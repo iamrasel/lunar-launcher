@@ -13,16 +13,16 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.databinding.LauncherHomeSettingsBinding;
+import rasel.lunar.launcher.helpers.Constants;
 
 public class LauncherHomeSettings extends BottomSheetDialogFragment {
 
     private LauncherHomeSettingsBinding binding;
     private Context context;
     private final Constants constants = new Constants();
+    private final SettingsPrefsUtils settingsPrefsUtils = new SettingsPrefsUtils();
     private int timeFormatValue, showYear, tempUnit, showCity, showTodos;
     private String cityName, owmKey;
 
@@ -49,83 +49,46 @@ public class LauncherHomeSettings extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SettingsPrefsUtils settingsPrefsUtils = new SettingsPrefsUtils();
-        AtomicInteger timeFormatValue = new AtomicInteger();
-        AtomicInteger showYearValue = new AtomicInteger();
-        AtomicInteger tempUnitValue = new AtomicInteger();
-        AtomicInteger showCityValue = new AtomicInteger();
-        AtomicInteger showTodosValue = new AtomicInteger();
+        getTimeFormat();
+        getShowYear();
+        getTempUnit();
+        getShowCity();
+        getShowTodos();
 
+        binding.cancelButton.setOnClickListener(v -> dismiss());
+        binding.okButton.setOnClickListener(v -> {
+            settingsPrefsUtils.saveCityName(context, getCityName());
+            settingsPrefsUtils.saveOwmKey(context, getOwmKey());
+            dismiss();
+        });
+    }
+
+    private void getTimeFormat() {
         binding.selectTwelve.setOnClickListener(v -> {
             binding.followSystemTime.setChecked(false);
             binding.selectTwentyFour.setChecked(false);
-            timeFormatValue.set(1);
+            settingsPrefsUtils.saveTimeFormat(context, 1);
         });
         binding.followSystemTime.setOnClickListener(v -> {
             binding.selectTwelve.setChecked(false);
             binding.selectTwentyFour.setChecked(false);
-            timeFormatValue.set(0);
+            settingsPrefsUtils.saveTimeFormat(context, 0);
         });
         binding.selectTwentyFour.setOnClickListener(v -> {
             binding.selectTwelve.setChecked(false);
             binding.followSystemTime.setChecked(false);
-            timeFormatValue.set(2);
+            settingsPrefsUtils.saveTimeFormat(context, 2);
         });
+    }
 
+    private void getShowYear() {
         binding.selectYearPositive.setOnClickListener(v -> {
             binding.selectYearNegative.setChecked(false);
-            showYearValue.set(1);
+            settingsPrefsUtils.showYear(context, 1);
         });
         binding.selectYearNegative.setOnClickListener(v -> {
             binding.selectYearPositive.setChecked(false);
-            showYearValue.set(0);
-        });
-
-        binding.selectCelsius.setOnClickListener(v -> {
-            binding.selectFahrenheit.setChecked(false);
-            tempUnitValue.set(0);
-        });
-        binding.selectFahrenheit.setOnClickListener(v -> {
-            binding.selectCelsius.setChecked(false);
-            tempUnitValue.set(1);
-        });
-
-        binding.showCityPositive.setOnClickListener(v -> {
-            binding.showCityNegative.setChecked(false);
-            showCityValue.set(1);
-        });
-        binding.showCityNegative.setOnClickListener(v -> {
-            binding.showCityPositive.setChecked(false);
-            showCityValue.set(0);
-        });
-
-        binding.showTodosNegative.setOnClickListener(v -> {
-            binding.showTodosThree.setChecked(false);
-            binding.showTodosFive.setChecked(false);
-            showTodosValue.set(0);
-        });
-        binding.showTodosThree.setOnClickListener(v -> {
-            binding.showTodosNegative.setChecked(false);
-            binding.showTodosFive.setChecked(false);
-            showTodosValue.set(3);
-        });
-        binding.showTodosFive.setOnClickListener(v -> {
-            binding.showTodosNegative.setChecked(false);
-            binding.showTodosThree.setChecked(false);
-            showTodosValue.set(5);
-        });
-
-
-        binding.cancelButton.setOnClickListener(v -> dismiss());
-        binding.okButton.setOnClickListener(v -> {
-            settingsPrefsUtils.saveTimeFormat(context, timeFormatValue.get());
-            settingsPrefsUtils.showYear(context, showYearValue.get());
-            settingsPrefsUtils.saveCityName(context, getCityName());
-            settingsPrefsUtils.saveOwmKey(context, getOwmKey());
-            settingsPrefsUtils.saveTempUnit(context, tempUnitValue.get());
-            settingsPrefsUtils.showCity(context, showCityValue.get());
-            settingsPrefsUtils.showTodos(context, showTodosValue.get());
-            dismiss();
+            settingsPrefsUtils.showYear(context, 0);
         });
     }
 
@@ -135,6 +98,46 @@ public class LauncherHomeSettings extends BottomSheetDialogFragment {
 
     private String getOwmKey() {
         return Objects.requireNonNull(binding.inputOwm.getText()).toString().trim();
+    }
+
+    private void getTempUnit() {
+        binding.selectCelsius.setOnClickListener(v -> {
+            binding.selectFahrenheit.setChecked(false);
+            settingsPrefsUtils.saveTempUnit(context, 0);
+        });
+        binding.selectFahrenheit.setOnClickListener(v -> {
+            binding.selectCelsius.setChecked(false);
+            settingsPrefsUtils.saveTempUnit(context, 1);
+        });
+    }
+
+    private void getShowCity() {
+        binding.showCityPositive.setOnClickListener(v -> {
+            binding.showCityNegative.setChecked(false);
+            settingsPrefsUtils.showCity(context, 1);
+        });
+        binding.showCityNegative.setOnClickListener(v -> {
+            binding.showCityPositive.setChecked(false);
+            settingsPrefsUtils.showCity(context, 0);
+        });
+    }
+
+    private void getShowTodos() {
+        binding.showTodosNegative.setOnClickListener(v -> {
+            binding.showTodosThree.setChecked(false);
+            binding.showTodosFive.setChecked(false);
+            settingsPrefsUtils.showTodos(context, 0);
+        });
+        binding.showTodosThree.setOnClickListener(v -> {
+            binding.showTodosNegative.setChecked(false);
+            binding.showTodosFive.setChecked(false);
+            settingsPrefsUtils.showTodos(context, 3);
+        });
+        binding.showTodosFive.setOnClickListener(v -> {
+            binding.showTodosNegative.setChecked(false);
+            binding.showTodosThree.setChecked(false);
+            settingsPrefsUtils.showTodos(context, 5);
+        });
     }
 
     private void loadSettings() {

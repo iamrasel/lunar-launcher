@@ -4,11 +4,15 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.admin.DevicePolicyManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Insets;
 import android.os.Build;
+import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.view.WindowInsets;
 import android.view.WindowMetrics;
@@ -63,5 +67,18 @@ public class UniUtils {
                     .getMethod("expandNotificationsPanel"))
                     .invoke(context.getSystemService("statusbar"));
         } catch (Exception ignored) {}
+    }
+
+    // Lock screen using device admin
+    public void lockDeviceAdmin(Context context, FragmentActivity fragmentActivity) {
+        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (powerManager.isInteractive()) {
+            DevicePolicyManager policy = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+            try {
+                policy.lockNow();
+            } catch (SecurityException exception) {
+                fragmentActivity.startActivity(new Intent().setComponent(new ComponentName("com.android.settings", "com.android.settings.DeviceAdminSettings")));
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@
     <string name="delete_all_confirmation">Are you sure to delete all the todos?</string>
     <string name="developer_name">Developed by: Md Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
+    <string name="device_admin_description">Allow to use double tap to lock feature</string>
     <string name="double_tap_lock">Double Tap Lock</string>
     <string name="empty_text_field">Text field is empty</string>
     <string name="fahrenheit">Fahrenheit</string>

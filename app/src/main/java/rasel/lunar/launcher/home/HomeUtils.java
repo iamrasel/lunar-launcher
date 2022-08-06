@@ -87,7 +87,7 @@ public class HomeUtils {
     }
 
     // Gestures on root view
-    protected void rootViewGestures(View view, Context context, FragmentManager fragmentManager) {
+    protected void rootViewGestures(View view, Context context, FragmentManager fragmentManager, FragmentActivity fragmentActivity, int lockMethodValue) {
         view.setOnTouchListener(new SwipeTouchListener(context) {
             @Override
             public void onSwipeUp() {
@@ -99,11 +99,18 @@ public class HomeUtils {
                 super.onSwipeDown();
                 uniUtils.expandNotificationPanel(context);
             }
+            @Override
+            public void onDoubleClick() {
+                super.onDoubleClick();
+                if(lockMethodValue == 2) {
+                    uniUtils.lockDeviceAdmin(context, fragmentActivity);
+                }
+            }
         });
     }
 
     // Gestures on battery progress indicator
-    protected void batteryProgressGestures(View view, Context context, FragmentActivity fragmentActivity) {
+    protected void batteryProgressGestures(View view, Context context, FragmentActivity fragmentActivity, int lockMethodValue) {
         view.setOnTouchListener(new SwipeTouchListener(context) {
             @Override
             public void onLongClick() {
@@ -115,11 +122,18 @@ public class HomeUtils {
                 super.onSwipeDown();
                 uniUtils.expandNotificationPanel(context);
             }
+            @Override
+            public void onDoubleClick() {
+                super.onDoubleClick();
+                if(lockMethodValue == 2) {
+                    uniUtils.lockDeviceAdmin(context, fragmentActivity);
+                }
+            }
         });
     }
 
     // Gestures on todos section
-    protected void todosGestures(View view, Context context, FragmentManager fragmentManager) {
+    protected void todosGestures(View view, Context context, FragmentManager fragmentManager, FragmentActivity fragmentActivity, int lockMethodValue) {
         view.setOnTouchListener(new SwipeTouchListener(context) {
             @Override
             public void onLongClick() {
@@ -136,6 +150,13 @@ public class HomeUtils {
             public void onSwipeDown() {
                 super.onSwipeDown();
                 uniUtils.expandNotificationPanel(context);
+            }
+            @Override
+            public void onDoubleClick() {
+                super.onDoubleClick();
+                if(lockMethodValue == 2) {
+                    uniUtils.lockDeviceAdmin(context, fragmentActivity);
+                }
             }
         });
     }

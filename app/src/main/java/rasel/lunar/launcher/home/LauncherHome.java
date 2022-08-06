@@ -31,6 +31,7 @@ public class LauncherHome extends Fragment {
     private LauncherHomeBinding binding;
     private Context context;
     private FragmentManager fragmentManager;
+    private SharedPreferences sharedPreferences;
     private final Constants constants = new Constants();
     private final HomeUtils homeUtils = new HomeUtils();
 
@@ -39,11 +40,12 @@ public class LauncherHome extends Fragment {
         binding = LauncherHomeBinding.inflate(inflater, container, false);
         context = requireActivity().getApplicationContext();
         fragmentManager = requireActivity().getSupportFragmentManager();
-        SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
 
         // Recreates the fragment on getting back
         ((MainActivity) requireActivity()).setFragmentRefreshListener(() -> this.requireActivity().recreate());
 
+        context.registerReceiver(batteryProgressReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)); // Battery
         binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context)); // Time
         binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences)); // Date
 
@@ -53,10 +55,11 @@ public class LauncherHome extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        int lockMethodValue = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
         // handle gesture events
-        homeUtils.rootViewGestures(binding.getRoot(), context, fragmentManager);
-        homeUtils.batteryProgressGestures(binding.batteryProgress, context, requireActivity());
-        homeUtils.todosGestures(binding.todos, context, fragmentManager);
+        homeUtils.rootViewGestures(binding.getRoot(), context, fragmentManager, requireActivity(), lockMethodValue);
+        homeUtils.batteryProgressGestures(binding.batteryProgress, context, requireActivity(), lockMethodValue);
+        homeUtils.todosGestures(binding.todos, context, fragmentManager, requireActivity(), lockMethodValue);
     }
 
     /* Shows battery percentage as a circular progress view
