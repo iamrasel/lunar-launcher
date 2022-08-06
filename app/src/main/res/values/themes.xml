@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.LunarLauncher" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary color -->
+        <item name="colorPrimary">@color/primary</item>
+        <!-- Background -->
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <!-- System bar colors -->
+        <item name="android:statusBarColor" >@color/status_bar</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/navigation_bar</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
+        <!-- Html links -->
+        <item name="android:textColorLink">@color/not_primary</item>
+    </style>
+
+    <style name="OutlinedTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/not_primary</item>
+        <item name="hintTextColor">@color/not_primary</item>
+        <item name="android:theme">@style/EditText</item>
+    </style>
+    <style name="EditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="colorControlActivated">@color/not_primary</item>
+    </style>
+</resources>

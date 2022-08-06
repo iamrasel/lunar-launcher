@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <ProgressBar
+            android:id="@+id/battery_progress"
+            android:layout_width="308dp"
+            android:layout_height="308dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progressDrawable="@drawable/battery_progress"
+            android:layout_centerHorizontal="true"
+            style="?android:attr/progressBarStyleHorizontal" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="308dp"
+            android:layout_height="308dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerHorizontal="true">
+
+            <TextClock
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:lines="1"
+                android:textIsSelectable="false"/>
+
+            <TextClock
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:lines="1"
+                android:textIsSelectable="false"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/todos"
+            android:layout_width="match_parent"
+            android:layout_height="308dp"
+            android:scrollbars="none"
+            android:layout_below="@id/battery_progress"
+            android:layout_marginHorizontal="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp" />
+
+    </RelativeLayout>
+</layout>

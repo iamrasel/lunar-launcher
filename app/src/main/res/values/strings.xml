@@ -1,0 +1,61 @@
+<resources>
+    <string name="about">About</string>
+    <string name="accessibility">Accessibility</string>
+    <string name="add_new">Add New</string>
+    <string name="app_info">App Info</string>
+    <string name="app_name">Lunar Launcher</string>
+    <string name="app_store">App Store</string>
+    <string name="application_theme">Application Theme</string>
+    <string name="celsius">Celsius</string>
+    <string name="city_name">City Name</string>
+    <string name="copied_message">Copied to clipboard</string>
+    <string name="dark_theme">Dark</string>
+    <string name="delete">Delete</string>
+    <string name="delete_all">Delete All</string>
+    <string name="delete_all_confirmation">Are you sure to delete all the todos?</string>
+    <string name="developer_name">Developed by: Md Rasel Hossain</string>
+    <string name="device_admin">Device Admin</string>
+    <string name="double_tap_lock">Double Tap Lock</string>
+    <string name="empty_text_field">Text field is empty</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="feed_url">Feed Url</string>
+    <string name="five">Five</string>
+    <string name="follow_system">Follow System</string>
+    <string name="freeform">Freeform</string>
+    <string name="home">Home</string>
+    <string name="light_theme">Light</string>
+    <string name="more">More</string>
+    <string name="negative">Negative</string>
+    <string name="nothing_found">¯\\_(ツ)_/¯</string>
+    <string name="null_app_store_message">There\'s no app store is installed\non this device.</string>
+    <string name="owm_key">OWM API Key</string>
+    <string name="positive">Positive</string>
+    <string name="root">Root</string>
+    <string name="show_city">Show City</string>
+    <string name="show_todos">Show Todos</string>
+    <string name="show_year">Show Year</string>
+    <string name="temp_unit">Temperature Unit</string>
+    <string name="three">Three</string>
+    <string name="time_format">Time Format</string>
+    <string name="todo">Todo</string>
+    <string name="twelve">12 Hour</string>
+    <string name="twenty_four">24 Hour</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="update">Update</string>
+
+
+
+    <string name="github_source">
+        <b>Source code</b>\n
+        <i><a href="https://github.com/iamrasel/lunar-launcher">https://github.com/iamrasel/lunar-launcher</a></i>
+    </string>
+    <string name="get_owm_api">
+        <b>OpenWeatherMap API Key (free)</b>\n
+        <i><a href="https://openweathermap.org/api">https://openweathermap.org/api</a></i>
+    </string>
+    <string name="acknowledgements">
+        <b>Acknowledgements</b>\n
+        <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
+        <i><a href="https://www.svgrepo.com">https://www.svgrepo.com</a></i>
+    </string>
+</resources>
