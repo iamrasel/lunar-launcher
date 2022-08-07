@@ -1,16 +1,13 @@
 package rasel.lunar.launcher.home;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +16,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import rasel.lunar.launcher.MainActivity;
-import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.LauncherHomeBinding;
 import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.todos.DatabaseHandler;
@@ -34,6 +30,7 @@ public class LauncherHome extends Fragment {
     private SharedPreferences sharedPreferences;
     private final Constants constants = new Constants();
     private final HomeUtils homeUtils = new HomeUtils();
+    private BatteryReceiver batteryReceiver;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,11 +38,12 @@ public class LauncherHome extends Fragment {
         context = requireActivity().getApplicationContext();
         fragmentManager = requireActivity().getSupportFragmentManager();
         sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
+        batteryReceiver = new BatteryReceiver(binding.batteryProgress);
 
         // Recreates the fragment on getting back
         ((MainActivity) requireActivity()).setFragmentRefreshListener(() -> this.requireActivity().recreate());
 
-        context.registerReceiver(batteryProgressReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)); // Battery
+        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)); // Battery
         binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context)); // Time
         binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences)); // Date
 
@@ -62,21 +60,6 @@ public class LauncherHome extends Fragment {
         homeUtils.todosGestures(binding.todos, context, fragmentManager, requireActivity(), lockMethodValue);
     }
 
-    /* Shows battery percentage as a circular progress view
-        with rotating animation while charging */
-    private final BroadcastReceiver batteryProgressReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            binding.batteryProgress.setProgress(homeUtils.getBatteryPercentage(intent));
-            if(homeUtils.getChargingStatus(intent) == BatteryManager.BATTERY_STATUS_CHARGING ||
-                    homeUtils.getChargingStatus(intent) == BatteryManager.BATTERY_STATUS_FULL) {
-                binding.batteryProgress.startAnimation(AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise));
-            } else if(homeUtils.getChargingStatus(intent) == BatteryManager.BATTERY_STATUS_DISCHARGING) {
-                binding.batteryProgress.clearAnimation();
-            }
-        }
-    };
-
     private void showTodoList() {
         binding.todos.setLayoutManager(new LinearLayoutManager(context));
         binding.todos.setAdapter(new TodoAdapter((new TodoManager()), (new DatabaseHandler(context)).getTodos(), context, requireActivity().getSupportFragmentManager(), this));
@@ -84,14 +67,14 @@ public class LauncherHome extends Fragment {
 
     @Override
     public void onResume() {
-        context.registerReceiver(batteryProgressReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         showTodoList();
         super.onResume();
     }
 
     @Override
     public void onDestroy() {
-        context.unregisterReceiver(this.batteryProgressReceiver);
+        context.unregisterReceiver(batteryReceiver);
         super.onDestroy();
     }
 }

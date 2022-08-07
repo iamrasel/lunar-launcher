@@ -3,7 +3,6 @@ package rasel.lunar.launcher.home;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.BatteryManager;
 import android.text.format.DateFormat;
 import android.view.View;
 
@@ -24,19 +23,6 @@ public class HomeUtils {
 
     Constants constants = new Constants();
     UniUtils uniUtils = new UniUtils();
-
-    // Gets battery percentage
-    protected int getBatteryPercentage(Intent intent) {
-        int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-        int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        float percentage = level / (float) scale;
-        return (int) ((percentage) * 100);
-    }
-
-    // Gets charging status
-    protected int getChargingStatus(Intent intent) {
-        return intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-    }
 
     // Gets time format
     protected String getTimeFormat(SharedPreferences sharedPreferences, Context context) {
