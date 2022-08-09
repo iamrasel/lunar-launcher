@@ -164,7 +164,10 @@ public class AppDrawer extends Fragment {
         binding.appsList.setOnItemLongClickListener((adapterView, view, i, l) -> {
             try {
                 launchAppMenu(packageNamesArrayList.get(i));
-            } catch (PackageManager.NameNotFoundException ignored) {}
+            } catch (PackageManager.NameNotFoundException nameNotFoundException) {
+                uniUtils.exceptionViewer(requireActivity(), nameNotFoundException.getMessage());
+                nameNotFoundException.printStackTrace();
+            }
             return true;
         });
     }

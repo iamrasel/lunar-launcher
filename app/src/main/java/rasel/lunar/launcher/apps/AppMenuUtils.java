@@ -55,7 +55,7 @@ public class AppMenuUtils {
                 Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
         Rect rect = new Rect(0, (uniUtils.getScreenHeight(fragmentActivity)/2), uniUtils.getScreenWidth(fragmentActivity), uniUtils.getScreenHeight(fragmentActivity));
-        ActivityOptions activityOptions = getActivityOptions();
+        ActivityOptions activityOptions = getActivityOptions(fragmentActivity);
         activityOptions = activityOptions.setLaunchBounds(rect);
 
         context.startActivity(freeformIntent, activityOptions.toBundle());
@@ -80,6 +80,7 @@ public class AppMenuUtils {
             context.startActivity(storeIntent);
         } catch (ActivityNotFoundException activityNotFoundException) {
             Toast.makeText(context, context.getString(R.string.null_app_store_message),Toast.LENGTH_SHORT).show();
+            activityNotFoundException.printStackTrace();
         }
         bottomSheetDialog.dismiss();
     }
@@ -93,13 +94,16 @@ public class AppMenuUtils {
         bottomSheetDialog.dismiss();
     }
 
-    private ActivityOptions getActivityOptions() {
+    private ActivityOptions getActivityOptions(FragmentActivity fragmentActivity) {
         ActivityOptions activityOptions = ActivityOptions.makeBasic();
         int freeform_stackId = 5;
         try {
             Method method = ActivityOptions.class.getMethod("setLaunchWindowingMode", int.class);
             method.invoke(activityOptions, freeform_stackId);
-        } catch (Exception ignored) {}
+        } catch (Exception exception) {
+            (new UniUtils()).exceptionViewer(fragmentActivity, exception.getMessage());
+            exception.printStackTrace();
+        }
         return activityOptions;
     }
 }

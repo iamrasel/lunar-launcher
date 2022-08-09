@@ -32,12 +32,16 @@ import android.graphics.Insets;
 import android.os.Build;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowMetrics;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textview.MaterialTextView;
 
 import rasel.lunar.launcher.R;
 
@@ -69,6 +73,19 @@ public class UniUtils {
         }
     }
 
+    public void exceptionViewer(FragmentActivity fragmentActivity, String exceptionText) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(fragmentActivity);
+        View view = fragmentActivity.getLayoutInflater().inflate(R.layout.exception_viewer, null);
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show();
+
+        MaterialTextView exceptionViewer = view.findViewById(R.id.exception_text);
+        exceptionViewer.setText(exceptionText);
+
+        view.findViewById(R.id.copy).setOnClickListener(v ->
+                copyToClipboard(fragmentActivity, fragmentActivity.getApplicationContext(), exceptionText));
+    }
+
     // Copies texts to clipboard
     public void copyToClipboard(FragmentActivity fragmentActivity, Context context, String copiedString) {
         ClipboardManager clipBoard = (ClipboardManager) fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
@@ -79,12 +96,15 @@ public class UniUtils {
 
     // Expands notification panel
     @SuppressLint("WrongConstant")
-    public void expandNotificationPanel(Context context) {
+    public void expandNotificationPanel(Context context, FragmentActivity fragmentActivity) {
         try {
             ((Class.forName("android.app.StatusBarManager"))
                     .getMethod("expandNotificationsPanel"))
                     .invoke(context.getSystemService("statusbar"));
-        } catch (Exception ignored) {}
+        } catch (Exception exception) {
+            exceptionViewer(fragmentActivity, exception.getMessage());
+            exception.printStackTrace();
+        }
     }
 
     // Lock screen using device admin
@@ -96,6 +116,7 @@ public class UniUtils {
                 policy.lockNow();
             } catch (SecurityException exception) {
                 fragmentActivity.startActivity(new Intent().setComponent(new ComponentName("com.android.settings", "com.android.settings.DeviceAdminSettings")));
+                exception.printStackTrace();
             }
         }
     }

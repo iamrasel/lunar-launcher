@@ -87,7 +87,9 @@ public class SwipeTouchListener implements View.OnTouchListener {
                         }
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             return false;
         }
     }
