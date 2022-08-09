@@ -36,6 +36,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -45,6 +46,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.chrisbanes.insetter.Insetter;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.AppDrawerBinding;
 import rasel.lunar.launcher.helpers.UniUtils;
@@ -74,6 +76,19 @@ public class AppDrawer extends Fragment {
         binding = AppDrawerBinding.inflate(inflater, container, false);
         context = requireActivity().getApplicationContext();
 
+        Insetter.builder()
+                .padding(WindowInsetsCompat.Type.systemBars())
+                .applyToView(binding.appsList)
+                .applyToView(binding.searchStringBox);
+        Insetter.builder()
+                .padding(WindowInsetsCompat.Type.systemBars())
+                .applyToView(binding.leftSearchList)
+                .applyToView(binding.leftSearchListII);
+        Insetter.builder()
+                .padding(WindowInsetsCompat.Type.systemBars())
+                .applyToView(binding.rightSearchList)
+                .applyToView(binding.rightSearchListII);
+
         setupInitialView();
         return binding.getRoot();
     }
@@ -89,13 +104,13 @@ public class AppDrawer extends Fragment {
     private void setupInitialView() {
         packageManager = requireActivity().getPackageManager();
         packageNamesArrayList = new ArrayList<>();
-        appsAdapter = new ArrayAdapter<>(context, R.layout.apps_list, R.id.app_textview, new ArrayList<>());
+        appsAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_list, R.id.app_textview, new ArrayList<>());
         // Left search textview list
-        ArrayAdapter<String> leftSearchAdapter = new ArrayAdapter<>(context, R.layout.apps_search_list, R.id.search_textview, leftSearchArray);
-        ArrayAdapter<String> leftSearchAdapterII = new ArrayAdapter<>(context, R.layout.apps_search_list, R.id.search_textview, leftSearchArrayII);
+        ArrayAdapter<String> leftSearchAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_search_list, R.id.search_textview, leftSearchArray);
+        ArrayAdapter<String> leftSearchAdapterII = new ArrayAdapter<>(getContext(), R.layout.apps_search_list, R.id.search_textview, leftSearchArrayII);
         // Right search textview list
-        ArrayAdapter<String> rightSearchAdapter = new ArrayAdapter<>(context, R.layout.apps_search_list, R.id.search_textview, rightSearchArray);
-        ArrayAdapter<String> rightSearchAdapterII = new ArrayAdapter<>(context, R.layout.apps_search_list, R.id.search_textview, rightSearchArrayII);
+        ArrayAdapter<String> rightSearchAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_search_list, R.id.search_textview, rightSearchArray);
+        ArrayAdapter<String> rightSearchAdapterII = new ArrayAdapter<>(getContext(), R.layout.apps_search_list, R.id.search_textview, rightSearchArrayII);
 
         binding.leftSearchList.setAdapter(leftSearchAdapter);
         binding.leftSearchListII.setAdapter(leftSearchAdapterII);
@@ -132,6 +147,7 @@ public class AppDrawer extends Fragment {
             return;
         } else {
             binding.noAppsMessage.setVisibility(View.GONE);
+            binding.appsCount.setText(String.valueOf(appsAdapter.getCount()));
         }
         showApps();
     }
@@ -201,6 +217,7 @@ public class AppDrawer extends Fragment {
         } else {
             showApps();
             binding.noAppsMessage.setVisibility(View.GONE);
+            binding.appsCount.setText(String.valueOf(appsAdapter.getCount()));
         }
     }
 

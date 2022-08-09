@@ -10,9 +10,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_marginBottom="8dp"
-            android:textSize="22sp"
-            android:textColor="@color/text_color"/>
+            android:paddingVertical="4dp"
+            android:textSize="22sp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

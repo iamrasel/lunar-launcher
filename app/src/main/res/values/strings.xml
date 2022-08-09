@@ -50,13 +50,18 @@
         <b>Source code</b>\n
         <i><a href="https://github.com/iamrasel/lunar-launcher">https://github.com/iamrasel/lunar-launcher</a></i>
     </string>
+    <string name="wiki">
+        <b>Wiki</b>\n
+        <i><a href="https://github.com/iamrasel/lunar-launcher/wiki">https://github.com/iamrasel/lunar-launcher/wiki</a></i>
+    </string>
     <string name="get_owm_api">
         <b>OpenWeatherMap API Key (free)</b>\n
         <i><a href="https://openweathermap.org/api">https://openweathermap.org/api</a></i>
     </string>
     <string name="acknowledgements">
         <b>Acknowledgements</b>\n
+        <i><a href="https://www.svgrepo.com">https://www.svgrepo.com</a></i>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
-        <i><a href="https://www.svgrepo.com">https://www.svgrepo.com</a></i>
+        <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>
     </string>
 </resources>

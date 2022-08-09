@@ -1,94 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/left_search_list"
-            android:layout_width="0dp"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/apps_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="216sp"
+            android:textColor="@color/apps_count"
+            android:layout_centerInParent="true"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.25"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:transcriptMode="alwaysScroll"
-            android:stackFromBottom="true"/>
-
-        <ListView
-            android:id="@+id/left_search_listII"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.25"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:transcriptMode="alwaysScroll"
-            android:stackFromBottom="true"/>
-
-        <RelativeLayout
-            android:id="@+id/main_apps_layout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="vertical">
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_alignParentBottom="true">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/search_string_box"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="8dp"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
 
             <ListView
-                android:id="@+id/apps_list"
-                android:layout_width="match_parent"
+                android:id="@+id/left_search_list"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
+                android:layout_weight="1.25"
                 android:divider="@null"
-                android:layout_centerVertical="true"
-                android:clipChildren="false"
-                android:clipToPadding="false"/>
+                android:scrollbars="none"
+                android:transcriptMode="alwaysScroll"
+                android:layout_gravity="bottom"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/no_apps_message"
-                android:layout_width="match_parent"
+            <ListView
+                android:id="@+id/left_search_listII"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/nothing_found"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:layout_centerVertical="true"/>
+                android:layout_weight="1.25"
+                android:divider="@null"
+                android:scrollbars="none"
+                android:transcriptMode="alwaysScroll"
+                android:layout_gravity="bottom"/>
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/main_apps_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/right_search_list"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.25"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:transcriptMode="alwaysScroll"
-            android:stackFromBottom="true"/>
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentBottom="true">
 
-        <ListView
-            android:id="@+id/right_search_listII"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.25"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:transcriptMode="alwaysScroll"
-            android:stackFromBottom="true"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/search_string_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
+                        style="@style/Widget.Material3.Button.ElevatedButton"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <ListView
+                    android:id="@+id/apps_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:divider="@null"
+                    android:layout_centerVertical="true"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/no_apps_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nothing_found"
+                    android:gravity="center"
+                    android:textSize="22sp"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/right_search_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.25"
+                android:divider="@null"
+                android:scrollbars="none"
+                android:transcriptMode="alwaysScroll"
+                android:layout_gravity="bottom"/>
+
+            <ListView
+                android:id="@+id/right_search_listII"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.25"
+                android:divider="@null"
+                android:scrollbars="none"
+                android:transcriptMode="alwaysScroll"
+                android:layout_gravity="bottom"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </RelativeLayout>
 </layout>

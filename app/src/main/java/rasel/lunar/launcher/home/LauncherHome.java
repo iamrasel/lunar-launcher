@@ -29,10 +29,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import dev.chrisbanes.insetter.Insetter;
 import rasel.lunar.launcher.MainActivity;
 import rasel.lunar.launcher.databinding.LauncherHomeBinding;
 import rasel.lunar.launcher.helpers.Constants;
@@ -57,6 +59,10 @@ public class LauncherHome extends Fragment {
         fragmentManager = requireActivity().getSupportFragmentManager();
         sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
         batteryReceiver = new BatteryReceiver(binding.batteryProgress);
+
+        Insetter.builder()
+                .padding(WindowInsetsCompat.Type.systemBars())
+                .applyToView(binding.getRoot());
 
         // Recreates the fragment on getting back
         ((MainActivity) requireActivity()).setFragmentRefreshListener(() -> this.requireActivity().recreate());

@@ -73,7 +73,6 @@ public class LauncherHomeSettings extends BottomSheetDialogFragment {
         getShowCity();
         getShowTodos();
 
-        binding.cancelButton.setOnClickListener(v -> dismiss());
         binding.okButton.setOnClickListener(v -> {
             settingsPrefsUtils.saveCityName(context, getCityName());
             settingsPrefsUtils.saveOwmKey(context, getOwmKey());

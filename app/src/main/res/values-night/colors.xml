@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary colors -->
-    <color name="primary">#FF000000</color>
+    <color name="primary">@android:color/transparent</color>
     <color name="not_primary">#FF8C9EFF</color>
-    <color name="window_background">#88000000</color>
+    <color name="window_background">#FF121212</color>
     <!-- System bar colors -->
     <color name="status_bar">@android:color/transparent</color>
     <color name="navigation_bar">@android:color/transparent</color>
@@ -11,6 +11,6 @@
     <color name="ic_launcher_bg_top">#FFBBBBBB</color>
     <color name="ic_launcher_bg_bottom">#FF333333</color>
 
-    <color name="icon_color">#FFFFFFFF</color>
-    <color name="text_color">#FFFFFFFF</color>
+    <color name="icon_color">@android:color/white</color>
+    <color name="apps_count">@android:color/black</color>
 </resources>

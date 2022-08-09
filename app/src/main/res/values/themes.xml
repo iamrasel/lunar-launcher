@@ -4,9 +4,9 @@
         <!-- Primary color -->
         <item name="colorPrimary">@color/primary</item>
         <!-- Background -->
-        <item name="android:windowShowWallpaper">true</item>
         <item name="android:windowBackground">@color/window_background</item>
         <!-- System bar colors -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor" >@color/status_bar</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/navigation_bar</item>

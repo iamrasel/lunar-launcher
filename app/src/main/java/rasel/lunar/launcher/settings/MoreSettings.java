@@ -67,7 +67,6 @@ public class MoreSettings extends BottomSheetDialogFragment {
         getLockMode();
         getThemeValue();
 
-        binding.cancelButton.setOnClickListener(v -> dismiss());
         binding.okButton.setOnClickListener(v -> {
             settingsPrefsUtils.saveFeedUrl(context, getFeedUrl());
             dismiss();

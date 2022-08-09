@@ -40,17 +40,17 @@
                 android:layout_weight="1">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/app_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_info"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-
-                <com.google.android.material.button.MaterialButton
                     android:id="@+id/app_store"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/app_store"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/app_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_info"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>
 
             </com.google.android.material.button.MaterialButtonToggleGroup>

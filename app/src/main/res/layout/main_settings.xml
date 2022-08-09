@@ -9,7 +9,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -17,66 +16,42 @@
                 android:textSize="36sp"
                 android:textStyle="bold"
                 android:layout_centerInParent="true"/>
-
         </RelativeLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <com.google.android.material.button.MaterialButtonToggleGroup
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:orientation="vertical"
             android:padding="16dp">
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/launcher_home_settings"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/launcher_home_settings"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/home"
-                    android:textSize="24sp"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:onClick="openSettingsFragments"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/more_settings"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/more"
-                    android:textSize="24sp"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:onClick="openSettingsFragments"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:layout_weight="1"
+                android:text="@string/home"
+                android:textSize="24sp"
+                android:onClick="openSettingsFragments"
+                style="@style/Widget.Material3.Button.ElevatedButton"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/more_settings"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/about"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/about"
-                    android:textSize="24sp"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:onClick="openSettingsFragments"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                android:layout_weight="1"
+                android:text="@string/more"
+                android:textSize="24sp"
+                android:onClick="openSettingsFragments"
+                style="@style/Widget.Material3.Button.ElevatedButton"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/about"
+                android:textSize="24sp"
+                android:onClick="openSettingsFragments"
+                style="@style/Widget.Material3.Button.ElevatedButton"/>
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

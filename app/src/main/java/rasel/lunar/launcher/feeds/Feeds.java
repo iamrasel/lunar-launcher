@@ -24,8 +24,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import dev.chrisbanes.insetter.Insetter;
 import rasel.lunar.launcher.databinding.FeedsBinding;
 
 public class Feeds extends Fragment {
@@ -35,6 +37,9 @@ public class Feeds extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FeedsBinding.inflate(inflater, container, false);
+        Insetter.builder()
+                .padding(WindowInsetsCompat.Type.systemBars())
+                .applyToView(binding.getRoot());
         return binding.getRoot();
     }
 }

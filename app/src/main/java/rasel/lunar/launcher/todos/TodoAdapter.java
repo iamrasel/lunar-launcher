@@ -63,7 +63,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.todo_list, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(fragment.getContext()).inflate(R.layout.todo_list, viewGroup, false));
     }
 
     @Override
@@ -83,6 +83,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         holder.todoText.setText("●  " + todoList.get(i).getName());
 
         if(currentFragment instanceof TodoManager) {
+            holder.todoText.setSingleLine(false);
             holder.todoText.setOnClickListener(v -> updateDialog(i));
             holder.todoText.setOnLongClickListener(v -> {
                 (new UniUtils()).copyToClipboard(fragment.requireActivity(), context, todoList.get(i).getName());

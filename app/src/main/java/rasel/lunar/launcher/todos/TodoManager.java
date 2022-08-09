@@ -29,6 +29,7 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -38,6 +39,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
+import dev.chrisbanes.insetter.Insetter;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.TodoManagerBinding;
 
@@ -51,6 +53,10 @@ public class TodoManager extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = TodoManagerBinding.inflate(inflater, container, false);
+
+        Insetter.builder()
+                .padding(WindowInsetsCompat.Type.systemBars())
+                .applyToView(binding.getRoot());
 
         context = requireActivity().getApplicationContext();
         databaseHandler = new DatabaseHandler(context);
