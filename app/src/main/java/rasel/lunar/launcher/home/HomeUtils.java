@@ -106,9 +106,7 @@ public class HomeUtils {
             @Override
             public void onDoubleClick() {
                 super.onDoubleClick();
-                if(lockMethodValue == 2) {
-                    uniUtils.lockDeviceAdmin(context, fragmentActivity);
-                }
+                lockMethod(lockMethodValue, context, fragmentActivity);
             }
         });
     }
@@ -129,9 +127,7 @@ public class HomeUtils {
             @Override
             public void onDoubleClick() {
                 super.onDoubleClick();
-                if(lockMethodValue == 2) {
-                    uniUtils.lockDeviceAdmin(context, fragmentActivity);
-                }
+                lockMethod(lockMethodValue, context, fragmentActivity);
             }
         });
     }
@@ -158,10 +154,16 @@ public class HomeUtils {
             @Override
             public void onDoubleClick() {
                 super.onDoubleClick();
-                if(lockMethodValue == 2) {
-                    uniUtils.lockDeviceAdmin(context, fragmentActivity);
-                }
+                lockMethod(lockMethodValue, context, fragmentActivity);
             }
         });
+    }
+
+    private void lockMethod(int lockMethodValue, Context context, FragmentActivity fragmentActivity) {
+        if(lockMethodValue == 1) {
+            uniUtils.lockAccessibility(fragmentActivity);
+        } else if(lockMethodValue == 2) {
+            uniUtils.lockDeviceAdmin(context, fragmentActivity);
+        }
     }
 }

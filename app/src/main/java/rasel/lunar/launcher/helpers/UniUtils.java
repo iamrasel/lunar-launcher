@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.graphics.Insets;
 import android.os.Build;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowInsets;
@@ -118,6 +119,20 @@ public class UniUtils {
                 fragmentActivity.startActivity(new Intent().setComponent(new ComponentName("com.android.settings", "com.android.settings.DeviceAdminSettings")));
                 exception.printStackTrace();
             }
+        }
+    }
+
+    public void lockAccessibility(FragmentActivity fragmentActivity) {
+        if ((new LockService()).isAccessibilityServiceEnabled(fragmentActivity.getApplicationContext())) {
+            try {
+                fragmentActivity.startService(new Intent(fragmentActivity.getApplicationContext(), LockService.class)
+                        .setAction((new Constants()).ACCESSIBILITY_SERVICE_LOCK_SCREEN));
+            } catch (Exception exception) {
+                exceptionViewer(fragmentActivity, exception.getMessage());
+                exception.printStackTrace();
+            }
+        } else {
+            fragmentActivity.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
         }
     }
 }

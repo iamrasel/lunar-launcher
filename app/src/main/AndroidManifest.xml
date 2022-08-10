@@ -32,10 +32,24 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".settings.SettingsActivity"
+        <activity
+            android:name=".settings.SettingsActivity"
             android:exported="false" />
 
-        <receiver android:name=".helpers.AdminReceiver"
+        <service
+            android:name=".helpers.LockService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/lock_service" />
+        </service>
+
+        <receiver
+            android:name=".helpers.AdminReceiver"
             android:label="@string/app_name"
             android:description="@string/device_admin_description"
             android:permission="android.permission.BIND_DEVICE_ADMIN"

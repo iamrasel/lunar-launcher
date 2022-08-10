@@ -1,6 +1,10 @@
 <resources>
     <string name="about">About</string>
     <string name="accessibility">Accessibility</string>
+    <string name="accessibility_service_description">
+        Accessibility service to allow Lunar Launcher to put the device to sleep, on Android Pie (API 28) and up.
+    </string>
+    <string name="accessibility_service_label">Lock Service</string>
     <string name="add_new">Add New</string>
     <string name="app_info">App Info</string>
     <string name="app_name">Lunar Launcher</string>
