@@ -44,6 +44,8 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.io.DataOutputStream;
+
 import rasel.lunar.launcher.R;
 
 public class UniUtils {
@@ -74,6 +76,7 @@ public class UniUtils {
         }
     }
 
+    // Shows exception messages in a dialog
     public void exceptionViewer(FragmentActivity fragmentActivity, String exceptionText) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(fragmentActivity);
         View view = fragmentActivity.getLayoutInflater().inflate(R.layout.exception_viewer, null);
@@ -122,6 +125,7 @@ public class UniUtils {
         }
     }
 
+    // Lock screen using accessibility service
     public void lockAccessibility(FragmentActivity fragmentActivity) {
         if ((new LockService()).isAccessibilityServiceEnabled(fragmentActivity.getApplicationContext())) {
             try {
@@ -133,6 +137,44 @@ public class UniUtils {
             }
         } else {
             fragmentActivity.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+        }
+    }
+
+    // Lock screen using root
+    public void lockRoot(FragmentActivity fragmentActivity) {
+        try {
+            Process process = Runtime.getRuntime().exec("su");
+            DataOutputStream dataOutputStream = new DataOutputStream(process.getOutputStream());
+            dataOutputStream.writeBytes("input keyevent ${KeyEvent.KEYCODE_POWER}\n");
+            dataOutputStream.writeBytes("exit\n");
+            dataOutputStream.flush();
+            dataOutputStream.close();
+            process.waitFor();
+            process.destroy();
+        } catch (Exception exception) {
+            exceptionViewer(fragmentActivity, exception.getMessage());
+            exception.printStackTrace();
+        }
+    }
+
+    // Checks if the device is rooted
+    public boolean isRooted(FragmentActivity fragmentActivity) {
+        Process process = null;
+        try {
+            process = Runtime.getRuntime().exec("su");
+            return true;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return false;
+        } finally {
+            if(process != null) {
+                try {
+                    process.destroy();
+                } catch (Exception exception) {
+                    exceptionViewer(fragmentActivity, exception.getMessage());
+                    exception.printStackTrace();
+                }
+            }
         }
     }
 }

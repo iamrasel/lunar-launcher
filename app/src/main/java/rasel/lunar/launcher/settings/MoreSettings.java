@@ -36,6 +36,7 @@ import java.util.Objects;
 
 import rasel.lunar.launcher.databinding.MoreSettingsBinding;
 import rasel.lunar.launcher.helpers.Constants;
+import rasel.lunar.launcher.helpers.UniUtils;
 
 public class MoreSettings extends BottomSheetDialogFragment {
 
@@ -49,11 +50,6 @@ public class MoreSettings extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = MoreSettingsBinding.inflate(inflater, container, false);
-
-        if(!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)) {
-            binding.selectLockAccessibility.setEnabled(false);
-        }
-
         initialize();
         loadSettings();
         return binding.getRoot();
@@ -133,6 +129,13 @@ public class MoreSettings extends BottomSheetDialogFragment {
 
     private void loadSettings() {
         binding.inputFeedUrl.setText(feedUrl);
+
+        if(!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)) {
+            binding.selectLockAccessibility.setEnabled(false);
+        }
+        if(!(new UniUtils()).isRooted(requireActivity())) {
+            binding.selectLockRoot.setEnabled(false);
+        }
 
         switch(lockMode) {
             case 0: binding.selectLockNegative.setChecked(true); break;

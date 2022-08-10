@@ -164,6 +164,8 @@ public class HomeUtils {
             uniUtils.lockAccessibility(fragmentActivity);
         } else if(lockMethodValue == 2) {
             uniUtils.lockDeviceAdmin(context, fragmentActivity);
+        } else if(lockMethodValue == 3) {
+            uniUtils.lockRoot(fragmentActivity);
         }
     }
 }
