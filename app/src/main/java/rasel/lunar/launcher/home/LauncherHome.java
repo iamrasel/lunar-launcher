@@ -38,6 +38,7 @@ import dev.chrisbanes.insetter.Insetter;
 import rasel.lunar.launcher.MainActivity;
 import rasel.lunar.launcher.databinding.LauncherHomeBinding;
 import rasel.lunar.launcher.helpers.Constants;
+import rasel.lunar.launcher.home.weather.WeatherExecutor;
 import rasel.lunar.launcher.todos.DatabaseHandler;
 import rasel.lunar.launcher.todos.TodoAdapter;
 import rasel.lunar.launcher.todos.TodoManager;
@@ -70,6 +71,7 @@ public class LauncherHome extends Fragment {
         context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)); // Battery
         binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context)); // Time
         binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences)); // Date
+        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp); // Weather
 
         return binding.getRoot();
     }
