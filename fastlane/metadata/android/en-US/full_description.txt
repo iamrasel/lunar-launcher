@@ -1,0 +1,18 @@
+Lunar Launcher is yet another addition to the world of android launchers. Low memory footprint and clean interface, but large number of features are awaiting. It is fully open-source and built with latest build-tools.
+
+**Features:**
+- Material design 3
+- Day/night theme mode
+- Double tap: Lock/sleep
+- Swipe down: Expand notification panel
+- Quick app search and launch
+- Launch apps in freeform mode
+- Animated battery percentage indicator
+- 12/24 time format and date
+- Weather: celsius and fahrenheit
+- 99 names of Allah
+- Todo manager
+- Device stats
+- Feeds
+- Quick actions
+- More to arrive
