@@ -32,11 +32,9 @@ import rasel.lunar.launcher.databinding.FeedsBinding;
 
 public class Feeds extends Fragment {
 
-    private FeedsBinding binding;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FeedsBinding.inflate(inflater, container, false);
+        FeedsBinding binding = FeedsBinding.inflate(inflater, container, false);
         Insetter.builder()
                 .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.getRoot());

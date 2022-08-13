@@ -33,14 +33,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import rasel.lunar.launcher.R;
+import rasel.lunar.launcher.databinding.TodoDialogBinding;
+import rasel.lunar.launcher.databinding.TodoListBinding;
 import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.helpers.UniUtils;
 
@@ -63,7 +62,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(fragment.getContext()).inflate(R.layout.todo_list, viewGroup, false));
+        TodoListBinding binding = TodoListBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -79,62 +79,58 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, @SuppressLint("RecyclerView") final int i) {
-        holder.todoText.setText("●  " + todoList.get(i).getName());
+    public void onBindViewHolder(@NonNull final ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
+        holder.view.todoText.setText("●  " + todoList.get(position).getName());
 
         if(currentFragment instanceof TodoManager) {
-            holder.todoText.setSingleLine(false);
-            holder.todoText.setOnClickListener(v -> updateDialog(i));
-            holder.todoText.setOnLongClickListener(v -> {
-                (new UniUtils()).copyToClipboard(fragment.requireActivity(), context, todoList.get(i).getName());
+            holder.view.todoText.setSingleLine(false);
+            holder.view.todoText.setOnClickListener(v -> updateDialog(position));
+            holder.view.todoText.setOnLongClickListener(v -> {
+                (new UniUtils()).copyToClipboard(fragment.requireActivity(), context, todoList.get(position).getName());
                 return true;
             });
         }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        MaterialTextView todoText;
-        ViewHolder(View view) {
-            super(view);
-            todoText = view.findViewById(R.id.todo_text);
+        TodoListBinding view;
+        ViewHolder(TodoListBinding v) {
+            super(v.getRoot());
+            view = v;
         }
     }
 
     private void updateDialog(int i) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(fragment.requireActivity());
         Objects.requireNonNull(bottomSheetDialog).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        View editView = fragment.getLayoutInflater().inflate(R.layout.todo_dialog, null);
-        bottomSheetDialog.setContentView(editView);
+        TodoDialogBinding dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(todoManager.getContext()));
+        bottomSheetDialog.setContentView(dialogBinding.getRoot());
         bottomSheetDialog.show();
 
         DatabaseHandler databaseHandler = new DatabaseHandler(context);
         Todo todo = todoList.get(i);
 
-        editView.findViewById(R.id.delete_all_confirmation).setVisibility(View.GONE);
-        TextInputEditText todoInput = editView.findViewById(R.id.todo_input);
-        MaterialButton todoDelete = editView.findViewById(R.id.todo_cancel);
-        MaterialButton todoUpdate = editView.findViewById(R.id.todo_ok);
+        dialogBinding.deleteAllConfirmation.setVisibility(View.GONE);
+        dialogBinding.todoInput.setText(todoList.get(i).getName());
+        dialogBinding.todoCancel.setText(context.getString(R.string.delete));
+        dialogBinding.todoCancel.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light));
+        dialogBinding.todoOk.setText(context.getString(R.string.update));
 
-        todoInput.setText(todoList.get(i).getName());
-        todoDelete.setText(context.getString(R.string.delete));
-        todoDelete.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light));
-        todoUpdate.setText(context.getString(R.string.update));
-
-        todoDelete.setOnClickListener(v -> {
+        dialogBinding.todoCancel.setOnClickListener(v -> {
             databaseHandler.deleteTodo(todoList.get(i).getId());
             bottomSheetDialog.dismiss();
             todoManager.refreshList();
         });
 
-        todoUpdate.setOnClickListener(v -> {
-            String updatedTodoString = Objects.requireNonNull(todoInput.getText()).toString().trim();
+        dialogBinding.todoOk.setOnClickListener(v -> {
+            String updatedTodoString = Objects.requireNonNull(dialogBinding.todoInput.getText()).toString().trim();
             if(updatedTodoString.length() > 0) {
                 todo.setName(updatedTodoString);
                 databaseHandler.updateTodo(todo);
                 bottomSheetDialog.dismiss();
                 todoManager.refreshList();
             } else {
-                todoInput.setError(context.getString(R.string.empty_text_field));
+                dialogBinding.todoInput.setError(context.getString(R.string.empty_text_field));
             }
         });
     }

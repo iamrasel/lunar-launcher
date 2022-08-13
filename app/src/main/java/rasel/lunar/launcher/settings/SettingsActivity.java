@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.MainSettingsBinding;
@@ -35,7 +34,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainSettingsBinding binding = DataBindingUtil.setContentView(this, R.layout.main_settings);
+        MainSettingsBinding binding = MainSettingsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
     }
 
     @SuppressLint("NonConstantResourceId")

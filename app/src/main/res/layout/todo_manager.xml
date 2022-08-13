@@ -1,58 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:background="?android:windowBackground"
-        android:padding="16dp"
-        android:focusable="true"
-        android:clickable="true">
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal|bottom"
+    android:background="?android:windowBackground"
+    android:focusable="true"
+    android:clickable="true"
+    android:layout_marginHorizontal="16dp">
 
-        <ScrollView
-            android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/todos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:textSize="14sp" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:gravity="center">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_all"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:scrollbars="none"
-            android:layout_marginBottom="16dp">
+            android:text="@string/delete_all"
+            app:icon="@android:drawable/ic_menu_delete"
+            app:iconSize="24dp"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/todos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:layout_gravity="bottom"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add_new"
+            app:icon="@android:drawable/ic_menu_add"
+            app:iconSize="24dp"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
 
-        </ScrollView>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/delete_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/delete_all"
-                app:icon="@android:drawable/ic_menu_delete"
-                app:iconSize="24dp"
-                style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/add_new"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/add_new"
-                app:icon="@android:drawable/ic_menu_add"
-                app:iconSize="24dp"
-                style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-</layout>
+</androidx.appcompat.widget.LinearLayoutCompat>

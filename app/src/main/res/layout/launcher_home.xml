@@ -1,69 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.appcompat.widget.LinearLayoutCompat
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
+    android:weightSum="4">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/battery_progress"
+            android:layout_width="308dp"
+            android:layout_height="308dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progressDrawable="@drawable/battery_progress"
+            style="?android:attr/progressBarStyleHorizontal" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="308dp"
+            android:layout_height="308dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerHorizontal="true">
+            <TextClock
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:lines="1"
+                android:textIsSelectable="false"/>
+            <TextClock
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:lines="1"
+                android:textIsSelectable="false"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:lines="1"
+                android:textIsSelectable="false"
+                android:layout_marginTop="2dp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/todos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="16dp"
-        android:weightSum="4">
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:scrollbars="none"
+        android:layout_marginHorizontal="48dp" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ProgressBar
-                android:id="@+id/battery_progress"
-                android:layout_width="308dp"
-                android:layout_height="308dp"
-                android:indeterminate="false"
-                android:max="100"
-                android:progressDrawable="@drawable/battery_progress"
-                style="?android:attr/progressBarStyleHorizontal" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="308dp"
-                android:layout_height="308dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_centerHorizontal="true">
-                <TextClock
-                    android:id="@+id/time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="48sp"
-                    android:textStyle="bold"
-                    android:lines="1"
-                    android:textIsSelectable="false"/>
-                <TextClock
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:lines="1"
-                    android:textIsSelectable="false"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/temp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:lines="1"
-                    android:textIsSelectable="false"
-                    android:layout_marginTop="2dp"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </RelativeLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/todos"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:scrollbars="none"
-            android:layout_marginHorizontal="48dp" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-</layout>
+</androidx.appcompat.widget.LinearLayoutCompat>

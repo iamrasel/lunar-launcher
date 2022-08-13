@@ -40,8 +40,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +47,7 @@ import java.util.List;
 import dev.chrisbanes.insetter.Insetter;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.AppDrawerBinding;
+import rasel.lunar.launcher.databinding.AppMenuBinding;
 import rasel.lunar.launcher.helpers.UniUtils;
 
 public class AppDrawer extends Fragment {
@@ -104,13 +103,13 @@ public class AppDrawer extends Fragment {
     private void setupInitialView() {
         packageManager = requireActivity().getPackageManager();
         packageNamesArrayList = new ArrayList<>();
-        appsAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_list, R.id.app_textview, new ArrayList<>());
+        appsAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_child, R.id.child_textview, new ArrayList<>());
         // Left search textview list
-        ArrayAdapter<String> leftSearchAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_search_list, R.id.search_textview, leftSearchArray);
-        ArrayAdapter<String> leftSearchAdapterII = new ArrayAdapter<>(getContext(), R.layout.apps_search_list, R.id.search_textview, leftSearchArrayII);
+        ArrayAdapter<String> leftSearchAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_child, R.id.child_textview, leftSearchArray);
+        ArrayAdapter<String> leftSearchAdapterII = new ArrayAdapter<>(getContext(), R.layout.apps_child, R.id.child_textview, leftSearchArrayII);
         // Right search textview list
-        ArrayAdapter<String> rightSearchAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_search_list, R.id.search_textview, rightSearchArray);
-        ArrayAdapter<String> rightSearchAdapterII = new ArrayAdapter<>(getContext(), R.layout.apps_search_list, R.id.search_textview, rightSearchArrayII);
+        ArrayAdapter<String> rightSearchAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_child, R.id.child_textview, rightSearchArray);
+        ArrayAdapter<String> rightSearchAdapterII = new ArrayAdapter<>(getContext(), R.layout.apps_child, R.id.child_textview, rightSearchArrayII);
 
         binding.leftSearchList.setAdapter(leftSearchAdapter);
         binding.leftSearchListII.setAdapter(leftSearchAdapterII);
@@ -247,24 +246,22 @@ public class AppDrawer extends Fragment {
 
     private void launchAppMenu(String packageName) throws PackageManager.NameNotFoundException {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireActivity());
-        View view = getLayoutInflater().inflate(R.layout.app_menu, null);
-        bottomSheetDialog.setContentView(view);
+        AppMenuBinding menuBinding = AppMenuBinding.inflate(LayoutInflater.from(getContext()));
+        bottomSheetDialog.setContentView(menuBinding.getRoot());
         bottomSheetDialog.show();
 
-        MaterialTextView appName = view.findViewById(R.id.app_name);
-        MaterialButton appPackage = view.findViewById(R.id.app_package);
-        appName.setText(appMenuUtils.getAppName(context.getPackageManager(), packageName));
-        appPackage.setText(packageName);
+        menuBinding.appName.setText(appMenuUtils.getAppName(context.getPackageManager(), packageName));
+        menuBinding.appPackage.setText(packageName);
 
-        view.findViewById(R.id.app_package).setOnClickListener(v ->
+        menuBinding.appPackage.setOnClickListener(v ->
                 uniUtils.copyToClipboard(requireActivity(), context, packageName));
-        view.findViewById(R.id.app_info).setOnClickListener(v ->
-                appMenuUtils.openAppInfo(context, packageName, bottomSheetDialog));
-        view.findViewById(R.id.app_store).setOnClickListener(v ->
+        menuBinding.appStore.setOnClickListener(v ->
                 appMenuUtils.openAppStore(context, packageName, bottomSheetDialog));
-        view.findViewById(R.id.app_freeform).setOnClickListener(v ->
+        menuBinding.appFreeform.setOnClickListener(v ->
                 appMenuUtils.launchAsFreeform(requireActivity(),context, uniUtils, packageName, bottomSheetDialog));
-        view.findViewById(R.id.app_uninstall).setOnClickListener(v ->
+        menuBinding.appInfo.setOnClickListener(v ->
+                appMenuUtils.openAppInfo(context, packageName, bottomSheetDialog));
+        menuBinding.appUninstall.setOnClickListener(v ->
                 appMenuUtils.uninstallApp(context, packageName, bottomSheetDialog));
     }
 
