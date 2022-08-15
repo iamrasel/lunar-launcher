@@ -71,7 +71,8 @@ public class LauncherHome extends Fragment {
         context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)); // Battery
         binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context)); // Time
         binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences)); // Date
-        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp); // Weather
+        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp, requireActivity()); // Weather
+        homeUtils.showNames(sharedPreferences, binding.names99, requireActivity());
 
         return binding.getRoot();
     }

@@ -23,12 +23,15 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import rasel.lunar.launcher.helpers.Constants;
+import rasel.lunar.launcher.helpers.UniUtils;
 
 public class WeatherExecutor {
 
@@ -44,41 +47,46 @@ public class WeatherExecutor {
         this.weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + owmKey;
     }
 
-    public void generateTempString(MaterialTextView materialTextView) {
-        if(cityName.length() > 0 && owmKey.length() > 0) {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            Handler handler = new Handler(Looper.getMainLooper());
-            materialTextView.setVisibility(View.GONE);
+    public void generateTempString(MaterialTextView materialTextView, FragmentActivity fragmentActivity) {
+        materialTextView.setVisibility(View.GONE);
+        try{
+            if(cityName.length() > 0 && owmKey.length() > 0) {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                Handler handler = new Handler(Looper.getMainLooper());
 
-            executor.execute(() -> {
-                Weather weather = null;
-                String jsonStr = (new WeatherClient()).fetchWeather(weatherUrl);
-                if (jsonStr != null) {
-                    weather = (new JsonParser()).getMyWeather(jsonStr);
-                }
-                Weather finalWeather = weather;
-
-                handler.post(() -> {
-                    if(finalWeather != null) {
-                        String temp = null, tempStr = null;
-
-                        switch(tempUnitValue) {
-                            case 0: temp = Math.round(finalWeather.getTemperature() - 273.15f) + "ºC";
-                                break;
-                            case 1: temp = Math.round(((finalWeather.getTemperature() - 273.15f) * 1.8) + 32) + "ºF";
-                                break;
-                        }
-
-                        switch(showCityValue) {
-                            case 0: tempStr = temp; break;
-                            case 1: tempStr = temp + " at " + cityName; break;
-                        }
-
-                        materialTextView.setVisibility(View.VISIBLE);
-                        materialTextView.setText(tempStr);
+                executor.execute(() -> {
+                    Weather weather = null;
+                    String jsonStr = (new WeatherClient()).fetchWeather(weatherUrl);
+                    if (jsonStr != null) {
+                        weather = (new JsonParser()).getMyWeather(jsonStr);
                     }
+                    Weather finalWeather = weather;
+
+                    handler.post(() -> {
+                        if(finalWeather != null) {
+                            String temp = null, tempStr = null;
+
+                            switch(tempUnitValue) {
+                                case 0: temp = Math.round(finalWeather.getTemperature() - 273.15f) + "ºC";
+                                    break;
+                                case 1: temp = Math.round(((finalWeather.getTemperature() - 273.15f) * 1.8) + 32) + "ºF";
+                                    break;
+                            }
+
+                            switch(showCityValue) {
+                                case 0: tempStr = temp; break;
+                                case 1: tempStr = temp + " at " + cityName; break;
+                            }
+
+                            materialTextView.setVisibility(View.VISIBLE);
+                            materialTextView.setText(tempStr);
+                        }
+                    });
                 });
-            });
+            }
+        } catch(Exception exception) {
+            (new UniUtils()).exceptionViewer(fragmentActivity, exception.getMessage());
+            exception.printStackTrace();
         }
     }
 }

@@ -52,10 +52,12 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>
 
-    <com.google.android.material.textview.MaterialTextView
+    <rasel.lunar.launcher.helpers.TypewriterTexts
+        android:id="@+id/names99"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.5"
+        android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todos"
@@ -63,6 +65,7 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:scrollbars="none"
-        android:layout_marginHorizontal="48dp" />
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginTop="16dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

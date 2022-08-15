@@ -31,6 +31,7 @@ public class Constants {
     public final String SHARED_PREF_SHOW_TODOS = "show_todos";
 
     public final String SHARED_PREF_FEED_URL = "feed_url";
+    public final String SHARED_PREF_NAMES99 = "names99";
     public final String SHARED_PREF_LOCK = "lock";
     public final String SHARED_PREF_THEME = "app_theme";
 

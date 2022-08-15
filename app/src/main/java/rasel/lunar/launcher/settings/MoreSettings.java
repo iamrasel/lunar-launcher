@@ -45,7 +45,7 @@ public class MoreSettings extends BottomSheetDialogFragment {
     private final Constants constants = new Constants();
     private final SettingsPrefsUtils settingsPrefsUtils = new SettingsPrefsUtils();
     private String feedUrl;
-    private int lockMode, themeValue;
+    private int namesMode, lockMode, themeValue;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class MoreSettings extends BottomSheetDialogFragment {
         context = requireActivity().getApplicationContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
         feedUrl = sharedPreferences.getString(constants.SHARED_PREF_FEED_URL, null);
+        namesMode = sharedPreferences.getInt(constants.SHARED_PREF_NAMES99, 0);
         lockMode = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
         themeValue = sharedPreferences.getInt(constants.SHARED_PREF_THEME, 0);
     }
@@ -66,6 +67,7 @@ public class MoreSettings extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getNamesMode();
         getLockMode();
         getThemeValue();
 
@@ -77,6 +79,33 @@ public class MoreSettings extends BottomSheetDialogFragment {
 
     private String getFeedUrl() {
         return Objects.requireNonNull(binding.inputFeedUrl.getText()).toString().trim();
+    }
+
+    private void getNamesMode() {
+        binding.names99Negative.setOnClickListener(v -> {
+            binding.names99Arabic.setChecked(false);
+            binding.names99English.setChecked(false);
+            binding.names99EnglishMeaning.setChecked(false);
+            settingsPrefsUtils.saveNamesMode(context, 0);
+        });
+        binding.names99Arabic.setOnClickListener(v -> {
+            binding.names99Negative.setChecked(false);
+            binding.names99English.setChecked(false);
+            binding.names99EnglishMeaning.setChecked(false);
+            settingsPrefsUtils.saveNamesMode(context, 1);
+        });
+        binding.names99English.setOnClickListener(v -> {
+            binding.names99Negative.setChecked(false);
+            binding.names99Arabic.setChecked(false);
+            binding.names99EnglishMeaning.setChecked(false);
+            settingsPrefsUtils.saveNamesMode(context, 2);
+        });
+        binding.names99EnglishMeaning.setOnClickListener(v -> {
+            binding.names99Negative.setChecked(false);
+            binding.names99Arabic.setChecked(false);
+            binding.names99English.setChecked(false);
+            settingsPrefsUtils.saveNamesMode(context, 3);
+        });
     }
 
     private void getLockMode() {
@@ -135,6 +164,13 @@ public class MoreSettings extends BottomSheetDialogFragment {
         }
         if(!(new UniUtils()).isRooted(requireActivity())) {
             binding.selectLockRoot.setEnabled(false);
+        }
+
+        switch (namesMode) {
+            case 0: binding.names99Negative.setChecked(true); break;
+            case 1: binding.names99Arabic.setChecked(true); break;
+            case 2: binding.names99English.setChecked(true); break;
+            case 3: binding.names99EnglishMeaning.setChecked(true); break;
         }
 
         switch(lockMode) {

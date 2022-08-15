@@ -16,21 +16,23 @@
     </p>
 </div>
 
-## Features
-<details><summary>Expand</summary>
+## Features/Todo
+<details><summary>Global</summary>
 
-- [x] Material design 3
+- [x] Material Design 3
+  - [ ] Material You support
 - [x] Day/night theme
 - [x] Double tap: lock/sleep
   - [x] Accessibility (SDK >= 28)
   - [x] Device admin
   - [x] Root
 - [x] Swipe down: expand notification panel
-- [x] App drawer (😄)
-  - [x] Quick search
-  - [x] Launch from search
-  - [x] Launch in freeform mode
-  - [x] Total apps count
+- [ ] Migration to Kotlin
+- [ ] Yet to decide
+
+</details>
+<details><summary>Home</summary>
+
 - [x] Battery status
   - [x] Circular percentage indicator
   - [x] Animation while charging
@@ -40,15 +42,35 @@
 - [x] Weather
   - [x] Provider: OpenWeatherMap
   - [x] Celsius/Fahrenheit
-- [ ] 99 names of Allah
+- [x] Al Asma Ul Husna
+  - [x] Arabic, English and English with meaning
 - [x] Todo
   - [x] Add, delete, edit, copy
+  - [ ] Auto destructive todo with notify
   - [x] Zero/three/five items in home screen
+
+</details>
+<details><summary>App Drawer</summary>
+
+- [x] Quick search
+- [x] Launch from search
+- [x] Launch in freeform mode
+- [x] Total apps count
+
+</details>
+<details><summary>Feeds</summary>
+
 - [ ] Device stats
 - [ ] Feed
-- [ ] Quick actions
-- [ ] Kotlin
-- [ ] Yet to decide
+
+</details>
+<details><summary>Quick Actions</summary>
+
+- [ ] Launch specific apps
+- [ ] Control system value
+  - [ ] Brightness
+  - [ ] Sound
+- [ ] Hidden system shortcuts
 
 </details>
 
@@ -64,6 +86,7 @@
 
 ## Credits
 - [https://www.svgrepo.com](https://www.svgrepo.com)
+- [https://99namesofallah.name](https://99namesofallah.name)
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
 - [https://github.com/chrisbanes/insetter](https://gitlab.com/biotstoiq/launch)
 

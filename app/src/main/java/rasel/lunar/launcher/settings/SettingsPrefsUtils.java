@@ -83,6 +83,13 @@ public class SettingsPrefsUtils {
         editor.apply();
     }
 
+    protected void saveNamesMode(Context context, int namesMode) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(constants.SHARED_PREF_NAMES99, namesMode);
+        editor.apply();
+    }
+
     protected void saveLockMode(Context context, int lockMode) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -33,7 +33,6 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.WindowInsets;
 import android.view.WindowMetrics;
 import android.widget.Toast;
@@ -79,14 +78,14 @@ public class UniUtils {
     // Shows exception messages in a dialog
     public void exceptionViewer(FragmentActivity fragmentActivity, String exceptionText) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(fragmentActivity);
-        ExceptionViewerBinding binding = ExceptionViewerBinding.inflate(LayoutInflater.from(fragmentActivity.getApplicationContext()));
+        ExceptionViewerBinding binding = ExceptionViewerBinding.inflate(fragmentActivity.getLayoutInflater());
         bottomSheetDialog.setContentView(binding.getRoot());
         bottomSheetDialog.show();
 
         binding.exceptionText.setText(exceptionText);
-
         binding.copy.setOnClickListener(v ->
                 copyToClipboard(fragmentActivity, fragmentActivity.getApplicationContext(), exceptionText));
+                bottomSheetDialog.dismiss();
     }
 
     // Copies texts to clipboard
