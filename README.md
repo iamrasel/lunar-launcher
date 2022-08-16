@@ -56,6 +56,8 @@
 - [x] Launch from search
 - [x] Launch in freeform mode
 - [x] Total apps count
+- [ ] App rename
+- [ ] Detailed app info
 
 </details>
 <details><summary>Feeds</summary>
@@ -81,10 +83,12 @@
 
 <img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'>
 <img src='https://img.shields.io/badge/F_Droid-1976D2?style=for-the-badge&logo=f-droid&logoColor=white'>
+<img src='https://img.shields.io/static/v1?message=IzzyOnDroid&logo=android&labelColor=515151&color=009000&logoColor=white&label=%20&style=for-the-badge'>
 
 </div>
 
 ## Credits
+- [https://simpleicons.org](https://simpleicons.org)
 - [https://www.svgrepo.com](https://www.svgrepo.com)
 - [https://99namesofallah.name](https://99namesofallah.name)
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
@@ -95,8 +99,10 @@
 
 ## Donation
 Do you like this app? If the answer is yes, then help me to continue this project. My current old laptop, which has only 4gb ram, has been serving me with it's last breaths. So I need to build a decent pc for developing, please help me with that. Donate me any amount you wish.
+
 <div align='center'>
 
-<img src='https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white'>
+|  ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white) | `38mRQy6oDJjZNR3xxiNRVS5obqLMnwonFD` |
+|:---:|:---:|
 
 </div>

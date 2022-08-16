@@ -18,38 +18,145 @@
 
 package rasel.lunar.launcher.settings;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import rasel.lunar.launcher.R;
-import rasel.lunar.launcher.databinding.MainSettingsBinding;
+import java.util.Objects;
+
+import rasel.lunar.launcher.BuildConfig;
+import rasel.lunar.launcher.databinding.SettingsActivityBinding;
 import rasel.lunar.launcher.helpers.Constants;
+import rasel.lunar.launcher.helpers.UniUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private SettingsActivityBinding binding;
+    private Context context;
     private final Constants constants = new Constants();
+    private final SettingsPrefsUtils settingsPrefsUtils = new SettingsPrefsUtils();
+    private SettingsClickListeners settingsClickListeners;
+    private int timeFormatValue, showYear, tempUnit, showCity, namesMode, showTodos, lockMode, themeValue;
+    private String cityName, owmKey, feedUrl;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainSettingsBinding binding = MainSettingsBinding.inflate(getLayoutInflater());
+        binding = SettingsActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        initializer();
+        loadSettings();
+
+        settingsClickListeners.timeFormat(binding.followSystemTime, binding.selectTwelve, binding.selectTwentyFour);
+        settingsClickListeners.showYear(binding.selectYearNegative, binding.selectYearPositive);
+        settingsClickListeners.tempUnit(binding.selectCelsius, binding.selectFahrenheit);
+        settingsClickListeners.showCity(binding.showCityNegative, binding.showCityPositive);
+        settingsClickListeners.names99(binding.names99Negative, binding.names99Arabic, binding.names99English, binding.names99EnglishMeaning);
+        settingsClickListeners.showTodos(binding.showTodosNegative, binding.showTodosThree, binding.showTodosFive);
+        settingsClickListeners.screenLock(binding.selectLockNegative, binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot);
+        settingsClickListeners.theme(binding.followSystemTheme, binding.selectDarkTheme, binding.selectLightTheme);
+        settingsClickListeners.openAbout(binding.about);
     }
 
-    @SuppressLint("NonConstantResourceId")
-    public void openSettingsFragments(View view) {
-        switch(view.getId()) {
-            case R.id.launcher_home_settings:
-                (new LauncherHomeSettings()).show(getSupportFragmentManager(), constants.MODAL_BOTTOM_SHEET_TAG);
-                break;
-            case R.id.more_settings:
-                (new MoreSettings()).show(getSupportFragmentManager(), constants.MODAL_BOTTOM_SHEET_TAG);
-                break;
-            case R.id.about:
-                (new About()).show(getSupportFragmentManager(), constants.MODAL_BOTTOM_SHEET_TAG);
-                break;
+    private void initializer() {
+        context = getApplicationContext();
+        settingsClickListeners = new SettingsClickListeners(this);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
+        timeFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_TIME_FORMAT, 0);
+        showYear = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_YEAR, 1);
+        cityName = sharedPreferences.getString(constants.SHARED_PREF_CITY_NAME, null);
+        owmKey = sharedPreferences.getString(constants.SHARED_PREF_OWM_KEY, null);
+        tempUnit = sharedPreferences.getInt(constants.SHARED_PREF_TEMP_UNIT, 0);
+        showCity = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_CITY, 0);
+        namesMode = sharedPreferences.getInt(constants.SHARED_PREF_NAMES99, 0);
+        showTodos = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_TODOS, 3);
+        feedUrl = sharedPreferences.getString(constants.SHARED_PREF_FEED_URL, null);
+        lockMode = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
+        themeValue = sharedPreferences.getInt(constants.SHARED_PREF_THEME, 0);
+    }
+
+    private void loadSettings() {
+        switch(timeFormatValue) {
+            case 0: binding.followSystemTime.setChecked(true); break;
+            case 1: binding.selectTwelve.setChecked(true); break;
+            case 2: binding.selectTwentyFour.setChecked(true); break;
         }
+
+        switch(showYear) {
+            case 0: binding.selectYearNegative.setChecked(true); break;
+            case 1: binding.selectYearPositive.setChecked(true); break;
+        }
+
+        binding.inputCity.setText(cityName);
+        binding.inputOwm.setText(owmKey);
+
+        switch(tempUnit) {
+            case 0: binding.selectCelsius.setChecked(true); break;
+            case 1: binding.selectFahrenheit.setChecked(true); break;
+        }
+
+        switch(showCity) {
+            case 0: binding.showCityNegative.setChecked(true); break;
+            case 1: binding.showCityPositive.setChecked(true); break;
+        }
+
+        switch (namesMode) {
+            case 0: binding.names99Negative.setChecked(true); break;
+            case 1: binding.names99Arabic.setChecked(true); break;
+            case 2: binding.names99English.setChecked(true); break;
+            case 3: binding.names99EnglishMeaning.setChecked(true); break;
+        }
+
+        switch(showTodos) {
+            case 0: binding.showTodosNegative.setChecked(true); break;
+            case 3: binding.showTodosThree.setChecked(true); break;
+            case 5: binding.showTodosFive.setChecked(true); break;
+        }
+
+        binding.inputFeedUrl.setText(feedUrl);
+
+        if(!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)) {
+            binding.selectLockAccessibility.setEnabled(false);
+        }
+        if(!(new UniUtils()).isRooted(this)) {
+            binding.selectLockRoot.setEnabled(false);
+        }
+
+        switch(lockMode) {
+            case 0: binding.selectLockNegative.setChecked(true); break;
+            case 1: binding.selectLockAccessibility.setChecked(true); break;
+            case 2: binding.selectLockAdmin.setChecked(true); break;
+            case 3: binding.selectLockRoot.setChecked(true); break;
+        }
+
+        switch(themeValue) {
+            case 0: binding.followSystemTheme.setChecked(true); break;
+            case 1: binding.selectDarkTheme.setChecked(true); break;
+            case 2: binding.selectLightTheme.setChecked(true); break;
+        }
+
+        binding.versionName.setText(BuildConfig.VERSION_NAME);
+    }
+
+    private String getCityName() {
+        return Objects.requireNonNull(binding.inputCity.getText()).toString().trim();
+    }
+
+    private String getOwmKey() {
+        return Objects.requireNonNull(binding.inputOwm.getText()).toString().trim();
+    }
+
+    private String getFeedUrl() {
+        return Objects.requireNonNull(binding.inputFeedUrl.getText()).toString().trim();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        settingsPrefsUtils.saveCityName(context, getCityName());
+        settingsPrefsUtils.saveOwmKey(context, getOwmKey());
+        settingsPrefsUtils.saveFeedUrl(context, getFeedUrl());
     }
 }
