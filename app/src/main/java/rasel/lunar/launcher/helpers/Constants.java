@@ -28,10 +28,9 @@ public class Constants {
     public final String SHARED_PREF_OWM_KEY = "owm_key";
     public final String SHARED_PREF_TEMP_UNIT = "temp_unit";
     public final String SHARED_PREF_SHOW_CITY = "show_city";
-    public final String SHARED_PREF_SHOW_TODOS = "show_todos";
-
-    public final String SHARED_PREF_FEED_URL = "feed_url";
     public final String SHARED_PREF_NAMES99 = "names99";
+    public final String SHARED_PREF_SHOW_TODOS = "show_todos";
+    public final String SHARED_PREF_FEED_URL = "feed_url";
     public final String SHARED_PREF_LOCK = "lock";
     public final String SHARED_PREF_THEME = "app_theme";
 
@@ -43,4 +42,7 @@ public class Constants {
     public final String TODO_COLUMN_NAME = "todo_column_name";
 
     public final String ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.SERVICE_LOCK_SCREEN";
+
+    public final String SHARED_PREFS_FAV_APPS = "rasel.lunar.launcher.FAVOURITES";
+    public final String FAV_APP_ = "fav_app_";
 }

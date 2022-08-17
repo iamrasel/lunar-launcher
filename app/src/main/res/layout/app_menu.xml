@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -17,13 +18,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp">
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/app_package"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.Material3.Button.ElevatedButton"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/fav_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:singleSelection="true">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/six"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -38,21 +81,18 @@
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:layout_weight="1">
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/app_store"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_store"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/app_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_info"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
-
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <com.google.android.material.button.MaterialButtonToggleGroup
@@ -61,14 +101,12 @@
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:layout_weight="1">
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/app_freeform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/freeform"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/app_uninstall"
                 android:layout_width="wrap_content"
@@ -76,7 +114,6 @@
                 android:text="@string/uninstall"
                 android:textColor="@android:color/holo_red_light"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
-
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

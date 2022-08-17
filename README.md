@@ -68,7 +68,7 @@
 </details>
 <details><summary>Quick Actions</summary>
 
-- [ ] Launch specific apps
+- [x] Favourite apps
 - [ ] Control system value
   - [ ] Brightness
   - [ ] Sound

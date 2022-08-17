@@ -23,7 +23,6 @@
 
 package rasel.lunar.launcher.apps;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -39,23 +38,16 @@ import androidx.annotation.Nullable;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import dev.chrisbanes.insetter.Insetter;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.AppDrawerBinding;
-import rasel.lunar.launcher.databinding.AppMenuBinding;
-import rasel.lunar.launcher.helpers.UniUtils;
 
 public class AppDrawer extends Fragment {
 
     private AppDrawerBinding binding;
-    private Context context;
-    private final AppMenuUtils appMenuUtils = new AppMenuUtils();
-    private final UniUtils uniUtils = new UniUtils();
 
     private final String[] leftSearchArray = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i",
             "j", "k", "l", "m"};
@@ -73,7 +65,6 @@ public class AppDrawer extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = AppDrawerBinding.inflate(inflater, container, false);
-        context = requireActivity().getApplicationContext();
 
         Insetter.builder()
                 .padding(WindowInsetsCompat.Type.systemBars())
@@ -161,12 +152,7 @@ public class AppDrawer extends Fragment {
         binding.appsList.setOnItemClickListener((adapterView, view, i, l) -> startActivity(packageManager.getLaunchIntentForPackage(packageNamesArrayList.get(i))));
 
         binding.appsList.setOnItemLongClickListener((adapterView, view, i, l) -> {
-            try {
-                launchAppMenu(packageNamesArrayList.get(i));
-            } catch (PackageManager.NameNotFoundException nameNotFoundException) {
-                uniUtils.exceptionViewer(requireActivity(), nameNotFoundException.getMessage());
-                nameNotFoundException.printStackTrace();
-            }
+            (new AppMenus()).show(requireActivity().getSupportFragmentManager(), packageNamesArrayList.get(i));
             return true;
         });
     }
@@ -242,27 +228,6 @@ public class AppDrawer extends Fragment {
             fetchAllApps();
             return false;
         });
-    }
-
-    private void launchAppMenu(String packageName) throws PackageManager.NameNotFoundException {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireActivity());
-        AppMenuBinding menuBinding = AppMenuBinding.inflate(LayoutInflater.from(getContext()));
-        bottomSheetDialog.setContentView(menuBinding.getRoot());
-        bottomSheetDialog.show();
-
-        menuBinding.appName.setText(appMenuUtils.getAppName(context.getPackageManager(), packageName));
-        menuBinding.appPackage.setText(packageName);
-
-        menuBinding.appPackage.setOnClickListener(v ->
-                uniUtils.copyToClipboard(requireActivity(), context, packageName));
-        menuBinding.appStore.setOnClickListener(v ->
-                appMenuUtils.openAppStore(context, packageName, bottomSheetDialog));
-        menuBinding.appFreeform.setOnClickListener(v ->
-                appMenuUtils.launchAsFreeform(requireActivity(),context, uniUtils, packageName, bottomSheetDialog));
-        menuBinding.appInfo.setOnClickListener(v ->
-                appMenuUtils.openAppInfo(context, packageName, bottomSheetDialog));
-        menuBinding.appUninstall.setOnClickListener(v ->
-                appMenuUtils.uninstallApp(context, packageName, bottomSheetDialog));
     }
 
     @Override

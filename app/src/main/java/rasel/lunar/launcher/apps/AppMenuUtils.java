@@ -33,8 +33,6 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import java.lang.reflect.Method;
 
 import rasel.lunar.launcher.R;
@@ -48,7 +46,7 @@ public class AppMenuUtils {
     }
 
     // Launches app in freeform window mode
-    protected void launchAsFreeform(FragmentActivity fragmentActivity, Context context, UniUtils uniUtils, String packageName, BottomSheetDialog bottomSheetDialog) {
+    protected void launchAsFreeform(FragmentActivity fragmentActivity, Context context, UniUtils uniUtils, String packageName, AppMenus appMenus) {
         Intent freeformIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
         freeformIntent.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
                 Intent.FLAG_ACTIVITY_NEW_TASK |
@@ -59,20 +57,20 @@ public class AppMenuUtils {
         activityOptions = activityOptions.setLaunchBounds(rect);
 
         context.startActivity(freeformIntent, activityOptions.toBundle());
-        bottomSheetDialog.dismiss();
+        appMenus.dismiss();
     }
 
     // Opens app info screen
-    protected void openAppInfo(Context context, String packageName, BottomSheetDialog bottomSheetDialog) {
+    protected void openAppInfo(Context context, String packageName, AppMenus appMenus) {
         Intent infoIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         infoIntent.setData(Uri.parse("package:" + packageName));
         infoIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(infoIntent);
-        bottomSheetDialog.dismiss();
+        appMenus.dismiss();
     }
 
     // Tries to open app's page in app market/store
-    protected void openAppStore(Context context, String packageName, BottomSheetDialog bottomSheetDialog) {
+    protected void openAppStore(Context context, String packageName, AppMenus appMenus) {
         try {
             Intent storeIntent = new Intent(Intent.ACTION_VIEW);
             storeIntent.setData(Uri.parse("market://details?id=" + packageName));
@@ -82,16 +80,16 @@ public class AppMenuUtils {
             Toast.makeText(context, context.getString(R.string.null_app_store_message),Toast.LENGTH_SHORT).show();
             activityNotFoundException.printStackTrace();
         }
-        bottomSheetDialog.dismiss();
+        appMenus.dismiss();
     }
 
     // Deletes the app from device
-    protected void uninstallApp(Context context, String packageName, BottomSheetDialog bottomSheetDialog) {
+    protected void uninstallApp(Context context, String packageName, AppMenus appMenus) {
         Intent uninstallIntent = new Intent(Intent.ACTION_DELETE);
         uninstallIntent.setData(Uri.parse("package:" + packageName));
         uninstallIntent.addFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(uninstallIntent);
-        bottomSheetDialog.dismiss();
+        appMenus.dismiss();
     }
 
     private ActivityOptions getActivityOptions(FragmentActivity fragmentActivity) {
