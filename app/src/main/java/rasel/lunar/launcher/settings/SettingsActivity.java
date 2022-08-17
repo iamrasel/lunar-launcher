@@ -49,14 +49,14 @@ public class SettingsActivity extends AppCompatActivity {
         initializer();
         loadSettings();
 
-        settingsClickListeners.timeFormat(binding.followSystemTime, binding.selectTwelve, binding.selectTwentyFour);
-        settingsClickListeners.showYear(binding.selectYearNegative, binding.selectYearPositive);
-        settingsClickListeners.tempUnit(binding.selectCelsius, binding.selectFahrenheit);
-        settingsClickListeners.showCity(binding.showCityNegative, binding.showCityPositive);
-        settingsClickListeners.names99(binding.names99Negative, binding.names99Arabic, binding.names99English, binding.names99EnglishMeaning);
-        settingsClickListeners.showTodos(binding.showTodosNegative, binding.showTodosThree, binding.showTodosFive);
-        settingsClickListeners.screenLock(binding.selectLockNegative, binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot);
-        settingsClickListeners.theme(binding.followSystemTheme, binding.selectDarkTheme, binding.selectLightTheme);
+        settingsClickListeners.timeFormat(binding.timeGroup, binding.followSystemTime, binding.selectTwelve, binding.selectTwentyFour);
+        settingsClickListeners.showYear(binding.yearGroup, binding.selectYearNegative, binding.selectYearPositive);
+        settingsClickListeners.tempUnit(binding.tempGroup, binding.selectCelsius, binding.selectFahrenheit);
+        settingsClickListeners.showCity(binding.cityGroup, binding.showCityNegative, binding.showCityPositive);
+        settingsClickListeners.names99(binding.names99Group, binding.names99Negative, binding.names99Arabic, binding.names99English, binding.names99EnglishMeaning);
+        settingsClickListeners.showTodos(binding.todosGroup, binding.showTodosNegative, binding.showTodosThree, binding.showTodosFive);
+        settingsClickListeners.screenLock(binding.lockGroup, binding.selectLockNegative, binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot);
+        settingsClickListeners.theme(binding.themeGroup, binding.followSystemTheme, binding.selectDarkTheme, binding.selectLightTheme);
         settingsClickListeners.openAbout(binding.about);
     }
 

@@ -46,8 +46,11 @@
                 android:text="@string/time_format"
                 android:textSize="16sp"/>
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/time_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/select_twelve"
                     android:layout_width="wrap_content"
@@ -75,8 +78,11 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/year_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/select_year_positive"
                     android:layout_width="wrap_content"
@@ -130,8 +136,11 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/temp_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/select_celsius"
                     android:layout_width="wrap_content"
@@ -153,8 +162,11 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/city_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_city_positive"
                     android:layout_width="wrap_content"
@@ -176,8 +188,11 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/names99_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/names99_negative"
                     android:layout_width="wrap_content"
@@ -211,8 +226,11 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/todos_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_todos_negative"
                     android:layout_width="wrap_content"
@@ -256,8 +274,11 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/lock_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/select_lock_negative"
                     android:layout_width="wrap_content"
@@ -291,8 +312,11 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/theme_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/select_dark_theme"
                     android:layout_width="wrap_content"

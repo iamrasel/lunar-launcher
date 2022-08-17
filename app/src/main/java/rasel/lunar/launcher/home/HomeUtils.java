@@ -34,7 +34,7 @@ import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.helpers.SwipeTouchListener;
 import rasel.lunar.launcher.helpers.TypewriterTexts;
 import rasel.lunar.launcher.helpers.UniUtils;
-import rasel.lunar.launcher.qactions.QuickActions;
+import rasel.lunar.launcher.qaccess.QuickAccess;
 import rasel.lunar.launcher.settings.SettingsActivity;
 import rasel.lunar.launcher.todos.TodoManager;
 
@@ -124,7 +124,7 @@ public class HomeUtils {
             @Override
             public void onSwipeUp() {
                 super.onSwipeUp();
-                (new QuickActions()).show(fragmentManager, constants.MODAL_BOTTOM_SHEET_TAG);
+                (new QuickAccess()).show(fragmentManager, constants.MODAL_BOTTOM_SHEET_TAG);
             }
             @Override
             public void onSwipeDown() {
@@ -172,7 +172,7 @@ public class HomeUtils {
             @Override
             public void onSwipeUp() {
                 super.onSwipeUp();
-                (new QuickActions()).show(fragmentManager, constants.MODAL_BOTTOM_SHEET_TAG);
+                (new QuickAccess()).show(fragmentManager, constants.MODAL_BOTTOM_SHEET_TAG);
             }
             @Override
             public void onSwipeDown() {

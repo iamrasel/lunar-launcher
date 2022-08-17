@@ -66,9 +66,9 @@
 - [ ] Feed
 
 </details>
-<details><summary>Quick Actions</summary>
+<details><summary>Quick Access</summary>
 
-- [x] Favourite apps
+- [x] Favourite apps (<=6)
 - [ ] Control system value
   - [ ] Brightness
   - [ ] Sound

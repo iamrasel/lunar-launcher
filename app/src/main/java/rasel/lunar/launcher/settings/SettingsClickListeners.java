@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import rasel.lunar.launcher.helpers.Constants;
 
@@ -40,147 +41,116 @@ public class SettingsClickListeners {
         this.context = appCompatActivity.getApplicationContext();
     }
 
-    protected void timeFormat(MaterialButton button0, MaterialButton button1, MaterialButton button2) {
-        button0.setOnClickListener(v -> {
-            button1.setChecked(false);
-            button2.setChecked(false);
-            settingsPrefsUtils.saveTimeFormat(context, 0);
-        });
-        button1.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button2.setChecked(false);
-            settingsPrefsUtils.saveTimeFormat(context, 1);
-        });
-        button2.setOnClickListener(v -> {
-            button1.setChecked(false);
-            button0.setChecked(false);
-            settingsPrefsUtils.saveTimeFormat(context, 2);
+    protected void timeFormat(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2) {
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == button0.getId()) {
+                    settingsPrefsUtils.saveTimeFormat(context, 0);
+                } else if(checkedId == button1.getId()) {
+                    settingsPrefsUtils.saveTimeFormat(context, 1);
+                } else if(checkedId == button2.getId()) {
+                    settingsPrefsUtils.saveTimeFormat(context, 2);
+                }
+            }
         });
     }
 
-    protected void showYear(MaterialButton button0, MaterialButton button1) {
-        button0.setOnClickListener(v -> {
-            button1.setChecked(false);
-            settingsPrefsUtils.showYear(context, 0);
-        });
-        button1.setOnClickListener(v -> {
-            button0.setChecked(false);
-            settingsPrefsUtils.showYear(context, 1);
-        });
-    }
-
-    protected void tempUnit(MaterialButton button0, MaterialButton button1) {
-        button0.setOnClickListener(v -> {
-            button1.setChecked(false);
-            settingsPrefsUtils.saveTempUnit(context, 0);
-        });
-        button1.setOnClickListener(v -> {
-            button0.setChecked(false);
-            settingsPrefsUtils.saveTempUnit(context, 1);
+    protected void showYear(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1) {
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == button0.getId()) {
+                    settingsPrefsUtils.showYear(context, 0);
+                } else if(checkedId == button1.getId()) {
+                    settingsPrefsUtils.showYear(context, 1);
+                }
+            }
         });
     }
 
-    protected void showCity(MaterialButton button0, MaterialButton button1) {
-        button0.setOnClickListener(v -> {
-            button1.setChecked(false);
-            settingsPrefsUtils.showCity(context, 0);
-        });
-        button1.setOnClickListener(v -> {
-            button0.setChecked(false);
-            settingsPrefsUtils.showCity(context, 1);
-        });
-    }
-
-    protected void names99(MaterialButton button0, MaterialButton button1, MaterialButton button2, MaterialButton button3) {
-        button0.setOnClickListener(v -> {
-            button1.setChecked(false);
-            button2.setChecked(false);
-            button3.setChecked(false);
-            settingsPrefsUtils.saveNamesMode(context, 0);
-        });
-        button1.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button2.setChecked(false);
-            button3.setChecked(false);
-            settingsPrefsUtils.saveNamesMode(context, 1);
-        });
-        button2.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button1.setChecked(false);
-            button3.setChecked(false);
-            settingsPrefsUtils.saveNamesMode(context, 2);
-        });
-        button3.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button1.setChecked(false);
-            button2.setChecked(false);
-            settingsPrefsUtils.saveNamesMode(context, 3);
+    protected void tempUnit(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1) {
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == button0.getId()) {
+                    settingsPrefsUtils.saveTempUnit(context, 0);
+                } else if(checkedId == button1.getId()) {
+                    settingsPrefsUtils.saveTempUnit(context, 1);
+                }
+            }
         });
     }
 
-    protected void showTodos(MaterialButton button0, MaterialButton button1, MaterialButton button2) {
-        button0.setOnClickListener(v -> {
-            button1.setChecked(false);
-            button2.setChecked(false);
-            settingsPrefsUtils.showTodos(context, 0);
-        });
-        button1.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button2.setChecked(false);
-            settingsPrefsUtils.showTodos(context, 3);
-        });
-        button2.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button1.setChecked(false);
-            settingsPrefsUtils.showTodos(context, 5);
+    protected void showCity(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1) {
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == button0.getId()) {
+                    settingsPrefsUtils.showCity(context, 0);
+                } else if(checkedId == button1.getId()) {
+                    settingsPrefsUtils.showCity(context, 1);
+                }
+            }
         });
     }
 
-    protected void screenLock(MaterialButton button0, MaterialButton button1, MaterialButton button2, MaterialButton button3) {
-        button0.setOnClickListener(v -> {
-            button1.setChecked(false);
-            button2.setChecked(false);
-            button3.setChecked(false);
-            settingsPrefsUtils.saveLockMode(context, 0);
-        });
-        button1.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button2.setChecked(false);
-            button3.setChecked(false);
-            settingsPrefsUtils.saveLockMode(context, 1);
-        });
-        button2.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button1.setChecked(false);
-            button3.setChecked(false);
-            settingsPrefsUtils.saveLockMode(context, 2);
-        });
-        button3.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button1.setChecked(false);
-            button2.setChecked(false);
-            settingsPrefsUtils.saveLockMode(context, 3);
+    protected void names99(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2, MaterialButton button3) {
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == button0.getId()) {
+                    settingsPrefsUtils.saveNamesMode(context, 0);
+                } else if(checkedId == button1.getId()) {
+                    settingsPrefsUtils.saveNamesMode(context, 1);
+                } else if(checkedId == button2.getId()) {
+                    settingsPrefsUtils.saveNamesMode(context, 2);
+                } else if(checkedId == button3.getId()) {
+                    settingsPrefsUtils.saveNamesMode(context, 3);
+                }
+            }
         });
     }
 
-    protected void theme(MaterialButton button0, MaterialButton button1, MaterialButton button2) {
-        button0.setOnClickListener(v -> {
-            button1.setChecked(false);
-            button2.setChecked(false);
-            settingsPrefsUtils.saveTheme(context, 0);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+    protected void showTodos(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2) {
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == button0.getId()) {
+                    settingsPrefsUtils.showTodos(context, 0);
+                } else if(checkedId == button1.getId()) {
+                    settingsPrefsUtils.showTodos(context, 3);
+                } else if(checkedId == button2.getId()) {
+                    settingsPrefsUtils.showTodos(context, 5);
+                }
+            }
         });
-        button1.setOnClickListener(v -> {
-            button0.setChecked(false);
-            button2.setChecked(false);
-            settingsPrefsUtils.saveTheme(context, 1);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    }
+
+    protected void screenLock(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2, MaterialButton button3) {
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == button0.getId()) {
+                    settingsPrefsUtils.saveLockMode(context, 0);
+                } else if(checkedId == button1.getId()) {
+                    settingsPrefsUtils.saveLockMode(context, 1);
+                } else if(checkedId == button2.getId()) {
+                    settingsPrefsUtils.saveLockMode(context, 2);
+                } else if(checkedId == button3.getId()) {
+                    settingsPrefsUtils.saveLockMode(context, 3);
+                }
+            }
         });
-        button2.setOnClickListener(v -> {
-            button1.setChecked(false);
-            button0.setChecked(false);
-            settingsPrefsUtils.saveTheme(context, 2);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    protected void theme(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2) {
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == button0.getId()) {
+                    settingsPrefsUtils.saveTheme(context, 0);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                } else if(checkedId == button1.getId()) {
+                    settingsPrefsUtils.saveTheme(context, 1);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else if(checkedId == button2.getId()) {
+                    settingsPrefsUtils.saveTheme(context, 2);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
         });
     }
 

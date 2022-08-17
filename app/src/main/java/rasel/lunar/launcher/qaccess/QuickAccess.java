@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package rasel.lunar.launcher.qactions;
+package rasel.lunar.launcher.qaccess;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -31,18 +31,18 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import rasel.lunar.launcher.apps.FavouriteUtils;
-import rasel.lunar.launcher.databinding.QuickActionsBinding;
+import rasel.lunar.launcher.databinding.QuickAccessBinding;
 
-public class QuickActions extends BottomSheetDialogFragment {
+public class QuickAccess extends BottomSheetDialogFragment {
 
-    private QuickActionsBinding binding;
+    private QuickAccessBinding binding;
     private Context context;
     private PackageManager packageManager;
     private final FavouriteUtils favouriteUtils = new FavouriteUtils();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = QuickActionsBinding.inflate(inflater, container, false);
+        binding = QuickAccessBinding.inflate(inflater, container, false);
 
         initializer();
         favOne(); favTwo(); favThree(); favFour(); favFive(); favSix();
