@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/apps_count"
@@ -45,21 +45,18 @@
             android:layout_weight="5"
             android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
+            <com.google.android.material.chip.Chip
+                android:id="@+id/search_string_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
+                app:textEndPadding="8dp"
+                app:closeIconSize="22sp"
+                app:checkedIconEnabled="false"
                 android:layout_centerInParent="true"
-                android:layout_alignParentBottom="true">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/search_string_box"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="2dp"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="?actionBarSize"
+                style="@style/Widget.MaterialComponents.Chip.Entry"/>
 
             <ListView
                 android:id="@+id/apps_list"

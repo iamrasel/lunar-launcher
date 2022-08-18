@@ -175,4 +175,14 @@ public class UniUtils {
             }
         }
     }
+
+    public void lockMethod(int lockMethodValue, Context context, FragmentActivity fragmentActivity) {
+        if(lockMethodValue == 1) {
+            lockAccessibility(fragmentActivity);
+        } else if(lockMethodValue == 2) {
+            lockDeviceAdmin(context, fragmentActivity);
+        } else if(lockMethodValue == 3) {
+            lockRoot(fragmentActivity);
+        }
+    }
 }

@@ -29,78 +29,56 @@ public class SettingsPrefsUtils {
 
     protected void saveTimeFormat(Context context, int timeFormatValue) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(constants.SHARED_PREF_TIME_FORMAT, timeFormatValue);
-        editor.apply();
+        sharedPreferences.edit().putInt(constants.SHARED_PREF_TIME_FORMAT, timeFormatValue).apply();
     }
 
     protected void showYear(Context context, int showYear) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(constants.SHARED_PREF_SHOW_YEAR, showYear);
-        editor.apply();
+        sharedPreferences.edit().putInt(constants.SHARED_PREF_SHOW_YEAR, showYear).apply();
     }
 
-    protected void saveCityName(Context context, String cityName) {
+    public void saveCityName(Context context, String cityName) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(constants.SHARED_PREF_CITY_NAME, cityName);
-        editor.apply();
+        sharedPreferences.edit().putString(constants.SHARED_PREF_CITY_NAME, cityName).apply();
     }
 
-    protected void saveOwmKey(Context context, String owmKey) {
+    public void saveOwmKey(Context context, String owmKey) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(constants.SHARED_PREF_OWM_KEY, owmKey);
-        editor.apply();
+        sharedPreferences.edit().putString(constants.SHARED_PREF_OWM_KEY, owmKey).apply();
     }
 
     protected void saveTempUnit(Context context, int tempUnit) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(constants.SHARED_PREF_TEMP_UNIT, tempUnit);
-        editor.apply();
+        sharedPreferences.edit().putInt(constants.SHARED_PREF_TEMP_UNIT, tempUnit).apply();
     }
 
     protected void showCity(Context context, int showCity) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(constants.SHARED_PREF_SHOW_CITY, showCity);
-        editor.apply();
+        sharedPreferences.edit().putInt(constants.SHARED_PREF_SHOW_CITY, showCity).apply();
     }
 
     protected void showTodos(Context context, int showTodos) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(constants.SHARED_PREF_SHOW_TODOS, showTodos);
-        editor.apply();
+        sharedPreferences.edit().putInt(constants.SHARED_PREF_SHOW_TODOS, showTodos).apply();
     }
 
     protected void saveFeedUrl(Context context, String feedUrl) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(constants.SHARED_PREF_FEED_URL, feedUrl);
-        editor.apply();
+        sharedPreferences.edit().putString(constants.SHARED_PREF_FEED_URL, feedUrl).apply();
     }
 
     protected void saveNamesMode(Context context, int namesMode) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(constants.SHARED_PREF_NAMES99, namesMode);
-        editor.apply();
+        sharedPreferences.edit().putInt(constants.SHARED_PREF_NAMES99, namesMode).apply();
     }
 
     protected void saveLockMode(Context context, int lockMode) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(constants.SHARED_PREF_LOCK, lockMode);
-        editor.apply();
+        sharedPreferences.edit().putInt(constants.SHARED_PREF_LOCK, lockMode).apply();
     }
 
     protected void saveTheme(Context context, int themeValue) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(constants.SHARED_PREF_THEME, themeValue);
-        editor.apply();
+        sharedPreferences.edit().putInt(constants.SHARED_PREF_THEME, themeValue).apply();
     }
 }

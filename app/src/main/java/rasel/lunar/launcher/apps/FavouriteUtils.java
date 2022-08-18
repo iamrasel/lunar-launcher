@@ -32,9 +32,7 @@ public class FavouriteUtils {
 
     public void saveFavApps(Context context, int position, String packageName) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(constants.FAV_APP_ + position, packageName);
-        editor.apply();
+        sharedPreferences.edit().putString(constants.FAV_APP_ + position, packageName).apply();
     }
 
     protected void saveFavPosition(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button1, MaterialButton button2, MaterialButton button3, MaterialButton button4, MaterialButton button5, MaterialButton button6, Context context, String packageName) {

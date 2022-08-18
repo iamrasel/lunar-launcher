@@ -18,6 +18,7 @@
 
 package rasel.lunar.launcher;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +27,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import rasel.lunar.launcher.databinding.MainActivityBinding;
+import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.helpers.ViewPagerAdapter;
+import rasel.lunar.launcher.settings.SettingsPrefsUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private boolean executeOnResume;
     private FragmentRefreshListener fragmentRefreshListener;
+    private final Constants constants = new Constants();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         executeOnResume = false;
+        putSettings();
         setUpView();
+    }
+
+    private boolean firstLaunch() {
+        SharedPreferences firstLaunchPrefs = getSharedPreferences(constants.SHARED_PREFS_FIRST_LAUNCH, 0);
+        if(firstLaunchPrefs.getBoolean(constants.FIRST_LAUNCH, true)) {
+            firstLaunchPrefs.edit().putBoolean(constants.FIRST_LAUNCH, false).apply();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void putSettings() {
+        if(firstLaunch()) {
+            new SettingsPrefsUtils().saveCityName(getApplicationContext(), null);
+            new SettingsPrefsUtils().saveOwmKey(getApplicationContext(), null);
+        }
     }
 
     private void setUpView() {
@@ -56,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(getSupportFragmentManager().getBackStackEntryCount() != 0) {
-            if(getFragmentRefreshListener()!= null){
+            if(getFragmentRefreshListener() != null){
                 getFragmentRefreshListener().onRefresh();
             }
             getSupportFragmentManager().popBackStack();
@@ -76,13 +98,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
-        this.fragmentRefreshListener = fragmentRefreshListener;
-    }
     public interface FragmentRefreshListener{
         void onRefresh();
     }
-    private FragmentRefreshListener getFragmentRefreshListener() {
+    public FragmentRefreshListener getFragmentRefreshListener() {
         return fragmentRefreshListener;
+    }
+    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
+        this.fragmentRefreshListener = fragmentRefreshListener;
     }
 }

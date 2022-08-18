@@ -23,6 +23,8 @@
 
 package rasel.lunar.launcher.apps;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -44,6 +46,9 @@ import java.util.List;
 import dev.chrisbanes.insetter.Insetter;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.AppDrawerBinding;
+import rasel.lunar.launcher.helpers.Constants;
+import rasel.lunar.launcher.helpers.SwipeTouchListener;
+import rasel.lunar.launcher.helpers.UniUtils;
 
 public class AppDrawer extends Fragment {
 
@@ -61,15 +66,16 @@ public class AppDrawer extends Fragment {
     private PackageManager packageManager;
     private List<ResolveInfo> packageList;
     private String searchString;
+    private Context context;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = AppDrawerBinding.inflate(inflater, container, false);
+        context = requireActivity().getApplicationContext();
 
         Insetter.builder()
                 .padding(WindowInsetsCompat.Type.systemBars())
-                .applyToView(binding.appsList)
-                .applyToView(binding.searchStringBox);
+                .applyToView(binding.appsList);
         Insetter.builder()
                 .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.leftSearchList)
@@ -83,12 +89,27 @@ public class AppDrawer extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controlOnAppActions();
         controlOnSearchClicks();
         searchStringRemover();
+
+        binding.getRoot().setOnTouchListener(new SwipeTouchListener(context) {
+            @Override
+            public void onSwipeDown() {
+                super.onSwipeDown();
+                new UniUtils().expandNotificationPanel(context, requireActivity());
+            }
+            @Override
+            public void onDoubleClick() {
+                super.onDoubleClick();
+                new UniUtils().lockMethod(((context.getSharedPreferences(new Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE))
+                        .getInt(new Constants().SHARED_PREF_LOCK, 0)), context, requireActivity());
+            }
+        });
     }
 
     private void setupInitialView() {
@@ -107,7 +128,7 @@ public class AppDrawer extends Fragment {
         binding.rightSearchList.setAdapter(rightSearchAdapter);
         binding.rightSearchListII.setAdapter(rightSearchAdapterII);
 
-        binding.searchStringBox.setVisibility(View.GONE);
+        binding.searchStringChip.setVisibility(View.GONE);
     }
 
     private void getAppsList() {
@@ -171,8 +192,8 @@ public class AppDrawer extends Fragment {
     private void searchClickHelper(AdapterView<?> adapterView, int i) {
         if (binding.appsList.getCount() < 2) return;
         searchString = searchString.concat(adapterView.getItemAtPosition(i).toString());
-        binding.searchStringBox.setVisibility(View.VISIBLE);
-        binding.searchStringBox.setText(searchString);
+        binding.searchStringChip.setVisibility(View.VISIBLE);
+        binding.searchStringChip.setText(searchString);
         filterAppsList();
     }
 
@@ -212,21 +233,20 @@ public class AppDrawer extends Fragment {
     /* On back press, remove the last character of the string
         and filter app list */
     private void searchStringRemover() {
-        binding.searchStringBox.setOnClickListener(v -> {
+        binding.searchStringChip.setOnClickListener(v -> {
             if(!searchString.isEmpty()) {
                 searchString = searchString.substring(0, (searchString.length()) - 1);
-                binding.searchStringBox.setText(searchString);
+                binding.searchStringChip.setText(searchString);
                 filterAppsList();
                 if(searchString.isEmpty()) {
-                    binding.searchStringBox.setVisibility(View.GONE);
+                    binding.searchStringChip.setVisibility(View.GONE);
                 }
             }
         });
 
-        binding.searchStringBox.setOnLongClickListener(v -> {
-            binding.searchStringBox.setVisibility(View.GONE);
+        binding.searchStringChip.setOnCloseIconClickListener(v -> {
+            binding.searchStringChip.setVisibility(View.GONE);
             fetchAllApps();
-            return false;
         });
     }
 
