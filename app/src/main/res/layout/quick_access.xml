@@ -6,10 +6,17 @@
     android:gravity="center_horizontal"
     android:padding="16dp">
 
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/brightness_controller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/ic_brightness"/>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="36dp">
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/one"
             android:layout_width="wrap_content"

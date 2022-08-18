@@ -8,7 +8,7 @@
     android:padding="16dp">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/exception_text"
+        android:id="@+id/text_viewer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp">
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/copy"
+            android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@android:string/copy"

@@ -6,6 +6,7 @@
     </string>
     <string name="accessibility_service_label">Lock Service</string>
     <string name="add_new">Add New</string>
+    <string name="allow">Allow</string>
     <string name="app_info">App Info</string>
     <string name="app_name">Lunar Launcher</string>
     <string name="app_store">App Store</string>
@@ -33,6 +34,7 @@
     <string name="freeform">Freeform</string>
     <string name="launcher_configs">Launcher Configurations</string>
     <string name="light_theme">Light</string>
+    <string name="modify_system_settings">Allow modifying system settings to control brightness.</string>
     <string name="names99">Al Asma Ul Husna</string>
     <string name="negative">Negative</string>
     <string name="nothing_found">¯\\_(ツ)_/¯</string>

@@ -70,7 +70,7 @@
 
 - [x] Favourite apps (<=6)
 - [ ] Control system value
-  - [ ] Brightness
+  - [x] Brightness
   - [ ] Sound
 - [ ] Hidden system shortcuts
 
@@ -86,6 +86,12 @@
 <img src='https://img.shields.io/static/v1?message=IzzyOnDroid&logo=android&labelColor=515151&color=009000&logoColor=white&label=%20&style=for-the-badge'>
 
 </div>
+
+## Permissions
+- `android.permission.EXPAND_STATUS_BAR` - To expand notification panel
+- `android.permission.INTERNET` - To fetch weather and feed data
+- `android.permission.REQUEST_DELETE_PACKAGES` - To uninstall apks
+- `android.permission.WRITE_SETTINGS` - To change system values like brightness
 
 ## Credits
 - [https://simpleicons.org](https://simpleicons.org)

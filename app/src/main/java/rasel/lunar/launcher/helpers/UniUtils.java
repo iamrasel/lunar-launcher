@@ -82,8 +82,8 @@ public class UniUtils {
         bottomSheetDialog.setContentView(binding.getRoot());
         bottomSheetDialog.show();
 
-        binding.exceptionText.setText(exceptionText);
-        binding.copy.setOnClickListener(v ->
+        binding.textViewer.setText(exceptionText);
+        binding.button.setOnClickListener(v ->
                 copyToClipboard(fragmentActivity, fragmentActivity.getApplicationContext(), exceptionText));
                 bottomSheetDialog.dismiss();
     }

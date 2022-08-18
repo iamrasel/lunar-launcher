@@ -29,7 +29,6 @@ import rasel.lunar.launcher.helpers.Constants;
 public class FavouriteUtils {
 
     private final Constants constants = new Constants();
-    public String packageOne, packageTwo, packageThree, packageFour, packageFive, packageSix;
 
     public void saveFavApps(Context context, int position, String packageName) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE);
@@ -72,29 +71,20 @@ public class FavouriteUtils {
         });
     }
 
-    public void initialize(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE);
-        packageOne = sharedPreferences.getString(constants.FAV_APP_ + 1, null);
-        packageTwo = sharedPreferences.getString(constants.FAV_APP_ + 2, null);
-        packageThree = sharedPreferences.getString(constants.FAV_APP_ + 3, null);
-        packageFour = sharedPreferences.getString(constants.FAV_APP_ + 4, null);
-        packageFive = sharedPreferences.getString(constants.FAV_APP_ + 5, null);
-        packageSix = sharedPreferences.getString(constants.FAV_APP_ + 6, null);
-    }
-
     protected void setPreview(Context context, String packageName, MaterialButton button1, MaterialButton button2, MaterialButton button3, MaterialButton button4, MaterialButton button5, MaterialButton button6) {
-        initialize(context);
-        if(packageName.equals(packageOne)) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE);
+
+        if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 1, null))) {
             button1.setChecked(true);
-        } else if(packageName.equals(packageTwo)) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 2, null))) {
             button2.setChecked(true);
-        } else if(packageName.equals(packageThree)) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 3, null))) {
             button3.setChecked(true);
-        } else if(packageName.equals(packageFour)) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 4, null))) {
             button4.setChecked(true);
-        } else if(packageName.equals(packageFive)) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 5, null))) {
             button5.setChecked(true);
-        } else if(packageName.equals(packageSix)) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 6, null))) {
             button6.setChecked(true);
         }
     }
