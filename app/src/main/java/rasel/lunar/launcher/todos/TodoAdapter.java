@@ -38,8 +38,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import rasel.lunar.launcher.R;
+import rasel.lunar.launcher.databinding.ListItemBinding;
 import rasel.lunar.launcher.databinding.TodoDialogBinding;
-import rasel.lunar.launcher.databinding.TodoListBinding;
 import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.helpers.UniUtils;
 
@@ -62,7 +62,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        TodoListBinding binding = TodoListBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+        ListItemBinding binding = ListItemBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
         return new ViewHolder(binding);
     }
 
@@ -80,12 +80,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.view.todoText.setText("●  " + todoList.get(position).getName());
+        holder.view.itemText.setText("●  " + todoList.get(position).getName());
 
         if(currentFragment instanceof TodoManager) {
-            holder.view.todoText.setSingleLine(false);
-            holder.view.todoText.setOnClickListener(v -> updateDialog(position));
-            holder.view.todoText.setOnLongClickListener(v -> {
+            holder.view.itemText.setSingleLine(false);
+            holder.view.itemText.setOnClickListener(v -> updateDialog(position));
+            holder.view.itemText.setOnLongClickListener(v -> {
                 (new UniUtils()).copyToClipboard(fragment.requireActivity(), context, todoList.get(position).getName());
                 return true;
             });
@@ -93,8 +93,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TodoListBinding view;
-        ViewHolder(TodoListBinding v) {
+        ListItemBinding view;
+        ViewHolder(ListItemBinding v) {
             super(v.getRoot());
             view = v;
         }

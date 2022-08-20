@@ -63,7 +63,7 @@
 <details><summary>Feeds</summary>
 
 - [ ] Device stats
-- [ ] Feed
+- [x] RSS
 
 </details>
 <details><summary>Quick Access</summary>

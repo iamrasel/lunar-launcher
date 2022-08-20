@@ -29,6 +29,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Insets;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
@@ -184,5 +186,12 @@ public class UniUtils {
         } else if(lockMethodValue == 3) {
             lockRoot(fragmentActivity);
         }
+    }
+
+    public boolean isNetworkAvailable(FragmentActivity fragmentActivity) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) fragmentActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 }

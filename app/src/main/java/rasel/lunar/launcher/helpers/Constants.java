@@ -35,6 +35,12 @@ public class Constants {
     public final String SHARED_PREF_LOCK = "lock";
     public final String SHARED_PREF_THEME = "app_theme";
 
+    public final String MODAL_BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG";
+    public final String ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.SERVICE_LOCK_SCREEN";
+
+    public final String SHARED_PREFS_FAV_APPS = "rasel.lunar.launcher.FAVOURITES";
+    public final String FAV_APP_ = "fav_app_";
+
     public final String TODO_DATABASE_NAME = "rasel.lunar.launcher.TODOS";
     public final int TODO_DATABASE_VERSION = 1;
     public final String TODO_TABLE = "todo_table";
@@ -42,9 +48,6 @@ public class Constants {
     public final String TODO_COL_CREATED = "todo_column_created";
     public final String TODO_COLUMN_NAME = "todo_column_name";
 
-    public final String MODAL_BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG";
-    public final String ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.SERVICE_LOCK_SCREEN";
-
-    public final String SHARED_PREFS_FAV_APPS = "rasel.lunar.launcher.FAVOURITES";
-    public final String FAV_APP_ = "fav_app_";
+    public final String RSS_ITEMS = "rss_items";
+    public final String RSS_RECEIVER = "rss_receiver";
 }

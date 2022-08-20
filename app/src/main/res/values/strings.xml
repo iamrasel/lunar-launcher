@@ -17,6 +17,7 @@
     <string name="city_name">City Name</string>
     <string name="copied_message">Copied to clipboard</string>
     <string name="dark_theme">Dark</string>
+    <string name="data_fetching_failed">Failed to fetch data</string>
     <string name="delete">Delete</string>
     <string name="delete_all">Delete All</string>
     <string name="delete_all_confirmation">Are you sure to delete all the todos?</string>

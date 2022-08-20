@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="rasel.lunar.launcher">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
@@ -51,6 +52,8 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/lock_service" />
         </service>
+
+        <service android:name=".feeds.rss.RssService"/>
 
         <receiver
             android:name=".helpers.AdminReceiver"
