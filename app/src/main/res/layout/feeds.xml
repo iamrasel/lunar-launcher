@@ -13,7 +13,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@drawable/top_rounded_bg"
+        android:backgroundTint="@color/rss_bg">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rss"
             android:layout_width="match_parent"
@@ -26,15 +28,18 @@
             android:layout_centerInParent="true"
             android:indeterminate="true"
             app:indicatorColor="@color/icon_color"
-            app:trackThickness="20dp"
+            app:trackThickness="4dp"
             style="@style/Widget.Material3.CircularProgressIndicator" />
-        <com.google.android.material.textview.MaterialTextView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/data_fetching_failed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/data_fetching_failed"
+            android:src="@drawable/ic_refresh"
+            android:tooltipText="@string/data_fetching_failed"
             android:visibility="gone"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            style="@style/Widget.Material3.FloatingActionButton.Secondary" />
     </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

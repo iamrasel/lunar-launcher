@@ -38,6 +38,14 @@ public class Constants {
     public final String MODAL_BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG";
     public final String ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.SERVICE_LOCK_SCREEN";
 
+    public final String SHARED_PREFS_PHONES_URLS = "rasel.lunar.launcher.PHONES&URLS";
+    public final String PHONE_NO = "Phone No";
+    public final String PHONE_NO_ = "phone_no_";
+    public final String PHONE_THUMB_LETTER_ = "phone_thumb_letter_";
+    public final String URL_ADDRESS = "Url Address";
+    public final String URL_NO_ = "url_no_";
+    public final String URL_THUMB_LETTER_ = "url_thumb_letter_";
+
     public final String SHARED_PREFS_FAV_APPS = "rasel.lunar.launcher.FAVOURITES";
     public final String FAV_APP_ = "fav_app_";
 

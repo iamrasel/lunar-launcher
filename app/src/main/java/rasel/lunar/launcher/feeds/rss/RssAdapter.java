@@ -65,7 +65,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
         holder.view.itemText.setText(items.get(position).getTitle());
 
         if(position == 0) {
-            holder.view.itemText.setText("❚  " + items.get(position).getTitle() + "  ❚");
+            holder.view.itemText.setText("⊶  " + items.get(position).getTitle() + "  ⊷");
             holder.view.itemText.setGravity(Gravity.CENTER);
             holder.view.itemText.setTextColor(ContextCompat.getColor(context, R.color.not_primary));
             holder.view.itemText.setTypeface(null, Typeface.BOLD);

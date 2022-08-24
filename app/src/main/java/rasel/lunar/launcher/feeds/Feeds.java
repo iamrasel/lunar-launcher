@@ -51,26 +51,29 @@ public class Feeds extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FeedsBinding.inflate(inflater, container, false);
         Insetter.builder()
-                .padding(WindowInsetsCompat.Type.systemBars())
+                .padding(WindowInsetsCompat.Type.navigationBars())
                 .applyToView(binding.getRoot());
-
-        String rssUrl = (requireActivity().getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE))
-                .getString(constants.SHARED_PREF_FEED_URL, null);
-
-        if(new UniUtils().isNetworkAvailable(requireActivity()) && !rssUrl.isEmpty()) {
-            startService();
-        } else {
-            binding.dataFetchingFailed.setVisibility(View.VISIBLE);
-            binding.loadingProgress.setVisibility(View.GONE);
-        }
 
         return binding.getRoot();
     }
 
     private void startService() {
-        Intent intent = new Intent(getActivity(), RssService.class);
-        intent.putExtra(constants.RSS_RECEIVER, resultReceiver);
-        requireActivity().startService(intent);
+        String rssUrl = (requireActivity().getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE))
+                .getString(constants.SHARED_PREF_FEED_URL, null);
+
+        if(new UniUtils().isNetworkAvailable(requireActivity()) && !rssUrl.isEmpty()) {
+            Intent intent = new Intent(getActivity(), RssService.class);
+            intent.putExtra(constants.RSS_RECEIVER, resultReceiver);
+            requireActivity().startService(intent);
+        } else {
+            resumeService();
+        }
+    }
+
+    private void resumeService() {
+        binding.loadingProgress.setVisibility(View.GONE);
+        binding.dataFetchingFailed.setVisibility(View.VISIBLE);
+        binding.dataFetchingFailed.setOnClickListener(v -> startService());
     }
 
     private final ResultReceiver resultReceiver = new ResultReceiver(new Handler()) {
@@ -81,12 +84,18 @@ public class Feeds extends Fragment {
             if(items != null) {
                 binding.rss.setLayoutManager(new LinearLayoutManager(getContext()));
                 binding.rss.setAdapter(new RssAdapter(items, getContext()));
+                binding.dataFetchingFailed.setVisibility(View.GONE);
                 binding.loadingProgress.setVisibility(View.GONE);
                 binding.rss.setVisibility(View.VISIBLE);
             } else {
-                binding.loadingProgress.setVisibility(View.GONE);
-                binding.dataFetchingFailed.setVisibility(View.VISIBLE);
+                resumeService();
             }
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService();
+    }
 }

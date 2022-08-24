@@ -57,6 +57,8 @@
 - [x] Launch in freeform mode
 - [x] Total apps count
 - [ ] App rename
+- [ ] App lock
+- [ ] App hide
 - [ ] Detailed app info
 
 </details>
@@ -69,6 +71,7 @@
 <details><summary>Quick Access</summary>
 
 - [x] Favourite apps (<=6)
+- [x] Favourite contacts and urls (3+3)
 - [ ] Control system value
   - [x] Brightness
   - [ ] Sound
@@ -88,6 +91,8 @@
 </div>
 
 ## Permissions
+- `android.permission.ACCESS_NETWORK_STATE` - To check for active network connection
+- `android.permission.CALL_PHONE` - To make call
 - `android.permission.EXPAND_STATUS_BAR` - To expand notification panel
 - `android.permission.INTERNET` - To fetch weather and feed data
 - `android.permission.REQUEST_DELETE_PACKAGES` - To uninstall apks
