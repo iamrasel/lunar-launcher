@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityBinding binding;
     private ViewPager2 viewPager;
-    private boolean executeOnResume;
-    private FragmentRefreshListener fragmentRefreshListener;
     private final Constants constants = new Constants();
 
     @Override
@@ -45,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         binding = MainActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        executeOnResume = false;
         putSettings();
         setUpView();
     }
@@ -78,33 +75,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(getSupportFragmentManager().getBackStackEntryCount() != 0) {
-            if(getFragmentRefreshListener() != null){
-                getFragmentRefreshListener().onRefresh();
-            }
             getSupportFragmentManager().popBackStack();
         }
         if (viewPager.getCurrentItem() == 0 | viewPager.getCurrentItem() == 2) {
             viewPager.setCurrentItem(1);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(executeOnResume) {
-            this.recreate();
-        } else {
-            executeOnResume = true;
-        }
-    }
-
-    public interface FragmentRefreshListener{
-        void onRefresh();
-    }
-    public FragmentRefreshListener getFragmentRefreshListener() {
-        return fragmentRefreshListener;
-    }
-    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
-        this.fragmentRefreshListener = fragmentRefreshListener;
     }
 }

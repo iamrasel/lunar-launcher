@@ -253,6 +253,7 @@ public class AppDrawer extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        setupInitialView();
         fetchAllApps();
     }
 

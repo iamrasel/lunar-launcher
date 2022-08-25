@@ -15,7 +15,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@drawable/top_rounded_bg"
-        android:backgroundTint="@color/rss_bg">
+        android:backgroundTint="@color/semi_transparent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rss"
             android:layout_width="match_parent"

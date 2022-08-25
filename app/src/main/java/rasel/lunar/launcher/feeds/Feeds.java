@@ -71,6 +71,7 @@ public class Feeds extends Fragment {
     }
 
     private void resumeService() {
+        binding.rss.setVisibility(View.GONE);
         binding.loadingProgress.setVisibility(View.GONE);
         binding.dataFetchingFailed.setVisibility(View.VISIBLE);
         binding.dataFetchingFailed.setOnClickListener(v -> startService());

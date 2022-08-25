@@ -99,9 +99,18 @@ public class HomeUtils {
         final int[] iterator = {0};
         switch(namesModeValue) {
             case 0: typewriterTexts.setVisibility(View.INVISIBLE); break;
-            case 1: arrays = fragmentActivity.getResources().getStringArray(R.array.arabic); break;
-            case 2: arrays = fragmentActivity.getResources().getStringArray(R.array.english); break;
-            case 3: arrays = fragmentActivity.getResources().getStringArray(R.array.english_meaning); break;
+            case 1:
+                typewriterTexts.setVisibility(View.VISIBLE);
+                arrays = fragmentActivity.getResources().getStringArray(R.array.arabic);
+                break;
+            case 2:
+                typewriterTexts.setVisibility(View.VISIBLE);
+                arrays = fragmentActivity.getResources().getStringArray(R.array.english);
+                break;
+            case 3:
+                typewriterTexts.setVisibility(View.VISIBLE);
+                arrays = fragmentActivity.getResources().getStringArray(R.array.english_meaning);
+                break;
         }
         for (String array : arrays) {
             randomString[0] = array;
@@ -167,7 +176,7 @@ public class HomeUtils {
             public void onLongClick() {
                 super.onLongClick();
                 (fragmentManager.beginTransaction()).replace(R.id.main_fragments_container,
-                        new TodoManager()).addToBackStack("").commit();
+                        new TodoManager()).addToBackStack(null).commit();
             }
             @Override
             public void onSwipeUp() {

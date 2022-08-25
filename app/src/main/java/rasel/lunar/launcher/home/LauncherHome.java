@@ -28,14 +28,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import dev.chrisbanes.insetter.Insetter;
-import rasel.lunar.launcher.MainActivity;
 import rasel.lunar.launcher.databinding.LauncherHomeBinding;
 import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.home.weather.WeatherExecutor;
@@ -65,37 +63,31 @@ public class LauncherHome extends Fragment {
                 .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.getRoot());
 
-        // Recreates the fragment on getting back
-        ((MainActivity) requireActivity()).setFragmentRefreshListener(() -> this.requireActivity().recreate());
-
-        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)); // Battery
-        binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context)); // Time
-        binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences)); // Date
-        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp, requireActivity()); // Weather
-        homeUtils.showNames(sharedPreferences, binding.names99, requireActivity());
+        requireActivity().getSupportFragmentManager().addOnBackStackChangedListener(this::showTodoList);
 
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        int lockMethodValue = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
-        // handle gesture events
-        homeUtils.rootViewGestures(binding.getRoot(), context, fragmentManager, requireActivity(), lockMethodValue);
-        homeUtils.batteryProgressGestures(binding.batteryProgress, context, requireActivity(), lockMethodValue);
-        homeUtils.todosGestures(binding.todos, context, fragmentManager, requireActivity(), lockMethodValue);
-    }
-
-    private void showTodoList() {
+    public void showTodoList() {
         binding.todos.setLayoutManager(new LinearLayoutManager(context));
         binding.todos.setAdapter(new TodoAdapter((new TodoManager()), (new DatabaseHandler(context)).getTodos(), context, requireActivity().getSupportFragmentManager(), this));
     }
 
     @Override
     public void onResume() {
-        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)); // Battery
+        binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context)); // Time
+        binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences)); // Date
+        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp, requireActivity()); // Weather
+        homeUtils.showNames(sharedPreferences, binding.names99, requireActivity()); // Al Asma Ul Husna
+
         showTodoList();
+
+        // handle gesture events
+        int lockMethodValue = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
+        homeUtils.rootViewGestures(binding.getRoot(), context, fragmentManager, requireActivity(), lockMethodValue);
+        homeUtils.batteryProgressGestures(binding.batteryProgress, context, requireActivity(), lockMethodValue);
+        homeUtils.todosGestures(binding.todos, context, fragmentManager, requireActivity(), lockMethodValue);
         super.onResume();
     }
 

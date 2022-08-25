@@ -13,5 +13,5 @@
 
     <color name="icon_color">@android:color/black</color>
     <color name="apps_count">@android:color/white</color>
-    <color name="rss_bg">#11000000</color>
+    <color name="semi_transparent">#11000000</color>
 </resources>
