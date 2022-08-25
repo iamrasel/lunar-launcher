@@ -23,4 +23,12 @@
     <style name="EditText" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
         <item name="colorControlActivated">@color/not_primary</item>
     </style>
+
+    <style name="Slider" parent="Widget.Material3.Slider">
+        <item name="thumbColor">@color/not_primary</item>
+        <item name="thumbRadius">8dp</item>
+        <item name="trackCornerRadius">8dp</item>
+        <item name="trackColorActive">@color/not_primary</item>
+        <item name="trackColorInactive">@color/semi_transparent</item>
+    </style>
 </resources>

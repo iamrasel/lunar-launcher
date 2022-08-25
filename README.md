@@ -72,10 +72,9 @@
 
 - [x] Favourite apps (<=6)
 - [x] Favourite contacts and urls (3+3)
-- [ ] Control system value
+- [x] Control system value
   - [x] Brightness
-  - [ ] Sound
-- [ ] Hidden system shortcuts
+  - [x] Sound
 
 </details>
 
@@ -100,7 +99,6 @@
 
 ## Credits
 - [https://simpleicons.org](https://simpleicons.org)
-- [https://www.svgrepo.com](https://www.svgrepo.com)
 - [https://99namesofallah.name](https://99namesofallah.name)
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
 - [https://github.com/chrisbanes/insetter](https://gitlab.com/biotstoiq/launch)

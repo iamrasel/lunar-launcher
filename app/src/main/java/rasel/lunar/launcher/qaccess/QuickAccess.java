@@ -42,6 +42,7 @@ import rasel.lunar.launcher.helpers.Constants;
 
 public class QuickAccess extends BottomSheetDialogFragment {
 
+    private QuickAccessBinding binding;
     private final Constants constants = new Constants();
     private AccessUtils accessUtils;
     String packageOne, packageTwo, packageThree, packageFour, packageFive, packageSix,
@@ -76,31 +77,18 @@ public class QuickAccess extends BottomSheetDialogFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rasel.lunar.launcher.databinding.QuickAccessBinding binding = QuickAccessBinding.inflate(inflater, container, false);
+        binding = QuickAccessBinding.inflate(inflater, container, false);
 
-        initializer();
-
-        accessUtils.favApps(packageOne, binding.appOne, 1); accessUtils.favApps(packageTwo, binding.appTwo, 2);
-        accessUtils.favApps(packageThree, binding.appThree, 3); accessUtils.favApps(packageFour, binding.appFour, 4);
-        accessUtils.favApps(packageFive, binding.appFive, 5); accessUtils.favApps(packageSix, binding.appSix, 6);
-
-        accessUtils.controlBrightness(binding.brightnessController);
-
-        accessUtils.phonesAndUrls(constants.URL_ADDRESS, urlStringOne, thumbUrlOne, binding.urlOne, 1);
-        accessUtils.phonesAndUrls(constants.URL_ADDRESS, urlStringTwo, thumbUrlTwo, binding.urlTwo, 2);
-        accessUtils.phonesAndUrls(constants.URL_ADDRESS, urlStringThree, thumbUrlThree, binding.urlThree, 3);
-
-        accessUtils.phonesAndUrls(constants.PHONE_NO, phoneNumOne, thumbPhoneOne, binding.phoneOne, 1);
-        accessUtils.phonesAndUrls(constants.PHONE_NO, phoneNumTwo, thumbPhoneTwo, binding.phoneTwo, 2);
-        accessUtils.phonesAndUrls(constants.PHONE_NO, phoneNumThree, thumbPhoneThree, binding.phoneThree, 3);
+        accessUtils = new AccessUtils(requireContext(), this, requireActivity());
+        favApps();
+        accessUtils.controlBrightness(binding.brightness);
+        accessUtils.volumeControllers(binding.notification, binding.alarm, binding.media, binding.voice, binding.ring);
 
         return binding.getRoot();
     }
 
-    private void initializer() {
-        Context context = requireActivity().getApplicationContext();
-        accessUtils = new AccessUtils(context, this, requireActivity());
-        SharedPreferences prefsFavApps = context.getSharedPreferences(constants.SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE);
+    private void favApps() {
+        SharedPreferences prefsFavApps = requireContext().getSharedPreferences(constants.SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE);
         packageOne = prefsFavApps.getString(constants.FAV_APP_ + 1, null);
         packageTwo = prefsFavApps.getString(constants.FAV_APP_ + 2, null);
         packageThree = prefsFavApps.getString(constants.FAV_APP_ + 3, null);
@@ -108,7 +96,13 @@ public class QuickAccess extends BottomSheetDialogFragment {
         packageFive = prefsFavApps.getString(constants.FAV_APP_ + 5, null);
         packageSix = prefsFavApps.getString(constants.FAV_APP_ + 6, null);
 
-        SharedPreferences prefsPhonesAndUrls = context.getSharedPreferences(constants.SHARED_PREFS_PHONES_URLS, Context.MODE_PRIVATE);
+        accessUtils.favApps(packageOne, binding.appOne, 1); accessUtils.favApps(packageTwo, binding.appTwo, 2);
+        accessUtils.favApps(packageThree, binding.appThree, 3); accessUtils.favApps(packageFour, binding.appFour, 4);
+        accessUtils.favApps(packageFive, binding.appFive, 5); accessUtils.favApps(packageSix, binding.appSix, 6);
+    }
+
+    private void favPhoneAndUrls() {
+        SharedPreferences prefsPhonesAndUrls = requireContext().getSharedPreferences(constants.SHARED_PREFS_PHONES_URLS, Context.MODE_PRIVATE);
 
         phoneNumOne = prefsPhonesAndUrls.getString(constants.PHONE_NO_ + 1, null);
         phoneNumTwo = prefsPhonesAndUrls.getString(constants.PHONE_NO_ + 2, null);
@@ -123,5 +117,19 @@ public class QuickAccess extends BottomSheetDialogFragment {
         thumbUrlOne = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 1, null);
         thumbUrlTwo = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 2, null);
         thumbUrlThree = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 3, null);
+
+        accessUtils.phonesAndUrls(constants.URL_ADDRESS, urlStringOne, thumbUrlOne, binding.urlOne, 1);
+        accessUtils.phonesAndUrls(constants.URL_ADDRESS, urlStringTwo, thumbUrlTwo, binding.urlTwo, 2);
+        accessUtils.phonesAndUrls(constants.URL_ADDRESS, urlStringThree, thumbUrlThree, binding.urlThree, 3);
+
+        accessUtils.phonesAndUrls(constants.PHONE_NO, phoneNumOne, thumbPhoneOne, binding.phoneOne, 1);
+        accessUtils.phonesAndUrls(constants.PHONE_NO, phoneNumTwo, thumbPhoneTwo, binding.phoneTwo, 2);
+        accessUtils.phonesAndUrls(constants.PHONE_NO, phoneNumThree, thumbPhoneThree, binding.phoneThree, 3);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        favPhoneAndUrls();
     }
 }

@@ -24,22 +24,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.text.InputType;
 import android.view.View;
-import android.widget.SeekBar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.slider.Slider;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.apps.FavouriteUtils;
@@ -64,6 +65,49 @@ public class AccessUtils {
         this.sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_PHONES_URLS, Context.MODE_PRIVATE);
     }
 
+    protected void volumeControllers(Slider notifyBar, Slider alarmBar, Slider mediaBar, Slider voiceBar, Slider ringerBar) {
+        AudioManager audioManager = (AudioManager) fragmentActivity.getSystemService(Context.AUDIO_SERVICE);
+
+        notifyBar.setValueTo(audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION));
+        alarmBar.setValueTo(audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM));
+        mediaBar.setValueTo(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        voiceBar.setValueTo(audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL));
+        ringerBar.setValueTo(audioManager.getStreamMaxVolume(AudioManager.STREAM_RING));
+
+        notifyBar.setValue(audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION));
+        alarmBar.setValue(audioManager.getStreamVolume(AudioManager.STREAM_ALARM));
+        mediaBar.setValue(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+        voiceBar.setValue(audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL));
+        ringerBar.setValue(audioManager.getStreamVolume(AudioManager.STREAM_RING));
+
+        notifyBar.addOnChangeListener((slider, value, fromUser) -> {
+            try {
+                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, (int) value, 0);
+            } catch (Exception exception) {
+                uniUtils.exceptionViewer(fragmentActivity, exception.getMessage() + "\nDisable DND mode first.");
+                exception.printStackTrace();
+            }
+        });
+
+        alarmBar.addOnChangeListener((slider, value, fromUser) ->
+                audioManager.setStreamVolume(AudioManager.STREAM_ALARM, (int) value, 0));
+
+        mediaBar.addOnChangeListener((slider, value, fromUser) ->
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int) value, 0));
+
+        voiceBar.addOnChangeListener((slider, value, fromUser) ->
+                audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, (int) value, 0));
+
+        ringerBar.addOnChangeListener((slider, value, fromUser) -> {
+            try {
+                audioManager.setStreamVolume(AudioManager.STREAM_RING, (int) value, 0);
+            } catch (Exception exception) {
+                uniUtils.exceptionViewer(fragmentActivity, exception.getMessage() + "\nDisable DND mode first.");
+                exception.printStackTrace();
+            }
+        });
+    }
+
     protected void phonesAndUrls(String root, String intentString, String thumbLetter, ExtendedFloatingActionButton efab, int position) {
         if(intentString == null) {
             efab.setText("+");
@@ -81,6 +125,7 @@ public class AccessUtils {
                     }
                     fragmentActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 }
+                bottomSheetDialogFragment.dismiss();
             });
             efab.setOnLongClickListener(v -> {
                 if(root.equals(constants.PHONE_NO)) {
@@ -91,30 +136,25 @@ public class AccessUtils {
                     sharedPreferences.edit().putString(constants.URL_THUMB_LETTER_ + position, null).apply();
                 }
                 efab.setText("+");
-                fragmentActivity.recreate();
+                bottomSheetDialogFragment.onResume();
                 return true;
             });
         }
     }
 
-    protected void controlBrightness(AppCompatSeekBar seekBar) {
+    protected void controlBrightness(Slider seekBar) {
         ContentResolver resolver = fragmentActivity.getContentResolver();
-        seekBar.setMax(255);
-        seekBar.setKeyProgressIncrement(1);
+        seekBar.setValueTo(255);
         try {
             int brightness = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS);
-            seekBar.setProgress(brightness);
+            seekBar.setValue(brightness);
         } catch(Settings.SettingNotFoundException settingNotFoundException) {
             uniUtils.exceptionViewer(fragmentActivity, settingNotFoundException.getMessage());
             settingNotFoundException.printStackTrace();
         }
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, progress);
-            }
+        seekBar.addOnChangeListener((slider, value, fromUser) -> {
+            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, (int) value);
         });
     }
 
@@ -157,11 +197,13 @@ public class AccessUtils {
         }
 
         String[] alphabets = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        AtomicBoolean isAlphabetPicked = new AtomicBoolean(false);
 
         dialogBinding.alphabetPicker.setMinValue(0);
         dialogBinding.alphabetPicker.setMaxValue(alphabets.length - 1);
         dialogBinding.alphabetPicker.setDisplayedValues(alphabets);
         dialogBinding.alphabetPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
+            isAlphabetPicked.set(true);
             if(hintText.equals(constants.PHONE_NO)) {
                 sharedPreferences.edit().putString(constants.PHONE_THUMB_LETTER_ + position, alphabets[newVal]).apply();
             } else if(hintText.equals(constants.URL_ADDRESS)) {
@@ -173,16 +215,16 @@ public class AccessUtils {
         dialogBinding.cancel.setOnClickListener(v -> dialog.dismiss());
         dialogBinding.ok.setOnClickListener(v -> {
             String urlPhone = Objects.requireNonNull(dialogBinding.urlPhone.getText()).toString().trim();
-            if(urlPhone.length() > 0) {
+            if(urlPhone.length() > 0 && isAlphabetPicked.get()) {
                 if(hintText.equals(constants.PHONE_NO)) {
                     sharedPreferences.edit().putString(constants.PHONE_NO_ + position, urlPhone).apply();
                 } else if(hintText.equals(constants.URL_ADDRESS)) {
                     sharedPreferences.edit().putString(constants.URL_NO_ + position, urlPhone).apply();
                 }
                 dialog.dismiss();
-                fragmentActivity.recreate();
+                bottomSheetDialogFragment.onResume();
             } else {
-                dialogBinding.urlPhone.setError(context.getString(R.string.empty_text_field));
+                dialogBinding.urlPhone.setError(context.getString(R.string.empty_text_field) + " or alphabet field is unchanged");
             }
         });
     }
