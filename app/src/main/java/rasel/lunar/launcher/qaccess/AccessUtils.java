@@ -18,6 +18,7 @@
 
 package rasel.lunar.launcher.qaccess;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -116,8 +117,11 @@ public class AccessUtils {
             efab.setText(thumbLetter);
             efab.setOnClickListener(v -> {
                 if(root.equals(constants.PHONE_NO)) {
-                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + intentString));
-                    fragmentActivity.startActivity(intent);
+                    if(fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        fragmentActivity.requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
+                    } else {
+                        fragmentActivity.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + intentString)));
+                    }
                 } else if(root.equals(constants.URL_ADDRESS)) {
                     String url = intentString;
                     if(!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -153,8 +157,16 @@ public class AccessUtils {
             settingNotFoundException.printStackTrace();
         }
         seekBar.addOnChangeListener((slider, value, fromUser) -> {
-            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-            Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, (int) value);
+            if(!Settings.System.canWrite(fragmentActivity)) {
+                fragmentActivity.startActivity(
+                        (new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS))
+                                .setData(Uri.parse("package:" + fragmentActivity.getPackageName()))
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                );
+            } else {
+                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+                Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, (int) value);
+            }
         });
     }
 

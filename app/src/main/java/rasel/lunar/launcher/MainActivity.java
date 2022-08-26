@@ -26,8 +26,11 @@ import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import rasel.lunar.launcher.databinding.MainActivityBinding;
 import rasel.lunar.launcher.helpers.Constants;
+import rasel.lunar.launcher.helpers.UniUtils;
 import rasel.lunar.launcher.helpers.ViewPagerAdapter;
 import rasel.lunar.launcher.settings.SettingsPrefsUtils;
 
@@ -43,11 +46,16 @@ public class MainActivity extends AppCompatActivity {
         binding = MainActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        putSettings();
+
+        if(isFirstLaunch()) {
+            putSettings();
+            welcomeDialog();
+        }
+
         setUpView();
     }
 
-    private boolean firstLaunch() {
+    private boolean isFirstLaunch() {
         SharedPreferences firstLaunchPrefs = getSharedPreferences(constants.SHARED_PREFS_FIRST_LAUNCH, 0);
         if(firstLaunchPrefs.getBoolean(constants.FIRST_LAUNCH, true)) {
             firstLaunchPrefs.edit().putBoolean(constants.FIRST_LAUNCH, false).apply();
@@ -58,10 +66,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void putSettings() {
-        if(firstLaunch()) {
-            new SettingsPrefsUtils().saveCityName(getApplicationContext(), null);
-            new SettingsPrefsUtils().saveOwmKey(getApplicationContext(), null);
-        }
+        new SettingsPrefsUtils().saveCityName(getApplicationContext(), null);
+        new SettingsPrefsUtils().saveOwmKey(getApplicationContext(), null);
+    }
+
+    private void welcomeDialog() {
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(this);
+        dialogBuilder.setTitle(R.string.welcome);
+        dialogBuilder.setMessage(R.string.welcome_description);
+        dialogBuilder.setPositiveButton(R.string.got_it, (dialog, which) -> {
+            dialog.dismiss();
+            new UniUtils().askPermissions(this);
+        });
+        dialogBuilder.show();
     }
 
     private void setUpView() {

@@ -103,8 +103,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/city_name"
                 app:endIconMode="clear_text"
-                android:layout_marginTop="16dp"
-                style="@style/OutlinedTextInputLayout">
+                android:layout_marginTop="16dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_city"
                     android:layout_width="match_parent"
@@ -119,8 +118,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/owm_key"
                 app:endIconMode="clear_text"
-                android:layout_marginTop="16dp"
-                style="@style/OutlinedTextInputLayout">
+                android:layout_marginTop="16dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_owm"
                     android:layout_width="match_parent"
@@ -257,8 +255,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/feed_url"
                 android:layout_marginTop="16dp"
-                app:endIconMode="clear_text"
-                style="@style/OutlinedTextInputLayout">
+                app:endIconMode="clear_text">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_feed_url"
                     android:layout_width="match_parent"

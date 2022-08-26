@@ -17,8 +17,7 @@
         <com.google.android.material.slider.Slider
             android:id="@+id/notification"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Slider"/>
+            android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -32,8 +31,7 @@
         <com.google.android.material.slider.Slider
             android:id="@+id/alarm"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Slider"/>
+            android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -47,8 +45,7 @@
         <com.google.android.material.slider.Slider
             android:id="@+id/media"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Slider"/>
+            android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -62,8 +59,7 @@
         <com.google.android.material.slider.Slider
             android:id="@+id/voice"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Slider"/>
+            android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -77,8 +73,7 @@
         <com.google.android.material.slider.Slider
             android:id="@+id/ring"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Slider"/>
+            android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -89,7 +84,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/phone_one"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="4dp"
             android:textStyle="bold"
@@ -97,7 +92,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/phone_two"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="4dp"
             android:textStyle="bold"
@@ -105,7 +100,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/phone_three"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="4dp"
             android:textStyle="bold"
@@ -113,7 +108,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/url_one"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="4dp"
             android:textStyle="bold"
@@ -121,7 +116,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/url_two"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="4dp"
             android:textStyle="bold"
@@ -129,7 +124,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/url_three"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="46dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="4dp"
             android:textStyle="bold"
@@ -148,8 +143,7 @@
         <com.google.android.material.slider.Slider
             android:id="@+id/brightness"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Slider"/>
+            android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat

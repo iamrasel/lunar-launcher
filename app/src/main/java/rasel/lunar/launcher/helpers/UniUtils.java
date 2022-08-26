@@ -20,6 +20,7 @@ package rasel.lunar.launcher.helpers;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
@@ -28,9 +29,11 @@ import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Insets;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
@@ -74,6 +77,20 @@ public class UniUtils {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             return displayMetrics.heightPixels;
+        }
+    }
+
+    public void askPermissions(FragmentActivity fragmentActivity) {
+        if(fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            fragmentActivity.requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
+        }
+
+        if(!Settings.System.canWrite(fragmentActivity)) {
+            fragmentActivity.startActivity(
+                    (new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS))
+                            .setData(Uri.parse("package:" + fragmentActivity.getPackageName()))
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            );
         }
     }
 

@@ -17,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        style="@style/OutlinedTextInputLayout">
+        app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/url_phone"
             android:layout_width="match_parent"

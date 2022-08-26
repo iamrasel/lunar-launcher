@@ -18,25 +18,17 @@
 
 package rasel.lunar.launcher.qaccess;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import rasel.lunar.launcher.R;
-import rasel.lunar.launcher.databinding.ExceptionViewerBinding;
 import rasel.lunar.launcher.databinding.QuickAccessBinding;
 import rasel.lunar.launcher.helpers.Constants;
 
@@ -48,32 +40,6 @@ public class QuickAccess extends BottomSheetDialogFragment {
     String packageOne, packageTwo, packageThree, packageFour, packageFive, packageSix,
             phoneNumOne, phoneNumTwo, phoneNumThree, thumbPhoneOne, thumbPhoneTwo, thumbPhoneThree,
             urlStringOne, urlStringTwo, urlStringThree, thumbUrlOne, thumbUrlTwo, thumbUrlThree;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(!Settings.System.canWrite(getContext())) {
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireActivity());
-            ExceptionViewerBinding exceptionViewerBinding = ExceptionViewerBinding.inflate(requireActivity().getLayoutInflater());
-            bottomSheetDialog.setContentView(exceptionViewerBinding.getRoot());
-            bottomSheetDialog.show();
-
-            exceptionViewerBinding.textViewer.setText(R.string.modify_system_settings);
-            exceptionViewerBinding.button.setText(R.string.allow);
-            exceptionViewerBinding.button.setOnClickListener(v -> {
-                startActivity(
-                        (new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS))
-                                .setData(Uri.parse("package:" + requireActivity().getPackageName()))
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                );
-                bottomSheetDialog.dismiss();
-            });
-        }
-
-        if (requireActivity().checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-            requireActivity().requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
-        }
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
