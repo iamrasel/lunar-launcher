@@ -23,14 +23,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
 import android.view.animation.AnimationUtils;
-import android.widget.ProgressBar;
+
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import rasel.lunar.launcher.R;
 
 public class BatteryReceiver extends BroadcastReceiver {
-    ProgressBar progressBar;
+    CircularProgressIndicator progressBar;
 
-    protected BatteryReceiver(ProgressBar progressBar) {
+    protected BatteryReceiver(CircularProgressIndicator progressBar) {
         this.progressBar = progressBar;
     }
 

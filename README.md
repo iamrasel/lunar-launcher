@@ -42,8 +42,6 @@
 - [x] Weather
   - [x] Provider: OpenWeatherMap
   - [x] Celsius/Fahrenheit
-- [x] Al Asma Ul Husna
-  - [x] Arabic, English and English with meaning
 - [x] Todo
   - [x] Add, delete, edit, copy
   - [ ] Auto destructive todo with notify
@@ -99,7 +97,6 @@
 
 ## Credits
 - [https://simpleicons.org](https://simpleicons.org)
-- [https://99namesofallah.name](https://99namesofallah.name)
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
 - [https://github.com/chrisbanes/insetter](https://gitlab.com/biotstoiq/launch)
 

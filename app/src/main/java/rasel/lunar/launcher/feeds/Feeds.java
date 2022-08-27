@@ -51,7 +51,7 @@ public class Feeds extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FeedsBinding.inflate(inflater, container, false);
         Insetter.builder()
-                .padding(WindowInsetsCompat.Type.navigationBars())
+                .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.getRoot());
 
         return binding.getRoot();
@@ -62,7 +62,7 @@ public class Feeds extends Fragment {
                 .getString(constants.SHARED_PREF_FEED_URL, null);
 
         if(new UniUtils().isNetworkAvailable(requireActivity()) && !rssUrl.isEmpty()) {
-            Intent intent = new Intent(getActivity(), RssService.class);
+            Intent intent = new Intent(requireActivity(), RssService.class);
             intent.putExtra(constants.RSS_RECEIVER, resultReceiver);
             requireActivity().startService(intent);
         } else {

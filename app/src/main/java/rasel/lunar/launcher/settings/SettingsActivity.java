@@ -40,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
     private final Constants constants = new Constants();
     private final SettingsPrefsUtils settingsPrefsUtils = new SettingsPrefsUtils();
     private SettingsClickListeners settingsClickListeners;
-    private int timeFormatValue, showYear, tempUnit, showCity, namesMode, showTodos, lockMode, themeValue;
+    private int timeFormatValue, showYear, tempUnit, showCity, showTodos, lockMode, themeValue;
     private String cityName, owmKey, feedUrl;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,6 @@ public class SettingsActivity extends AppCompatActivity {
         settingsClickListeners.showYear(binding.yearGroup, binding.selectYearNegative, binding.selectYearPositive);
         settingsClickListeners.tempUnit(binding.tempGroup, binding.selectCelsius, binding.selectFahrenheit);
         settingsClickListeners.showCity(binding.cityGroup, binding.showCityNegative, binding.showCityPositive);
-        settingsClickListeners.names99(binding.names99Group, binding.names99Negative, binding.names99Arabic, binding.names99English, binding.names99EnglishMeaning);
         settingsClickListeners.showTodos(binding.todosGroup, binding.showTodosNegative, binding.showTodosThree, binding.showTodosFive);
         settingsClickListeners.screenLock(binding.lockGroup, binding.selectLockNegative, binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot);
         settingsClickListeners.theme(binding.themeGroup, binding.followSystemTheme, binding.selectDarkTheme, binding.selectLightTheme);
@@ -71,7 +70,6 @@ public class SettingsActivity extends AppCompatActivity {
         owmKey = sharedPreferences.getString(constants.SHARED_PREF_OWM_KEY, null);
         tempUnit = sharedPreferences.getInt(constants.SHARED_PREF_TEMP_UNIT, 0);
         showCity = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_CITY, 0);
-        namesMode = sharedPreferences.getInt(constants.SHARED_PREF_NAMES99, 0);
         showTodos = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_TODOS, 3);
         feedUrl = sharedPreferences.getString(constants.SHARED_PREF_FEED_URL, null);
         lockMode = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
@@ -102,13 +100,6 @@ public class SettingsActivity extends AppCompatActivity {
         switch(showCity) {
             case 0: binding.showCityNegative.setChecked(true); break;
             case 1: binding.showCityPositive.setChecked(true); break;
-        }
-
-        switch (namesMode) {
-            case 0: binding.names99Negative.setChecked(true); break;
-            case 1: binding.names99Arabic.setChecked(true); break;
-            case 2: binding.names99English.setChecked(true); break;
-            case 3: binding.names99EnglishMeaning.setChecked(true); break;
         }
 
         switch(showTodos) {

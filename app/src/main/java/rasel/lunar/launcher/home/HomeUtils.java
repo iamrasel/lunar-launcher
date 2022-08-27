@@ -32,7 +32,6 @@ import java.util.Calendar;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.helpers.SwipeTouchListener;
-import rasel.lunar.launcher.helpers.TypewriterTexts;
 import rasel.lunar.launcher.helpers.UniUtils;
 import rasel.lunar.launcher.qaccess.QuickAccess;
 import rasel.lunar.launcher.settings.SettingsActivity;
@@ -90,42 +89,6 @@ public class HomeUtils {
         }
         return dateFormat;
     }
-	
-	// Shows the 99 names of Allah
-	protected void showNames(SharedPreferences sharedPreferences, TypewriterTexts typewriterTexts, FragmentActivity fragmentActivity) {
-		int namesModeValue = sharedPreferences.getInt(constants.SHARED_PREF_NAMES99, 0);
-		String[] arrays = new String[0];
-        final String[] randomString = new String[1];
-        final int[] iterator = {0};
-        switch(namesModeValue) {
-            case 0: typewriterTexts.setVisibility(View.INVISIBLE); break;
-            case 1:
-                typewriterTexts.setVisibility(View.VISIBLE);
-                arrays = fragmentActivity.getResources().getStringArray(R.array.arabic);
-                break;
-            case 2:
-                typewriterTexts.setVisibility(View.VISIBLE);
-                arrays = fragmentActivity.getResources().getStringArray(R.array.english);
-                break;
-            case 3:
-                typewriterTexts.setVisibility(View.VISIBLE);
-                arrays = fragmentActivity.getResources().getStringArray(R.array.english_meaning);
-                break;
-        }
-        for (String array : arrays) {
-            randomString[0] = array;
-        }
-        typewriterTexts.animateText(fragmentActivity.getString(R.string.bismillah));
-        String[] finalArrays = arrays;
-        typewriterTexts.setOnClickListener(v -> {
-            randomString[0] = finalArrays[iterator[0]];
-            typewriterTexts.animateText(randomString[0]);
-            iterator[0] = iterator[0] +1;
-            if(iterator[0] >= finalArrays.length) {
-                iterator[0] = 0;
-            }
-        });
-	}
 
     // Gestures on root view
     protected void rootViewGestures(View view, Context context, FragmentManager fragmentManager, FragmentActivity fragmentActivity, int lockMethodValue) {
@@ -175,7 +138,7 @@ public class HomeUtils {
             @Override
             public void onLongClick() {
                 super.onLongClick();
-                (fragmentManager.beginTransaction()).replace(R.id.main_fragments_container,
+                (fragmentManager.beginTransaction()).add(R.id.main_fragments_container,
                         new TodoManager()).addToBackStack(null).commit();
             }
             @Override

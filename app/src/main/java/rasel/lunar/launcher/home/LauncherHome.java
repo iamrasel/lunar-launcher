@@ -64,6 +64,7 @@ public class LauncherHome extends Fragment {
                 .applyToView(binding.getRoot());
 
         requireActivity().getSupportFragmentManager().addOnBackStackChangedListener(this::showTodoList);
+        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         return binding.getRoot();
     }
@@ -79,7 +80,6 @@ public class LauncherHome extends Fragment {
         binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context)); // Time
         binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences)); // Date
         new WeatherExecutor(sharedPreferences).generateTempString(binding.temp, requireActivity()); // Weather
-        homeUtils.showNames(sharedPreferences, binding.names99, requireActivity()); // Al Asma Ul Husna
 
         showTodoList();
 

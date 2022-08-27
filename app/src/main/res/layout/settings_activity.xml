@@ -183,44 +183,6 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/names99"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/names99_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/names99_negative"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/negative"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/names99_arabic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/arabic"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/names99_english"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/english"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/names99_english_meaning"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/english_meaning"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/show_todos"
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>

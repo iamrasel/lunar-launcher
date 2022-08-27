@@ -91,22 +91,6 @@ public class SettingsClickListeners {
         });
     }
 
-    protected void names99(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2, MaterialButton button3) {
-        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (isChecked) {
-                if (checkedId == button0.getId()) {
-                    settingsPrefsUtils.saveNamesMode(context, 0);
-                } else if(checkedId == button1.getId()) {
-                    settingsPrefsUtils.saveNamesMode(context, 1);
-                } else if(checkedId == button2.getId()) {
-                    settingsPrefsUtils.saveNamesMode(context, 2);
-                } else if(checkedId == button3.getId()) {
-                    settingsPrefsUtils.saveNamesMode(context, 3);
-                }
-            }
-        });
-    }
-
     protected void showTodos(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2) {
         buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {

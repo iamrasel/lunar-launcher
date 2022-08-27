@@ -67,11 +67,6 @@ public class SettingsPrefsUtils {
         sharedPreferences.edit().putString(constants.SHARED_PREF_FEED_URL, feedUrl).apply();
     }
 
-    protected void saveNamesMode(Context context, int namesMode) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putInt(constants.SHARED_PREF_NAMES99, namesMode).apply();
-    }
-
     protected void saveLockMode(Context context, int lockMode) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
         sharedPreferences.edit().putInt(constants.SHARED_PREF_LOCK, lockMode).apply();

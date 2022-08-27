@@ -10,8 +10,6 @@
     <string name="app_name">Lunar Launcher</string>
     <string name="app_store">App Store</string>
     <string name="application_theme">Application Theme</string>
-    <string name="arabic">Arabic</string>
-    <string name="bismillah">Bismillahir Rahmanir Rahim</string>
     <string name="celsius">Celsius</string>
     <string name="city_name">City Name</string>
     <string name="copied_message">Copied to clipboard</string>
@@ -24,8 +22,6 @@
     <string name="device_admin_description">Allow to use double tap to lock feature</string>
     <string name="double_tap_lock">Double Tap Lock</string>
     <string name="empty_text_field">Text field is empty</string>
-    <string name="english">English</string>
-    <string name="english_meaning">Meaning</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="feed_url">Feed Url</string>
     <string name="five">Five</string>
@@ -34,7 +30,6 @@
     <string name="got_it">Got it</string>
     <string name="launcher_configs">Launcher Configurations</string>
     <string name="light_theme">Light</string>
-    <string name="names99">Al Asma Ul Husna</string>
     <string name="negative">Negative</string>
     <string name="nothing_found">¯\\_(ツ)_/¯</string>
     <string name="null_app_store_message">There\'s no app store is installed\non this device.</string>
@@ -67,7 +62,7 @@
         <li>Swipe right - feeds</li>\n
         <li>Swipe left - app drawer</li>\n
         <li>Tap and hold inside battery indicator - launcher settings</li>\n
-        <li>Tap and hold in the middle of the screen - todo manager</li>\n
+        <li>Tap and hold in the lower part of the screen - todo manager</li>\n
         <li>Double tap - device lock/sleep (enable from settings)</li>\n
         <li>Tap and hold the favourite item - remove favourite</li>\n\n
         For more information, visit the wiki page at Github.
@@ -89,7 +84,6 @@
     </string>
     <string name="acknowledgements">
         <b>Acknowledgements</b>\n
-        <i><a href="https://99namesofallah.name">https://99namesofallah.name</a></i>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
         <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>
     </string>
