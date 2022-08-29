@@ -10,9 +10,9 @@ Lunar Launcher is yet another addition to the world of android launchers. Low me
 - Animated battery percentage indicator
 - 12/24 time format and date
 - Weather: celsius and fahrenheit
-- 99 names of Allah
 - Todo manager
-- Device stats
-- Feeds
 - Quick actions
-- More to arrive
+- RSS feeds
+- Device stats
+
+More exciting features will be added soon. Please donate to support the development.
