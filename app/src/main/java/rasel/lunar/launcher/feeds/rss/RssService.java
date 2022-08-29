@@ -25,8 +25,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -52,7 +50,7 @@ public class RssService extends IntentService {
         try {
             RssParser parser = new RssParser();
             rssItems = parser.parse(getInputStream(rssUrl));
-        } catch (XmlPullParserException | IOException exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
         Bundle bundle = new Bundle();

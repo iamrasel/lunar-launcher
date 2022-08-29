@@ -98,10 +98,7 @@
 ## Credits
 - [https://simpleicons.org](https://simpleicons.org)
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
-- [https://github.com/chrisbanes/insetter](https://gitlab.com/biotstoiq/launch)
-
-## License
-<a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=for-the-badge'></a>
+- [https://github.com/chrisbanes/insetter](https://github.com/chrisbanes/insetter)
 
 ## Donation
 Do you like this app? If the answer is yes, then help me to continue this project. My current old laptop, which has only 4gb ram, has been serving me with it's last breaths. So I need to build a decent pc for developing, please help me with that. Donate me any amount you wish.

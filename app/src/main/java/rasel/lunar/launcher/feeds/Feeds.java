@@ -26,8 +26,10 @@ import android.os.ResultReceiver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,6 +48,9 @@ public class Feeds extends Fragment {
 
     private FeedsBinding binding;
     private final Constants constants = new Constants();
+    private FeedsUtils feedsUtils;
+    private Handler handler;
+    private Runnable runnable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +59,18 @@ public class Feeds extends Fragment {
                 .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.getRoot());
 
+        feedsUtils = new FeedsUtils(requireActivity());
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        String noAction = "Action will be added soon";
+        binding.ram.setOnClickListener(v -> Toast.makeText(requireContext(), noAction, Toast.LENGTH_SHORT).show());
+        binding.intStorage.setOnClickListener(v -> Toast.makeText(requireContext(), noAction, Toast.LENGTH_SHORT).show());
+        binding.extStorage.setOnClickListener(v -> Toast.makeText(requireContext(), noAction, Toast.LENGTH_SHORT).show());
     }
 
     private void startService() {
@@ -95,8 +111,34 @@ public class Feeds extends Fragment {
     };
 
     @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         startService();
+        feedsUtils.ram(binding.ram);
+        feedsUtils.cpuBattery(binding.cpu);
+        feedsUtils.intStorage(binding.intStorage);
+        feedsUtils.extStorage(binding.extStorage);
+
+        handler = new Handler();
+        runnable = new Runnable() {
+            public void run() {
+                feedsUtils.ram(binding.ram);
+                feedsUtils.cpuBattery(binding.cpu);
+                handler.postDelayed(this, 1000);
+            }
+        };
+        handler.post(runnable);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler.removeCallbacks(runnable);
     }
 }
