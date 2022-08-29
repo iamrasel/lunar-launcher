@@ -172,7 +172,7 @@ public class AccessUtils {
 
     protected void favApps(String packageName, AppCompatImageView imageView, int position) {
         PackageManager packageManager = context.getPackageManager();
-        if(!(packageName == null)) {
+        if(packageName != null) {
             try{
                 Drawable appIcon = packageManager.getApplicationIcon(packageName);
                 imageView.setImageDrawable(appIcon);

@@ -2,26 +2,24 @@
 	<img src='fastlane/metadata/android/en-US/images/icon.png' alt='Lunar Launcher' width='100' height='100'>
     <h2>Lunar Launcher</h2>
     <p>
-        <img src='https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white' alt='OS'>
-        <img src='https://img.shields.io/badge/SDK-26-vibrant?style=for-the-badge' alt='SDK'>
-		<img src='https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white'>
+        <img src='https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white'>
+        <img src='https://img.shields.io/badge/SDK-26-vibrant?style=for-the-badge'>
         <a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=for-the-badge'></a>
         <br>
-		<img src='https://img.shields.io/badge/Maintained-yes-green?style=for-the-badge' alt='Maintained'>
+		<img src='https://img.shields.io/badge/Maintained-yes-green?style=for-the-badge'>
         <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/Build_Debug?style=for-the-badge'></a>
-		<!--
-		<a href='https://github.com/iamrasel/lunar-launcher/releases'><img src='https://img.shields.io/github/release/iamrasel/lunar-launcher?style=for-the-badge'></a>
-		<img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=for-the-badge' alt='Downloads'>
-		-->
+		<img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=for-the-badge'>
     </p>
 </div>
 
 ## Features/Todo
 <details><summary>Global</summary>
 
-- [x] Material Design 3
+- [x] Appearences
+  - [x] Material Design 3
   - [ ] Material You support
-- [x] Day/night theme
+  - [x] Day/night theme
+  - [ ] Wallpaper with dim support
 - [x] Double tap: lock/sleep
   - [x] Accessibility (SDK >= 28)
   - [x] Device admin
@@ -46,6 +44,7 @@
   - [x] Add, delete, edit, copy
   - [ ] Auto destructive todo with notify
   - [x] Zero/three/five items in home screen
+  - [ ] Access lock
 
 </details>
 <details><summary>App Drawer</summary>
@@ -62,7 +61,7 @@
 </details>
 <details><summary>Feeds</summary>
 
-- [ ] Device stats
+- [x] Device stats
 - [x] RSS
 
 </details>
@@ -77,13 +76,26 @@
 </details>
 
 ## Screenshots
+As per version 14. Click on the image to enlarge it.
+
+<div align='center'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/1.png' width=130>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/2.png' width=130>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/3.png' width=130>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/4.png' width=130>
+	<br>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/5.png' width=130>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/6.png' width=130>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/7.png' width=130>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/8.png' width=130>
+</div>
 
 ## Download
 <div align='center'>
 
-<img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'>
-<img src='https://img.shields.io/badge/F_Droid-1976D2?style=for-the-badge&logo=f-droid&logoColor=white'>
-<img src='https://img.shields.io/static/v1?message=IzzyOnDroid&logo=android&labelColor=515151&color=009000&logoColor=white&label=%20&style=for-the-badge'>
+<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'></a>
+<a href='https://f-droid.org/en/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976D2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
+<a href='https://apt.izzysoft.de/fdroid/index/apk/rasel.lunar.launcher'><img src='https://img.shields.io/static/v1?message=IzzyOnDroid&logo=android&labelColor=515151&color=009000&logoColor=white&label=%20&style=for-the-badge'></a>
 
 </div>
 

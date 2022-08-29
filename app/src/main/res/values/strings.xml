@@ -48,24 +48,23 @@
     <string name="uninstall">Uninstall</string>
     <string name="update">Update</string>
     <string name="welcome">Welcome</string>
-    <string name="welcome_description">
-        Welcome to Lunar Launcher. This is your first launch; if you are a first time user, <b>read these texts before
-        you proceed</b>.\n\n
-        At first, after you close this dialog, you will be asked to grant following permissions. If you refuse to allow
-        them, this app won\'t work as expected.\n\n
-        <li><b>Modify system settings -</b> To control brightness using a slider</li>\n
-        <li><b>Phone -</b> To make call to favourite contacts</li>\n\n
-        If you still have any doubt, you can check the source code anytime, it is fully open-source.\n\n
-        <b><u>Gestures:</u></b>\n
-        <li>Swipe up - quick access</li>\n
-        <li>Swipe down - notification panel</li>\n
-        <li>Swipe right - feeds</li>\n
-        <li>Swipe left - app drawer</li>\n
-        <li>Tap and hold inside battery indicator - launcher settings</li>\n
-        <li>Tap and hold in the lower part of the screen - todo manager</li>\n
-        <li>Double tap - device lock/sleep (enable from settings)</li>\n
-        <li>Tap and hold the favourite item - remove favourite</li>\n\n
-        For more information, visit the wiki page at Github.
+    <string name="welcome_description">Welcome to Lunar Launcher. This is your first launch; if you are a first time user,
+		<b>read these texts before you proceed</b>.
+        \n\nAt first, after you close this dialog, you will be asked to grant following permissions. If you refuse to allow
+        them, this app won\'t work as expected.
+        \n\n<li><b>Modify system settings -</b> To control brightness using a slider</li>
+        \n<li><b>Phone -</b> To make call to favourite contacts</li>
+        \n\nIf you still have any doubt, you can check the source code anytime, it is fully open-source.
+        \n\n<b><u>Gestures:</u></b>
+        \n<li>Swipe up - quick access</li>
+        \n<li>Swipe down - notification panel</li>
+        \n<li>Swipe right - feeds</li>
+        \n<li>Swipe left - app drawer</li>
+        \n<li>Tap and hold inside battery indicator - launcher settings</li>
+        \n<li>Tap and hold in the lower part of the screen - todo manager</li>
+        \n<li>Double tap - device lock/sleep (enable from settings)</li>
+        \n<li>Tap and hold the favourite item - remove favourite</li>
+        \n\nFor more information, visit the wiki page at Github.
     </string>
 
 

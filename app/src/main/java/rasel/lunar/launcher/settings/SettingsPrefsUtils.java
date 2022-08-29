@@ -37,12 +37,12 @@ public class SettingsPrefsUtils {
         sharedPreferences.edit().putInt(constants.SHARED_PREF_SHOW_YEAR, showYear).apply();
     }
 
-    public void saveCityName(Context context, String cityName) {
+    protected void saveCityName(Context context, String cityName) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
         sharedPreferences.edit().putString(constants.SHARED_PREF_CITY_NAME, cityName).apply();
     }
 
-    public void saveOwmKey(Context context, String owmKey) {
+    protected void saveOwmKey(Context context, String owmKey) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
         sharedPreferences.edit().putString(constants.SHARED_PREF_OWM_KEY, owmKey).apply();
     }

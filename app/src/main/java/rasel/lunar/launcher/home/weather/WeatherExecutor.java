@@ -50,7 +50,7 @@ public class WeatherExecutor {
     public void generateTempString(MaterialTextView materialTextView, FragmentActivity fragmentActivity) {
         materialTextView.setVisibility(View.GONE);
         try{
-            if(cityName.length() > 0 && owmKey.length() > 0) {
+            if(cityName != null && owmKey != null) {
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 Handler handler = new Handler(Looper.getMainLooper());
 

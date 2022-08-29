@@ -32,7 +32,6 @@ import rasel.lunar.launcher.databinding.MainActivityBinding;
 import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.helpers.UniUtils;
 import rasel.lunar.launcher.helpers.ViewPagerAdapter;
-import rasel.lunar.launcher.settings.SettingsPrefsUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         if(isFirstLaunch()) {
-            putSettings();
             welcomeDialog();
         }
 
@@ -63,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return false;
         }
-    }
-
-    private void putSettings() {
-        new SettingsPrefsUtils().saveCityName(getApplicationContext(), null);
-        new SettingsPrefsUtils().saveOwmKey(getApplicationContext(), null);
     }
 
     private void welcomeDialog() {

@@ -9,7 +9,7 @@ android {
         applicationId "rasel.lunar.launcher"
         minSdk 26
         targetSdk 32
-        versionCode 13
+        versionCode 14
         versionName (new Date().format('yyyyMMdd'))
     }
 
