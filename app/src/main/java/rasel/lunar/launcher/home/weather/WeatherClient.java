@@ -19,7 +19,6 @@
 package rasel.lunar.launcher.home.weather;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -50,8 +49,8 @@ public class WeatherClient {
             if(stringBuilder.length() != 0) {
                 jsonStr = stringBuilder.toString();
             }
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         } finally {
             if(httpURLConnection != null) {
                 httpURLConnection.disconnect();
@@ -59,8 +58,8 @@ public class WeatherClient {
             if(bufferedReader != null) {
                 try {
                     bufferedReader.close();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
             }
         }

@@ -111,12 +111,6 @@ public class Feeds extends Fragment {
     };
 
     @Override
-    public void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         startService();
@@ -137,8 +131,8 @@ public class Feeds extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onPause() {
+        super.onPause();
         handler.removeCallbacks(runnable);
     }
 }

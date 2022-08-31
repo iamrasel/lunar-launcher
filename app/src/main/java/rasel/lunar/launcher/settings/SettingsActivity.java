@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.settings;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -76,7 +75,6 @@ public class SettingsActivity extends AppCompatActivity {
         themeValue = sharedPreferences.getInt(constants.SHARED_PREF_THEME, 0);
     }
 
-    @SuppressLint("SetTextI18n")
     private void loadSettings() {
         switch(timeFormatValue) {
             case 0: binding.followSystemTime.setChecked(true); break;
@@ -130,7 +128,7 @@ public class SettingsActivity extends AppCompatActivity {
             case 2: binding.selectLightTheme.setChecked(true); break;
         }
 
-        binding.version.setText(BuildConfig.VERSION_CODE + " ~ " + BuildConfig.VERSION_NAME);
+        binding.version.setText(BuildConfig.VERSION_NAME);
     }
 
     private String getCityName() {

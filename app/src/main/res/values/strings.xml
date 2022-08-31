@@ -7,7 +7,6 @@
     <string name="accessibility_service_label">Lock Service</string>
     <string name="add_new">Add New</string>
     <string name="app_info">App Info</string>
-    <string name="app_name">Lunar Launcher</string>
     <string name="app_store">App Store</string>
     <string name="application_theme">Application Theme</string>
     <string name="celsius">Celsius</string>
@@ -31,7 +30,6 @@
     <string name="launcher_configs">Launcher Configurations</string>
     <string name="light_theme">Light</string>
     <string name="negative">Negative</string>
-    <string name="nothing_found">¯\\_(ツ)_/¯</string>
     <string name="null_app_store_message">There\'s no app store is installed\non this device.</string>
     <string name="owm_key">OWM API Key</string>
     <string name="positive">Positive</string>

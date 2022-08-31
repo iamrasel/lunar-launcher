@@ -24,14 +24,14 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
-import rasel.lunar.launcher.helpers.Constants;
+import rasel.lunar.launcher.databinding.AboutBinding;
 
 public class SettingsClickListeners {
 
-    private final Constants constants = new Constants();
     private final AppCompatActivity appCompatActivity;
     private final SettingsPrefsUtils settingsPrefsUtils = new SettingsPrefsUtils();
     private final Context context;
@@ -139,7 +139,11 @@ public class SettingsClickListeners {
     }
 
     protected void openAbout(View view) {
-        view.setOnClickListener(v ->
-                (new About()).show(appCompatActivity.getSupportFragmentManager(), constants.MODAL_BOTTOM_SHEET_TAG));
+        view.setOnClickListener(v -> {
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(appCompatActivity);
+            AboutBinding aboutBinding = AboutBinding.inflate(appCompatActivity.getLayoutInflater());
+            bottomSheetDialog.setContentView(aboutBinding.getRoot());
+            bottomSheetDialog.show();
+        });
     }
 }

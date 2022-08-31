@@ -56,8 +56,8 @@ public class AppDrawer extends Fragment {
 
     private final String[] leftSearchArray = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i",
             "j", "k", "l", "m"};
-    private final String[] leftSearchArrayII = new String[]{"-", "_", "0", "1", "2", "3", "4"};
-    private final String[] rightSearchArray = new String[]{".", "!", "9", "8", "7", "6", "5"};
+    private final String[] leftSearchArrayII = new String[]{"0", "1", "2", "3", "4"};
+    private final String[] rightSearchArray = new String[]{"9", "8", "7", "6", "5"};
     private final String[] rightSearchArrayII = new String[]{"z", "y", "x", "w", "v", "u", "t", "s", "r",
             "q", "p", "o", "n"};
 
@@ -154,10 +154,10 @@ public class AppDrawer extends Fragment {
         }
 
         if(appsAdapter.getCount() < 1) {
-            binding.noAppsMessage.setVisibility(View.VISIBLE);
+            binding.loadingProgress.setVisibility(View.VISIBLE);
             return;
         } else {
-            binding.noAppsMessage.setVisibility(View.GONE);
+            binding.loadingProgress.setVisibility(View.GONE);
             binding.appsCount.setText(String.valueOf(appsAdapter.getCount()));
         }
         showApps();
@@ -212,7 +212,7 @@ public class AppDrawer extends Fragment {
             that match the search string */
         for (ResolveInfo resolver : packageList) {
             String appNm = (String) resolver.loadLabel(packageManager);
-            if (appNm.toLowerCase().contains(searchString)) {
+            if (appNm.replaceAll("[^a-zA-Z0-9]", "").toLowerCase().contains(searchString)) {
                 appsAdapter.add(appNm);
                 packageNamesArrayList.add(resolver.activityInfo.packageName);
             }
@@ -222,10 +222,9 @@ public class AppDrawer extends Fragment {
         if (appsAdapter.getCount() == 1) {
             startActivity(packageManager.getLaunchIntentForPackage(packageNamesArrayList.get(0)));
         } else if (appsAdapter.getCount() < 1) {
-            binding.noAppsMessage.setVisibility(View.VISIBLE);
+            binding.appsCount.setText("0");
         } else {
             showApps();
-            binding.noAppsMessage.setVisibility(View.GONE);
             binding.appsCount.setText(String.valueOf(appsAdapter.getCount()));
         }
     }

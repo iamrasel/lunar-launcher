@@ -35,11 +35,15 @@ import rasel.lunar.launcher.helpers.UniUtils;
 
 public class WeatherExecutor {
 
-    Constants constants = new Constants();
-    String cityName, owmKey, weatherUrl;
-    int tempUnitValue, showCityValue;
+    private final String cityName;
+    private final String owmKey;
+    private final String weatherUrl;
+    private final int tempUnitValue;
+    private final int showCityValue;
+    private final UniUtils uniUtils = new UniUtils();
 
     public WeatherExecutor(SharedPreferences sharedPreferences) {
+        Constants constants = new Constants();
         this.cityName = sharedPreferences.getString(constants.SHARED_PREF_CITY_NAME, null);
         this.owmKey = sharedPreferences.getString(constants.SHARED_PREF_OWM_KEY, null);
         this.tempUnitValue = sharedPreferences.getInt(constants.SHARED_PREF_TEMP_UNIT, 0);
@@ -50,7 +54,7 @@ public class WeatherExecutor {
     public void generateTempString(MaterialTextView materialTextView, FragmentActivity fragmentActivity) {
         materialTextView.setVisibility(View.GONE);
         try{
-            if(cityName != null && owmKey != null) {
+            if(uniUtils.isNetworkAvailable(fragmentActivity) && cityName != null && owmKey != null) {
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 Handler handler = new Handler(Looper.getMainLooper());
 
@@ -85,7 +89,7 @@ public class WeatherExecutor {
                 });
             }
         } catch(Exception exception) {
-            (new UniUtils()).exceptionViewer(fragmentActivity, exception.getMessage());
+            uniUtils.exceptionViewer(fragmentActivity, exception.getMessage());
             exception.printStackTrace();
         }
     }

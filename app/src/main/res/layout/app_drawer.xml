@@ -68,14 +68,15 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/no_apps_message"
-                android:layout_width="match_parent"
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/loading_progress"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/nothing_found"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                app:indicatorColor="@color/icon_color"
+                app:trackThickness="4dp"
+                style="@style/Widget.Material3.CircularProgressIndicator" />
 
         </RelativeLayout>
 

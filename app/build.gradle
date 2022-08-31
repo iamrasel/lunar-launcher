@@ -10,7 +10,7 @@ android {
         minSdk 26
         targetSdk 32
         versionCode 14
-        versionName (new Date().format('yyyyMMdd'))
+        versionName "14.1"
     }
 
     buildTypes {
@@ -19,11 +19,13 @@ android {
             shrinkResources false
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+            resValue "string", "app_name", "Lunar Launcher Debug"
         }
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Lunar Launcher"
         }
     }
 
