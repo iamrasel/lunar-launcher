@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,10 +79,17 @@ public class LauncherHome extends Fragment {
     @Override
     public void onResume() {
         context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)); // Battery
-        binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context)); // Time
-        binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences)); // Date
-        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp, requireActivity()); // Weather
 
+        // Time and date
+        if(DateFormat.is24HourFormat(requireContext())) {
+            binding.time.setFormat24Hour(homeUtils.getTimeFormat(sharedPreferences, context));
+            binding.date.setFormat24Hour(homeUtils.getDateFormat(sharedPreferences));
+        } else {
+            binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context));
+            binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences));
+        }
+
+        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp, requireActivity()); // Weather
         showTodoList();
 
         // handle gesture events
