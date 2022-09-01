@@ -53,17 +53,17 @@ public class FavouriteUtils {
                 }
             } else {
                 if(checkedId == button1.getId()) {
-                    saveFavApps(context, 1, null);
+                    saveFavApps(context, 1, "");
                 } else if(checkedId == button2.getId()) {
-                    saveFavApps(context, 2, null);
+                    saveFavApps(context, 2, "");
                 } else if(checkedId == button3.getId()) {
-                    saveFavApps(context, 3, null);
+                    saveFavApps(context, 3, "");
                 } else if(checkedId == button4.getId()) {
-                    saveFavApps(context, 4, null);
+                    saveFavApps(context, 4, "");
                 } else if(checkedId == button5.getId()) {
-                    saveFavApps(context, 5, null);
+                    saveFavApps(context, 5, "");
                 } else if(checkedId == button6.getId()) {
-                    saveFavApps(context, 6, null);
+                    saveFavApps(context, 6, "");
                 }
             }
         });
@@ -72,17 +72,17 @@ public class FavouriteUtils {
     protected void setPreview(Context context, String packageName, MaterialButton button1, MaterialButton button2, MaterialButton button3, MaterialButton button4, MaterialButton button5, MaterialButton button6) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE);
 
-        if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 1, null))) {
+        if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 1, ""))) {
             button1.setChecked(true);
-        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 2, null))) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 2, ""))) {
             button2.setChecked(true);
-        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 3, null))) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 3, ""))) {
             button3.setChecked(true);
-        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 4, null))) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 4, ""))) {
             button4.setChecked(true);
-        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 5, null))) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 5, ""))) {
             button5.setChecked(true);
-        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 6, null))) {
+        } else if(packageName.equals(sharedPreferences.getString(constants.FAV_APP_ + 6, ""))) {
             button6.setChecked(true);
         }
     }

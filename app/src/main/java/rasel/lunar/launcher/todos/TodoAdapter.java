@@ -124,7 +124,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
         dialogBinding.todoOk.setOnClickListener(v -> {
             String updatedTodoString = Objects.requireNonNull(dialogBinding.todoInput.getText()).toString().trim();
-            if(updatedTodoString.length() > 0) {
+            if(!updatedTodoString.isEmpty()) {
                 todo.setName(updatedTodoString);
                 databaseHandler.updateTodo(todo);
                 bottomSheetDialog.dismiss();

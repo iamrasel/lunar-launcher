@@ -102,15 +102,16 @@ public class UniUtils {
         bottomSheetDialog.show();
 
         binding.textViewer.setText(exceptionText);
-        binding.button.setOnClickListener(v ->
-                copyToClipboard(fragmentActivity, fragmentActivity.getApplicationContext(), exceptionText));
-                bottomSheetDialog.dismiss();
+        binding.button.setOnClickListener(v -> {
+            copyToClipboard(fragmentActivity, fragmentActivity.getApplicationContext(), exceptionText);
+            bottomSheetDialog.dismiss();
+        });
     }
 
     // Copies texts to clipboard
     public void copyToClipboard(FragmentActivity fragmentActivity, Context context, String copiedString) {
         ClipboardManager clipBoard = (ClipboardManager) fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText(null, copiedString);
+        ClipData clipData = ClipData.newPlainText("", copiedString);
         clipBoard.setPrimaryClip(clipData);
         Toast.makeText(context, context.getString(R.string.copied_message), Toast.LENGTH_SHORT).show();
     }

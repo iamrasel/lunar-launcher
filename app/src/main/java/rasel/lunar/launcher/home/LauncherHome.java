@@ -34,6 +34,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import dev.chrisbanes.insetter.Insetter;
+import rasel.lunar.launcher.MainActivity;
 import rasel.lunar.launcher.databinding.LauncherHomeBinding;
 import rasel.lunar.launcher.helpers.Constants;
 import rasel.lunar.launcher.home.weather.WeatherExecutor;
@@ -71,7 +72,7 @@ public class LauncherHome extends Fragment {
 
     public void showTodoList() {
         binding.todos.setLayoutManager(new LinearLayoutManager(context));
-        binding.todos.setAdapter(new TodoAdapter((new TodoManager()), (new DatabaseHandler(context)).getTodos(), context, requireActivity().getSupportFragmentManager(), this));
+        binding.todos.setAdapter(new TodoAdapter((new TodoManager()), (new DatabaseHandler(context)).getTodos(), context, new MainActivity().getSupportFragmentManager(), this));
     }
 
     @Override

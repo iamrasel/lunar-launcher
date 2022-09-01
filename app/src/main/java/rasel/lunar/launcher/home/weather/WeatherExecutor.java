@@ -44,8 +44,8 @@ public class WeatherExecutor {
 
     public WeatherExecutor(SharedPreferences sharedPreferences) {
         Constants constants = new Constants();
-        this.cityName = sharedPreferences.getString(constants.SHARED_PREF_CITY_NAME, null);
-        this.owmKey = sharedPreferences.getString(constants.SHARED_PREF_OWM_KEY, null);
+        this.cityName = sharedPreferences.getString(constants.SHARED_PREF_CITY_NAME, "");
+        this.owmKey = sharedPreferences.getString(constants.SHARED_PREF_OWM_KEY, "");
         this.tempUnitValue = sharedPreferences.getInt(constants.SHARED_PREF_TEMP_UNIT, 0);
         this.showCityValue = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_CITY, 0);
         this.weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + owmKey;
@@ -53,22 +53,22 @@ public class WeatherExecutor {
 
     public void generateTempString(MaterialTextView materialTextView, FragmentActivity fragmentActivity) {
         materialTextView.setVisibility(View.GONE);
-        try{
-            if(uniUtils.isNetworkAvailable(fragmentActivity) && cityName != null && owmKey != null) {
+        if(uniUtils.isNetworkAvailable(fragmentActivity) && !cityName.isEmpty() && !owmKey.isEmpty()) {
+            try{
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 Handler handler = new Handler(Looper.getMainLooper());
 
                 executor.execute(() -> {
                     Weather weather = null;
-                    String jsonStr = (new WeatherClient()).fetchWeather(weatherUrl);
-                    if (jsonStr != null) {
-                        weather = (new JsonParser()).getMyWeather(jsonStr);
+                    String jsonStr = new WeatherClient().fetchWeather(weatherUrl);
+                    if (!jsonStr.isEmpty()) {
+                        weather = new JsonParser().getMyWeather(jsonStr);
                     }
                     Weather finalWeather = weather;
 
                     handler.post(() -> {
                         if(finalWeather != null) {
-                            String temp = null, tempStr = null;
+                            String temp = "", tempStr = "";
 
                             switch(tempUnitValue) {
                                 case 0: temp = Math.round(finalWeather.getTemperature() - 273.15f) + "ºC";
@@ -87,10 +87,10 @@ public class WeatherExecutor {
                         }
                     });
                 });
+            } catch(Exception exception) {
+                uniUtils.exceptionViewer(fragmentActivity, exception.getMessage());
+                exception.printStackTrace();
             }
-        } catch(Exception exception) {
-            uniUtils.exceptionViewer(fragmentActivity, exception.getMessage());
-            exception.printStackTrace();
         }
     }
 }

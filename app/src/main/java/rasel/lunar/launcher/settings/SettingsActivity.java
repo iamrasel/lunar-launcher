@@ -65,12 +65,12 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
         timeFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_TIME_FORMAT, 0);
         showYear = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_YEAR, 1);
-        cityName = sharedPreferences.getString(constants.SHARED_PREF_CITY_NAME, null);
-        owmKey = sharedPreferences.getString(constants.SHARED_PREF_OWM_KEY, null);
+        cityName = sharedPreferences.getString(constants.SHARED_PREF_CITY_NAME, "");
+        owmKey = sharedPreferences.getString(constants.SHARED_PREF_OWM_KEY, "");
         tempUnit = sharedPreferences.getInt(constants.SHARED_PREF_TEMP_UNIT, 0);
         showCity = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_CITY, 0);
         showTodos = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_TODOS, 3);
-        feedUrl = sharedPreferences.getString(constants.SHARED_PREF_FEED_URL, null);
+        feedUrl = sharedPreferences.getString(constants.SHARED_PREF_FEED_URL, "");
         lockMode = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
         themeValue = sharedPreferences.getInt(constants.SHARED_PREF_THEME, 0);
     }

@@ -27,7 +27,7 @@ import java.net.URL;
 public class WeatherClient {
 
     protected String fetchWeather(String wUrl) {
-        String jsonStr = null;
+        String jsonStr = "";
 
         HttpURLConnection httpURLConnection = null;
         BufferedReader bufferedReader = null;
@@ -42,7 +42,7 @@ public class WeatherClient {
             StringBuilder stringBuilder = new StringBuilder();
             String line;
 
-            while ((line =bufferedReader.readLine())!=null) {
+            while ((line =bufferedReader.readLine()) != null) {
                 stringBuilder.append(line).append("\n");
             }
 

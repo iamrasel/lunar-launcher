@@ -45,7 +45,7 @@ public class HomeUtils {
     // Gets time format
     protected String getTimeFormat(SharedPreferences sharedPreferences, Context context) {
         int timeFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_TIME_FORMAT, 0);
-        String timeFormat = null;
+        String timeFormat = "";
         switch (timeFormatValue) {
             case 0:
                 if(DateFormat.is24HourFormat(context)) {
@@ -80,7 +80,7 @@ public class HomeUtils {
     // Gets date format
     protected String getDateFormat(SharedPreferences sharedPreferences) {
         int dateFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_YEAR, 1);
-        String dateFormat = null;
+        String dateFormat = "";
         switch (dateFormatValue) {
             case 0: dateFormat = "EEE',' d" + getDateNumberSuffix() + " MMMM";
                 break;
@@ -139,7 +139,7 @@ public class HomeUtils {
             public void onLongClick() {
                 super.onLongClick();
                 (fragmentManager.beginTransaction()).add(R.id.main_fragments_container,
-                        new TodoManager()).addToBackStack(null).commit();
+                        new TodoManager()).addToBackStack("").commit();
             }
             @Override
             public void onSwipeUp() {

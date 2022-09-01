@@ -44,7 +44,7 @@ public class RssService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences settingsPrefs = getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        String rssUrl = settingsPrefs.getString(constants.SHARED_PREF_FEED_URL, null);
+        String rssUrl = settingsPrefs.getString(constants.SHARED_PREF_FEED_URL, "");
 
         List<RSS> rssItems = null;
         try {

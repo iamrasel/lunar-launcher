@@ -35,7 +35,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private final Constants constants = new Constants();
 
     public DatabaseHandler(Context context) {
-        super(context, (new Constants()).TODO_DATABASE_NAME, null, (new Constants()).TODO_DATABASE_VERSION);
+        super(context, new Constants().TODO_DATABASE_NAME, null, new Constants().TODO_DATABASE_VERSION);
     }
 
     @Override

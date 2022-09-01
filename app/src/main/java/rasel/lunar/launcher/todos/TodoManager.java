@@ -111,7 +111,7 @@ public class TodoManager extends Fragment {
         dialogBinding.todoCancel.setOnClickListener(v -> bottomSheetDialog.dismiss());
         dialogBinding.todoOk.setOnClickListener(v -> {
             String todoString = Objects.requireNonNull(dialogBinding.todoInput.getText()).toString().trim();
-            if(todoString.length() > 0) {
+            if(!todoString.isEmpty()) {
                 todo.setName(todoString);
                 databaseHandler.addTodo(todo);
                 bottomSheetDialog.dismiss();

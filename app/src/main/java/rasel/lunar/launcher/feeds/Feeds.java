@@ -75,9 +75,9 @@ public class Feeds extends Fragment {
 
     private void startService() {
         String rssUrl = (requireActivity().getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE))
-                .getString(constants.SHARED_PREF_FEED_URL, null);
+                .getString(constants.SHARED_PREF_FEED_URL, "");
 
-        if(new UniUtils().isNetworkAvailable(requireActivity()) && rssUrl != null) {
+        if(new UniUtils().isNetworkAvailable(requireActivity()) && !rssUrl.isEmpty()) {
             Intent intent = new Intent(requireActivity(), RssService.class);
             intent.putExtra(constants.RSS_RECEIVER, resultReceiver);
             requireActivity().startService(intent);

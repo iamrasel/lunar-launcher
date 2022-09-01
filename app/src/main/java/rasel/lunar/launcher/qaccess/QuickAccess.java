@@ -55,12 +55,12 @@ public class QuickAccess extends BottomSheetDialogFragment {
 
     private void favApps() {
         SharedPreferences prefsFavApps = requireContext().getSharedPreferences(constants.SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE);
-        packageOne = prefsFavApps.getString(constants.FAV_APP_ + 1, null);
-        packageTwo = prefsFavApps.getString(constants.FAV_APP_ + 2, null);
-        packageThree = prefsFavApps.getString(constants.FAV_APP_ + 3, null);
-        packageFour = prefsFavApps.getString(constants.FAV_APP_ + 4, null);
-        packageFive = prefsFavApps.getString(constants.FAV_APP_ + 5, null);
-        packageSix = prefsFavApps.getString(constants.FAV_APP_ + 6, null);
+        packageOne = prefsFavApps.getString(constants.FAV_APP_ + 1, "");
+        packageTwo = prefsFavApps.getString(constants.FAV_APP_ + 2, "");
+        packageThree = prefsFavApps.getString(constants.FAV_APP_ + 3, "");
+        packageFour = prefsFavApps.getString(constants.FAV_APP_ + 4, "");
+        packageFive = prefsFavApps.getString(constants.FAV_APP_ + 5, "");
+        packageSix = prefsFavApps.getString(constants.FAV_APP_ + 6, "");
 
         accessUtils.favApps(packageOne, binding.appOne, 1); accessUtils.favApps(packageTwo, binding.appTwo, 2);
         accessUtils.favApps(packageThree, binding.appThree, 3); accessUtils.favApps(packageFour, binding.appFour, 4);
@@ -70,19 +70,19 @@ public class QuickAccess extends BottomSheetDialogFragment {
     private void favPhoneAndUrls() {
         SharedPreferences prefsPhonesAndUrls = requireContext().getSharedPreferences(constants.SHARED_PREFS_PHONES_URLS, Context.MODE_PRIVATE);
 
-        phoneNumOne = prefsPhonesAndUrls.getString(constants.PHONE_NO_ + 1, null);
-        phoneNumTwo = prefsPhonesAndUrls.getString(constants.PHONE_NO_ + 2, null);
-        phoneNumThree = prefsPhonesAndUrls.getString(constants.PHONE_NO_ + 3, null);
-        thumbPhoneOne = prefsPhonesAndUrls.getString(constants.PHONE_THUMB_LETTER_ + 1, null);
-        thumbPhoneTwo = prefsPhonesAndUrls.getString(constants.PHONE_THUMB_LETTER_ + 2, null);
-        thumbPhoneThree = prefsPhonesAndUrls.getString(constants.PHONE_THUMB_LETTER_ + 3, null);
+        phoneNumOne = prefsPhonesAndUrls.getString(constants.PHONE_NO_ + 1, "");
+        phoneNumTwo = prefsPhonesAndUrls.getString(constants.PHONE_NO_ + 2, "");
+        phoneNumThree = prefsPhonesAndUrls.getString(constants.PHONE_NO_ + 3, "");
+        thumbPhoneOne = prefsPhonesAndUrls.getString(constants.PHONE_THUMB_LETTER_ + 1, "");
+        thumbPhoneTwo = prefsPhonesAndUrls.getString(constants.PHONE_THUMB_LETTER_ + 2, "");
+        thumbPhoneThree = prefsPhonesAndUrls.getString(constants.PHONE_THUMB_LETTER_ + 3, "");
 
-        urlStringOne = prefsPhonesAndUrls.getString(constants.URL_NO_ + 1, null);
-        urlStringTwo = prefsPhonesAndUrls.getString(constants.URL_NO_ + 2, null);
-        urlStringThree = prefsPhonesAndUrls.getString(constants.URL_NO_ + 3, null);
-        thumbUrlOne = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 1, null);
-        thumbUrlTwo = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 2, null);
-        thumbUrlThree = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 3, null);
+        urlStringOne = prefsPhonesAndUrls.getString(constants.URL_NO_ + 1, "");
+        urlStringTwo = prefsPhonesAndUrls.getString(constants.URL_NO_ + 2, "");
+        urlStringThree = prefsPhonesAndUrls.getString(constants.URL_NO_ + 3, "");
+        thumbUrlOne = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 1, "");
+        thumbUrlTwo = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 2, "");
+        thumbUrlThree = prefsPhonesAndUrls.getString(constants.URL_THUMB_LETTER_ + 3, "");
 
         accessUtils.phonesAndUrls(constants.URL_ADDRESS, urlStringOne, thumbUrlOne, binding.urlOne, 1);
         accessUtils.phonesAndUrls(constants.URL_ADDRESS, urlStringTwo, thumbUrlTwo, binding.urlTwo, 2);

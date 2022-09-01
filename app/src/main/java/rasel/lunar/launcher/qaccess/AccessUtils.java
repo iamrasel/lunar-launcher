@@ -110,7 +110,7 @@ public class AccessUtils {
     }
 
     protected void phonesAndUrls(String root, String intentString, String thumbLetter, ExtendedFloatingActionButton efab, int position) {
-        if(intentString == null) {
+        if(intentString.isEmpty()) {
             efab.setText("+");
             efab.setOnClickListener(v -> saverDialog(position, root));
         } else {
@@ -133,11 +133,11 @@ public class AccessUtils {
             });
             efab.setOnLongClickListener(v -> {
                 if(root.equals(constants.PHONE_NO)) {
-                    sharedPreferences.edit().putString(constants.PHONE_NO_ + position, null).apply();
-                    sharedPreferences.edit().putString(constants.PHONE_THUMB_LETTER_ + position, null).apply();
+                    sharedPreferences.edit().putString(constants.PHONE_NO_ + position, "").apply();
+                    sharedPreferences.edit().putString(constants.PHONE_THUMB_LETTER_ + position, "").apply();
                 } else if(root.equals(constants.URL_ADDRESS)) {
-                    sharedPreferences.edit().putString(constants.URL_NO_ + position, null).apply();
-                    sharedPreferences.edit().putString(constants.URL_THUMB_LETTER_ + position, null).apply();
+                    sharedPreferences.edit().putString(constants.URL_NO_ + position, "").apply();
+                    sharedPreferences.edit().putString(constants.URL_THUMB_LETTER_ + position, "").apply();
                 }
                 efab.setText("+");
                 bottomSheetDialogFragment.onResume();
@@ -172,7 +172,7 @@ public class AccessUtils {
 
     protected void favApps(String packageName, AppCompatImageView imageView, int position) {
         PackageManager packageManager = context.getPackageManager();
-        if(packageName != null) {
+        if(!packageName.isEmpty()) {
             try{
                 Drawable appIcon = packageManager.getApplicationIcon(packageName);
                 imageView.setImageDrawable(appIcon);
@@ -181,7 +181,7 @@ public class AccessUtils {
                     bottomSheetDialogFragment.dismiss();
                 });
                 imageView.setOnLongClickListener(v -> {
-                    favouriteUtils.saveFavApps(context, position, null);
+                    favouriteUtils.saveFavApps(context, position, "");
                     imageView.setVisibility(View.GONE);
                     return true;
                 });
@@ -227,7 +227,7 @@ public class AccessUtils {
         dialogBinding.cancel.setOnClickListener(v -> dialog.dismiss());
         dialogBinding.ok.setOnClickListener(v -> {
             String urlPhone = Objects.requireNonNull(dialogBinding.urlPhone.getText()).toString().trim();
-            if(urlPhone.length() > 0 && isAlphabetPicked.get()) {
+            if(!urlPhone.isEmpty() && isAlphabetPicked.get()) {
                 if(hintText.equals(constants.PHONE_NO)) {
                     sharedPreferences.edit().putString(constants.PHONE_NO_ + position, urlPhone).apply();
                 } else if(hintText.equals(constants.URL_ADDRESS)) {
