@@ -1,0 +1,4 @@
+- Few crush fix and improvements
+- Unexpected connection issue fix (for api.openweathermap.org)
+- Special characters will be ignored while searching apps
+- Date-time fix (for system default 24 hour format)

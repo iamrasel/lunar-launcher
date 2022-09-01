@@ -62,6 +62,8 @@
 <details><summary>Feeds</summary>
 
 - [x] Device stats
+  - [ ] RAM boost
+  - [ ] Cache clean
 - [x] RSS
 
 </details>

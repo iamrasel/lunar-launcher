@@ -1,6 +1,6 @@
 Lunar Launcher is yet another addition to the world of android launchers. Low memory footprint and clean interface, but large number of features are awaiting. It is fully open-source and built with latest build-tools.
 
-**Features:**
+<b>Features:</b>
 
 - Material design 3
 - Day/night theme mode
