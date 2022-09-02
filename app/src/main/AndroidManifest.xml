@@ -42,19 +42,6 @@
             android:name=".settings.SettingsActivity"
             android:exported="false" />
 
-        <service
-            android:name=".helpers.LockService"
-	    android:isAccessibilityTool="true"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:exported="false">
-            <intent-filter>
-                <action android:isAccessibilityTool="true" android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-		android:isAccessibilityTool="true"
-                android:resource="@xml/lock_service" />
-        </service>
 
         <service android:name=".feeds.rss.RssService"/>
 
