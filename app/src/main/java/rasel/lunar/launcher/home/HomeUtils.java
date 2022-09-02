@@ -82,7 +82,7 @@ public class HomeUtils {
         int dateFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_YEAR, 1);
         String dateFormat = "";
         switch (dateFormatValue) {
-            case 0: dateFormat = "EEE',' d" + getDateNumberSuffix() + " MMMM";
+            case 0: dateFormat = "EEEE',' d" + getDateNumberSuffix() + " MMM";
                 break;
             case 1: dateFormat = "EEE',' d" + getDateNumberSuffix() + " MMM',' yyyy";
                 break;

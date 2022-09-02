@@ -186,31 +186,13 @@
                 android:text="@string/show_todos"
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/todos_group"
-                android:layout_width="wrap_content"
+            <com.google.android.material.slider.Slider
+                android:id="@+id/show_todos"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_todos_negative"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/negative"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_todos_three"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/three"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_todos_five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/five"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+                android:valueFrom="0"
+                android:valueTo="7"
+                android:stepSize="1"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="324dp"

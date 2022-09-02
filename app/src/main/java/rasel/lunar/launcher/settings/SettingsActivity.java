@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         settingsClickListeners.showYear(binding.yearGroup, binding.selectYearNegative, binding.selectYearPositive);
         settingsClickListeners.tempUnit(binding.tempGroup, binding.selectCelsius, binding.selectFahrenheit);
         settingsClickListeners.showCity(binding.cityGroup, binding.showCityNegative, binding.showCityPositive);
-        settingsClickListeners.showTodos(binding.todosGroup, binding.showTodosNegative, binding.showTodosThree, binding.showTodosFive);
+        settingsClickListeners.showTodos(binding.showTodos);
         settingsClickListeners.screenLock(binding.lockGroup, binding.selectLockNegative, binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot);
         settingsClickListeners.theme(binding.themeGroup, binding.followSystemTheme, binding.selectDarkTheme, binding.selectLightTheme);
         settingsClickListeners.openAbout(binding.about);
@@ -100,11 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
             case 1: binding.showCityPositive.setChecked(true); break;
         }
 
-        switch(showTodos) {
-            case 0: binding.showTodosNegative.setChecked(true); break;
-            case 3: binding.showTodosThree.setChecked(true); break;
-            case 5: binding.showTodosFive.setChecked(true); break;
-        }
+        binding.showTodos.setValue(showTodos);
 
         binding.inputFeedUrl.setText(feedUrl);
 

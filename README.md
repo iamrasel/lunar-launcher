@@ -8,7 +8,7 @@
         <br>
 		<img src='https://img.shields.io/badge/Maintained-yes-green?style=for-the-badge'>
         <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/Build_Debug?style=for-the-badge'></a>
-		<img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=for-the-badge'>
+		<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=for-the-badge'></a>
     </p>
 </div>
 
@@ -25,7 +25,6 @@
   - [x] Device admin
   - [x] Root
 - [x] Swipe down: expand notification panel
-- [ ] Migration to Kotlin
 - [ ] Yet to decide
 
 </details>
@@ -43,7 +42,7 @@
 - [x] Todo
   - [x] Add, delete, edit, copy
   - [ ] Auto destructive todo with notify
-  - [x] Zero/three/five items in home screen
+  - [x] 0-7 items in home screen
   - [ ] Access lock
 
 </details>
@@ -62,8 +61,6 @@
 <details><summary>Feeds</summary>
 
 - [x] Device stats
-  - [ ] RAM boost
-  - [ ] Cache clean
 - [x] RSS
 
 </details>
@@ -78,7 +75,7 @@
 </details>
 
 ## Screenshots
-As per version 14. Click on the image to enlarge it.
+As per version 14. Click on any image to enlarge it. To know more, explore and see for yourself.
 
 <div align='center'>
 	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/1.png' width=130>

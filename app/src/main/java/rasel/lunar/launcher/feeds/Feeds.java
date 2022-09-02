@@ -26,10 +26,8 @@ import android.os.ResultReceiver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -62,15 +60,6 @@ public class Feeds extends Fragment {
         feedsUtils = new FeedsUtils(requireActivity());
 
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        String noAction = "Action will be added soon";
-        binding.ram.setOnClickListener(v -> Toast.makeText(requireContext(), noAction, Toast.LENGTH_SHORT).show());
-        binding.intStorage.setOnClickListener(v -> Toast.makeText(requireContext(), noAction, Toast.LENGTH_SHORT).show());
-        binding.extStorage.setOnClickListener(v -> Toast.makeText(requireContext(), noAction, Toast.LENGTH_SHORT).show());
     }
 
     private void startService() {

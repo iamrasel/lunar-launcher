@@ -23,8 +23,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/rounded_bg"
-                android:clickable="true"/>
+                android:background="@drawable/rounded_bg"/>
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/cpu"
                 android:layout_width="0dp"
@@ -45,16 +44,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/rounded_bg"
-                android:clickable="true"/>
+                android:background="@drawable/rounded_bg"/>
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/ext_storage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/rounded_bg"
-                android:clickable="true"/>
+                android:background="@drawable/rounded_bg"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

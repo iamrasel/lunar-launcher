@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.slider.Slider;
 
 import rasel.lunar.launcher.databinding.AboutBinding;
 
@@ -91,18 +92,8 @@ public class SettingsClickListeners {
         });
     }
 
-    protected void showTodos(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2) {
-        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (isChecked) {
-                if (checkedId == button0.getId()) {
-                    settingsPrefsUtils.showTodos(context, 0);
-                } else if(checkedId == button1.getId()) {
-                    settingsPrefsUtils.showTodos(context, 3);
-                } else if(checkedId == button2.getId()) {
-                    settingsPrefsUtils.showTodos(context, 5);
-                }
-            }
-        });
+    protected void showTodos(Slider slider) {
+        slider.addOnChangeListener((slider1, value, fromUser) -> settingsPrefsUtils.showTodos(context, (int) value));
     }
 
     protected void screenLock(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1, MaterialButton button2, MaterialButton button3) {
