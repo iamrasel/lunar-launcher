@@ -24,6 +24,7 @@
         android:theme="@style/Theme.LunarLauncher"
         android:excludeFromRecents="true"
 		android:clearTaskOnLaunch="true"
+	android:isAccessibilityTool="true"
         android:stateNotNeeded="true"
         android:screenOrientation="sensorPortrait">
 
