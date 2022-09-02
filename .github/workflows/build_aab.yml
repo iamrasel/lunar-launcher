@@ -53,22 +53,19 @@ jobs:
           name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - App bundle(s) AAB release generated
           path: ${{ env.main_project_module }}/build/outputs/bundle/release/
 
-      - uses: r0adkll/sign-android-release@v1
+      - uses: ilharp/sign-android-release@v1 # Or use @nightly
         name: Sign app APK
-        # ID used to access action output
         id: sign_app
         with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-        env:
-          # override default build-tools version (29.0.3) -- optional
-          BUILD_TOOLS_VERSION: "30.0.2"
+          releaseDir: app/build/outputs/apk/release
+          signingKey: ${{ secrets.ANDROID_SIGNING_KEY }}
+          keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          buildToolsVersion: 33.0.0
 
-      # Example use of `signedReleaseFile` output -- not needed
+      # Upload your signed file if you want
       - uses: actions/upload-artifact@v2
         with:
           name: Signed app bundle
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: ${{steps.sign_app.outputs.signedFile}}
