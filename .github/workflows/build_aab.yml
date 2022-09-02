@@ -57,7 +57,7 @@ jobs:
         name: Sign app APK
         id: sign_app
         with:
-          releaseDir: ${{ env.main_project_module }}/build/outputs/apk/release
+          releaseDir: ${{ env.main_project_module }}/build/outputs/bundle/release/
           signingKey: ${{ secrets.ANDROID_SIGNING_KEY }}
           keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
