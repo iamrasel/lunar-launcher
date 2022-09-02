@@ -101,7 +101,7 @@ public class AppDrawer extends Fragment {
             @Override
             public void onSwipeDown() {
                 super.onSwipeDown();
-                new UniUtils().expandNotificationPanel(context, requireActivity());
+                new UniUtils().expandNotificationPanel(context);
             }
             @Override
             public void onDoubleClick() {

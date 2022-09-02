@@ -88,7 +88,6 @@ public class WeatherExecutor {
                     });
                 });
             } catch(Exception exception) {
-                uniUtils.exceptionViewer(fragmentActivity, exception.getMessage());
                 exception.printStackTrace();
             }
         }

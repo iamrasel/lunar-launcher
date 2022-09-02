@@ -111,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)) {
             binding.selectLockAccessibility.setEnabled(false);
         }
-        if(!(new UniUtils()).isRooted(this)) {
+        if(!(new UniUtils()).isRooted()) {
             binding.selectLockRoot.setEnabled(false);
         }
 

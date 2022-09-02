@@ -19,6 +19,7 @@
     <string name="developer_name">Developed by: Md Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
     <string name="device_admin_description">Allow to use double tap to lock feature</string>
+    <string name="disable_dnd">Disable DND mode first</string>
     <string name="double_tap_lock">Double Tap Lock</string>
     <string name="empty_text_field">Text field is empty</string>
     <string name="fahrenheit">Fahrenheit</string>

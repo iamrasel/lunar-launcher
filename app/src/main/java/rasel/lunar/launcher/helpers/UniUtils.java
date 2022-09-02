@@ -45,12 +45,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import java.io.DataOutputStream;
 
 import rasel.lunar.launcher.R;
-import rasel.lunar.launcher.databinding.ExceptionViewerBinding;
 
 public class UniUtils {
 
@@ -94,20 +91,6 @@ public class UniUtils {
         }
     }
 
-    // Shows exception messages in a dialog
-    public void exceptionViewer(FragmentActivity fragmentActivity, String exceptionText) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(fragmentActivity);
-        ExceptionViewerBinding binding = ExceptionViewerBinding.inflate(fragmentActivity.getLayoutInflater());
-        bottomSheetDialog.setContentView(binding.getRoot());
-        bottomSheetDialog.show();
-
-        binding.textViewer.setText(exceptionText);
-        binding.button.setOnClickListener(v -> {
-            copyToClipboard(fragmentActivity, fragmentActivity.getApplicationContext(), exceptionText);
-            bottomSheetDialog.dismiss();
-        });
-    }
-
     // Copies texts to clipboard
     public void copyToClipboard(FragmentActivity fragmentActivity, Context context, String copiedString) {
         ClipboardManager clipBoard = (ClipboardManager) fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
@@ -118,13 +101,12 @@ public class UniUtils {
 
     // Expands notification panel
     @SuppressLint("WrongConstant")
-    public void expandNotificationPanel(Context context, FragmentActivity fragmentActivity) {
+    public void expandNotificationPanel(Context context) {
         try {
             ((Class.forName("android.app.StatusBarManager"))
                     .getMethod("expandNotificationsPanel"))
                     .invoke(context.getSystemService("statusbar"));
         } catch (Exception exception) {
-            exceptionViewer(fragmentActivity, exception.getMessage());
             exception.printStackTrace();
         }
     }
@@ -150,7 +132,6 @@ public class UniUtils {
                 fragmentActivity.startService(new Intent(fragmentActivity.getApplicationContext(), LockService.class)
                         .setAction((new Constants()).ACCESSIBILITY_SERVICE_LOCK_SCREEN));
             } catch (Exception exception) {
-                exceptionViewer(fragmentActivity, exception.getMessage());
                 exception.printStackTrace();
             }
         } else {
@@ -159,7 +140,7 @@ public class UniUtils {
     }
 
     // Lock screen using root
-    public void lockRoot(FragmentActivity fragmentActivity) {
+    public void lockRoot() {
         try {
             Process process = Runtime.getRuntime().exec("su");
             DataOutputStream dataOutputStream = new DataOutputStream(process.getOutputStream());
@@ -170,13 +151,12 @@ public class UniUtils {
             process.waitFor();
             process.destroy();
         } catch (Exception exception) {
-            exceptionViewer(fragmentActivity, exception.getMessage());
             exception.printStackTrace();
         }
     }
 
     // Checks if the device is rooted
-    public boolean isRooted(FragmentActivity fragmentActivity) {
+    public boolean isRooted() {
         Process process = null;
         try {
             process = Runtime.getRuntime().exec("su");
@@ -189,7 +169,6 @@ public class UniUtils {
                 try {
                     process.destroy();
                 } catch (Exception exception) {
-                    exceptionViewer(fragmentActivity, exception.getMessage());
                     exception.printStackTrace();
                 }
             }
@@ -202,7 +181,7 @@ public class UniUtils {
         } else if(lockMethodValue == 2) {
             lockDeviceAdmin(context, fragmentActivity);
         } else if(lockMethodValue == 3) {
-            lockRoot(fragmentActivity);
+            lockRoot();
         }
     }
 

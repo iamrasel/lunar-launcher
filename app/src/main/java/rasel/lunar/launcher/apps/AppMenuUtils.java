@@ -53,7 +53,7 @@ public class AppMenuUtils {
                 Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
         Rect rect = new Rect(0, (uniUtils.getScreenHeight(fragmentActivity)/2), uniUtils.getScreenWidth(fragmentActivity), uniUtils.getScreenHeight(fragmentActivity));
-        ActivityOptions activityOptions = getActivityOptions(fragmentActivity);
+        ActivityOptions activityOptions = getActivityOptions();
         activityOptions = activityOptions.setLaunchBounds(rect);
 
         context.startActivity(freeformIntent, activityOptions.toBundle());
@@ -92,14 +92,13 @@ public class AppMenuUtils {
         appMenus.dismiss();
     }
 
-    private ActivityOptions getActivityOptions(FragmentActivity fragmentActivity) {
+    private ActivityOptions getActivityOptions() {
         ActivityOptions activityOptions = ActivityOptions.makeBasic();
         int freeform_stackId = 5;
         try {
             Method method = ActivityOptions.class.getMethod("setLaunchWindowingMode", int.class);
             method.invoke(activityOptions, freeform_stackId);
         } catch (Exception exception) {
-            (new UniUtils()).exceptionViewer(fragmentActivity, exception.getMessage());
             exception.printStackTrace();
         }
         return activityOptions;

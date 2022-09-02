@@ -101,7 +101,7 @@ public class HomeUtils {
             @Override
             public void onSwipeDown() {
                 super.onSwipeDown();
-                uniUtils.expandNotificationPanel(context, fragmentActivity);
+                uniUtils.expandNotificationPanel(context);
             }
             @Override
             public void onDoubleClick() {
@@ -122,7 +122,7 @@ public class HomeUtils {
             @Override
             public void onSwipeDown() {
                 super.onSwipeDown();
-                uniUtils.expandNotificationPanel(context, fragmentActivity);
+                uniUtils.expandNotificationPanel(context);
             }
             @Override
             public void onDoubleClick() {
@@ -149,7 +149,7 @@ public class HomeUtils {
             @Override
             public void onSwipeDown() {
                 super.onSwipeDown();
-                uniUtils.expandNotificationPanel(context, fragmentActivity);
+                uniUtils.expandNotificationPanel(context);
             }
             @Override
             public void onDoubleClick() {

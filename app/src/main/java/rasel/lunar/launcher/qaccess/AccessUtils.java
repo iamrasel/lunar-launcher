@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -47,7 +48,6 @@ import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.apps.FavouriteUtils;
 import rasel.lunar.launcher.databinding.SaverDialogBinding;
 import rasel.lunar.launcher.helpers.Constants;
-import rasel.lunar.launcher.helpers.UniUtils;
 
 public class AccessUtils {
 
@@ -55,7 +55,6 @@ public class AccessUtils {
     private final BottomSheetDialogFragment bottomSheetDialogFragment;
     private final FragmentActivity fragmentActivity;
     private final FavouriteUtils favouriteUtils = new FavouriteUtils();
-    private final UniUtils uniUtils = new UniUtils();
     private final Constants constants = new Constants();
     private final SharedPreferences sharedPreferences;
 
@@ -85,7 +84,7 @@ public class AccessUtils {
             try {
                 audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, (int) value, 0);
             } catch (Exception exception) {
-                uniUtils.exceptionViewer(fragmentActivity, exception.getMessage() + "\nDisable DND mode first.");
+                Toast.makeText(context, R.string.disable_dnd, Toast.LENGTH_SHORT).show();
                 exception.printStackTrace();
             }
         });
@@ -103,7 +102,7 @@ public class AccessUtils {
             try {
                 audioManager.setStreamVolume(AudioManager.STREAM_RING, (int) value, 0);
             } catch (Exception exception) {
-                uniUtils.exceptionViewer(fragmentActivity, exception.getMessage() + "\nDisable DND mode first.");
+                Toast.makeText(context, R.string.disable_dnd, Toast.LENGTH_SHORT).show();
                 exception.printStackTrace();
             }
         });
@@ -153,7 +152,6 @@ public class AccessUtils {
             int brightness = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS);
             seekBar.setValue(brightness);
         } catch(Settings.SettingNotFoundException settingNotFoundException) {
-            uniUtils.exceptionViewer(fragmentActivity, settingNotFoundException.getMessage());
             settingNotFoundException.printStackTrace();
         }
         seekBar.addOnChangeListener((slider, value, fromUser) -> {

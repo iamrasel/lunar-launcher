@@ -51,7 +51,6 @@ public class AppMenus extends BottomSheetDialogFragment {
         try {
             binding.appName.setText(appMenuUtils.getAppName(context.getPackageManager(), packageName));
         } catch (PackageManager.NameNotFoundException nameNotFoundException) {
-            (new UniUtils()).exceptionViewer(requireActivity(), nameNotFoundException.getMessage());
             nameNotFoundException.printStackTrace();
         }
         binding.appPackage.setText(packageName);
