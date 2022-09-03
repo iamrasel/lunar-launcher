@@ -31,6 +31,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -38,6 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.Objects;
 
 import dev.chrisbanes.insetter.Insetter;
+import rasel.lunar.launcher.MainActivity;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.TodoDialogBinding;
 import rasel.lunar.launcher.databinding.TodoManagerBinding;
@@ -45,6 +47,7 @@ import rasel.lunar.launcher.databinding.TodoManagerBinding;
 public class TodoManager extends Fragment {
 
     private TodoManagerBinding binding;
+    private FragmentActivity activity;
     private Context context;
     private DatabaseHandler databaseHandler;
     private final Todo todo = new Todo();
@@ -57,7 +60,12 @@ public class TodoManager extends Fragment {
                 .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.getRoot());
 
-        context = requireActivity().getApplicationContext();
+        if(isAdded()) {
+            activity = requireActivity();
+        } else {
+            activity = new MainActivity();
+        }
+        context = activity.getApplicationContext();
         databaseHandler = new DatabaseHandler(context);
         binding.todos.setLayoutManager(new LinearLayoutManager(context));
 
@@ -72,11 +80,11 @@ public class TodoManager extends Fragment {
     }
 
     protected void refreshList() {
-        binding.todos.setAdapter(new TodoAdapter(this, databaseHandler.getTodos(), context, requireActivity().getSupportFragmentManager(), this));
+        binding.todos.setAdapter(new TodoAdapter(this, databaseHandler.getTodos(), context, activity.getSupportFragmentManager(), this));
     }
 
     private void deleteAllDialog() {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireActivity());
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity);
         TodoDialogBinding dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(getContext()));
         bottomSheetDialog.setContentView(dialogBinding.getRoot());
         bottomSheetDialog.show();
@@ -97,7 +105,7 @@ public class TodoManager extends Fragment {
     }
 
     private void addNewDialog() {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireActivity());
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity);
         Objects.requireNonNull(bottomSheetDialog).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         TodoDialogBinding dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(getContext()));
         bottomSheetDialog.setContentView(dialogBinding.getRoot());
@@ -105,7 +113,7 @@ public class TodoManager extends Fragment {
 
         dialogBinding.deleteAllConfirmation.setVisibility(View.GONE);
         dialogBinding.todoInput.requestFocus();
-        InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(dialogBinding.todoInput, InputMethodManager.SHOW_IMPLICIT);
 
         dialogBinding.todoCancel.setOnClickListener(v -> bottomSheetDialog.dismiss());

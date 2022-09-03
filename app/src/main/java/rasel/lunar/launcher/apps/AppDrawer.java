@@ -39,11 +39,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dev.chrisbanes.insetter.Insetter;
+import rasel.lunar.launcher.MainActivity;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.AppDrawerBinding;
 import rasel.lunar.launcher.helpers.Constants;
@@ -53,7 +55,7 @@ import rasel.lunar.launcher.helpers.UniUtils;
 public class AppDrawer extends Fragment {
 
     private AppDrawerBinding binding;
-
+    private FragmentActivity activity;
     private final String[] leftSearchArray = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i",
             "j", "k", "l", "m"};
     private final String[] leftSearchArrayII = new String[]{"0", "1", "2", "3", "4"};
@@ -71,7 +73,12 @@ public class AppDrawer extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = AppDrawerBinding.inflate(inflater, container, false);
-        context = requireActivity().getApplicationContext();
+        if(isAdded()) {
+            activity = requireActivity();
+        } else {
+            activity = new MainActivity();
+        }
+        context = activity.getApplicationContext();
 
         Insetter.builder()
                 .padding(WindowInsetsCompat.Type.systemBars())
@@ -107,13 +114,13 @@ public class AppDrawer extends Fragment {
             public void onDoubleClick() {
                 super.onDoubleClick();
                 new UniUtils().lockMethod(((context.getSharedPreferences(new Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE))
-                        .getInt(new Constants().SHARED_PREF_LOCK, 0)), context, requireActivity());
+                        .getInt(new Constants().SHARED_PREF_LOCK, 0)), context, activity);
             }
         });
     }
 
     private void setupInitialView() {
-        packageManager = requireActivity().getPackageManager();
+        packageManager = activity.getPackageManager();
         packageNamesArrayList = new ArrayList<>();
         appsAdapter = new ArrayAdapter<>(getContext(), R.layout.apps_child, R.id.child_textview, new ArrayList<>());
         // Left search textview list
@@ -173,7 +180,7 @@ public class AppDrawer extends Fragment {
         binding.appsList.setOnItemClickListener((adapterView, view, i, l) -> startActivity(packageManager.getLaunchIntentForPackage(packageNamesArrayList.get(i))));
 
         binding.appsList.setOnItemLongClickListener((adapterView, view, i, l) -> {
-            (new AppMenus()).show(requireActivity().getSupportFragmentManager(), packageNamesArrayList.get(i));
+            (new AppMenus()).show(activity.getSupportFragmentManager(), packageNamesArrayList.get(i));
             return true;
         });
     }

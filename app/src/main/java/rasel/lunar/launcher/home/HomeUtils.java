@@ -39,11 +39,24 @@ import rasel.lunar.launcher.todos.TodoManager;
 
 public class HomeUtils {
 
-    Constants constants = new Constants();
-    UniUtils uniUtils = new UniUtils();
+    private final Constants constants = new Constants();
+    private final UniUtils uniUtils = new UniUtils();
+    private final FragmentActivity fragmentActivity;
+    private final FragmentManager fragmentManager;
+    private final SharedPreferences sharedPreferences;
+    private final int lockMethodValue;
+    private final Context context;
+
+    protected HomeUtils(FragmentActivity fragmentActivity, FragmentManager fragmentManager, SharedPreferences sharedPreferences, int lockMethodValue) {
+        this.fragmentActivity = fragmentActivity;
+        this.fragmentManager = fragmentManager;
+        this.sharedPreferences = sharedPreferences;
+        this.lockMethodValue = lockMethodValue;
+        this.context = fragmentActivity.getApplicationContext();
+    }
 
     // Gets time format
-    protected String getTimeFormat(SharedPreferences sharedPreferences, Context context) {
+    protected String getTimeFormat() {
         int timeFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_TIME_FORMAT, 0);
         String timeFormat = "";
         switch (timeFormatValue) {
@@ -78,7 +91,7 @@ public class HomeUtils {
     }
 
     // Gets date format
-    protected String getDateFormat(SharedPreferences sharedPreferences) {
+    protected String getDateFormat() {
         int dateFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_YEAR, 1);
         String dateFormat = "";
         switch (dateFormatValue) {
@@ -91,7 +104,7 @@ public class HomeUtils {
     }
 
     // Gestures on root view
-    protected void rootViewGestures(View view, Context context, FragmentManager fragmentManager, FragmentActivity fragmentActivity, int lockMethodValue) {
+    protected void rootViewGestures(View view) {
         view.setOnTouchListener(new SwipeTouchListener(context) {
             @Override
             public void onSwipeUp() {
@@ -112,7 +125,7 @@ public class HomeUtils {
     }
 
     // Gestures on battery progress indicator
-    protected void batteryProgressGestures(View view, Context context, FragmentActivity fragmentActivity, int lockMethodValue) {
+    protected void batteryProgressGestures(View view) {
         view.setOnTouchListener(new SwipeTouchListener(context) {
             @Override
             public void onLongClick() {
@@ -133,7 +146,7 @@ public class HomeUtils {
     }
 
     // Gestures on todos section
-    protected void todosGestures(View view, Context context, FragmentManager fragmentManager, FragmentActivity fragmentActivity, int lockMethodValue) {
+    protected void todosGestures(View view) {
         view.setOnTouchListener(new SwipeTouchListener(context) {
             @Override
             public void onLongClick() {

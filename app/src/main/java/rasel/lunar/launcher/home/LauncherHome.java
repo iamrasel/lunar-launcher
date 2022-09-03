@@ -27,10 +27,10 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -46,26 +46,36 @@ import rasel.lunar.launcher.todos.TodoManager;
 public class LauncherHome extends Fragment {
 
     private LauncherHomeBinding binding;
+    private FragmentActivity activity;
     private Context context;
     private FragmentManager fragmentManager;
     private SharedPreferences sharedPreferences;
     private final Constants constants = new Constants();
-    private final HomeUtils homeUtils = new HomeUtils();
+    private HomeUtils homeUtils;
     private BatteryReceiver batteryReceiver;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = LauncherHomeBinding.inflate(inflater, container, false);
-        context = requireActivity().getApplicationContext();
-        fragmentManager = requireActivity().getSupportFragmentManager();
+
+        if(isAdded()) {
+            activity = requireActivity();
+        } else {
+            activity = new MainActivity();
+        }
+
+        context = activity.getApplicationContext();
+        fragmentManager = activity.getSupportFragmentManager();
         sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
+        int lockMethodValue = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
+        homeUtils = new HomeUtils(activity, fragmentManager, sharedPreferences, lockMethodValue);
         batteryReceiver = new BatteryReceiver(binding.batteryProgress);
 
         Insetter.builder()
                 .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.getRoot());
 
-        requireActivity().getSupportFragmentManager().addOnBackStackChangedListener(this::showTodoList);
+        fragmentManager.addOnBackStackChangedListener(this::showTodoList);
         context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         return binding.getRoot();
@@ -73,7 +83,7 @@ public class LauncherHome extends Fragment {
 
     public void showTodoList() {
         binding.todos.setLayoutManager(new LinearLayoutManager(context));
-        binding.todos.setAdapter(new TodoAdapter((new TodoManager()), (new DatabaseHandler(context)).getTodos(), context, new MainActivity().getSupportFragmentManager(), this));
+        binding.todos.setAdapter(new TodoAdapter((new TodoManager()), (new DatabaseHandler(context)).getTodos(), context, fragmentManager, this));
     }
 
     @Override
@@ -82,21 +92,20 @@ public class LauncherHome extends Fragment {
 
         // Time and date
         if(DateFormat.is24HourFormat(requireContext())) {
-            binding.time.setFormat24Hour(homeUtils.getTimeFormat(sharedPreferences, context));
-            binding.date.setFormat24Hour(homeUtils.getDateFormat(sharedPreferences));
+            binding.time.setFormat24Hour(homeUtils.getTimeFormat());
+            binding.date.setFormat24Hour(homeUtils.getDateFormat());
         } else {
-            binding.time.setFormat12Hour(homeUtils.getTimeFormat(sharedPreferences, context));
-            binding.date.setFormat12Hour(homeUtils.getDateFormat(sharedPreferences));
+            binding.time.setFormat12Hour(homeUtils.getTimeFormat());
+            binding.date.setFormat12Hour(homeUtils.getDateFormat());
         }
 
-        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp, requireActivity()); // Weather
+        new WeatherExecutor(sharedPreferences).generateTempString(binding.temp, activity); // Weather
         showTodoList();
 
         // handle gesture events
-        int lockMethodValue = sharedPreferences.getInt(constants.SHARED_PREF_LOCK, 0);
-        homeUtils.rootViewGestures(binding.getRoot(), context, fragmentManager, requireActivity(), lockMethodValue);
-        homeUtils.batteryProgressGestures(binding.batteryProgress, context, requireActivity(), lockMethodValue);
-        homeUtils.todosGestures(binding.todos, context, fragmentManager, requireActivity(), lockMethodValue);
+        homeUtils.rootViewGestures(binding.getRoot());
+        homeUtils.batteryProgressGestures(binding.batteryProgress);
+        homeUtils.todosGestures(binding.todos);
         super.onResume();
     }
 

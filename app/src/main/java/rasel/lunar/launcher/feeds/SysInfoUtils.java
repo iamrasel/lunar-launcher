@@ -21,7 +21,6 @@ package rasel.lunar.launcher.feeds;
 import android.annotation.SuppressLint;
 import android.os.SystemClock;
 
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.concurrent.TimeUnit;
 

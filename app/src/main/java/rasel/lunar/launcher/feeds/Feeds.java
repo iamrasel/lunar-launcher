@@ -30,11 +30,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
 
 import dev.chrisbanes.insetter.Insetter;
+import rasel.lunar.launcher.MainActivity;
 import rasel.lunar.launcher.databinding.FeedsBinding;
 import rasel.lunar.launcher.feeds.rss.RSS;
 import rasel.lunar.launcher.feeds.rss.RssAdapter;
@@ -45,6 +47,7 @@ import rasel.lunar.launcher.helpers.UniUtils;
 public class Feeds extends Fragment {
 
     private FeedsBinding binding;
+    private FragmentActivity activity;
     private final Constants constants = new Constants();
     private FeedsUtils feedsUtils;
     private Handler handler;
@@ -57,19 +60,25 @@ public class Feeds extends Fragment {
                 .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.getRoot());
 
-        feedsUtils = new FeedsUtils(requireActivity());
+        if(isAdded()) {
+            activity = requireActivity();
+        } else {
+            activity = new MainActivity();
+        }
+
+        feedsUtils = new FeedsUtils(activity);
 
         return binding.getRoot();
     }
 
     private void startService() {
-        String rssUrl = (requireActivity().getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE))
+        String rssUrl = (activity.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE))
                 .getString(constants.SHARED_PREF_FEED_URL, "");
 
-        if(new UniUtils().isNetworkAvailable(requireActivity()) && !rssUrl.isEmpty()) {
-            Intent intent = new Intent(requireActivity(), RssService.class);
+        if(new UniUtils().isNetworkAvailable(activity) && !rssUrl.isEmpty()) {
+            Intent intent = new Intent(activity, RssService.class);
             intent.putExtra(constants.RSS_RECEIVER, resultReceiver);
-            requireActivity().startService(intent);
+            activity.startService(intent);
         } else {
             resumeService();
         }
