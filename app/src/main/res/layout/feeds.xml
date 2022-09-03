@@ -51,7 +51,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/rounded_bg"/>
+                android:background="@drawable/rounded_bg"
+                android:clickable="true"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

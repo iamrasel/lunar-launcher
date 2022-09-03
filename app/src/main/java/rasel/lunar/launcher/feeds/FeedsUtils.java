@@ -23,6 +23,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Environment;
 import android.os.StatFs;
@@ -110,12 +111,24 @@ public class FeedsUtils {
             float totalExtStorage = (statFs.getBlockCountLong() * blockSize) / toGb;
             float availExtStorage = (statFs.getAvailableBlocksLong() * blockSize) / toGb;
             float usedExtStorage = totalExtStorage - availExtStorage;
-            String[] sdcardPaths = storages[1].getPath().split("/");
+            String[] sdcardPaths = storages[1].getPath().split(File.separator);
+            String sdcardPath = File.separator + sdcardPaths[1] + File.separator + sdcardPaths[2] + File.separator;
             extStorage.setText(Html.fromHtml("<h5>SD Card</h5><br>" +
                     "Total: " + String.format("%.03f", totalExtStorage) + " GB<br>" +
                     "Used: " + String.format("%.03f", usedExtStorage) + " GB<br>" +
                     "Free: " + String.format("%.03f", availExtStorage) + " GB<br>" +
-                    "Path: " + "/" + sdcardPaths[1] + "/" + sdcardPaths[2] + "/", Html.FROM_HTML_MODE_COMPACT));
+                    "Path: " + sdcardPath, Html.FROM_HTML_MODE_COMPACT));
+
+            extStorage.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse(sdcardPath), "resource/folder");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                try {
+                    fragmentActivity.startActivity(intent);
+                } catch(Exception exception) {
+                    exception.printStackTrace();
+                }
+            });
         } else {
             extStorage.setText(Html.fromHtml("<h5>SD Card</h5><br>" + "Couldn't find", Html.FROM_HTML_MODE_COMPACT));
         }
