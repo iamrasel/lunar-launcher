@@ -93,8 +93,7 @@ As per version 14. Click on any image to enlarge it. To know more, explore and s
 <div align='center'>
 
 <a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'></a>
-<a href='https://f-droid.org/en/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976D2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
-<a href='https://apt.izzysoft.de/fdroid/index/apk/rasel.lunar.launcher'><img src='https://img.shields.io/static/v1?message=IzzyOnDroid&logo=android&labelColor=515151&color=009000&logoColor=white&label=%20&style=for-the-badge'></a>
+<a href='https://f-droid.org/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976D2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
 
 </div>
 
