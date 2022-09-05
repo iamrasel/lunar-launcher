@@ -24,7 +24,7 @@ public class Constants {
 
     public final String SHARED_PREFS_SETTINGS = "rasel.lunar.launcher.SETTINGS";
     public final String SHARED_PREF_TIME_FORMAT = "time_format";
-    public final String SHARED_PREF_SHOW_YEAR = "date_format";
+    public final String SHARED_PREF_DATE_FORMAT = "date_format";
     public final String SHARED_PREF_CITY_NAME = "city_name";
     public final String SHARED_PREF_OWM_KEY = "owm_key";
     public final String SHARED_PREF_TEMP_UNIT = "temp_unit";
@@ -34,6 +34,7 @@ public class Constants {
     public final String SHARED_PREF_LOCK = "lock";
     public final String SHARED_PREF_THEME = "app_theme";
 
+    public final String DEFAULT_DATE_FORMAT = "EEE dx MMM',' yyyy";
     public final String MODAL_BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG";
     public final String ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.SERVICE_LOCK_SCREEN";
 

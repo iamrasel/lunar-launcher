@@ -32,9 +32,9 @@ public class SettingsPrefsUtils {
         sharedPreferences.edit().putInt(constants.SHARED_PREF_TIME_FORMAT, timeFormatValue).apply();
     }
 
-    protected void showYear(Context context, int showYear) {
+    protected void saveDateFormat(Context context, String dateFormatValue) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putInt(constants.SHARED_PREF_SHOW_YEAR, showYear).apply();
+        sharedPreferences.edit().putString(constants.SHARED_PREF_DATE_FORMAT, dateFormatValue).apply();
     }
 
     protected void saveCityName(Context context, String cityName) {

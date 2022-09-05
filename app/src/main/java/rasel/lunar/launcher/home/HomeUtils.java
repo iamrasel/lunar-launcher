@@ -92,13 +92,12 @@ public class HomeUtils {
 
     // Gets date format
     protected String getDateFormat() {
-        int dateFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_YEAR, 1);
-        String dateFormat = "";
-        switch (dateFormatValue) {
-            case 0: dateFormat = "EEEE',' d" + getDateNumberSuffix() + " MMM";
-                break;
-            case 1: dateFormat = "EEE',' d" + getDateNumberSuffix() + " MMM',' yyyy";
-                break;
+        String dateFormatValue = sharedPreferences.getString(constants.SHARED_PREF_DATE_FORMAT, constants.DEFAULT_DATE_FORMAT);
+        String dateFormat;
+        if (dateFormatValue.contains("x")) {
+            dateFormat = dateFormatValue.replace("x", getDateNumberSuffix());
+        } else {
+            dateFormat = dateFormatValue;
         }
         return dateFormat;
     }

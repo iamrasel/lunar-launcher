@@ -13,6 +13,7 @@
     <string name="city_name">City Name</string>
     <string name="copied_message">Copied to clipboard</string>
     <string name="dark_theme">Dark</string>
+    <string name="date_format">Date Format</string>
     <string name="delete">Delete</string>
     <string name="delete_all">Delete All</string>
     <string name="delete_all_confirmation">Are you sure to delete all the todos?</string>
@@ -36,7 +37,6 @@
     <string name="root">Root</string>
     <string name="show_city">Show City</string>
     <string name="show_todos">Show Todos</string>
-    <string name="show_year">Show Year</string>
     <string name="temp_unit">Temperature Unit</string>
     <string name="time_format">Time Format</string>
     <string name="todo">Todo</string>

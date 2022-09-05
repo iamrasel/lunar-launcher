@@ -39,8 +39,8 @@ public class SettingsActivity extends AppCompatActivity {
     private final Constants constants = new Constants();
     private final SettingsPrefsUtils settingsPrefsUtils = new SettingsPrefsUtils();
     private SettingsClickListeners settingsClickListeners;
-    private int timeFormatValue, showYear, tempUnit, showCity, showTodos, lockMode, themeValue;
-    private String cityName, owmKey, feedUrl;
+    private int timeFormatValue, tempUnit, showCity, showTodos, lockMode, themeValue;
+    private String dateFormatValue, cityName, owmKey, feedUrl;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
         loadSettings();
 
         settingsClickListeners.timeFormat(binding.timeGroup, binding.followSystemTime, binding.selectTwelve, binding.selectTwentyFour);
-        settingsClickListeners.showYear(binding.yearGroup, binding.selectYearNegative, binding.selectYearPositive);
         settingsClickListeners.tempUnit(binding.tempGroup, binding.selectCelsius, binding.selectFahrenheit);
         settingsClickListeners.showCity(binding.cityGroup, binding.showCityNegative, binding.showCityPositive);
         settingsClickListeners.showTodos(binding.showTodos);
@@ -64,7 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
         settingsClickListeners = new SettingsClickListeners(this);
         SharedPreferences sharedPreferences = context.getSharedPreferences(constants.SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE);
         timeFormatValue = sharedPreferences.getInt(constants.SHARED_PREF_TIME_FORMAT, 0);
-        showYear = sharedPreferences.getInt(constants.SHARED_PREF_SHOW_YEAR, 1);
+        dateFormatValue = sharedPreferences.getString(constants.SHARED_PREF_DATE_FORMAT, constants.DEFAULT_DATE_FORMAT);
         cityName = sharedPreferences.getString(constants.SHARED_PREF_CITY_NAME, "");
         owmKey = sharedPreferences.getString(constants.SHARED_PREF_OWM_KEY, "");
         tempUnit = sharedPreferences.getInt(constants.SHARED_PREF_TEMP_UNIT, 0);
@@ -82,11 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
             case 2: binding.selectTwentyFour.setChecked(true); break;
         }
 
-        switch(showYear) {
-            case 0: binding.selectYearNegative.setChecked(true); break;
-            case 1: binding.selectYearPositive.setChecked(true); break;
-        }
-
+        binding.dateFormat.setText(dateFormatValue);
         binding.inputCity.setText(cityName);
         binding.inputOwm.setText(owmKey);
 
@@ -127,6 +122,10 @@ public class SettingsActivity extends AppCompatActivity {
         binding.version.setText(BuildConfig.VERSION_NAME);
     }
 
+    private String getDateFormat() {
+        return Objects.requireNonNull(binding.dateFormat.getText()).toString().trim();
+    }
+
     private String getCityName() {
         return Objects.requireNonNull(binding.inputCity.getText()).toString().trim();
     }
@@ -142,6 +141,11 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if (getDateFormat().isEmpty()) {
+            settingsPrefsUtils.saveDateFormat(context, constants.DEFAULT_DATE_FORMAT);
+        } else {
+            settingsPrefsUtils.saveDateFormat(context, getDateFormat());
+        }
         settingsPrefsUtils.saveCityName(context, getCityName());
         settingsPrefsUtils.saveOwmKey(context, getOwmKey());
         settingsPrefsUtils.saveFeedUrl(context, getFeedUrl());

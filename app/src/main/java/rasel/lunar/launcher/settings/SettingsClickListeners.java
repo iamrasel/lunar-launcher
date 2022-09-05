@@ -56,18 +56,6 @@ public class SettingsClickListeners {
         });
     }
 
-    protected void showYear(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1) {
-        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (isChecked) {
-                if (checkedId == button0.getId()) {
-                    settingsPrefsUtils.showYear(context, 0);
-                } else if(checkedId == button1.getId()) {
-                    settingsPrefsUtils.showYear(context, 1);
-                }
-            }
-        });
-    }
-
     protected void tempUnit(MaterialButtonToggleGroup buttonToggleGroup, MaterialButton button0, MaterialButton button1) {
         buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
