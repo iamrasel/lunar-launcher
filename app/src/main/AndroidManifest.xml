@@ -28,7 +28,7 @@
         android:screenOrientation="sensorPortrait">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".LauncherActivity"
 			android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
@@ -43,6 +43,10 @@
             android:exported="false" />
 
         <service
+            android:name=".feeds.rss.RssService"
+            android:exported="false"/>
+
+        <service
             android:name=".helpers.LockService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
@@ -53,8 +57,6 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/lock_service" />
         </service>
-
-        <service android:name=".feeds.rss.RssService"/>
 
         <receiver
             android:name=".helpers.AdminReceiver"

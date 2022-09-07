@@ -39,7 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.Objects;
 
 import dev.chrisbanes.insetter.Insetter;
-import rasel.lunar.launcher.MainActivity;
+import rasel.lunar.launcher.LauncherActivity;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.TodoDialogBinding;
 import rasel.lunar.launcher.databinding.TodoManagerBinding;
@@ -63,7 +63,7 @@ public class TodoManager extends Fragment {
         if(isAdded()) {
             activity = requireActivity();
         } else {
-            activity = new MainActivity();
+            activity = new LauncherActivity();
         }
         context = activity.getApplicationContext();
         databaseHandler = new DatabaseHandler(context);

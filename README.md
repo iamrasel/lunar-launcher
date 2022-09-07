@@ -15,7 +15,7 @@
 ## Features/Todo
 <details><summary>Global</summary>
 
-- [x] Appearences
+- [x] Appearances
   - [x] Material Design 3
   - [ ] Material You support
   - [x] Day/night theme
@@ -106,7 +106,6 @@ As per version 14. Click on any image to enlarge it. To know more, explore and s
 - `android.permission.WRITE_SETTINGS` - To change system values like brightness
 
 ## Credits
-- [https://simpleicons.org](https://simpleicons.org)
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
 - [https://github.com/chrisbanes/insetter](https://github.com/chrisbanes/insetter)
 

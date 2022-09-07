@@ -2,18 +2,20 @@ Lunar Launcher is yet another addition to the world of android launchers. Low me
 
 <b>Features:</b>
 
-- Material design 3
-- Day/night theme mode
-- Double tap: Lock/sleep
-- Swipe down: Expand notification panel
-- Quick app search and launch
-- Launch apps in freeform mode
-- Animated battery percentage indicator
-- 12/24 time format and date
-- Weather: celsius and fahrenheit
-- Todo manager
-- Quick actions
-- RSS feeds
-- Device stats
+<ul>
+<li>Material design 3</li>
+<li>Day/night theme mode</li>
+<li>Double tap: Lock/sleep</li>
+<li>Swipe down: Expand notification panel</li>
+<li>Quick app search and launch</li>
+<li>Launch apps in freeform mode</li>
+<li>Animated battery percentage indicator</li>
+<li>12/24 time format and date</li>
+<li>Weather: celsius and fahrenheit</li>
+<li>Todo manager</li>
+<li>Quick actions</li>
+<li>RSS feeds</li>
+<li>Device stats</li>
+</ul>
 
 More exciting features will be added soon. Please donate to support the development.

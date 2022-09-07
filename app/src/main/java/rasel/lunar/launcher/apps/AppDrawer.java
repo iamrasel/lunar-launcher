@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.chrisbanes.insetter.Insetter;
-import rasel.lunar.launcher.MainActivity;
+import rasel.lunar.launcher.LauncherActivity;
 import rasel.lunar.launcher.R;
 import rasel.lunar.launcher.databinding.AppDrawerBinding;
 import rasel.lunar.launcher.helpers.Constants;
@@ -76,7 +76,7 @@ public class AppDrawer extends Fragment {
         if(isAdded()) {
             activity = requireActivity();
         } else {
-            activity = new MainActivity();
+            activity = new LauncherActivity();
         }
         context = activity.getApplicationContext();
 

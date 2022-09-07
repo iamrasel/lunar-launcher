@@ -36,7 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.List;
 
 import dev.chrisbanes.insetter.Insetter;
-import rasel.lunar.launcher.MainActivity;
+import rasel.lunar.launcher.LauncherActivity;
 import rasel.lunar.launcher.databinding.FeedsBinding;
 import rasel.lunar.launcher.feeds.rss.RSS;
 import rasel.lunar.launcher.feeds.rss.RssAdapter;
@@ -63,7 +63,7 @@ public class Feeds extends Fragment {
         if(isAdded()) {
             activity = requireActivity();
         } else {
-            activity = new MainActivity();
+            activity = new LauncherActivity();
         }
 
         feedsUtils = new FeedsUtils(activity);
