@@ -7,7 +7,7 @@
         <a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=for-the-badge'></a>
         <br>
 		<img src='https://img.shields.io/badge/Maintained-yes-green?style=for-the-badge'>
-        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/Build_Debug?style=for-the-badge'></a>
+        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/CI_Push?style=for-the-badge'></a>
 		<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=for-the-badge'></a>
     </p>
 </div>
@@ -61,6 +61,7 @@
 <details><summary>Feeds</summary>
 
 - [x] Device stats
+  - This section is temporary, will be replaced with more useful feature.
 - [x] RSS
 
 </details>
@@ -90,6 +91,7 @@ As per version 14. Click on any image to enlarge it. To know more, explore and s
 </div>
 
 ## Download
+To get updated with the latest build head over to the [Actions](https://github.com/iamrasel/lunar-launcher/actions) tab and choose the latest workflow run from there.
 <div align='center'>
 
 <a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'></a>

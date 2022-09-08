@@ -1,8 +1,8 @@
-name: Build_Release
+name: CI_Push
 
 on:
-  workflow_dispatch:
-    branches: [master]
+  push:
+    branches: [main]
     paths-ignore:
           - "README*.md"
           - "LICENSE.md"

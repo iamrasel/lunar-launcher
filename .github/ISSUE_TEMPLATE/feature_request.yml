@@ -1,0 +1,38 @@
+name: Feature request
+description: Suggest an idea for this project
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping to make Lunar Launcher better by suggesting a feature. :hugs:
+        Your ideas are highly welcome!
+        
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I made sure that there are **no existing issues** - [open](https://github.com/iamrasel/lunar-launcher/issues) or [closed](https://github.com/iamrasel/lunar-launcher/issues?q=is%3Aissue+is%3Aclosed) - which I could contribute my information to."
+          required: true
+        - label: "I have already checked the [WIKI](https://github.com/iamrasel/lunar-launcher/wiki) pages and made sure that the feature isn't already exist."
+          required: true
+        - label: "I have taken the time to fill in all the required details. I understand that the feature request will be dismissed otherwise."
+          required: true
+        - label: "This issue contains only one feature request."
+          required: true
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Feature description
+      description: |
+        Explain how you want the app's look or behavior to change to suit your needs.
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional information
+      description: Any other information you'd like to include.

@@ -1,7 +1,12 @@
-name: Build_Debug
+name: CI_Pull
 
 on:
-  [push, pull_request]
+  pull_request:
+    branches: [main]
+    paths-ignore:
+          - "README*.md"
+          - "LICENSE.md"
+          - "fastlane/**"
 
 jobs:
   build:
