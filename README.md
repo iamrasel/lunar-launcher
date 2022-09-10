@@ -91,7 +91,7 @@ As per version 14. Click on any image to enlarge it. To know more, explore and s
 </div>
 
 ## Download
-To get updated with the latest build head over to the [Actions](https://github.com/iamrasel/lunar-launcher/actions) tab and choose the latest workflow run from there.
+To get updated with the latest build head over to the [Actions](https://github.com/iamrasel/lunar-launcher/actions) tab and choose the latest workflow build from there.
 <div align='center'>
 
 <a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'></a>

@@ -25,7 +25,7 @@
         android:excludeFromRecents="true"
 		android:clearTaskOnLaunch="true"
         android:stateNotNeeded="true"
-        android:screenOrientation="sensorPortrait">
+        android:screenOrientation="nosensor">
 
         <activity
             android:name=".LauncherActivity"
@@ -40,7 +40,16 @@
 
         <activity
             android:name=".settings.SettingsActivity"
-            android:exported="false" />
+            android:label="@string/lunar_settings"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".feeds.rss.RssService"

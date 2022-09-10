@@ -11,7 +11,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:title="@string/launcher_configs"
+            app:title="@string/lunar_settings"
             app:expandedTitleGravity="center"
             app:collapsedTitleGravity="center_horizontal"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">

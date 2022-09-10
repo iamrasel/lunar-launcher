@@ -27,8 +27,8 @@
     <string name="follow_system">Follow System</string>
     <string name="freeform">Freeform</string>
     <string name="got_it">Got it</string>
-    <string name="launcher_configs">Launcher Configurations</string>
     <string name="light_theme">Light</string>
+    <string name="lunar_settings">Lunar Settings</string>
     <string name="negative">Negative</string>
     <string name="null_app_store_message">There\'s no app store is installed\non this device.</string>
     <string name="owm_key">OWM API Key</string>
