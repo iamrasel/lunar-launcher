@@ -9,6 +9,9 @@
     <string name="app_info">App Info</string>
     <string name="app_store">App Store</string>
     <string name="application_theme">Application Theme</string>
+    <string name="authentication_error">Authentication error</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="authentication_subtitle">Authenticate with your device credential to proceed</string>
     <string name="celsius">Celsius</string>
     <string name="city_name">City Name</string>
     <string name="copied_message">Copied to clipboard</string>
@@ -39,6 +42,7 @@
     <string name="temp_unit">Temperature Unit</string>
     <string name="time_format">Time Format</string>
     <string name="todo">Todo</string>
+    <string name="todo_manager">Todo Manager</string>
     <string name="twelve">12 Hour</string>
     <string name="twenty_four">24 Hour</string>
     <string name="uninstall">Uninstall</string>

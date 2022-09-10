@@ -43,7 +43,7 @@
   - [x] Add, delete, edit, copy
   - [ ] Auto destructive todo with notify
   - [x] 0-7 items in home screen
-  - [ ] Access lock
+  - [x] Access lock
 
 </details>
 <details><summary>App Drawer</summary>

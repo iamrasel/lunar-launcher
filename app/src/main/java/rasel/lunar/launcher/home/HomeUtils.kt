@@ -23,6 +23,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.text.format.DateFormat
 import android.view.View
+import android.widget.Toast
+import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import rasel.lunar.launcher.R
@@ -113,8 +115,14 @@ internal class HomeUtils(
         view.setOnTouchListener(object : SwipeTouchListener(context) {
             override fun onLongClick() {
                 super.onLongClick()
-                fragmentManager.beginTransaction().add(R.id.main_fragments_container, TodoManager())
-                    .addToBackStack("").commit()
+                if (UniUtils().canAuthenticate(context)) {
+                    val biometricPrompt = BiometricPrompt(fragmentActivity, authenticationCallback)
+                    try {
+                        biometricPrompt.authenticate(UniUtils().biometricPromptInfo(fragmentActivity.getString(R.string.todo_manager), fragmentActivity))
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
+                }
             }
             override fun onSwipeUp() {
                 super.onSwipeUp()
@@ -129,5 +137,18 @@ internal class HomeUtils(
                 UniUtils().lockMethod(lockMethodValue, context, fragmentActivity)
             }
         })
+    }
+
+    private val authenticationCallback = object : BiometricPrompt.AuthenticationCallback() {
+        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+            fragmentManager.beginTransaction().add(R.id.main_fragments_container, TodoManager())
+                .addToBackStack("").commit()
+        }
+        override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+            Toast.makeText(context, fragmentActivity.getString(R.string.authentication_error), Toast.LENGTH_SHORT).show()
+        }
+        override fun onAuthenticationFailed() {
+            Toast.makeText(context, fragmentActivity.getString(R.string.authentication_failed), Toast.LENGTH_SHORT).show()
+        }
     }
 }

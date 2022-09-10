@@ -32,6 +32,9 @@ import android.provider.Settings
 import android.util.DisplayMetrics
 import android.view.WindowInsets
 import android.widget.Toast
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
+import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
 import rasel.lunar.launcher.R
 import java.io.DataOutputStream
@@ -185,5 +188,20 @@ internal class UniUtils {
             fragmentActivity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         @Suppress("DEPRECATION") val activeNetworkInfo = connectivityManager.activeNetworkInfo
         @Suppress("DEPRECATION") return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
+    }
+
+    fun canAuthenticate(context: Context): Boolean {
+        val biometricManager = BiometricManager.from(context)
+        val canAuthenticate = biometricManager.canAuthenticate(Constants().AUTHENTICATOR_TYPE)
+        return canAuthenticate == BIOMETRIC_SUCCESS
+    }
+
+    fun biometricPromptInfo(title: String, fragmentActivity: FragmentActivity): BiometricPrompt.PromptInfo {
+        return BiometricPrompt.PromptInfo.Builder()
+            .setTitle(title)
+            .setSubtitle(fragmentActivity.getString(R.string.authentication_subtitle))
+            .setConfirmationRequired(true)
+            .setAllowedAuthenticators(Constants().AUTHENTICATOR_TYPE)
+            .build()
     }
 }

@@ -18,6 +18,9 @@
 
 package rasel.lunar.launcher.helpers
 
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+
 internal class Constants {
     @JvmField val SHARED_PREFS_FIRST_LAUNCH = "rasel.lunar.launcher.FIRST_LAUNCH"
     @JvmField val FIRST_LAUNCH = "first_launch"
@@ -37,6 +40,7 @@ internal class Constants {
     @JvmField val DEFAULT_DATE_FORMAT = "EEE dx MMM',' yyyy"
     @JvmField val MODAL_BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG"
     @JvmField val ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.SERVICE_LOCK_SCREEN"
+    @JvmField val AUTHENTICATOR_TYPE = BIOMETRIC_WEAK or DEVICE_CREDENTIAL
 
     @JvmField val SHARED_PREFS_PHONES_URLS = "rasel.lunar.launcher.PHONES&URLS"
     @JvmField val PHONE_NO = "Phone No"
