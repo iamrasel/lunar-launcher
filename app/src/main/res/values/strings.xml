@@ -73,10 +73,6 @@
         <b>Wiki</b>\n
         <i><a href="https://github.com/iamrasel/lunar-launcher/wiki">https://github.com/iamrasel/lunar-launcher/wiki</a></i>
     </string>
-    <string name="get_owm_api">
-        <b>OpenWeatherMap API Key (free)</b>\n
-        <i><a href="https://openweathermap.org/api">https://openweathermap.org/api</a></i>
-    </string>
     <string name="acknowledgements">
         <b>Acknowledgements</b>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n

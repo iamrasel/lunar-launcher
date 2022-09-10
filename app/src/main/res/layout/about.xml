@@ -46,14 +46,6 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/get_owm_api"
-        android:autoLink="web"
-        android:gravity="center"
-        android:layout_marginTop="32dp"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/acknowledgements"
         android:autoLink="web"
         android:gravity="center"
