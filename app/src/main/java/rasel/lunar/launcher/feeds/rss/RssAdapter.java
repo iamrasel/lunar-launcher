@@ -21,8 +21,10 @@ package rasel.lunar.launcher.feeds.rss;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -62,14 +64,19 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.view.itemText.setSingleLine(false);
-        holder.view.itemText.setText(items.get(position).getTitle());
 
-        if(position == 0) {
-            holder.view.itemText.setText("⊶  " + items.get(position).getTitle() + "  ⊷");
+        if (position == 0) {
+            holder.view.itemText.setText("\u22B6  " + items.get(position).getTitle() + "  \u22B7");
             holder.view.itemText.setGravity(Gravity.CENTER);
             holder.view.itemText.setTextColor(ContextCompat.getColor(context, R.color.primary));
             holder.view.itemText.setTypeface(null, Typeface.BOLD);
             holder.view.itemText.setTextSize(18);
+        } else {
+            holder.view.itemText.setText(items.get(position).getTitle());
+            holder.view.itemText.setGravity(holder.gravity);
+            holder.view.itemText.setTextColor(holder.color);
+            holder.view.itemText.setTypeface(holder.typeface);
+            holder.view.itemText.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.size);
         }
 
         holder.view.itemText.setOnClickListener(v -> {
@@ -81,9 +88,15 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ListItemBinding view;
+        int gravity; ColorStateList color;
+        Typeface typeface; float size;
         ViewHolder(ListItemBinding v) {
             super(v.getRoot());
             view = v;
+            gravity = v.itemText.getGravity();
+            color = v.itemText.getTextColors();
+            typeface = v.itemText.getTypeface();
+            size = v.itemText.getTextSize();
         }
     }
 }

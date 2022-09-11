@@ -80,7 +80,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.view.itemText.setText("●  " + todoList.get(position).getName());
+        holder.view.itemText.setText("\u25CF  " + todoList.get(position).getName());
 
         if(currentFragment instanceof TodoManager) {
             holder.view.itemText.setSingleLine(false);
