@@ -77,16 +77,16 @@ internal class LauncherHome : Fragment() {
     }
 
     private fun showTodoList() {
-        binding.todos.layoutManager = LinearLayoutManager(_context)
+        binding.todos.layoutManager = LinearLayoutManager(context)
         binding.todos.adapter =
-            TodoAdapter(TodoManager(), DatabaseHandler(_context).todos, _context, fragManager, this)
+            context?.let { TodoAdapter(DatabaseHandler(context).todos, TodoManager(), fragmentActivity, it) }
     }
 
     override fun onResume() {
         _context.registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) // Battery
 
         // Time and date
-        if (DateFormat.is24HourFormat(_context)) {
+        if (DateFormat.is24HourFormat(context)) {
             binding.time.format24Hour = homeUtils.getTimeFormat()
             binding.date.format24Hour = homeUtils.getDateFormat()
         } else {

@@ -16,23 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package rasel.lunar.launcher.feeds.rss;
+package rasel.lunar.launcher.feeds.rss
 
-public class RSS {
-
-    private final String title;
-    private final String link;
-
-    protected RSS(String title, String link) {
-        this.title = title;
-        this.link = link;
-    }
-
-    protected String getTitle() {
-        return title;
-    }
-
-    public String getLink() {
-        return link;
-    }
-}
+internal class RSS(val title: String, val link: String)
