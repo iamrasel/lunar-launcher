@@ -23,15 +23,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import dev.chrisbanes.insetter.Insetter
+import dev.chrisbanes.insetter.applyInsetter
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.TodoDialogBinding
@@ -45,9 +43,11 @@ class TodoManager : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = TodoManagerBinding.inflate(inflater, container, false)
-        Insetter.builder()
-            .padding(WindowInsetsCompat.Type.systemBars())
-            .applyToView(binding.root)
+        binding.root.applyInsetter {
+            type(systemGestures = true) {
+                margin()
+            }
+        }
 
         fragmentActivity = if (isAdded) {
             requireActivity()
@@ -94,7 +94,6 @@ class TodoManager : Fragment() {
 
     private fun addNewDialog() {
         val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
-        Objects.requireNonNull(bottomSheetDialog).window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)    // Todo: deprecated
         val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(context))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()

@@ -18,19 +18,19 @@
 
 package rasel.lunar.launcher.feeds.rss
 
-import android.app.IntentService
 import android.content.Intent
 import android.os.Bundle
 import android.os.ResultReceiver
+import androidx.core.app.JobIntentService
 import rasel.lunar.launcher.helpers.Constants
 import java.io.IOException
 import java.io.InputStream
 import java.io.Serializable
 import java.net.URL
 
-internal class RssService : IntentService("RssService") {   // Todo: deprecated
+internal class RssService : JobIntentService() {   // Todo: deprecated
 
-    override fun onHandleIntent(intent: Intent?) {
+    override fun onHandleWork(intent: Intent) {
         val settingsPrefs = getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
         val rssUrl = settingsPrefs.getString(Constants().SHARED_PREF_FEED_URL, "")
         var rssItems: List<RSS?>? = null
@@ -42,7 +42,7 @@ internal class RssService : IntentService("RssService") {   // Todo: deprecated
         }
         val bundle = Bundle()
         bundle.putSerializable(Constants().RSS_ITEMS, rssItems as Serializable)
-        val receiver = intent?.getParcelableExtra<ResultReceiver>(Constants().RSS_RECEIVER)
+        val receiver = intent.getParcelableExtra<ResultReceiver>(Constants().RSS_RECEIVER)
         receiver?.send(0, bundle)
     }
 

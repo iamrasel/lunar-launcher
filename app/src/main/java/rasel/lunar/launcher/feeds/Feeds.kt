@@ -22,15 +22,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.ResultReceiver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.app.JobIntentService.enqueueWork   // Todo: deprecated
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chrisbanes.insetter.Insetter
+import dev.chrisbanes.insetter.windowInsetTypesOf
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.databinding.FeedsBinding
 import rasel.lunar.launcher.feeds.rss.RSS
@@ -49,15 +51,20 @@ internal class Feeds : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FeedsBinding.inflate(inflater, container, false)
-        Insetter.builder()
-            .padding(WindowInsetsCompat.Type.systemBars())
-            .applyToView(binding.root)
 
         fragmentActivity = if (isAdded) {
             requireActivity()
         } else {
             LauncherActivity()
         }
+
+        Insetter.builder()
+            .paddingBottom(windowInsetTypesOf(systemGestures = true))
+            .applyToView(binding.rss)
+        Insetter.builder()
+            .marginTop(windowInsetTypesOf(statusBars = true))
+            .applyToView(binding.ram)
+            .applyToView(binding.cpu)
 
         feedsUtils = FeedsUtils(fragmentActivity)
         return binding.root
@@ -69,7 +76,7 @@ internal class Feeds : Fragment() {
         if (UniUtils().isNetworkAvailable(fragmentActivity) && rssUrl != null && rssUrl.isNotEmpty()) {
             val intent = Intent(fragmentActivity, RssService::class.java)
             intent.putExtra(Constants().RSS_RECEIVER, resultReceiver)
-            fragmentActivity.startService(intent)
+            enqueueWork(fragmentActivity, RssService::class.java, 101, intent)
         } else {
             resumeService()
         }
@@ -83,7 +90,7 @@ internal class Feeds : Fragment() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private val resultReceiver: ResultReceiver = object : ResultReceiver(Handler()) {   // Todo: deprecated
+    private val resultReceiver: ResultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
             val items = resultData.getSerializable(Constants().RSS_ITEMS) as List<RSS>?
             if (items != null) {
@@ -107,7 +114,7 @@ internal class Feeds : Fragment() {
         feedsUtils.intStorage(binding.intStorage)
         feedsUtils.extStorage(binding.extStorage)
 
-        handler = Handler()
+        handler = Handler(Looper.getMainLooper())
         runnable = object : Runnable {
             override fun run() {
                 feedsUtils.ram(binding.ram)

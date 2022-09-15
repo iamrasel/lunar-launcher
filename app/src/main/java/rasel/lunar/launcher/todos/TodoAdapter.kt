@@ -23,7 +23,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -77,7 +76,6 @@ internal class TodoAdapter(
 
     private fun updateDialog(i: Int) {
         val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
-        Objects.requireNonNull(bottomSheetDialog).window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)    // Todo: deprecated
         val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(todoManager.context))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()

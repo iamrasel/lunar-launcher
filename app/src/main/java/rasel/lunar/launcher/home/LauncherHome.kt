@@ -27,12 +27,11 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.chrisbanes.insetter.Insetter
+import dev.chrisbanes.insetter.applyInsetter
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
 import rasel.lunar.launcher.helpers.Constants
@@ -53,6 +52,11 @@ internal class LauncherHome : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = LauncherHomeBinding.inflate(inflater, container, false)
+        binding.root.applyInsetter {
+            type(systemGestures = true) {
+                margin()
+            }
+        }
 
         fragmentActivity = if (isAdded) {
             requireActivity()
@@ -65,10 +69,6 @@ internal class LauncherHome : Fragment() {
         sharedPreferences = _context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, 0)
         homeUtils = HomeUtils(fragmentActivity, sharedPreferences)
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
-
-        Insetter.builder()
-            .padding(WindowInsetsCompat.Type.systemBars())
-            .applyToView(binding.root)
 
         fragManager.addOnBackStackChangedListener { this.showTodoList() }
         _context.registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))

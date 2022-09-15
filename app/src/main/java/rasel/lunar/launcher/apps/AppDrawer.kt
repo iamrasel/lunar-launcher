@@ -23,29 +23,29 @@
 
 package rasel.lunar.launcher.apps
 
-import androidx.fragment.app.FragmentActivity
-import android.widget.ArrayAdapter
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.os.Bundle
-import dev.chrisbanes.insetter.Insetter
-import androidx.core.view.WindowInsetsCompat
 import android.annotation.SuppressLint
 import android.content.Context
-import rasel.lunar.launcher.helpers.SwipeTouchListener
-import rasel.lunar.launcher.helpers.UniUtils
-import rasel.lunar.launcher.R
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView.OnItemClickListener
+import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.AdapterView.OnItemLongClickListener
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import dev.chrisbanes.insetter.Insetter
+import dev.chrisbanes.insetter.windowInsetTypesOf
 import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
 import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.SwipeTouchListener
+import rasel.lunar.launcher.helpers.UniUtils
 import java.util.*
 
 internal class AppDrawer : Fragment() {
@@ -72,18 +72,21 @@ internal class AppDrawer : Fragment() {
         }
 
         Insetter.builder()
-            .padding(WindowInsetsCompat.Type.systemBars())
+            .padding(windowInsetTypesOf(systemGestures = true))
             .applyToView(binding.appsList)
         Insetter.builder()
-            .padding(WindowInsetsCompat.Type.systemBars())
+            .marginBottom(windowInsetTypesOf(navigationBars = true))
             .applyToView(binding.leftSearchList)
             .applyToView(binding.leftSearchListII)
         Insetter.builder()
-            .padding(WindowInsetsCompat.Type.systemBars())
+            .marginBottom(windowInsetTypesOf(navigationBars = true))
             .applyToView(binding.rightSearchList)
             .applyToView(binding.rightSearchListII)
-        setupInitialView()
+        Insetter.builder()
+            .marginBottom(windowInsetTypesOf(navigationBars = true))
+            .applyToView(binding.searchStringChip)
 
+        setupInitialView()
         return binding.root
     }
 

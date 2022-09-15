@@ -67,7 +67,9 @@
             android:id="@+id/rss"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none" />
+            android:scrollbars="none"
+            android:clipChildren="false"
+            android:clipToPadding="false"/>
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/loading_progress"
             android:layout_width="wrap_content"
