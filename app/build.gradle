@@ -11,7 +11,7 @@ android {
         minSdk 26
         targetSdk 32
         versionCode 17
-        versionName "17.2"
+        versionName "17.3"
     }
 
     buildTypes {
@@ -50,6 +50,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'rasel.lunar.launcher'
 }
 
 dependencies {
