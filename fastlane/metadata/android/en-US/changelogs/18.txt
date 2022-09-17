@@ -1,0 +1,2 @@
+- [New] Scroll to top/bottom of apps list
+- [Fix] Few visual improvements

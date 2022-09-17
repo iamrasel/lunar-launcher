@@ -38,7 +38,7 @@ internal class AppMenuUtils {
     @Throws(PackageManager.NameNotFoundException::class)
     fun getAppName(packageManager: PackageManager, packageName: String): String {
         return packageManager.getApplicationLabel(
-            packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+            @Suppress("DEPRECATION") packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA) // Todo: deprecated
         ) as String
     }
 

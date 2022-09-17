@@ -28,6 +28,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,8 +54,8 @@ internal class AppDrawer : Fragment() {
     private lateinit var binding: AppDrawerBinding
     private lateinit var fragmentActivity: FragmentActivity
     private val leftSearchArray = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m")
-    private val leftSearchArrayII = arrayOf("0", "1", "2", "3", "4")
-    private val rightSearchArray = arrayOf("9", "8", "7", "6", "5")
+    private val leftSearchArrayII = arrayOf("0", "1", "2", "3", "4", "\u290A")
+    private val rightSearchArray = arrayOf("9", "8", "7", "6", "5", "\u290B")
     private val rightSearchArrayII = arrayOf("z", "y", "x", "w", "v", "u", "t", "s", "r", "q", "p", "o", "n")
     private lateinit var packageNamesArrayList: ArrayList<String>
     private lateinit var appsAdapter: ArrayAdapter<String>
@@ -102,7 +103,6 @@ internal class AppDrawer : Fragment() {
                 super.onSwipeDown()
                 UniUtils().expandNotificationPanel(requireContext())
             }
-
             override fun onDoubleClick() {
                 super.onDoubleClick()
                 UniUtils().lockMethod(
@@ -140,8 +140,13 @@ internal class AppDrawer : Fragment() {
         get() {
             searchString = ""
             // Fetch all the installed apps
-            packageList = packageManager.queryIntentActivities(
-                Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0)
+            packageList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                packageManager.queryIntentActivities(
+                    Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), PackageManager.ResolveInfoFlags.of(0))
+            } else {
+                @Suppress("DEPRECATION") packageManager.queryIntentActivities(
+                    Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0)
+            }
             // Sort the app list
             (packageList as MutableList<ResolveInfo>).sortWith(ResolveInfo.DisplayNameComparator(packageManager))
         }
@@ -195,12 +200,18 @@ internal class AppDrawer : Fragment() {
         // Left column 2
         binding.leftSearchListII.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
-                searchClickHelper(adapterView, i)
+                when (i) {
+                    leftSearchArrayII.size - 1 -> binding.appsList.setSelection(0)
+                    else -> searchClickHelper(adapterView, i)
+                }
             }
         // Right column 1
         binding.rightSearchList.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
-                searchClickHelper(adapterView, i)
+                when (i) {
+                    rightSearchArray.size - 1 -> binding.appsList.setSelection(appsAdapter.count - 1)
+                    else -> searchClickHelper(adapterView, i)
+                }
             }
         // Right column 2
         binding.rightSearchListII.onItemClickListener =
