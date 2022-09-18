@@ -41,58 +41,11 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/time_format"
-                android:textSize="16sp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/time_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_twelve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/twelve"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/follow_system_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/follow_system"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_twenty_four"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/twenty_four"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="248dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/date_format"
-                app:endIconMode="clear_text"
-                android:layout_marginTop="16dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/date_format"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="196dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/city_name"
-                app:endIconMode="clear_text"
-                android:layout_marginTop="16dp">
+                app:endIconMode="clear_text">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_city"
                     android:layout_width="match_parent"
@@ -271,13 +224,55 @@
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp">
+                android:layout_marginTop="36dp"
+                android:orientation="vertical">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/time_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_date"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/weather"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weather"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/todo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/todo"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/look"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/look"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/more"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/about"
                     android:textStyle="bold"
+                    android:textAllCaps="true"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>
             </com.google.android.material.button.MaterialButtonToggleGroup>
 

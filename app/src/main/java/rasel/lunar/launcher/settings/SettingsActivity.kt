@@ -25,18 +25,17 @@ import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.settings.childs.TimeDate
 import java.util.*
 
 internal class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsActivityBinding
     private lateinit var settingsClickListeners: SettingsClickListeners
-    private var timeFormatValue = 0
     private var tempUnit = 0
     private var showCity = 0
     private var showTodos = 0
     private var lockMode = 0
     private var themeValue = 0
-    private lateinit var dateFormatValue: String
     private lateinit var cityName: String
     private lateinit var owmKey: String
     private lateinit var feedUrl: String
@@ -48,8 +47,10 @@ internal class SettingsActivity : AppCompatActivity() {
         initializer()
         loadSettings()
 
-        settingsClickListeners.timeFormat(binding.timeGroup, binding.followSystemTime,
-            binding.selectTwelve, binding.selectTwentyFour)
+        binding.timeDate.setOnClickListener {
+            TimeDate().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+        }
+
         settingsClickListeners.tempUnit(binding.tempGroup, binding.selectCelsius, binding.selectFahrenheit)
         settingsClickListeners.showCity(binding.cityGroup, binding.showCityNegative, binding.showCityPositive)
         settingsClickListeners.showTodos(binding.showTodos)
@@ -63,9 +64,6 @@ internal class SettingsActivity : AppCompatActivity() {
     private fun initializer() {
         settingsClickListeners = SettingsClickListeners(this)
         val sharedPreferences = applicationContext.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        timeFormatValue = sharedPreferences.getInt(Constants().SHARED_PREF_TIME_FORMAT, 0)
-        dateFormatValue =
-            sharedPreferences.getString(Constants().SHARED_PREF_DATE_FORMAT, Constants().DEFAULT_DATE_FORMAT).toString()
         cityName = sharedPreferences.getString(Constants().SHARED_PREF_CITY_NAME, "").toString()
         owmKey = sharedPreferences.getString(Constants().SHARED_PREF_OWM_KEY, "").toString()
         tempUnit = sharedPreferences.getInt(Constants().SHARED_PREF_TEMP_UNIT, 0)
@@ -77,13 +75,6 @@ internal class SettingsActivity : AppCompatActivity() {
     }
 
     private fun loadSettings() {
-        when (timeFormatValue) {
-            0 -> binding.followSystemTime.isChecked = true
-            1 -> binding.selectTwelve.isChecked = true
-            2 -> binding.selectTwentyFour.isChecked = true
-        }
-
-        binding.dateFormat.setText(dateFormatValue)
         binding.inputCity.setText(cityName)
         binding.inputOwm.setText(owmKey)
 
@@ -120,9 +111,6 @@ internal class SettingsActivity : AppCompatActivity() {
         binding.version.text = BuildConfig.VERSION_NAME
     }
 
-    private val dateFormat: String
-        get() = Objects.requireNonNull(binding.dateFormat.text).toString().trim { it <= ' ' }
-
     private fun getCityName(): String {
         return Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' }
     }
@@ -139,11 +127,6 @@ internal class SettingsActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
         super.onBackPressed()
-        if (dateFormat.isEmpty()) {
-            SettingsPrefsUtils().saveDateFormat(applicationContext, Constants().DEFAULT_DATE_FORMAT)
-        } else {
-            SettingsPrefsUtils().saveDateFormat(applicationContext, dateFormat)
-        }
         SettingsPrefsUtils().saveCityName(applicationContext, getCityName())
         SettingsPrefsUtils().saveOwmKey(applicationContext, getOwmKey())
         SettingsPrefsUtils().saveFeedUrl(applicationContext, getFeedUrl())

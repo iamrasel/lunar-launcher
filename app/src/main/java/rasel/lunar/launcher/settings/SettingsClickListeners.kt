@@ -30,19 +30,6 @@ import rasel.lunar.launcher.databinding.AboutBinding
 
 internal class SettingsClickListeners(private val appCompatActivity: AppCompatActivity) {
     private val context: Context = appCompatActivity.applicationContext
-    
-    fun timeFormat(buttonToggleGroup: MaterialButtonToggleGroup,
-        button0: MaterialButton, button1: MaterialButton, button2: MaterialButton) {
-        buttonToggleGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    button0.id -> SettingsPrefsUtils().saveTimeFormat(context, 0)
-                    button1.id -> SettingsPrefsUtils().saveTimeFormat(context, 1)
-                    button2.id -> SettingsPrefsUtils().saveTimeFormat(context, 2)
-                }
-            }
-        }
-    }
 
     fun tempUnit(buttonToggleGroup: MaterialButtonToggleGroup, button0: MaterialButton, button1: MaterialButton) {
         buttonToggleGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->

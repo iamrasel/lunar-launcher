@@ -31,7 +31,9 @@
     <string name="freeform">Freeform</string>
     <string name="got_it">Got it</string>
     <string name="light_theme">Light</string>
+    <string name="look">Look</string>
     <string name="lunar_settings">Lunar Settings</string>
+    <string name="more">More</string>
     <string name="negative">Negative</string>
     <string name="null_app_store_message">There\'s no app store is installed\non this device.</string>
     <string name="owm_key">OWM API Key</string>
@@ -40,6 +42,7 @@
     <string name="show_city">Show City</string>
     <string name="show_todos">Show Todos</string>
     <string name="temp_unit">Temperature Unit</string>
+    <string name="time_date">Time - Date</string>
     <string name="time_format">Time Format</string>
     <string name="todo">Todo</string>
     <string name="todo_manager">Todo Manager</string>
@@ -47,6 +50,7 @@
     <string name="twenty_four">24 Hour</string>
     <string name="uninstall">Uninstall</string>
     <string name="update">Update</string>
+    <string name="weather">Weather</string>
     <string name="welcome">Welcome</string>
     <string name="welcome_description">Welcome to Lunar Launcher. This is your first launch; if you are a first time user,
 		<b>read these texts before you proceed</b>.
