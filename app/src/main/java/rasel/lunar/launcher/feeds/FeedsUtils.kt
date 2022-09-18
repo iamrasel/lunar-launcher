@@ -38,7 +38,7 @@ import java.io.InputStreamReader
 internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
 
     private var sysInfoUtils = SysInfoUtils()
-    private val toGb = 1073741824f
+    private val toGb = 1.07374182E9f
 
     @SuppressLint("DefaultLocale")
     fun ram(ram: MaterialTextView) {

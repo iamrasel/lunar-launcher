@@ -74,6 +74,7 @@ internal class LauncherActivity : AppCompatActivity() {
         viewPager.setCurrentItem(1, false)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount != 0) {
             supportFragmentManager.popBackStack()

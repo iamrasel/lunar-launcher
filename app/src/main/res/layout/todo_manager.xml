@@ -9,7 +9,7 @@
     android:background="?android:windowBackground"
     android:focusable="true"
     android:clickable="true"
-    android:layout_marginHorizontal="16dp">
+    android:paddingHorizontal="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todos"

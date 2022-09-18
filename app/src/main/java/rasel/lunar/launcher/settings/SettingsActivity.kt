@@ -135,6 +135,8 @@ internal class SettingsActivity : AppCompatActivity() {
         return Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' }
     }
 
+    @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         super.onBackPressed()
         if (dateFormat.isEmpty()) {
