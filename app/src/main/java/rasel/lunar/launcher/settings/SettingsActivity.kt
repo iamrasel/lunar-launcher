@@ -18,31 +18,27 @@
 
 package rasel.lunar.launcher.settings
 
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import rasel.lunar.launcher.BuildConfig
+import rasel.lunar.launcher.databinding.AboutBinding
 import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.settings.childs.*
 import rasel.lunar.launcher.settings.childs.Look
 import rasel.lunar.launcher.settings.childs.TimeDate
 import rasel.lunar.launcher.settings.childs.TodoSettings
 import rasel.lunar.launcher.settings.childs.WeatherSettings
-import java.util.*
 
 internal class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsActivityBinding
-    private lateinit var settingsClickListeners: SettingsClickListeners
-    private var lockMode = 0
-    private lateinit var feedUrl: String
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initializer()
-        loadSettings()
+        binding.version.text = BuildConfig.VERSION_NAME
 
         binding.timeDate.setOnClickListener {
             TimeDate().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
@@ -60,45 +56,15 @@ internal class SettingsActivity : AppCompatActivity() {
             Look().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
         }
 
-        settingsClickListeners.screenLock(binding.lockGroup, binding.selectLockNegative,
-            binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot)
-        settingsClickListeners.openAbout(binding.about)
-    }
-
-    private fun initializer() {
-        settingsClickListeners = SettingsClickListeners(this)
-        val sharedPreferences = applicationContext.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        feedUrl = sharedPreferences.getString(Constants().SHARED_PREF_FEED_URL, "").toString()
-        lockMode = sharedPreferences.getInt(Constants().SHARED_PREF_LOCK, 0)
-    }
-
-    private fun loadSettings() {
-        binding.inputFeedUrl.setText(feedUrl)
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            binding.selectLockAccessibility.isEnabled = false
-        }
-        if (!UniUtils().isRooted) {
-            binding.selectLockRoot.isEnabled = false
+        binding.more.setOnClickListener {
+            More().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
         }
 
-        when (lockMode) {
-            0 -> binding.selectLockNegative.isChecked = true
-            1 -> binding.selectLockAccessibility.isChecked = true
-            2 -> binding.selectLockAdmin.isChecked = true
-            3 -> binding.selectLockRoot.isChecked = true
+        binding.about.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(this)
+            val aboutBinding = AboutBinding.inflate(this.layoutInflater)
+            bottomSheetDialog.setContentView(aboutBinding.root)
+            bottomSheetDialog.show()
         }
-        binding.version.text = BuildConfig.VERSION_NAME
-    }
-
-    private fun getFeedUrl(): String {
-        return Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' }
-    }
-
-    @Deprecated("Deprecated in Java")
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        SettingsPrefsUtils().saveFeedUrl(applicationContext, getFeedUrl())
     }
 }
