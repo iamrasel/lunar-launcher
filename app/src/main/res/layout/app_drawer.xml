@@ -55,7 +55,6 @@
                 app:checkedIconEnabled="false"
                 android:layout_centerInParent="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="?actionBarSize"
                 style="@style/Widget.MaterialComponents.Chip.Entry"/>
 
             <ListView

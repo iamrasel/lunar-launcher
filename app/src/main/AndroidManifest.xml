@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="rasel.lunar.launcher">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -25,10 +24,11 @@
         android:excludeFromRecents="true"
 		android:clearTaskOnLaunch="true"
         android:stateNotNeeded="true"
-        android:screenOrientation="sensorPortrait">
+        android:screenOrientation="nosensor"
+        android:windowSoftInputMode="adjustResize">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".LauncherActivity"
 			android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
@@ -40,10 +40,22 @@
 
         <activity
             android:name=".settings.SettingsActivity"
-            android:exported="false" />
+            android:label="@string/lunar_settings"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
+        <service
+            android:name=".feeds.rss.RssService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false"/>
 
-        <service android:name=".feeds.rss.RssService"/>
 
         <receiver
             android:name=".helpers.AdminReceiver"

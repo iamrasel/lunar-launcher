@@ -1,0 +1,80 @@
+name: Bug report
+description: Create a bug report
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping me to make Lunar Launcher better by reporting a bug. :hugs:
+        Please fill in as much information as possible about your bug so that I can fix it immediately.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I made sure that there are **no existing issues** - [open](https://github.com/iamrasel/lunar-launcher/issues) or [closed](https://github.com/iamrasel/lunar-launcher/issues?q=is%3Aissue+is%3Aclosed) - which I could contribute my information to."
+          required: true
+        - label: "I have taken the time to fill in all the required details. I understand that the bug report will be dismissed otherwise."
+          required: true
+        - label: "This issue contains only one bug."
+          required: true
+
+  - type: input
+    id: app-version
+    attributes:
+     label: App version
+     description: "In which version did you encounter the bug?"
+     placeholder: "xx.xx - Can be seen in the app from the 'Settings' section"
+    validations:
+      required: true
+      
+  - type: input
+    id: device-os-info
+    attributes:
+     label: Android version
+     description: |
+      With what operating system (+ version) did you encounter the bug?
+     placeholder: "Example: Android 10"
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce the bug
+      description: |
+        What did you do for the bug to show up?
+        If you can't cause the bug to show up again reliably (and hence don't have a proper set of steps to give us), please still try to give as many details as possible on how you think you encountered the bug.
+      placeholder: |
+        1. Go to '...'
+        2. Press on '....'
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: |
+        Tell us what you expect to happen.
+
+  - type: textarea
+    id: screen-media
+    attributes:
+      label: Screenshots/Screen recordings
+      description: |
+        A picture or video is worth a thousand words.
+        If applicable, share screenshots or a screen recording to help explain your problem.
+        
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        If you could catch the log of the bug, don't forget to share it. This is the best way to point out any bug.
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional information
+      description: |
+        Any other information you'd like to include.

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:id="@+id/bottom_sheet_dialog">
+    android:padding="16dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/delete_all_confirmation"
@@ -34,8 +33,7 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/todo_cancel"

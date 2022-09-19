@@ -11,7 +11,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:title="@string/launcher_configs"
+            app:title="@string/lunar_settings"
             app:expandedTitleGravity="center"
             app:collapsedTitleGravity="center_horizontal"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -41,272 +41,57 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/time_format"
-                android:textSize="16sp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/time_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_twelve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/twelve"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/follow_system_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/follow_system"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_twenty_four"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/twenty_four"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/show_year"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/year_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_year_positive"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/positive"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_year_negative"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/negative"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="196dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/city_name"
-                app:endIconMode="clear_text"
-                android:layout_marginTop="16dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="324dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/owm_key"
-                app:endIconMode="clear_text"
-                android:layout_marginTop="16dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_owm"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/temp_unit"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/temp_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_celsius"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/celsius"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_fahrenheit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fahrenheit"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/show_city"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/city_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_city_positive"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/positive"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_city_negative"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/negative"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/show_todos"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/todos_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_todos_negative"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/negative"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_todos_three"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/three"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_todos_five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/five"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="324dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/feed_url"
-                android:layout_marginTop="16dp"
-                app:endIconMode="clear_text">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_feed_url"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/double_tap_lock"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/lock_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_lock_negative"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/negative"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_lock_accessibility"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/accessibility"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_lock_admin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/device_admin"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_lock_root"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/root"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/application_theme"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/theme_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_dark_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dark_theme"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/follow_system_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/follow_system"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_light_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/light_theme"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp">
+                android:orientation="vertical">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/time_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_date"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/weather"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weather"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/todo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/todo"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/look"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/look"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/more"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    style="@style/Widget.Material3.Button.ElevatedButton"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/about"
                     android:textStyle="bold"
+                    android:textAllCaps="true"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>
             </com.google.android.material.button.MaterialButtonToggleGroup>
 

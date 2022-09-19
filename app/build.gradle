@@ -1,16 +1,17 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "rasel.lunar.launcher"
         minSdk 26
-        targetSdk 32
-        versionCode 4   
-        versionName "4.01"
+        targetSdk 33
+        versionCode 18
+        versionName "18.6"
     }
 
     buildTypes {
@@ -49,10 +50,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+	
+    namespace 'rasel.lunar.launcher'
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.biometric:biometric-ktx:1.2.0-alpha04'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'com.google.android.material:material:1.6.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'dev.chrisbanes.insetter:insetter:0.6.1'
 }

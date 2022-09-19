@@ -7,15 +7,15 @@
         <a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=for-the-badge'></a>
         <br>
 		<img src='https://img.shields.io/badge/Maintained-yes-green?style=for-the-badge'>
-        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/Build_Debug?style=for-the-badge'></a>
-		<img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=for-the-badge'>
+        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/CI_Push?style=for-the-badge'></a>
+		<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=for-the-badge'></a>
     </p>
 </div>
 
 ## Features/Todo
 <details><summary>Global</summary>
 
-- [x] Appearences
+- [x] Appearances
   - [x] Material Design 3
   - [ ] Material You support
   - [x] Day/night theme
@@ -25,7 +25,6 @@
   - [x] Device admin
   - [x] Root
 - [x] Swipe down: expand notification panel
-- [ ] Migration to Kotlin
 - [ ] Yet to decide
 
 </details>
@@ -43,8 +42,8 @@
 - [x] Todo
   - [x] Add, delete, edit, copy
   - [ ] Auto destructive todo with notify
-  - [x] Zero/three/five items in home screen
-  - [ ] Access lock
+  - [x] 0-7 items in home screen
+  - [x] Access lock
 
 </details>
 <details><summary>App Drawer</summary>
@@ -62,8 +61,7 @@
 <details><summary>Feeds</summary>
 
 - [x] Device stats
-  - [ ] RAM boost
-  - [ ] Cache clean
+  - This section is temporary, will be replaced with more useful feature.
 - [x] RSS
 
 </details>
@@ -78,7 +76,7 @@
 </details>
 
 ## Screenshots
-As per version 14. Click on the image to enlarge it.
+As per version 14. Click on any image to enlarge it. To know more, explore and see for yourself.
 
 <div align='center'>
 	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/1.png' width=130>
@@ -93,11 +91,11 @@ As per version 14. Click on the image to enlarge it.
 </div>
 
 ## Download
+To get updated with the latest build head over to the [Actions](https://github.com/iamrasel/lunar-launcher/actions) tab and choose the latest workflow build from there.
 <div align='center'>
 
 <a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'></a>
-<a href='https://f-droid.org/en/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976D2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
-<a href='https://apt.izzysoft.de/fdroid/index/apk/rasel.lunar.launcher'><img src='https://img.shields.io/static/v1?message=IzzyOnDroid&logo=android&labelColor=515151&color=009000&logoColor=white&label=%20&style=for-the-badge'></a>
+<a href='https://f-droid.org/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976D2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
 
 </div>
 
@@ -110,7 +108,6 @@ As per version 14. Click on the image to enlarge it.
 - `android.permission.WRITE_SETTINGS` - To change system values like brightness
 
 ## Credits
-- [https://simpleicons.org](https://simpleicons.org)
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
 - [https://github.com/chrisbanes/insetter](https://github.com/chrisbanes/insetter)
 
