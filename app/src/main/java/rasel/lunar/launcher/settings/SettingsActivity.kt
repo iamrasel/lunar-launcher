@@ -26,18 +26,15 @@ import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
 import rasel.lunar.launcher.settings.childs.TimeDate
+import rasel.lunar.launcher.settings.childs.WeatherSettings
 import java.util.*
 
 internal class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsActivityBinding
     private lateinit var settingsClickListeners: SettingsClickListeners
-    private var tempUnit = 0
-    private var showCity = 0
     private var showTodos = 0
     private var lockMode = 0
     private var themeValue = 0
-    private lateinit var cityName: String
-    private lateinit var owmKey: String
     private lateinit var feedUrl: String
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,8 +48,10 @@ internal class SettingsActivity : AppCompatActivity() {
             TimeDate().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
         }
 
-        settingsClickListeners.tempUnit(binding.tempGroup, binding.selectCelsius, binding.selectFahrenheit)
-        settingsClickListeners.showCity(binding.cityGroup, binding.showCityNegative, binding.showCityPositive)
+        binding.weather.setOnClickListener {
+            WeatherSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+        }
+
         settingsClickListeners.showTodos(binding.showTodos)
         settingsClickListeners.screenLock(binding.lockGroup, binding.selectLockNegative,
             binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot)
@@ -64,10 +63,6 @@ internal class SettingsActivity : AppCompatActivity() {
     private fun initializer() {
         settingsClickListeners = SettingsClickListeners(this)
         val sharedPreferences = applicationContext.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        cityName = sharedPreferences.getString(Constants().SHARED_PREF_CITY_NAME, "").toString()
-        owmKey = sharedPreferences.getString(Constants().SHARED_PREF_OWM_KEY, "").toString()
-        tempUnit = sharedPreferences.getInt(Constants().SHARED_PREF_TEMP_UNIT, 0)
-        showCity = sharedPreferences.getInt(Constants().SHARED_PREF_SHOW_CITY, 0)
         showTodos = sharedPreferences.getInt(Constants().SHARED_PREF_SHOW_TODOS, 3)
         feedUrl = sharedPreferences.getString(Constants().SHARED_PREF_FEED_URL, "").toString()
         lockMode = sharedPreferences.getInt(Constants().SHARED_PREF_LOCK, 0)
@@ -75,18 +70,6 @@ internal class SettingsActivity : AppCompatActivity() {
     }
 
     private fun loadSettings() {
-        binding.inputCity.setText(cityName)
-        binding.inputOwm.setText(owmKey)
-
-        when (tempUnit) {
-            0 -> binding.selectCelsius.isChecked = true
-            1 -> binding.selectFahrenheit.isChecked = true
-        }
-        when (showCity) {
-            0 -> binding.showCityNegative.isChecked = true
-            1 -> binding.showCityPositive.isChecked = true
-        }
-
         binding.showTodos.value = showTodos.toFloat()
         binding.inputFeedUrl.setText(feedUrl)
 
@@ -111,14 +94,6 @@ internal class SettingsActivity : AppCompatActivity() {
         binding.version.text = BuildConfig.VERSION_NAME
     }
 
-    private fun getCityName(): String {
-        return Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' }
-    }
-
-    private fun getOwmKey(): String {
-        return Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' }
-    }
-
     private fun getFeedUrl(): String {
         return Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' }
     }
@@ -127,8 +102,6 @@ internal class SettingsActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
         super.onBackPressed()
-        SettingsPrefsUtils().saveCityName(applicationContext, getCityName())
-        SettingsPrefsUtils().saveOwmKey(applicationContext, getOwmKey())
         SettingsPrefsUtils().saveFeedUrl(applicationContext, getFeedUrl())
     }
 }

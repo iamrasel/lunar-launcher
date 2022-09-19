@@ -31,28 +31,6 @@ import rasel.lunar.launcher.databinding.AboutBinding
 internal class SettingsClickListeners(private val appCompatActivity: AppCompatActivity) {
     private val context: Context = appCompatActivity.applicationContext
 
-    fun tempUnit(buttonToggleGroup: MaterialButtonToggleGroup, button0: MaterialButton, button1: MaterialButton) {
-        buttonToggleGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    button0.id -> SettingsPrefsUtils().saveTempUnit(context, 0)
-                    button1.id -> SettingsPrefsUtils().saveTempUnit(context, 1)
-                }
-            }
-        }
-    }
-
-    fun showCity(buttonToggleGroup: MaterialButtonToggleGroup, button0: MaterialButton, button1: MaterialButton) {
-        buttonToggleGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    button0.id -> SettingsPrefsUtils().showCity(context, 0)
-                    button1.id -> SettingsPrefsUtils().showCity(context, 1)
-                }
-            }
-        }
-    }
-
     fun showTodos(slider: Slider) {
         slider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             SettingsPrefsUtils().showTodos(context, value.toInt())
