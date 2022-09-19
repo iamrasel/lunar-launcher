@@ -26,13 +26,13 @@ import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
 import rasel.lunar.launcher.settings.childs.TimeDate
+import rasel.lunar.launcher.settings.childs.TodoSettings
 import rasel.lunar.launcher.settings.childs.WeatherSettings
 import java.util.*
 
 internal class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsActivityBinding
     private lateinit var settingsClickListeners: SettingsClickListeners
-    private var showTodos = 0
     private var lockMode = 0
     private var themeValue = 0
     private lateinit var feedUrl: String
@@ -52,7 +52,10 @@ internal class SettingsActivity : AppCompatActivity() {
             WeatherSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
         }
 
-        settingsClickListeners.showTodos(binding.showTodos)
+        binding.todo.setOnClickListener {
+            TodoSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+        }
+
         settingsClickListeners.screenLock(binding.lockGroup, binding.selectLockNegative,
             binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot)
         settingsClickListeners.theme(binding.themeGroup, binding.followSystemTheme,
@@ -63,14 +66,12 @@ internal class SettingsActivity : AppCompatActivity() {
     private fun initializer() {
         settingsClickListeners = SettingsClickListeners(this)
         val sharedPreferences = applicationContext.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        showTodos = sharedPreferences.getInt(Constants().SHARED_PREF_SHOW_TODOS, 3)
         feedUrl = sharedPreferences.getString(Constants().SHARED_PREF_FEED_URL, "").toString()
         lockMode = sharedPreferences.getInt(Constants().SHARED_PREF_LOCK, 0)
         themeValue = sharedPreferences.getInt(Constants().SHARED_PREF_THEME, 0)
     }
 
     private fun loadSettings() {
-        binding.showTodos.value = showTodos.toFloat()
         binding.inputFeedUrl.setText(feedUrl)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
