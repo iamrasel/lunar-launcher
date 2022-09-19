@@ -25,6 +25,7 @@ import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.settings.childs.Look
 import rasel.lunar.launcher.settings.childs.TimeDate
 import rasel.lunar.launcher.settings.childs.TodoSettings
 import rasel.lunar.launcher.settings.childs.WeatherSettings
@@ -34,7 +35,6 @@ internal class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsActivityBinding
     private lateinit var settingsClickListeners: SettingsClickListeners
     private var lockMode = 0
-    private var themeValue = 0
     private lateinit var feedUrl: String
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,10 +56,12 @@ internal class SettingsActivity : AppCompatActivity() {
             TodoSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
         }
 
+        binding.look.setOnClickListener {
+            Look().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+        }
+
         settingsClickListeners.screenLock(binding.lockGroup, binding.selectLockNegative,
             binding.selectLockAccessibility, binding.selectLockAdmin, binding.selectLockRoot)
-        settingsClickListeners.theme(binding.themeGroup, binding.followSystemTheme,
-            binding.selectDarkTheme, binding.selectLightTheme)
         settingsClickListeners.openAbout(binding.about)
     }
 
@@ -68,7 +70,6 @@ internal class SettingsActivity : AppCompatActivity() {
         val sharedPreferences = applicationContext.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
         feedUrl = sharedPreferences.getString(Constants().SHARED_PREF_FEED_URL, "").toString()
         lockMode = sharedPreferences.getInt(Constants().SHARED_PREF_LOCK, 0)
-        themeValue = sharedPreferences.getInt(Constants().SHARED_PREF_THEME, 0)
     }
 
     private fun loadSettings() {
@@ -86,11 +87,6 @@ internal class SettingsActivity : AppCompatActivity() {
             1 -> binding.selectLockAccessibility.isChecked = true
             2 -> binding.selectLockAdmin.isChecked = true
             3 -> binding.selectLockRoot.isChecked = true
-        }
-        when (themeValue) {
-            0 -> binding.followSystemTheme.isChecked = true
-            1 -> binding.selectDarkTheme.isChecked = true
-            2 -> binding.selectLightTheme.isChecked = true
         }
         binding.version.text = BuildConfig.VERSION_NAME
     }

@@ -93,38 +93,6 @@
                     style="@style/Widget.Material3.Button.OutlinedButton"/>
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/application_theme"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/theme_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_dark_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dark_theme"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/follow_system_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/follow_system"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/select_light_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/light_theme"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

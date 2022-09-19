@@ -21,7 +21,6 @@ package rasel.lunar.launcher.settings
 import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -39,28 +38,6 @@ internal class SettingsClickListeners(private val appCompatActivity: AppCompatAc
                     button1.id -> SettingsPrefsUtils().saveLockMode(context, 1)
                     button2.id -> SettingsPrefsUtils().saveLockMode(context, 2)
                     button3.id -> SettingsPrefsUtils().saveLockMode(context, 3)
-                }
-            }
-        }
-    }
-
-    fun theme(buttonToggleGroup: MaterialButtonToggleGroup,
-        button0: MaterialButton, button1: MaterialButton, button2: MaterialButton) {
-        buttonToggleGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    button0.id -> {
-                        SettingsPrefsUtils().saveTheme(context, 0)
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    }
-                    button1.id -> {
-                        SettingsPrefsUtils().saveTheme(context, 1)
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    }
-                    button2.id -> {
-                        SettingsPrefsUtils().saveTheme(context, 2)
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }
                 }
             }
         }
