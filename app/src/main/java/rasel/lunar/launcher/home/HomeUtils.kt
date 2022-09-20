@@ -115,12 +115,18 @@ internal class HomeUtils(
         view.setOnTouchListener(object : SwipeTouchListener(context) {
             override fun onLongClick() {
                 super.onLongClick()
-                if (UniUtils().canAuthenticate(context)) {
-                    val biometricPrompt = BiometricPrompt(fragmentActivity, authenticationCallback)
-                    try {
-                        biometricPrompt.authenticate(UniUtils().biometricPromptInfo(fragmentActivity.getString(R.string.todo_manager), fragmentActivity))
-                    } catch (exception: Exception) {
-                        exception.printStackTrace()
+                when (sharedPreferences.getBoolean(Constants().SHARED_PREF_TODO_LOCK, false)) {
+                    false -> fragmentManager.beginTransaction().add(R.id.main_fragments_container, TodoManager())
+                        .addToBackStack("").commit()
+                    true -> {
+                        if (UniUtils().canAuthenticate(context)) {
+                            val biometricPrompt = BiometricPrompt(fragmentActivity, authenticationCallback)
+                            try {
+                                biometricPrompt.authenticate(UniUtils().biometricPromptInfo(fragmentActivity.getString(R.string.todo_manager), fragmentActivity))
+                            } catch (exception: Exception) {
+                                exception.printStackTrace()
+                            }
+                        }
                     }
                 }
             }

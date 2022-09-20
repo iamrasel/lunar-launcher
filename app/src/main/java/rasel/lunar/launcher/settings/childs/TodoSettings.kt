@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsTodoBinding
 import rasel.lunar.launcher.helpers.Constants
@@ -32,13 +33,20 @@ import rasel.lunar.launcher.settings.SettingsPrefsUtils
 internal class TodoSettings : BottomSheetDialogFragment() {
     private lateinit var binding : SettingsTodoBinding
     private var showTodos = 0
+    private var todoLock : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTodoBinding.inflate(inflater, container, false)
 
         val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
         showTodos = sharedPreferences.getInt(Constants().SHARED_PREF_SHOW_TODOS, 3)
+        todoLock = sharedPreferences.getBoolean(Constants().SHARED_PREF_TODO_LOCK, false)
         binding.showTodos.value = showTodos.toFloat()
+
+        when (todoLock) {
+            false -> binding.todoLockNegative.isChecked = true
+            true -> binding.todoLockPositive.isChecked = true
+        }
 
         return binding.root
     }
@@ -48,5 +56,14 @@ internal class TodoSettings : BottomSheetDialogFragment() {
         binding.showTodos.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             SettingsPrefsUtils().showTodos(requireContext(), value.toInt())
         })
+
+        binding.todoLockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
+            if (isChecked) {
+                when (checkedId) {
+                    binding.todoLockPositive.id -> SettingsPrefsUtils().todoLock(requireContext(), true)
+                    binding.todoLockNegative.id -> SettingsPrefsUtils().todoLock(requireContext(), false)
+                }
+            }
+        }
     }
 }

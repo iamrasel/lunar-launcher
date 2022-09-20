@@ -46,6 +46,7 @@
     <string name="time_format">Time Format</string>
     <string name="todo">Todo</string>
     <string name="todo_manager">Todo Manager</string>
+    <string name="todo_manager_lock">Todo Manager Lock</string>
     <string name="twelve">12 Hour</string>
     <string name="twenty_four">24 Hour</string>
     <string name="uninstall">Uninstall</string>

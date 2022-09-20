@@ -58,6 +58,11 @@ internal class SettingsPrefsUtils {
         sharedPreferences.edit().putInt(Constants().SHARED_PREF_SHOW_TODOS, showTodos).apply()
     }
 
+    fun todoLock(context: Context, todoLock: Boolean) {
+        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean(Constants().SHARED_PREF_TODO_LOCK, todoLock).apply()
+    }
+
     fun saveFeedUrl(context: Context, feedUrl: String) {
         val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
         sharedPreferences.edit().putString(Constants().SHARED_PREF_FEED_URL, feedUrl).apply()

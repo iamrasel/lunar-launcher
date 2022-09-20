@@ -34,6 +34,7 @@ internal class Constants {
     @JvmField val SHARED_PREF_TEMP_UNIT = "temp_unit"
     @JvmField val SHARED_PREF_SHOW_CITY = "show_city"
     @JvmField val SHARED_PREF_SHOW_TODOS = "show_todos"
+    @JvmField val SHARED_PREF_TODO_LOCK = "todo_lock"
     @JvmField val SHARED_PREF_FEED_URL = "feed_url"
     @JvmField val SHARED_PREF_LOCK = "lock"
     @JvmField val SHARED_PREF_THEME = "app_theme"
