@@ -18,6 +18,8 @@
 
 package rasel.lunar.launcher.settings
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -61,6 +63,8 @@ internal class SettingsActivity : AppCompatActivity() {
                         bottomSheetDialog.setContentView(aboutBinding.root)
                         bottomSheetDialog.show()
                     }
+                    binding.donate.id ->
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://iamrasel.github.io/donate")))
                 }
             }
         }

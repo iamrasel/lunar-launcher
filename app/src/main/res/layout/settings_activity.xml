@@ -80,6 +80,14 @@
                 android:textStyle="bold"
                 android:textAllCaps="true"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/donate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/donate"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                style="@style/Widget.Material3.Button.ElevatedButton"/>
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <com.google.android.material.textview.MaterialTextView
