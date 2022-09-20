@@ -36,7 +36,7 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
     private lateinit var cityName: String
     private lateinit var owmKey: String
     private var tempUnit = 0
-    private var showCity = 0
+    private var showCity : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsWeatherBinding.inflate(inflater, container, false)
@@ -45,7 +45,7 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         cityName = sharedPreferences.getString(Constants().SHARED_PREF_CITY_NAME, "").toString()
         owmKey = sharedPreferences.getString(Constants().SHARED_PREF_OWM_KEY, "").toString()
         tempUnit = sharedPreferences.getInt(Constants().SHARED_PREF_TEMP_UNIT, 0)
-        showCity = sharedPreferences.getInt(Constants().SHARED_PREF_SHOW_CITY, 0)
+        showCity = sharedPreferences.getBoolean(Constants().SHARED_PREF_SHOW_CITY, false)
 
         binding.inputCity.setText(cityName)
         binding.inputOwm.setText(owmKey)
@@ -55,8 +55,8 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
             1 -> binding.selectFahrenheit.isChecked = true
         }
         when (showCity) {
-            0 -> binding.showCityNegative.isChecked = true
-            1 -> binding.showCityPositive.isChecked = true
+            false -> binding.showCityNegative.isChecked = true
+            true -> binding.showCityPositive.isChecked = true
         }
 
         return binding.root
@@ -76,8 +76,8 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         binding.cityGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.showCityNegative.id -> SettingsPrefsUtils().showCity(requireContext(), 0)
-                    binding.showCityPositive.id -> SettingsPrefsUtils().showCity(requireContext(), 1)
+                    binding.showCityNegative.id -> SettingsPrefsUtils().showCity(requireContext(), false)
+                    binding.showCityPositive.id -> SettingsPrefsUtils().showCity(requireContext(), true)
                 }
             }
         }

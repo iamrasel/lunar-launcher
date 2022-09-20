@@ -48,9 +48,9 @@ internal class SettingsPrefsUtils {
         sharedPreferences.edit().putInt(Constants().SHARED_PREF_TEMP_UNIT, tempUnit).apply()
     }
 
-    fun showCity(context: Context, showCity: Int) {
+    fun showCity(context: Context, showCity: Boolean) {
         val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putInt(Constants().SHARED_PREF_SHOW_CITY, showCity).apply()
+        sharedPreferences.edit().putBoolean(Constants().SHARED_PREF_SHOW_CITY, showCity).apply()
     }
 
     fun showTodos(context: Context, showTodos: Int) {

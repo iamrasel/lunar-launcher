@@ -21,6 +21,7 @@ package rasel.lunar.launcher.settings
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.databinding.AboutBinding
 import rasel.lunar.launcher.databinding.SettingsActivityBinding
@@ -40,31 +41,28 @@ internal class SettingsActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.version.text = BuildConfig.VERSION_NAME
 
-        binding.timeDate.setOnClickListener {
-            TimeDate().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
-        }
-
-        binding.weather.setOnClickListener {
-            WeatherSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
-        }
-
-        binding.todo.setOnClickListener {
-            TodoSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
-        }
-
-        binding.look.setOnClickListener {
-            Look().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
-        }
-
-        binding.more.setOnClickListener {
-            More().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
-        }
-
-        binding.about.setOnClickListener {
-            val bottomSheetDialog = BottomSheetDialog(this)
-            val aboutBinding = AboutBinding.inflate(this.layoutInflater)
-            bottomSheetDialog.setContentView(aboutBinding.root)
-            bottomSheetDialog.show()
+        binding.mainSettingsGroup.addOnButtonCheckedListener {
+                _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
+            if (isChecked) {
+                when (checkedId) {
+                    binding.timeDate.id ->
+                        TimeDate().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                    binding.weather.id ->
+                        WeatherSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                    binding.todo.id ->
+                        TodoSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                    binding.look.id ->
+                        Look().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                    binding.more.id ->
+                        More().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                    binding.about.id -> {
+                        val bottomSheetDialog = BottomSheetDialog(this)
+                        val aboutBinding = AboutBinding.inflate(this.layoutInflater)
+                        bottomSheetDialog.setContentView(aboutBinding.root)
+                        bottomSheetDialog.show()
+                    }
+                }
+            }
         }
     }
 }

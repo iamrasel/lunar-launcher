@@ -34,7 +34,7 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
     private val owmKey: String
     private val weatherUrl: String
     private val tempUnitValue: Int
-    private val showCityValue: Int
+    private val showCityValue: Boolean
 
     fun generateTempString(materialTextView: MaterialTextView, fragmentActivity: FragmentActivity) {
         materialTextView.visibility = View.GONE
@@ -51,17 +51,15 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
                     val finalWeather = weather
                     handler.post {
                         if (finalWeather != null) {
-                            var temp = ""
-                            var tempStr = ""
-                            when (tempUnitValue) {
-                                0 -> temp =
-                                    (finalWeather.temperature - 273.15f).roundToInt().toString() + "ºC"
-                                1 -> temp =
-                                    ((finalWeather.temperature - 273.15f) * 1.8 + 32).roundToInt().toString() + "ºF"
+                            val temp = when (tempUnitValue) {
+                                0 -> (finalWeather.temperature - 273.15f).roundToInt().toString() + "ºC"
+                                1 -> ((finalWeather.temperature - 273.15f) * 1.8 + 32).roundToInt().toString() + "ºF"
+                                else -> throw AssertionError()
                             }
-                            when (showCityValue) {
-                                0 -> tempStr = temp
-                                1 -> tempStr = "$temp at $cityName"
+
+                            val tempStr = when (showCityValue) {
+                                false -> temp
+                                true -> "$temp at $cityName"
                             }
                             materialTextView.visibility = View.VISIBLE
                             materialTextView.text = tempStr
@@ -78,7 +76,7 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
         cityName = sharedPreferences.getString(Constants().SHARED_PREF_CITY_NAME, "").toString()
         owmKey = sharedPreferences.getString(Constants().SHARED_PREF_OWM_KEY, "").toString()
         tempUnitValue = sharedPreferences.getInt(Constants().SHARED_PREF_TEMP_UNIT, 0)
-        showCityValue = sharedPreferences.getInt(Constants().SHARED_PREF_SHOW_CITY, 0)
+        showCityValue = sharedPreferences.getBoolean(Constants().SHARED_PREF_SHOW_CITY, false)
         weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmKey"
     }
 }

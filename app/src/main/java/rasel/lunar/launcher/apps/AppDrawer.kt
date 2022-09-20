@@ -54,8 +54,8 @@ internal class AppDrawer : Fragment() {
     private lateinit var binding: AppDrawerBinding
     private lateinit var fragmentActivity: FragmentActivity
     private val leftSearchArray = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m")
-    private val leftSearchArrayII = arrayOf("0", "1", "2", "3", "4", "\u290A")
-    private val rightSearchArray = arrayOf("9", "8", "7", "6", "5", "\u290B")
+    private val leftSearchArrayII = arrayOf("0", "1", "2", "3", "4", "\u290B")
+    private val rightSearchArray = arrayOf("9", "8", "7", "6", "5", "\u290A")
     private val rightSearchArrayII = arrayOf("z", "y", "x", "w", "v", "u", "t", "s", "r", "q", "p", "o", "n")
     private lateinit var packageNamesArrayList: ArrayList<String>
     private lateinit var appsAdapter: ArrayAdapter<String>
@@ -201,7 +201,7 @@ internal class AppDrawer : Fragment() {
         binding.leftSearchListII.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
                 when (i) {
-                    leftSearchArrayII.size - 1 -> binding.appsList.setSelection(0)
+                    leftSearchArrayII.size - 1 -> binding.appsList.setSelection(appsAdapter.count - 1)
                     else -> searchClickHelper(adapterView, i)
                 }
             }
@@ -209,7 +209,7 @@ internal class AppDrawer : Fragment() {
         binding.rightSearchList.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
                 when (i) {
-                    rightSearchArray.size - 1 -> binding.appsList.setSelection(appsAdapter.count - 1)
+                    rightSearchArray.size - 1 -> binding.appsList.setSelection(0)
                     else -> searchClickHelper(adapterView, i)
                 }
             }
