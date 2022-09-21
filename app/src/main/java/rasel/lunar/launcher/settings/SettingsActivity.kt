@@ -29,10 +29,6 @@ import rasel.lunar.launcher.databinding.AboutBinding
 import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.settings.childs.*
-import rasel.lunar.launcher.settings.childs.Look
-import rasel.lunar.launcher.settings.childs.TimeDate
-import rasel.lunar.launcher.settings.childs.TodoSettings
-import rasel.lunar.launcher.settings.childs.WeatherSettings
 
 internal class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsActivityBinding
@@ -57,6 +53,8 @@ internal class SettingsActivity : AppCompatActivity() {
                         Look().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
                     binding.more.id ->
                         More().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                    binding.advance.id ->
+                        Advance().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
                     binding.about.id -> {
                         val bottomSheetDialog = BottomSheetDialog(this)
                         val aboutBinding = AboutBinding.inflate(this.layoutInflater)

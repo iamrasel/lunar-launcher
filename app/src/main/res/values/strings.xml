@@ -6,6 +6,7 @@
     </string>
     <string name="accessibility_service_label">Lock Service</string>
     <string name="add_new">Add New</string>
+    <string name="advance">Advance</string>
     <string name="app_info">App Info</string>
     <string name="app_store">App Store</string>
     <string name="application_theme">Application Theme</string>
@@ -39,6 +40,7 @@
     <string name="null_app_store_message">There\'s no app store is installed\non this device.</string>
     <string name="owm_key">OWM API Key</string>
     <string name="positive">Positive</string>
+    <string name="restart">Restart</string>
     <string name="root">Root</string>
     <string name="show_city">Show City</string>
     <string name="show_todos">Show Todos</string>

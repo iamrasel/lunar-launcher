@@ -73,6 +73,14 @@
                 android:textAllCaps="true"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/advance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/advance"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                style="@style/Widget.Material3.Button.ElevatedButton"/>
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
