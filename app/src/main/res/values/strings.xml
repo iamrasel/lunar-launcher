@@ -40,6 +40,9 @@
     <string name="null_app_store_message">There\'s no app store is installed\non this device.</string>
     <string name="owm_key">OWM API Key</string>
     <string name="positive">Positive</string>
+    <string name="proceed">Proceed</string>
+    <string name="reset">Reset</string>
+    <string name="reset_message">This operation will clear all the data stored for this application, and can\'t be undone.</string>
     <string name="restart">Restart</string>
     <string name="root">Root</string>
     <string name="show_city">Show City</string>

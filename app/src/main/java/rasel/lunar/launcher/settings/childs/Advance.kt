@@ -25,6 +25,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.SettingsAdvanceBinding
 import kotlin.system.exitProcess
 
@@ -42,6 +44,17 @@ internal class Advance : BottomSheetDialogFragment() {
         binding.advanceSettings.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
+                    binding.reset.id -> {
+                        MaterialAlertDialogBuilder(requireActivity())
+                            .setTitle(R.string.reset)
+                            .setMessage(R.string.reset_message)
+                            .setPositiveButton(R.string.proceed) { dialog, _ ->
+                                dialog.dismiss()
+                                Runtime.getRuntime().exec("pm clear " + requireContext().packageName)
+                            }
+                            .setNeutralButton(android.R.string.cancel) {dialog, _ -> dialog.dismiss() }
+                            .show()
+                    }
                     binding.restart.id -> {
                         val intent = (requireContext().packageManager).getLaunchIntentForPackage(requireContext().packageName)
                         requireContext().startActivity(Intent.makeRestartActivityTask(intent?.component))
