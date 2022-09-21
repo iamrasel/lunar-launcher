@@ -1,0 +1,3 @@
+- Reworked Settings screen
+- [New] Todo manager lock system on/off
+- [New] Reset, Restart and Donate button
