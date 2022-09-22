@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     paths-ignore:
-          - "README*.md"
-          - "LICENSE.md"
+          - "README.md"
+          - "LICENSE"
           - "fastlane/**"
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew assembleRelease
+        run: ./gradlew clean && ./gradlew assembleRelease
 
       - name: Sign
         id: sign_apk

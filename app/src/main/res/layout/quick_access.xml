@@ -78,57 +78,69 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:orientation="horizontal"
         android:layout_marginTop="22dp">
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/phone_one"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginHorizontal="4dp"
+            android:gravity="center"
             android:textStyle="bold"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"/>
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:textSize="26sp"
+            android:background="@drawable/rounded_bg"
+            android:layout_marginHorizontal="4dp"/>
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/phone_two"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginHorizontal="4dp"
+            android:gravity="center"
             android:textStyle="bold"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"/>
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:textSize="26sp"
+            android:background="@drawable/rounded_bg"
+            android:layout_marginHorizontal="4dp"/>
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/phone_three"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginHorizontal="4dp"
+            android:gravity="center"
             android:textStyle="bold"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary"/>
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:textSize="26sp"
+            android:background="@drawable/rounded_bg"
+            android:layout_marginHorizontal="4dp"/>
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/url_one"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginHorizontal="4dp"
+            android:gravity="center"
             android:textStyle="bold"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Tertiary"/>
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:textSize="26sp"
+            android:background="@drawable/rounded_bg"
+            android:layout_marginHorizontal="4dp"/>
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/url_two"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginHorizontal="4dp"
+            android:gravity="center"
             android:textStyle="bold"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Tertiary"/>
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:textSize="26sp"
+            android:background="@drawable/rounded_bg"
+            android:layout_marginHorizontal="4dp"/>
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/url_three"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginHorizontal="4dp"
+            android:gravity="center"
             android:textStyle="bold"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Tertiary"/>
+            android:textSize="26sp"
+            android:background="@drawable/rounded_bg"
+            android:layout_marginHorizontal="4dp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat

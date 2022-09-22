@@ -24,7 +24,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.BuildConfig
+import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AboutBinding
 import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants
@@ -61,8 +63,15 @@ internal class SettingsActivity : AppCompatActivity() {
                         bottomSheetDialog.setContentView(aboutBinding.root)
                         bottomSheetDialog.show()
                     }
-                    binding.donate.id ->
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://iamrasel.github.io/donate")))
+                    binding.donate.id -> {
+                        MaterialAlertDialogBuilder(this)
+                            .setTitle(R.string.donate)
+                            .setMessage(R.string.donate_message)
+                            .setPositiveButton(R.string.proceed) { dialog, _ ->
+                                dialog.dismiss()
+                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://iamrasel.github.io/donate")))
+                            }.show()
+                    }
                 }
             }
         }

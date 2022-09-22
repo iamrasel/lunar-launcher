@@ -4,8 +4,8 @@ on:
   pull_request:
     branches: [main]
     paths-ignore:
-          - "README*.md"
-          - "LICENSE.md"
+          - "README.md"
+          - "LICENSE"
           - "fastlane/**"
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew assembleDebug
+        run: ./gradlew clean && ./gradlew assembleDebug
 
       - name: Upload
         uses: actions/upload-artifact@v2

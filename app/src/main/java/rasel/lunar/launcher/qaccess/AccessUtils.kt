@@ -34,8 +34,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.slider.Slider
+import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.apps.FavouriteUtils
 import rasel.lunar.launcher.databinding.SaverDialogBinding
@@ -92,13 +92,13 @@ internal class AccessUtils(
         }
     }
 
-    fun phonesAndUrls(root: String, intentString: String, thumbLetter: String?, efab: ExtendedFloatingActionButton, position: Int) {
+    fun phonesAndUrls(root: String, intentString: String, thumbLetter: String, thumbHolder: MaterialTextView, position: Int) {
         if (intentString.isEmpty()) {
-            efab.text = "+"
-            efab.setOnClickListener { saverDialog(position, root) }
+            thumbHolder.text = "+"
+            thumbHolder.setOnClickListener { saverDialog(position, root) }
         } else {
-            efab.text = thumbLetter
-            efab.setOnClickListener {
+            thumbHolder.text = thumbLetter
+            thumbHolder.setOnClickListener {
                 if (root == Constants().PHONE_NO) {
                     if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         fragmentActivity.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
@@ -118,7 +118,7 @@ internal class AccessUtils(
                 }
                 bottomSheetDialogFragment.dismiss()
             }
-            efab.setOnLongClickListener {
+            thumbHolder.setOnLongClickListener {
                 if (root == Constants().PHONE_NO) {
                     sharedPreferences.edit().putString(Constants().PHONE_NO_ + position, "").apply()
                     sharedPreferences.edit().putString(Constants().PHONE_THUMB_LETTER_ + position, "")
@@ -128,7 +128,7 @@ internal class AccessUtils(
                     sharedPreferences.edit().putString(Constants().URL_THUMB_LETTER_ + position, "")
                         .apply()
                 }
-                efab.text = "+"
+                thumbHolder.text = "+"
                 bottomSheetDialogFragment.onResume()
                 true
             }

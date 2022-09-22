@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+	namespace 'rasel.lunar.launcher'
     compileSdk 33
 
     defaultConfig {
@@ -11,13 +12,14 @@ android {
         minSdk 26
         targetSdk 33
         versionCode 19
-        versionName "18.9.1"
+        versionName "19.1"
     }
 
     buildTypes {
         debug {
             minifyEnabled false
             shrinkResources false
+            debuggable true
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             resValue "string", "app_name", "Lunar Launcher Debug"
@@ -50,8 +52,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-	
-    namespace 'rasel.lunar.launcher'
 }
 
 dependencies {
