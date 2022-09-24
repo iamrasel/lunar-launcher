@@ -24,10 +24,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="288dp"
             android:layout_height="288dp"
-            android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="vertical">
+
             <TextClock
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
@@ -36,6 +36,7 @@
                 android:textIsSelectable="false"
                 android:textSize="48sp"
                 android:textStyle="bold" />
+
             <TextClock
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
@@ -43,6 +44,7 @@
                 android:lines="1"
                 android:textIsSelectable="false"
                 android:textSize="14sp" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/temp"
                 android:layout_width="wrap_content"

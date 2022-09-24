@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primary">#FF82B1FF</color>
-    <color name="window_background">#FFF9FBE7</color>
+    <color name="window_background">#FFFFFF</color>
 
     <color name="status_bar">@android:color/transparent</color>
     <color name="navigation_bar">@android:color/transparent</color>
 
     <color name="ic_launcher_bg_top">#FF333333</color>
-    <color name="ic_launcher_bg_bottom">#FFBBBBBB</color>
+    <color name="ic_launcher_bg_bottom">#A57171</color>
 
     <color name="icon_color">@android:color/black</color>
     <color name="apps_count">@android:color/white</color>
