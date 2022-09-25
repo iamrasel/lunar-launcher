@@ -12,4 +12,8 @@
     <color name="icon_color">@android:color/black</color>
     <color name="apps_count">@android:color/white</color>
     <color name="almost_transparent">#11000000</color>
+
+    <color name="red">#FFFF0000</color>
+    <color name="green">#FF00FF00</color>
+    <color name="blue">#FF0000FF</color>
 </resources>

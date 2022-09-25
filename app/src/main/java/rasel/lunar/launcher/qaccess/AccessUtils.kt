@@ -23,32 +23,36 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.media.AudioManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
 import android.text.InputType
 import android.view.View
-import android.widget.NumberPicker
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
-import rasel.lunar.launcher.R
 import rasel.lunar.launcher.apps.FavouriteUtils
-import rasel.lunar.launcher.databinding.SaverDialogBinding
+import rasel.lunar.launcher.databinding.ShortcutMakerBinding
+import rasel.lunar.launcher.helpers.ColorPicker
 import rasel.lunar.launcher.helpers.Constants
 import java.util.*
-import java.util.concurrent.atomic.AtomicBoolean
 
 internal class AccessUtils(
     private val context: Context,
     private val bottomSheetDialogFragment: BottomSheetDialogFragment,
     private val fragmentActivity: FragmentActivity) {
     private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences(Constants().SHARED_PREFS_PHONES_URLS, Context.MODE_PRIVATE)
+        context.getSharedPreferences(Constants().SHARED_PREFS_SHORTCUTS, Context.MODE_PRIVATE)
 
     fun volumeControllers(notifyBar: Slider, alarmBar: Slider, mediaBar: Slider, voiceBar: Slider, ringerBar: Slider) {
         val audioManager = fragmentActivity.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -92,22 +96,22 @@ internal class AccessUtils(
         }
     }
 
-    fun phonesAndUrls(root: String, intentString: String, thumbLetter: String, thumbHolder: MaterialTextView, position: Int) {
+    fun shortcutsUtil(textView: MaterialTextView, shortcutType: String, intentString: String,
+                      thumbLetter: String, color: String, position: Int) {
         if (intentString.isEmpty()) {
-            thumbHolder.text = "+"
-            thumbHolder.setOnClickListener { saverDialog(position, root) }
+            textView.text = "+"
+            textView.setOnClickListener { shortcutsSaverDialog(position) }
         } else {
-            thumbHolder.text = thumbLetter
-            thumbHolder.setOnClickListener {
-                if (root == Constants().PHONE_NO) {
-                    if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        fragmentActivity.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
-                    } else {
-                        fragmentActivity.startActivity(
-                            Intent(Intent.ACTION_CALL, Uri.parse("tel:$intentString"))
-                        )
-                    }
-                } else if (root == Constants().URL_ADDRESS) {
+            textView.text = thumbLetter
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                textView.background.colorFilter =
+                    BlendModeColorFilter(Color.parseColor("#$color"), BlendMode.MULTIPLY)
+            } else {
+                @Suppress("DEPRECATION")
+                textView.background.setColorFilter(Color.parseColor("#$color"), PorterDuff.Mode.MULTIPLY)
+            }
+            textView.setOnClickListener {
+                if (shortcutType == Constants().TYPE_URL) {
                     var url = intentString
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
                         url = "http://$intentString"
@@ -115,20 +119,21 @@ internal class AccessUtils(
                     fragmentActivity.startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(url)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
+                } else if (shortcutType == Constants().TYPE_PHONE) {
+                    if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        fragmentActivity.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
+                    } else {
+                        fragmentActivity.startActivity(
+                            Intent(Intent.ACTION_CALL, Uri.parse("tel:$intentString"))
+                        )
+                    }
                 }
                 bottomSheetDialogFragment.dismiss()
             }
-            thumbHolder.setOnLongClickListener {
-                if (root == Constants().PHONE_NO) {
-                    sharedPreferences.edit().putString(Constants().PHONE_NO_ + position, "").apply()
-                    sharedPreferences.edit().putString(Constants().PHONE_THUMB_LETTER_ + position, "")
-                        .apply()
-                } else if (root == Constants().URL_ADDRESS) {
-                    sharedPreferences.edit().putString(Constants().URL_NO_ + position, "").apply()
-                    sharedPreferences.edit().putString(Constants().URL_THUMB_LETTER_ + position, "")
-                        .apply()
-                }
-                thumbHolder.text = "+"
+            textView.setOnLongClickListener {
+                sharedPreferences.edit().putString(Constants().SHORTCUT_NO_ + position, "").apply()
+                textView.text = "+"
+                textView.background.colorFilter = null
                 bottomSheetDialogFragment.onResume()
                 true
             }
@@ -186,59 +191,45 @@ internal class AccessUtils(
         }
     }
 
-    private fun saverDialog(position: Int, hintText: String) {
+    private fun shortcutsSaverDialog(position: Int) {
         val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
-        val dialogBinding = SaverDialogBinding.inflate(fragmentActivity.layoutInflater)
+        val dialogBinding = ShortcutMakerBinding.inflate(fragmentActivity.layoutInflater)
         dialogBuilder.setView(dialogBinding.root)
         val dialog = dialogBuilder.create()
         dialog.show()
 
-        dialogBinding.inputLayout.hint = hintText
-        if (hintText == Constants().PHONE_NO) {
-            dialogBinding.urlPhone.inputType = InputType.TYPE_CLASS_PHONE
-        } else if (hintText == Constants().URL_ADDRESS) {
-            dialogBinding.urlPhone.inputType = InputType.TYPE_TEXT_VARIATION_URI
-        }
+        ColorPicker(dialogBinding.colorPicker.colorInput, dialogBinding.colorPicker.colorA,
+            dialogBinding.colorPicker.colorR, dialogBinding.colorPicker.colorG,
+            dialogBinding.colorPicker.colorB, dialogBinding.colorPicker.colorPicker).pickColor()
 
-        val alphabets = arrayOf(
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-        )
-
-        val isAlphabetPicked = AtomicBoolean(false)
-        dialogBinding.alphabetPicker.minValue = 0
-        dialogBinding.alphabetPicker.maxValue = alphabets.size - 1
-        dialogBinding.alphabetPicker.displayedValues = alphabets
-        dialogBinding.alphabetPicker.setOnValueChangedListener { _: NumberPicker?, _: Int, newVal: Int ->
-            isAlphabetPicked.set(true)
-            if (hintText == Constants().PHONE_NO) {
-                sharedPreferences.edit()
-                    .putString(Constants().PHONE_THUMB_LETTER_ + position, alphabets[newVal]).apply()
-            } else if (hintText == Constants().URL_ADDRESS) {
-                sharedPreferences.edit()
-                    .putString(Constants().URL_THUMB_LETTER_ + position, alphabets[newVal]).apply()
+        var shortcutType = ""
+        dialogBinding.shortcutType.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
+            if (isChecked) {
+                when (checkedId) {
+                    dialogBinding.contact.id -> {
+                        shortcutType = Constants().TYPE_PHONE
+                        dialogBinding.inputField.inputType = InputType.TYPE_CLASS_PHONE
+                    }
+                    dialogBinding.url.id -> {
+                        shortcutType = Constants().TYPE_URL
+                        dialogBinding.inputField.inputType = InputType.TYPE_TEXT_VARIATION_URI
+                    }
+                }
             }
         }
 
         dialogBinding.cancel.setOnClickListener { dialog.dismiss() }
         dialogBinding.ok.setOnClickListener {
-            val urlPhone =
-                Objects.requireNonNull(dialogBinding.urlPhone.text).toString().trim { it <= ' ' }
-            if (urlPhone.isNotEmpty() && isAlphabetPicked.get()) {
-                if (hintText == Constants().PHONE_NO) {
-                    sharedPreferences.edit().putString(Constants().PHONE_NO_ + position, urlPhone)
-                        .apply()
-                } else if (hintText == Constants().URL_ADDRESS) {
-                    sharedPreferences.edit().putString(Constants().URL_NO_ + position, urlPhone)
-                        .apply()
-                }
+            val intentString = Objects.requireNonNull(dialogBinding.inputField.text).toString().trim { it <= ' ' }
+            val thumbLetter = Objects.requireNonNull(dialogBinding.thumbField.text).toString().trim { it <= ' ' }
+            val color = Objects.requireNonNull(dialogBinding.colorPicker.colorInput.text).toString().trim { it <= ' ' }
+
+            if (shortcutType.isNotEmpty() && intentString.isNotEmpty() && thumbLetter.isNotEmpty() && color.isNotEmpty()) {
+                sharedPreferences.edit().putString(Constants().SHORTCUT_NO_ + position,
+                    "$shortcutType||$intentString||$thumbLetter||$color").apply()
                 dialog.dismiss()
                 bottomSheetDialogFragment.onResume()
-            } else {
-                dialogBinding.urlPhone.error =
-                    context.getString(R.string.empty_text_field) + " or alphabet field is unchanged"
             }
         }
     }
-
 }
