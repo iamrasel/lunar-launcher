@@ -19,22 +19,39 @@
 package rasel.lunar.launcher.qaccess
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.textview.MaterialTextView
+import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.QuickAccessBinding
 import rasel.lunar.launcher.helpers.Constants
 
 internal class QuickAccess : BottomSheetDialogFragment() {
     private lateinit var binding: QuickAccessBinding
+    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var accessUtils: AccessUtils
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = QuickAccessBinding.inflate(inflater, container, false)
-        accessUtils = AccessUtils(requireContext(), this, requireActivity())
 
+        fragmentActivity = if (isAdded) {
+            requireActivity()
+        } else {
+            LauncherActivity()
+        }
+
+        accessUtils = AccessUtils(requireContext(), this, fragmentActivity)
         favApps()
         accessUtils.controlBrightness(binding.brightness)
         accessUtils.volumeControllers(binding.notification, binding.alarm, binding.media, binding.voice, binding.ring)
@@ -46,14 +63,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
         val prefsFavApps = requireContext().getSharedPreferences(Constants().SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE)
         for (position in 1..6) {
             val packageValue = prefsFavApps.getString(Constants().FAV_APP_ + position.toString(), "").toString()
-            when (position) {
-                1 -> accessUtils.favApps(packageValue, binding.appOne, position)
-                2 -> accessUtils.favApps(packageValue, binding.appTwo, position)
-                3 -> accessUtils.favApps(packageValue, binding.appThree, position)
-                4 -> accessUtils.favApps(packageValue, binding.appFour, position)
-                5 -> accessUtils.favApps(packageValue, binding.appFive, position)
-                6 -> accessUtils.favApps(packageValue, binding.appSix, position)
-            }
+            accessUtils.favApps(packageValue, imageView(), position)
         }
     }
 
@@ -76,15 +86,34 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 exception.printStackTrace()
             }
 
-            when (position) {
-                1 -> accessUtils.shortcutsUtil(binding.shortcutOne, shortcutType, intentString, thumbLetter, color, position)
-                2 -> accessUtils.shortcutsUtil(binding.shortcutTwo, shortcutType, intentString, thumbLetter, color, position)
-                3 -> accessUtils.shortcutsUtil(binding.shortcutThree, shortcutType, intentString, thumbLetter, color, position)
-                4 -> accessUtils.shortcutsUtil(binding.shortcutFour, shortcutType, intentString, thumbLetter, color, position)
-                5 -> accessUtils.shortcutsUtil(binding.shortcutFive, shortcutType, intentString, thumbLetter, color, position)
-                6 -> accessUtils.shortcutsUtil(binding.shortcutSix, shortcutType, intentString, thumbLetter, color, position)
-            }
+            accessUtils.shortcutsUtil(textView(), shortcutType, intentString, thumbLetter, color, position, binding.shortcutsGroup)
         }
+    }
+
+    private fun imageView() : AppCompatImageView {
+        val imageView = AppCompatImageView(fragmentActivity)
+        imageView.layoutParams = LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 1F)
+        binding.favAppsGroup.addView(imageView)
+        return imageView
+    }
+
+    private fun textView() : MaterialTextView {
+        val relativeLayout = RelativeLayout(fragmentActivity)
+        relativeLayout.layoutParams = LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+            LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1F)
+        relativeLayout.gravity = Gravity.CENTER
+        binding.shortcutsGroup.addView(relativeLayout)
+
+        val textView = MaterialTextView(fragmentActivity)
+        textView.layoutParams = LinearLayoutCompat.LayoutParams((54 * resources.displayMetrics.density).toInt(),
+            (54 * resources.displayMetrics.density).toInt())
+        textView.gravity = Gravity.CENTER
+        textView.textSize = 20 * resources.displayMetrics.density
+        textView.setTypeface(null, Typeface.BOLD)
+        textView.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_bg)
+        relativeLayout.addView(textView)
+        return textView
     }
 
     override fun onResume() {

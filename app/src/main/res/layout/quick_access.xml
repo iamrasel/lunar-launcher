@@ -77,71 +77,11 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/shortcuts_group"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="22dp">
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/shortcut_one"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:background="@drawable/rounded_bg"
-            android:layout_marginHorizontal="4dp"/>
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/shortcut_two"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:background="@drawable/rounded_bg"
-            android:layout_marginHorizontal="4dp"/>
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/shortcut_three"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:background="@drawable/rounded_bg"
-            android:layout_marginHorizontal="4dp"/>
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/shortcut_four"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:background="@drawable/rounded_bg"
-            android:layout_marginHorizontal="4dp"/>
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/shortcut_five"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:background="@drawable/rounded_bg"
-            android:layout_marginHorizontal="4dp"/>
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/shortcut_six"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:background="@drawable/rounded_bg"
-            android:layout_marginHorizontal="4dp"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_marginTop="22dp"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -159,39 +99,9 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/fav_apps_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="42dp"
         android:orientation="horizontal"
-        android:layout_marginTop="22dp">
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/app_one"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_weight="1"/>
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/app_two"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_weight="1"/>
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/app_three"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_weight="1"/>
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/app_four"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_weight="1"/>
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/app_five"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_weight="1"/>
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/app_six"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_weight="1"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_marginTop="22dp"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

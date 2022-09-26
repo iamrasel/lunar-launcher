@@ -10,6 +10,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="196dp"
         android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/window_background"
         app:endIconMode="clear_text">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/color_input"

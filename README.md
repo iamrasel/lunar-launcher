@@ -68,7 +68,7 @@
 <details><summary>Quick Access</summary>
 
 - [x] Favourite apps (<=6)
-- [x] Favourite contacts and urls (3+3)
+- [x] Favourite contacts and urls (<=6)
 - [x] Control system value
   - [x] Brightness
   - [x] Sound
@@ -112,11 +112,13 @@ To get updated with the latest build head over to the [Actions](https://github.c
 - [https://github.com/chrisbanes/insetter](https://github.com/chrisbanes/insetter)
 
 ## Donation
-Do you like this app? If the answer is yes, then help me to continue this project. My current old laptop, which has only 4gb ram, has been serving me with it's last breaths. So I need to build a decent pc for developing, please help me with that. Donate me any amount you wish.
+Do you like this app? If the answer is yes, then help me to continue this project. My current old laptop, which has only 4gb ram, has been serving me with it's last breaths. So I need to replace it with a decent one for developing, please help me with that. Donate me any amount you wish.
 
 <div align='center'>
 
-|  ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white) | `38mRQy6oDJjZNR3xxiNRVS5obqLMnwonFD` |
+|  ![](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black) | [iamrasel](https://www.buymeacoffee.com/iamrasel) |
 |:---:|:---:|
+|  ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white) | `38mRQy6oDJjZNR3xxiNRVS5obqLMnwonFD` |
+|  ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | `0x9b2f72a19C78a73dDE4478a6d51BACf198671480` |
 
 </div>

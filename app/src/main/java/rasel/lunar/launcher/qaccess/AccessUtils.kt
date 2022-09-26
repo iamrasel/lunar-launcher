@@ -35,6 +35,7 @@ import android.provider.Settings.SettingNotFoundException
 import android.text.InputType
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -97,10 +98,10 @@ internal class AccessUtils(
     }
 
     fun shortcutsUtil(textView: MaterialTextView, shortcutType: String, intentString: String,
-                      thumbLetter: String, color: String, position: Int) {
+                      thumbLetter: String, color: String, position: Int, shortcutGroup: LinearLayoutCompat) {
         if (intentString.isEmpty()) {
             textView.text = "+"
-            textView.setOnClickListener { shortcutsSaverDialog(position) }
+            textView.setOnClickListener { shortcutsSaverDialog(position, shortcutGroup) }
         } else {
             textView.text = thumbLetter
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -134,6 +135,7 @@ internal class AccessUtils(
                 sharedPreferences.edit().putString(Constants().SHORTCUT_NO_ + position, "").apply()
                 textView.text = "+"
                 textView.background.colorFilter = null
+                shortcutGroup.removeAllViews()
                 bottomSheetDialogFragment.onResume()
                 true
             }
@@ -191,7 +193,7 @@ internal class AccessUtils(
         }
     }
 
-    private fun shortcutsSaverDialog(position: Int) {
+    private fun shortcutsSaverDialog(position: Int, shortcutGroup: LinearLayoutCompat) {
         val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
         val dialogBinding = ShortcutMakerBinding.inflate(fragmentActivity.layoutInflater)
         dialogBuilder.setView(dialogBinding.root)
@@ -221,13 +223,14 @@ internal class AccessUtils(
         dialogBinding.cancel.setOnClickListener { dialog.dismiss() }
         dialogBinding.ok.setOnClickListener {
             val intentString = Objects.requireNonNull(dialogBinding.inputField.text).toString().trim { it <= ' ' }
-            val thumbLetter = Objects.requireNonNull(dialogBinding.thumbField.text).toString().trim { it <= ' ' }
+            val thumbLetter = Objects.requireNonNull(dialogBinding.thumbField.text).toString().trim { it <= ' ' }.uppercase()
             val color = Objects.requireNonNull(dialogBinding.colorPicker.colorInput.text).toString().trim { it <= ' ' }
 
             if (shortcutType.isNotEmpty() && intentString.isNotEmpty() && thumbLetter.isNotEmpty() && color.isNotEmpty()) {
                 sharedPreferences.edit().putString(Constants().SHORTCUT_NO_ + position,
                     "$shortcutType||$intentString||$thumbLetter||$color").apply()
                 dialog.dismiss()
+                shortcutGroup.removeAllViews()
                 bottomSheetDialogFragment.onResume()
             }
         }
