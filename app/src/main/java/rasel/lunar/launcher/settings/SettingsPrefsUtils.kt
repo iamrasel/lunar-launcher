@@ -63,6 +63,11 @@ internal class SettingsPrefsUtils {
         sharedPreferences.edit().putBoolean(Constants().SHARED_PREF_TODO_LOCK, todoLock).apply()
     }
 
+    fun autoKeyboard(context: Context, autoKeyboard: Boolean) {
+        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean(Constants().SHARED_PREF_AUTO_KEYBOARD, autoKeyboard).apply()
+    }
+
     fun saveFeedUrl(context: Context, feedUrl: String) {
         val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
         sharedPreferences.edit().putString(Constants().SHARED_PREF_FEED_URL, feedUrl).apply()

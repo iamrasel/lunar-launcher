@@ -25,18 +25,22 @@ package rasel.lunar.launcher.apps
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.AdapterView.OnItemLongClickListener
 import android.widget.ArrayAdapter
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import dev.chrisbanes.insetter.Insetter
@@ -85,7 +89,8 @@ internal class AppDrawer : Fragment() {
             .applyToView(binding.rightSearchListII)
         Insetter.builder()
             .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.searchStringChip)
+            .marginBottom(windowInsetTypesOf(ime = true))
+            .applyToView(binding.searchBox)
 
         setupInitialView()
         return binding.root
@@ -106,7 +111,7 @@ internal class AppDrawer : Fragment() {
             override fun onDoubleClick() {
                 super.onDoubleClick()
                 UniUtils().lockMethod(
-                    requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
+                    requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
                         .getInt(Constants().SHARED_PREF_LOCK, 0), requireContext(), fragmentActivity)
             }
         })
@@ -131,7 +136,7 @@ internal class AppDrawer : Fragment() {
         binding.leftSearchListII.adapter = leftSearchAdapterII
         binding.rightSearchList.adapter = rightSearchAdapter
         binding.rightSearchListII.adapter = rightSearchAdapterII
-        binding.searchStringChip.visibility = View.GONE
+        binding.searchBox.visibility = View.GONE
     }
 
     // Fetch all the installed apps
@@ -222,10 +227,22 @@ internal class AppDrawer : Fragment() {
 
     private fun searchClickHelper(adapterView: AdapterView<*>, i: Int) {
         if (binding.appsList.count < 2) return
-        searchString += adapterView.getItemAtPosition(i).toString()
-        binding.searchStringChip.visibility = View.VISIBLE
-        binding.searchStringChip.text = searchString
-        filterAppsList()
+        binding.searchBox.visibility = View.VISIBLE
+        val string = binding.searchInput.text.toString() + adapterView.getItemAtPosition(i).toString()
+        binding.searchInput.text = SpannableStringBuilder(string)
+
+        val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
+        if (sharedPreferences.getBoolean(Constants().SHARED_PREF_AUTO_KEYBOARD, false)) {
+            binding.searchInput.requestFocus()
+            val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
+        }
+
+        binding.searchInput.doAfterTextChanged {
+            binding.searchInput.setSelection(binding.searchInput.text.toString().length)
+            searchString = binding.searchInput.text.toString()
+            filterAppsList()
+        }
     }
 
     private fun filterAppsList() {
@@ -262,25 +279,20 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun searchStringRemover() {
-        binding.searchStringChip.setOnClickListener {
-            if (searchString.isNotEmpty()) {
-                searchString = searchString.substring(0, searchString.length - 1)
-                binding.searchStringChip.text = searchString
-                filterAppsList()
-                if (searchString.isEmpty()) {
-                    binding.searchStringChip.visibility = View.GONE
-                }
+        binding.searchBox.setEndIconOnClickListener {
+            binding.searchInput.text?.clear()
+            binding.searchInput.let { view ->
+                val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
             }
-        }
-
-        binding.searchStringChip.setOnCloseIconClickListener {
-            binding.searchStringChip.visibility = View.GONE
+            binding.searchBox.visibility = View.GONE
             fetchAllApps()
         }
     }
 
     override fun onResume() {
         super.onResume()
+        binding.searchInput.text?.clear()
         setupInitialView()
         fetchAllApps()
     }

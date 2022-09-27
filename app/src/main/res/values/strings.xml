@@ -7,9 +7,10 @@
     <string name="accessibility_service_label">Lock Service</string>
     <string name="add_new">Add New</string>
     <string name="advance">Advance</string>
+    <string name="application_theme">Application Theme</string>
+    <string name="apps">Apps</string>
     <string name="app_info">App Info</string>
     <string name="app_store">App Store</string>
-    <string name="application_theme">Application Theme</string>
     <string name="authentication_error">Authentication error</string>
     <string name="authentication_failed">Authentication failed</string>
     <string name="authentication_subtitle">Authenticate with your device credential to proceed</string>
@@ -34,6 +35,7 @@
     <string name="follow_system">Follow System</string>
     <string name="freeform">Freeform</string>
     <string name="got_it">Got it</string>
+    <string name="keyboard_automatic">Search with keyboard</string>
     <string name="light_theme">Light</string>
     <string name="look">Look</string>
     <string name="lunar_settings">Lunar Settings</string>

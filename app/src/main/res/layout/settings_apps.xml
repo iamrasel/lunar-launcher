@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/keyboard_automatic"
+        android:textSize="16sp"/>
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/keyboard_auto_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:singleSelection="true"
+        app:selectionRequired="true">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/keyboard_auto_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/positive"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/keyboard_auto_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/negative"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

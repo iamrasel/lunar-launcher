@@ -45,18 +45,6 @@
             android:layout_weight="6"
             android:orientation="vertical">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/search_string_chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                app:textEndPadding="8dp"
-                app:closeIconSize="22sp"
-                app:checkedIconEnabled="false"
-                android:layout_centerInParent="true"
-                android:layout_alignParentBottom="true"
-                style="@style/Widget.MaterialComponents.Chip.Entry"/>
-
             <ListView
                 android:id="@+id/apps_list"
                 android:layout_width="match_parent"
@@ -76,6 +64,24 @@
                 app:indicatorColor="@color/icon_color"
                 app:trackThickness="4dp"
                 style="@style/Widget.Material3.CircularProgressIndicator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:boxBackgroundColor="@color/window_background"
+                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_input"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionSearch"
+                    android:maxLength="5"
+                    android:singleLine="true"
+                    android:gravity="center" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </RelativeLayout>
 

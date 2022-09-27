@@ -57,6 +57,14 @@
                 android:textAllCaps="true"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/apps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apps"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                style="@style/Widget.Material3.Button.ElevatedButton"/>
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/look"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

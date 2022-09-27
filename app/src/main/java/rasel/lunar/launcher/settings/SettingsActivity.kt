@@ -51,6 +51,8 @@ internal class SettingsActivity : AppCompatActivity() {
                         WeatherSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
                     binding.todo.id ->
                         TodoSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                    binding.apps.id ->
+                        Apps().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
                     binding.look.id ->
                         Look().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
                     binding.more.id ->
