@@ -53,8 +53,7 @@
 - [x] Launch in freeform mode
 - [x] Total apps count
 - [ ] App rename
-- [ ] App lock
-- [ ] App hide
+- [ ] App vault
 - [ ] Detailed app info
 
 </details>
@@ -116,9 +115,9 @@ Do you like this app? If the answer is yes, then help me to continue this projec
 
 <div align='center'>
 
-|  ![](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black) | [iamrasel](https://www.buymeacoffee.com/iamrasel) |
-|:---:|:---:|
-|  ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white) | `38mRQy6oDJjZNR3xxiNRVS5obqLMnwonFD` |
-|  ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | `0x9b2f72a19C78a73dDE4478a6d51BACf198671480` |
+| ![](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black) | [iamrasel](https://www.buymeacoffee.com/iamrasel) |
+|:-----------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
+|         ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)         |       `38mRQy6oDJjZNR3xxiNRVS5obqLMnwonFD`        |
+|        ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)        |   `0x9b2f72a19C78a73dDE4478a6d51BACf198671480`    |
 
 </div>

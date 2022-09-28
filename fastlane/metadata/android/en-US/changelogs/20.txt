@@ -1,0 +1,4 @@
+- new: app search with soft keyboard
+- improvement: contact and url shortcuts
+- fix: multiple issues
+- version name structure changed (trying to be normal)
