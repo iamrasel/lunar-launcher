@@ -27,9 +27,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import dev.chrisbanes.insetter.applyInsetter
+import dev.chrisbanes.insetter.Insetter
+import dev.chrisbanes.insetter.windowInsetTypesOf
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.TodoDialogBinding
@@ -43,11 +43,13 @@ class TodoManager : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = TodoManagerBinding.inflate(inflater, container, false)
-        binding.root.applyInsetter {
-            type(systemGestures = true) {
-                margin()
-            }
-        }
+        Insetter.builder()
+            .paddingTop(windowInsetTypesOf(statusBars = true))
+            .applyToView(binding.todos)
+        Insetter.builder()
+            .marginBottom(windowInsetTypesOf(navigationBars = true))
+            .applyToView(binding.addNew)
+            .applyToView(binding.deleteAll)
 
         fragmentActivity = if (isAdded) {
             requireActivity()
@@ -56,15 +58,14 @@ class TodoManager : Fragment() {
         }
 
         databaseHandler = DatabaseHandler(context)
-        binding.todos.layoutManager = LinearLayoutManager(context)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.deleteAll.setOnClickListener { deleteAllDialog() }
         binding.addNew.setOnClickListener { addNewDialog() }
+        binding.deleteAll.setOnClickListener { deleteAllDialog() }
     }
 
     fun refreshList() {

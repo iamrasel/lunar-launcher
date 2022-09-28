@@ -60,7 +60,7 @@
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:overScrollMode="never"
-        android:layout_marginHorizontal="48dp"
+        android:paddingHorizontal="48dp"
         android:layout_marginTop="96dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

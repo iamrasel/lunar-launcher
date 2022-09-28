@@ -35,7 +35,6 @@ import android.provider.Settings.SettingNotFoundException
 import android.text.InputType
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -80,28 +79,25 @@ internal class AccessUtils(
             audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, value.toInt(), 0)
         })
 
-        try {
-            if (Settings.Global.getInt(fragmentActivity.contentResolver, "zen_mode") == 0) {
-                notifyBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-                    audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, value.toInt(), 0)
-                })
-                ringerBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-                    audioManager.setStreamVolume(AudioManager.STREAM_RING, value.toInt(), 0)
-                })
-            } else {
-                notifyBar.isEnabled = false
-                ringerBar.isEnabled = false
-            }
-        } catch (exception: Exception) {
-            exception.printStackTrace()
+        if (Settings.Global.getInt(fragmentActivity.contentResolver, "zen_mode") == 0 &&
+            audioManager.ringerMode != AudioManager.RINGER_MODE_SILENT) {
+            notifyBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, value.toInt(), 0)
+            })
+            ringerBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+                audioManager.setStreamVolume(AudioManager.STREAM_RING, value.toInt(), 0)
+            })
+        } else {
+            notifyBar.isEnabled = false
+            ringerBar.isEnabled = false
         }
     }
 
     fun shortcutsUtil(textView: MaterialTextView, shortcutType: String, intentString: String,
-                      thumbLetter: String, color: String, position: Int, shortcutGroup: LinearLayoutCompat) {
+                      thumbLetter: String, color: String, position: Int) {
         if (intentString.isEmpty()) {
             textView.text = "+"
-            textView.setOnClickListener { shortcutsSaverDialog(position, shortcutGroup) }
+            textView.setOnClickListener { shortcutsSaverDialog(position) }
         } else {
             textView.text = thumbLetter
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -135,7 +131,6 @@ internal class AccessUtils(
                 sharedPreferences.edit().putString(Constants().SHORTCUT_NO_ + position, "").apply()
                 textView.text = "+"
                 textView.background.colorFilter = null
-                shortcutGroup.removeAllViews()
                 bottomSheetDialogFragment.onResume()
                 true
             }
@@ -193,7 +188,7 @@ internal class AccessUtils(
         }
     }
 
-    private fun shortcutsSaverDialog(position: Int, shortcutGroup: LinearLayoutCompat) {
+    private fun shortcutsSaverDialog(position: Int) {
         val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
         val dialogBinding = ShortcutMakerBinding.inflate(fragmentActivity.layoutInflater)
         dialogBuilder.setView(dialogBinding.root)
@@ -230,7 +225,6 @@ internal class AccessUtils(
                 sharedPreferences.edit().putString(Constants().SHORTCUT_NO_ + position,
                     "$shortcutType||$intentString||$thumbLetter||$color").apply()
                 dialog.dismiss()
-                shortcutGroup.removeAllViews()
                 bottomSheetDialogFragment.onResume()
             }
         }

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal|bottom"
     android:background="?android:windowBackground"
     android:focusable="true"
     android:clickable="true"
@@ -15,13 +14,18 @@
         android:id="@+id/todos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:scrollbars="none"
-        android:textSize="14sp" />
+        android:overScrollMode="never"
+        app:stackFromEnd = "true"
+        app:layoutManager="LinearLayoutManager"
+        android:clipChildren="false"
+        android:clipToPadding="false"/>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_all"

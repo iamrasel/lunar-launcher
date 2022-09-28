@@ -86,7 +86,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 exception.printStackTrace()
             }
 
-            accessUtils.shortcutsUtil(textView(), shortcutType, intentString, thumbLetter, color, position, binding.shortcutsGroup)
+            accessUtils.shortcutsUtil(textView(), shortcutType, intentString, thumbLetter, color, position)
         }
     }
 
@@ -118,6 +118,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
+        binding.shortcutsGroup.removeAllViews()
         shortcuts()
     }
 }

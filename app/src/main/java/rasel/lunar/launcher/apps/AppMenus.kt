@@ -18,22 +18,32 @@
 
 package rasel.lunar.launcher.apps
 
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import rasel.lunar.launcher.helpers.UniUtils
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.os.Bundle
 import android.content.pm.PackageManager
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.databinding.AppMenuBinding
+import rasel.lunar.launcher.helpers.UniUtils
 
 internal class AppMenus : BottomSheetDialogFragment() {
 
     private lateinit var binding: AppMenuBinding
+    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var packageName: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppMenuBinding.inflate(inflater, container, false)
+
+        fragmentActivity = if (isAdded) {
+            requireActivity()
+        } else {
+            LauncherActivity()
+        }
+
         packageName = tag.toString()
 
         try {
@@ -55,7 +65,7 @@ internal class AppMenus : BottomSheetDialogFragment() {
             binding.three, binding.four, binding.five, binding.six, requireContext(), packageName)
 
         binding.appPackage.setOnClickListener {
-            UniUtils().copyToClipboard(requireActivity(), requireContext(), packageName)
+            UniUtils().copyToClipboard(fragmentActivity, requireContext(), packageName)
         }
 
         binding.appStore.setOnClickListener {
@@ -63,7 +73,7 @@ internal class AppMenus : BottomSheetDialogFragment() {
         }
 
         binding.appFreeform.setOnClickListener {
-            AppMenuUtils().launchAsFreeform(requireActivity(), requireContext(), packageName, this)
+            AppMenuUtils().launchAsFreeform(fragmentActivity, requireContext(), packageName, this)
         }
 
         binding.appInfo.setOnClickListener {

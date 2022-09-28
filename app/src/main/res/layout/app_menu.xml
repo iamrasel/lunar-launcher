@@ -22,7 +22,7 @@
             android:id="@+id/app_package"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.Material3.Button.ElevatedButton"/>
+            style="@style/Widget.Material3.Button.TextButton"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
@@ -71,7 +71,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="16dp">
 
@@ -79,17 +79,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/app_store"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_store"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/app_info"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_info"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
@@ -99,17 +99,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginStart="8dp">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/app_freeform"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/freeform"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/app_uninstall"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/uninstall"
                 android:textColor="@android:color/holo_red_light"
