@@ -42,8 +42,7 @@
             android:id="@+id/main_apps_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:orientation="vertical">
+            android:layout_weight="6">
 
             <ListView
                 android:id="@+id/apps_list"
@@ -51,37 +50,44 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
                 android:divider="@null"
+                android:overScrollMode="never"
                 android:layout_centerVertical="true"
                 android:clipChildren="false"
                 android:clipToPadding="false"/>
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/loading_progress"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/search_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:indeterminate="true"
-                app:indicatorColor="@color/icon_color"
-                app:trackThickness="4dp"
-                style="@style/Widget.Material3.CircularProgressIndicator" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/search_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:endIconMode="clear_text"
-                app:boxBackgroundColor="@color/window_background"
-                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search_input"
-                    android:layout_width="120dp"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionSearch"
-                    android:maxLength="5"
-                    android:singleLine="true"
-                    android:gravity="center" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="-2dp"
+                    app:endIconMode="clear_text"
+                    app:boxBackgroundColor="@color/window_background">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/search_input"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionSearch"
+                        android:maxLength="5"
+                        android:singleLine="true"
+                        android:gravity="center" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/backspace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="@null"
+                    style="@style/Widget.Material3.FloatingActionButton.Surface"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </RelativeLayout>
 

@@ -60,14 +60,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/top_rounded_bg"
-        android:backgroundTint="@color/almost_transparent">
+        android:layout_weight="1">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rss"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
+            android:background="@drawable/top_rounded_bg"
+            android:backgroundTint="@color/almost_transparent"
             android:clipChildren="false"
             android:clipToPadding="false"/>
         <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -87,7 +87,7 @@
             android:visibility="gone"
             android:layout_centerInParent="true"
             android:contentDescription="@null"
-            style="@style/Widget.Material3.FloatingActionButton.Secondary" />
+            style="@style/Widget.Material3.FloatingActionButton.Surface" />
     </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
