@@ -25,6 +25,22 @@
             style="@style/Widget.Material3.Button.TextButton"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/detailed_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_info"
+            style="@style/Widget.Material3.FloatingActionButton.Surface"
+            android:contentDescription="@null" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/fav_group"
         android:layout_width="wrap_content"

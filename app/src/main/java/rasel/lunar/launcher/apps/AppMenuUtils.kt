@@ -18,29 +18,19 @@
 
 package rasel.lunar.launcher.apps
 
-import kotlin.Throws
-import android.content.pm.PackageManager
-import androidx.fragment.app.FragmentActivity
-import rasel.lunar.launcher.helpers.UniUtils
-import android.content.Intent
 import android.app.ActivityOptions
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import rasel.lunar.launcher.R
-import java.lang.Exception
+import rasel.lunar.launcher.helpers.UniUtils
 
 internal class AppMenuUtils {
-
-    @Throws(PackageManager.NameNotFoundException::class)
-    fun getAppName(packageManager: PackageManager, packageName: String): String {
-        return packageManager.getApplicationLabel(
-            @Suppress("DEPRECATION") packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA) // Todo: deprecated
-        ) as String
-    }
 
     fun launchAsFreeform(
         fragmentActivity: FragmentActivity, context: Context, packageName: String, appMenus: AppMenus) {
