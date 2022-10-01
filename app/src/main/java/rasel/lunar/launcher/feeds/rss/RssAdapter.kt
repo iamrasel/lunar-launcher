@@ -47,8 +47,6 @@ internal class RssAdapter(private val items: List<RSS>, private val context: Con
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        holder.view.itemText.isSingleLine = false
-
         if (position == 0) {
             holder.view.itemText.text = "\u22B6  " + items[position].title + "  \u22B7"
             holder.view.itemText.gravity = Gravity.CENTER

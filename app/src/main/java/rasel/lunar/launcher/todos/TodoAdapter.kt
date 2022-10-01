@@ -67,6 +67,8 @@ internal class TodoAdapter(
                 UniUtils().copyToClipboard(fragmentActivity, context, todoList[position].name)
                 true
             }
+        } else {
+            holder.view.itemText.isSingleLine = true
         }
     }
 

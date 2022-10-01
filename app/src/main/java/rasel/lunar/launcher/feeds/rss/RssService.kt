@@ -19,9 +19,11 @@
 package rasel.lunar.launcher.feeds.rss
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.ResultReceiver
 import androidx.core.app.JobIntentService
+import rasel.lunar.launcher.feeds.Feeds
 import rasel.lunar.launcher.helpers.Constants
 import java.io.IOException
 import java.io.InputStream
@@ -42,7 +44,12 @@ internal class RssService : JobIntentService() {   // Todo: deprecated
         }
         val bundle = Bundle()
         bundle.putSerializable(Constants().RSS_ITEMS, rssItems as Serializable)
-        val receiver = intent.getParcelableExtra<ResultReceiver>(Constants().RSS_RECEIVER)
+
+        val receiver = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("DATA", ResultReceiver::class.java)
+        } else {
+            @Suppress("DEPRECATION") intent.getParcelableExtra(Constants().RSS_RECEIVER)
+        }
         receiver?.send(0, bundle)
     }
 

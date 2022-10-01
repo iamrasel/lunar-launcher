@@ -19,24 +19,28 @@
 package rasel.lunar.launcher.apps
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.R
+import rasel.lunar.launcher.databinding.ActivityBrowserDialogBinding
 import rasel.lunar.launcher.databinding.AppInfoDialogBinding
 import rasel.lunar.launcher.databinding.AppMenuBinding
 import rasel.lunar.launcher.helpers.UniUtils
-import java.util.*
+import java.util.ArrayList
 
 internal class AppMenus : BottomSheetDialogFragment() {
 
@@ -45,6 +49,7 @@ internal class AppMenus : BottomSheetDialogFragment() {
     private lateinit var packageName: String
     private lateinit var packageManager: PackageManager
     private lateinit var appInfo: ApplicationInfo
+    private lateinit var appMenuUtils: AppMenuUtils
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppMenuBinding.inflate(inflater, container, false)
@@ -57,6 +62,7 @@ internal class AppMenus : BottomSheetDialogFragment() {
 
         packageName = tag.toString()
         packageManager = requireContext().packageManager
+        appMenuUtils = AppMenuUtils(this, fragmentActivity, requireContext(), packageManager, packageName)
 
         appInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getApplicationInfo(packageName,
@@ -84,22 +90,11 @@ internal class AppMenus : BottomSheetDialogFragment() {
         }
 
         binding.detailedInfo.setOnClickListener { detailedInfo() }
-
-        binding.appStore.setOnClickListener {
-            AppMenuUtils().openAppStore(requireContext(), packageName, this)
-        }
-
-        binding.appFreeform.setOnClickListener {
-            AppMenuUtils().launchAsFreeform(fragmentActivity, requireContext(), packageName, this)
-        }
-
-        binding.appInfo.setOnClickListener {
-            AppMenuUtils().openAppInfo(requireContext(), packageName, this)
-        }
-
-        binding.appUninstall.setOnClickListener {
-            AppMenuUtils().uninstallApp(requireContext(), packageName, this)
-        }
+        binding.activityBrowser.setOnClickListener { activityBrowser() }
+        binding.appStore.setOnClickListener { appMenuUtils.openAppStore() }
+        binding.appFreeform.setOnClickListener { appMenuUtils.launchAsFreeform() }
+        binding.appInfo.setOnClickListener { appMenuUtils.openAppInfo() }
+        binding.appUninstall.setOnClickListener { appMenuUtils.uninstallApp() }
     }
 
     @SuppressLint("SetTextI18n")
@@ -108,6 +103,7 @@ internal class AppMenus : BottomSheetDialogFragment() {
         val dialogBinding = AppInfoDialogBinding.inflate(fragmentActivity.layoutInflater)
         dialogBuilder.setView(dialogBinding.root)
         dialogBuilder.show()
+        dialogBinding.appName.text = packageManager.getApplicationLabel(appInfo)
 
         val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
@@ -115,36 +111,50 @@ internal class AppMenus : BottomSheetDialogFragment() {
             @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, 0)
         }
 
-        dialogBinding.appName.text = packageManager.getApplicationLabel(appInfo)
         dialogBinding.mixed.text =
             "Version: ${packageInfo.versionName} (${PackageInfoCompat.getLongVersionCode(packageInfo).toInt()})\n" +
                     "SDK: ${appInfo.minSdkVersion} ~ ${appInfo.targetSdkVersion}\n" +
                     "UID: ${appInfo.uid}\n" +
-                    "First Install: ${dateTimeFormat(packageInfo.firstInstallTime)}\n" +
-                    "Last Update: ${dateTimeFormat(packageInfo.lastUpdateTime)}"
+                    "First Install: ${appMenuUtils.dateTimeFormat(packageInfo.firstInstallTime)}\n" +
+                    "Last Update: ${appMenuUtils.dateTimeFormat(packageInfo.lastUpdateTime)}"
 
-        dialogBinding.permissions.text = permissionsForPackage()
+        dialogBinding.permissions.text = appMenuUtils.permissionsForPackage()
     }
 
-    private fun dateTimeFormat(long: Long) : String {
-        val sdf = SimpleDateFormat.getDateTimeInstance()
-        return sdf.format(Date(long))
-    }
+    private fun activityBrowser() {
+        val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
+        val dialogBinding = ActivityBrowserDialogBinding.inflate(fragmentActivity.layoutInflater)
+        dialogBuilder.setView(dialogBinding.root)
+        val dialog = dialogBuilder.create()
+        dialog.show()
+        dialogBinding.appName.text = packageManager.getApplicationLabel(appInfo)
 
-    private fun permissionsForPackage() : String {
-        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(PackageManager.GET_PERMISSIONS.toLong()))
+        val activityInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getPackageInfo(
+                packageName,
+                PackageManager.PackageInfoFlags.of(PackageManager.GET_ACTIVITIES.toLong())
+            )
         } else {
-            @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+            @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
         }
-        return if (packageInfo.requestedPermissions.isNotEmpty()) {
-            val stringBuilder = StringBuilder()
-            for (i in 0 until packageInfo.requestedPermissions.size) {
-                stringBuilder.append("${packageInfo.requestedPermissions[i]}\n")
+
+        val activityAdapter: ArrayAdapter<String> =
+            ArrayAdapter(requireContext(), R.layout.list_item, R.id.item_text, ArrayList())
+        if (activityInfo.activities.isNotEmpty()) {
+            for (i in 0 until activityInfo.activities.size) {
+                val activity = activityInfo.activities[i].toString().split(" ").toTypedArray()
+                activityAdapter.add(activity[1].replace("}", ""))
             }
-            stringBuilder.toString()
-        } else {
-            ""
+            dialogBinding.activityList.adapter = activityAdapter
         }
+
+        dialogBinding.activityList.onItemClickListener =
+            AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, i: Int, _: Long ->
+                val intent = Intent()
+                intent.component = ComponentName(packageName, activityAdapter.getItem(i).toString())
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                requireContext().startActivity(intent)
+                dialog.dismiss()
+            }
     }
 }

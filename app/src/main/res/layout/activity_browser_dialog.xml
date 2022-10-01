@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingVertical="16dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_name"
@@ -14,21 +14,12 @@
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"/>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mixed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:layout_marginTop="16dp"/>
-
-    <ScrollView
+    <ListView
+        android:id="@+id/activity_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/permissions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </ScrollView>
+        android:divider="@null"
+        android:scrollbars="none"
+        android:layout_marginTop="16dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

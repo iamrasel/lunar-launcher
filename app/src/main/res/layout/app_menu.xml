@@ -39,6 +39,14 @@
             style="@style/Widget.Material3.FloatingActionButton.Surface"
             android:contentDescription="@null" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/activity_browser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_activity"
+            style="@style/Widget.Material3.FloatingActionButton.Surface"
+            android:contentDescription="@null" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
