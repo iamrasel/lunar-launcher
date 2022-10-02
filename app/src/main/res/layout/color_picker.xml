@@ -11,7 +11,8 @@
         android:layout_width="196dp"
         android:layout_height="wrap_content"
         app:boxBackgroundColor="@color/window_background"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        android:hint="@string/argb">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/color_input"
             android:layout_width="match_parent"

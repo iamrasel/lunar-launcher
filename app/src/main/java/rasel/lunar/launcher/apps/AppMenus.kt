@@ -30,6 +30,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -112,11 +113,11 @@ internal class AppMenus : BottomSheetDialogFragment() {
         }
 
         dialogBinding.mixed.text =
-            "Version: ${packageInfo.versionName} (${PackageInfoCompat.getLongVersionCode(packageInfo).toInt()})\n" +
-                    "SDK: ${appInfo.minSdkVersion} ~ ${appInfo.targetSdkVersion}\n" +
-                    "UID: ${appInfo.uid}\n" +
-                    "First Install: ${appMenuUtils.dateTimeFormat(packageInfo.firstInstallTime)}\n" +
-                    "Last Update: ${appMenuUtils.dateTimeFormat(packageInfo.lastUpdateTime)}"
+            "${resources.getString(R.string.version)}: ${packageInfo.versionName} (${PackageInfoCompat.getLongVersionCode(packageInfo).toInt()})\n" +
+            "${resources.getString(R.string.sdk)}: ${appInfo.minSdkVersion} ~ ${appInfo.targetSdkVersion}\n" +
+            "${resources.getString(R.string.uid)}: ${appInfo.uid}\n" +
+            "${resources.getString(R.string.first_install)}: ${appMenuUtils.dateTimeFormat(packageInfo.firstInstallTime)}\n" +
+            "${resources.getString(R.string.last_update)}: ${appMenuUtils.dateTimeFormat(packageInfo.lastUpdateTime)}"
 
         dialogBinding.permissions.text = appMenuUtils.permissionsForPackage()
     }
@@ -150,10 +151,17 @@ internal class AppMenus : BottomSheetDialogFragment() {
 
         dialogBinding.activityList.onItemClickListener =
             AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, i: Int, _: Long ->
-                val intent = Intent()
-                intent.component = ComponentName(packageName, activityAdapter.getItem(i).toString())
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                requireContext().startActivity(intent)
+                try {
+                    val intent = Intent()
+                    intent.component = ComponentName(packageName, activityAdapter.getItem(i).toString())
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    requireContext().startActivity(intent)
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                    val exceptionShort = (exception.toString().split(": ").toTypedArray())[0]
+                    Toast.makeText(requireContext(),
+                        "${resources.getString(R.string.unable_to_launch)} -\n$exceptionShort", Toast.LENGTH_LONG).show()
+                }
                 dialog.dismiss()
             }
     }

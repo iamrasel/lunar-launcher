@@ -11,6 +11,7 @@
     <string name="apps">Apps</string>
     <string name="app_info">App Info</string>
     <string name="app_store">App Store</string>
+    <string name="argb">AARRGGBB</string>
     <string name="authentication_error">Authentication error</string>
     <string name="authentication_failed">Authentication failed</string>
     <string name="authentication_subtitle">Authenticate with your device credential to proceed</string>
@@ -32,10 +33,12 @@
     <string name="empty_text_field">Text field is empty</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="feed_url">Feed Url</string>
+    <string name="first_install">First Install</string>
     <string name="follow_system">Follow System</string>
     <string name="freeform">Freeform</string>
     <string name="got_it">Got it</string>
     <string name="keyboard_automatic">Search with keyboard</string>
+    <string name="last_update">Last Update</string>
     <string name="light_theme">Light</string>
     <string name="look">Look</string>
     <string name="lunar_settings">Lunar Settings</string>
@@ -49,6 +52,7 @@
     <string name="reset_message">This operation will clear all the data stored for this application, and can\'t be undone.</string>
     <string name="restart">Restart</string>
     <string name="root">Root</string>
+    <string name="sdk">SDK</string>
     <string name="show_city">Show City</string>
     <string name="show_todos">Show Todos</string>
     <string name="temp_unit">Temperature Unit</string>
@@ -59,9 +63,12 @@
     <string name="todo_manager_lock">Todo Manager Lock</string>
     <string name="twelve">12 Hour</string>
     <string name="twenty_four">24 Hour</string>
+    <string name="uid">UID</string>
+    <string name="unable_to_launch">Unable to launch</string>
     <string name="uninstall">Uninstall</string>
     <string name="update">Update</string>
     <string name="url">Url</string>
+    <string name="version">Version</string>
     <string name="weather">Weather</string>
     <string name="welcome">Welcome</string>
     <string name="welcome_description">Welcome to Lunar Launcher. This is your first launch; if you are a first time user,

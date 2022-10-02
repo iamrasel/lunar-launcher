@@ -61,14 +61,25 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_bg"
+                    android:paddingHorizontal="12dp"
+                    android:src="@drawable/ic_close"
+                    android:contentDescription="@null"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/search_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-2dp"
+                    app:boxBackgroundColor="@color/window_background"
                     app:endIconMode="clear_text"
-                    app:boxBackgroundColor="@color/window_background">
+                    app:hintEnabled="false">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/search_input"
                         android:layout_width="120dp"
@@ -79,13 +90,14 @@
                         android:gravity="center" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/backspace"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:background="@drawable/rounded_bg"
+                    android:paddingHorizontal="12dp"
                     android:src="@drawable/ic_back"
-                    android:contentDescription="@null"
-                    style="@style/Widget.Material3.FloatingActionButton.Surface"/>
+                    android:contentDescription="@null"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

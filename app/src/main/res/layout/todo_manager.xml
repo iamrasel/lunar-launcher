@@ -25,7 +25,7 @@
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="8dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_all"
@@ -33,8 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/delete_all"
-            app:icon="@android:drawable/ic_menu_delete"
-            app:iconSize="24dp"
+            app:icon="@drawable/ic_delete"
+            app:iconGravity="textStart"
+            app:iconSize="20dp"
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
 
         <com.google.android.material.button.MaterialButton
@@ -43,8 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/add_new"
-            app:icon="@android:drawable/ic_menu_add"
-            app:iconSize="24dp"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textStart"
+            app:iconSize="20dp"
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
 
     </com.google.android.material.button.MaterialButtonToggleGroup>

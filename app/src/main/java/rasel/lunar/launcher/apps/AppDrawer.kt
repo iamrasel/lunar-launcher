@@ -242,10 +242,7 @@ internal class AppDrawer : Fragment() {
                 }
             }
         }
-        binding.backspace.setOnLongClickListener {
-            closeSearch()
-            true
-        }
+        binding.close.setOnClickListener { closeSearch() }
     }
 
     private fun searchStringChangeListener() {

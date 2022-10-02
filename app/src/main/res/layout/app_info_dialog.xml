@@ -18,7 +18,6 @@
         android:id="@+id/mixed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
         android:layout_marginTop="16dp"/>
 
     <ScrollView
