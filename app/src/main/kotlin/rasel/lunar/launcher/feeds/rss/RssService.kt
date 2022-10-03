@@ -46,11 +46,15 @@ internal class RssService : JobIntentService() {   // Todo: deprecated
         bundle.putSerializable(Constants().RSS_ITEMS, rssItems as Serializable)
 
         val receiver = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("DATA", ResultReceiver::class.java)
+            intent.getParcelableExtra(Constants().RSS_RECEIVER, ResultReceiver::class.java)
         } else {
             @Suppress("DEPRECATION") intent.getParcelableExtra(Constants().RSS_RECEIVER)
         }
-        receiver?.send(0, bundle)
+        try {
+            receiver?.send(0, bundle)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
     }
 
     private fun getInputStream(link: String?): InputStream? {
