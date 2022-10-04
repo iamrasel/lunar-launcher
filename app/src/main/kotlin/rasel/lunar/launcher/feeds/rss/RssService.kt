@@ -23,7 +23,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.ResultReceiver
 import androidx.core.app.JobIntentService
-import rasel.lunar.launcher.feeds.Feeds
 import rasel.lunar.launcher.helpers.Constants
 import java.io.IOException
 import java.io.InputStream
@@ -36,25 +35,24 @@ internal class RssService : JobIntentService() {   // Todo: deprecated
         val settingsPrefs = getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
         val rssUrl = settingsPrefs.getString(Constants().SHARED_PREF_FEED_URL, "")
         var rssItems: List<RSS?>? = null
+
         try {
             val parser = RssParser()
             rssItems = getInputStream(rssUrl)?.let { parser.parse(it) }
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
+
         val bundle = Bundle()
-        bundle.putSerializable(Constants().RSS_ITEMS, rssItems as Serializable)
+        bundle.putSerializable(Constants().RSS_ITEMS, rssItems as? Serializable)
 
         val receiver = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(Constants().RSS_RECEIVER, ResultReceiver::class.java)
         } else {
             @Suppress("DEPRECATION") intent.getParcelableExtra(Constants().RSS_RECEIVER)
         }
-        try {
-            receiver?.send(0, bundle)
-        } catch (exception: Exception) {
-            exception.printStackTrace()
-        }
+
+        receiver?.send(0, bundle)
     }
 
     private fun getInputStream(link: String?): InputStream? {

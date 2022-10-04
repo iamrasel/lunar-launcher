@@ -7,7 +7,7 @@
         <item name="android:windowBackground">@color/window_background</item>
         <!-- System bar colors -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor" >@color/status_bar</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/navigation_bar</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
@@ -15,18 +15,5 @@
         <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
         <item name="sliderStyle">@style/Slider</item>
         <item name="elevationOverlayColor">@color/window_background</item>
-    </style>
-
-    <style name="ModalBottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
-    </style>
-    <style name="ModalBottomSheet" parent="Widget.Material3.BottomSheet.Modal">
-        <item name="backgroundTint">@color/window_background</item>
-    </style>
-
-    <style name="Slider" parent="Widget.Material3.Slider">
-        <item name="thumbRadius">8dp</item>
-        <item name="trackCornerRadius">8dp</item>
-        <item name="trackColorInactive">@color/almost_transparent</item>
     </style>
 </resources>

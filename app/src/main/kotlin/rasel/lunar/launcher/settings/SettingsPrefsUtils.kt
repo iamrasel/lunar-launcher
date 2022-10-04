@@ -77,9 +77,4 @@ internal class SettingsPrefsUtils {
         val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
         sharedPreferences.edit().putInt(Constants().SHARED_PREF_LOCK, lockMode).apply()
     }
-
-    fun saveTheme(context: Context, themeValue: Int) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putInt(Constants().SHARED_PREF_THEME, themeValue).apply()
-    }
 }

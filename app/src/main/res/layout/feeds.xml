@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
-            android:background="@drawable/top_rounded_bg"
+            android:background="@drawable/rounded_bg_top"
             android:backgroundTint="@color/almost_transparent"
             android:clipChildren="false"
             android:clipToPadding="false"/>

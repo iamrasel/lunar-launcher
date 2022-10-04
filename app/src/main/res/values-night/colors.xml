@@ -3,13 +3,13 @@
     <color name="primary">#FF8C9EFF</color>
     <color name="window_background">#FF121212</color>
 
-    <color name="status_bar">@android:color/transparent</color>
-    <color name="navigation_bar">@android:color/transparent</color>
+    <color name="status_bar">#00000000</color>
+    <color name="navigation_bar">#00000000</color>
 
     <color name="ic_launcher_bg_top">#FFBBBBBB</color>
     <color name="ic_launcher_bg_bottom">#FF333333</color>
 
-    <color name="icon_color">@android:color/white</color>
-    <color name="apps_count">@android:color/black</color>
+    <color name="icon_color">#FFFFFFFF</color>
+    <color name="apps_count">#FF000000</color>
     <color name="almost_transparent">#11FFFFFF</color>
 </resources>

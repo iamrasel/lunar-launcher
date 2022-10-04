@@ -38,7 +38,6 @@ internal class Constants {
     @JvmField val SHARED_PREF_AUTO_KEYBOARD = "automatic_keyboard"
     @JvmField val SHARED_PREF_FEED_URL = "feed_url"
     @JvmField val SHARED_PREF_LOCK = "lock"
-    @JvmField val SHARED_PREF_THEME = "app_theme"
 
     @JvmField val DEFAULT_DATE_FORMAT = "EEE dx MMM, yyyy"
     @JvmField val MODAL_BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG"

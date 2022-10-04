@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.settings.childs
 
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,22 +26,18 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.databinding.SettingsLookBinding
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.SettingsPrefsUtils
 
 internal class Look : BottomSheetDialogFragment() {
     private lateinit var binding : SettingsLookBinding
-    private var themeValue = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsLookBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        themeValue = sharedPreferences.getInt(Constants().SHARED_PREF_THEME, 0)
-        when (themeValue) {
-            0 -> binding.followSystemTheme.isChecked = true
-            1 -> binding.selectDarkTheme.isChecked = true
-            2 -> binding.selectLightTheme.isChecked = true
+        when (AppCompatDelegate.getDefaultNightMode()) {
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> binding.followSystemTheme.isChecked = true
+            AppCompatDelegate.MODE_NIGHT_YES -> binding.selectDarkTheme.isChecked = true
+            AppCompatDelegate.MODE_NIGHT_NO -> binding.selectLightTheme.isChecked = true
+            else -> binding.followSystemTheme.isChecked = true
         }
 
         return binding.root
@@ -54,15 +49,12 @@ internal class Look : BottomSheetDialogFragment() {
             if (isChecked) {
                 when (checkedId) {
                     binding.followSystemTheme.id -> {
-                        SettingsPrefsUtils().saveTheme(requireContext(), 0)
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                     }
                     binding.selectDarkTheme.id -> {
-                        SettingsPrefsUtils().saveTheme(requireContext(), 1)
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     }
                     binding.selectLightTheme.id -> {
-                        SettingsPrefsUtils().saveTheme(requireContext(), 2)
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     }
                 }
