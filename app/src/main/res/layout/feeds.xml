@@ -69,7 +69,9 @@
             android:background="@drawable/rounded_bg_top"
             android:backgroundTint="@color/almost_transparent"
             android:clipChildren="false"
-            android:clipToPadding="false"/>
+            android:clipToPadding="false"
+            android:visibility="gone"
+            app:layoutManager="LinearLayoutManager"/>
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/loading_progress"
             android:layout_width="wrap_content"

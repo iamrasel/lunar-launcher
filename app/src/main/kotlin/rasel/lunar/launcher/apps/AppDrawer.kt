@@ -38,9 +38,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.AdapterView.OnItemLongClickListener
 import android.widget.ArrayAdapter
-import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import dev.chrisbanes.insetter.Insetter
@@ -52,15 +51,16 @@ import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.SwipeTouchListener
 import rasel.lunar.launcher.helpers.UniUtils
 import java.util.*
+import kotlin.collections.ArrayList
 
 internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
     private lateinit var fragmentActivity: FragmentActivity
-    private lateinit var packageNamesArrayList: ArrayList<String>
-    private lateinit var appsAdapter: ArrayAdapter<String>
+    private lateinit var packageInfoList: List<ResolveInfo>
+    private lateinit var packageNameList: ArrayList<String>
+    private lateinit var appsList: ArrayList<String>
     private lateinit var packageManager: PackageManager
-    private lateinit var packageList: List<ResolveInfo>
 
     private val leftSearchArray = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m")
     private val leftSearchArrayII = arrayOf("0", "1", "2", "3", "4", "\u290B")
@@ -69,12 +69,6 @@ internal class AppDrawer : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
-
-        fragmentActivity = if (isAdded) {
-            requireActivity()
-        } else {
-            LauncherActivity()
-        }
 
         Insetter.builder()
             .padding(windowInsetTypesOf(systemGestures = true))
@@ -92,14 +86,28 @@ internal class AppDrawer : Fragment() {
             .marginBottom(windowInsetTypesOf(ime = true))
             .applyToView(binding.searchLayout)
 
-        setupInitialView()
+        setupSearchColumns()
+
+        fragmentActivity = if (isAdded) {
+            requireActivity()
+        } else {
+            LauncherActivity()
+        }
+
+        packageManager = fragmentActivity.packageManager
+        packageNameList = ArrayList()
+        appsList = ArrayList()
+        binding.appsList.adapter =
+            context?.let { AppsAdapter(fragmentActivity, requireContext(), appsList, packageNameList) }
+        binding.appsCount.text = appsList.size.toString()
+
         return binding.root
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        controlOnAppActions()
+
         controlOnSearchActions()
         searchStringRemover()
 
@@ -108,6 +116,7 @@ internal class AppDrawer : Fragment() {
                 super.onSwipeDown()
                 UniUtils().expandNotificationPanel(requireContext())
             }
+
             override fun onDoubleClick() {
                 super.onDoubleClick()
                 UniUtils().lockMethod(
@@ -117,16 +126,17 @@ internal class AppDrawer : Fragment() {
         })
     }
 
-    private fun setupInitialView() {
-        packageManager = fragmentActivity.packageManager
-        packageNamesArrayList = ArrayList()
-        appsAdapter = ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, ArrayList())
-        // left search columns
+    override fun onResume() {
+        super.onResume()
+        closeSearch()
+        fetchApps()
+    }
+
+    private fun setupSearchColumns() {
         binding.leftSearchList.adapter =
             ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, leftSearchArray)
         binding.leftSearchListII.adapter =
             ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, leftSearchArrayII)
-        // right search columns
         binding.rightSearchList.adapter =
             ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, rightSearchArray)
         binding.rightSearchListII.adapter =
@@ -134,56 +144,43 @@ internal class AppDrawer : Fragment() {
     }
 
     // fetch all the installed apps and sort them
-    private val appsList: Unit
+    private val getAppsList: Unit
         get() {
             // fetch all the installed apps
-            packageList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageInfoList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 packageManager.queryIntentActivities(
                     Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), PackageManager.ResolveInfoFlags.of(0))
             } else {
                 @Suppress("DEPRECATION") packageManager.queryIntentActivities(
                     Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0)
             }
-            // sort the app list
-            (packageList as MutableList<ResolveInfo>).sortWith(ResolveInfo.DisplayNameComparator(packageManager))
+            // sort the list
+            (packageInfoList as MutableList<ResolveInfo>).sortWith(ResolveInfo.DisplayNameComparator(packageManager))
         }
 
     private fun fetchApps() {
-        appsList
-        // clear the list before repopulating
-        appsAdapter.clear()
-        packageNamesArrayList.clear()
-        // add the apps names to the adapter, and the package names to the array list
-        for (resolver in packageList) {
-            val appName = resolver.loadLabel(packageManager).toString()
-            appsAdapter.add(appName)
-            packageNamesArrayList.add(resolver.activityInfo.packageName)
+        getAppsList
+        // clear the lists before repopulating
+        packageNameList.clear()
+        appsList.clear()
+        // add package and app names to their respective lists
+        for (resolver in packageInfoList) {
+            packageNameList.add(resolver.activityInfo.packageName)
+            appsList.add(resolver.loadLabel(packageManager).toString())
         }
 
-        if (appsAdapter.count < 1) {
+        if (appsList.size < 1) {
             return
         } else {
             showApps()
         }
     }
 
+    // show the apps list and total count
+    @SuppressLint("NotifyDataSetChanged")
     private fun showApps() {
-        // show the apps list and total count
-        binding.appsList.adapter = appsAdapter
-        binding.appsCount.text = appsAdapter.count.toString()
-    }
-
-    private fun controlOnAppActions() {
-        binding.appsList.onItemClickListener =
-            OnItemClickListener { _: AdapterView<*>?, _: View?, i: Int, _: Long ->
-                startActivity(packageManager.getLaunchIntentForPackage(packageNamesArrayList[i]))
-            }
-
-        binding.appsList.onItemLongClickListener =
-            OnItemLongClickListener { _: AdapterView<*>?, _: View?, i: Int, _: Long ->
-                AppMenus().show(fragmentActivity.supportFragmentManager, packageNamesArrayList[i])
-                true
-            }
+        binding.appsList.adapter?.notifyDataSetChanged()
+        binding.appsCount.text = appsList.size.toString()
     }
 
     private fun controlOnSearchActions() {
@@ -196,7 +193,7 @@ internal class AppDrawer : Fragment() {
         binding.leftSearchListII.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
                 when (i) {
-                    leftSearchArrayII.size - 1 -> binding.appsList.setSelection(appsAdapter.count - 1)
+                    leftSearchArrayII.size - 1 -> binding.appsList.smoothScrollToPosition(appsList.size - 1)
                     else -> searchClickHelper(adapterView, i)
                 }
             }
@@ -204,7 +201,7 @@ internal class AppDrawer : Fragment() {
         binding.rightSearchList.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
                 when (i) {
-                    rightSearchArray.size - 1 -> binding.appsList.setSelection(0)
+                    rightSearchArray.size - 1 -> binding.appsList.smoothScrollToPosition(0)
                     else -> searchClickHelper(adapterView, i)
                 }
             }
@@ -216,10 +213,10 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun searchClickHelper(adapterView: AdapterView<*>, i: Int) {
-        if (appsAdapter.count < 2) return
+        if (appsList.size < 2) return
         binding.searchLayout.visibility = View.VISIBLE
         val string = binding.searchInput.text.toString() + adapterView.getItemAtPosition(i).toString()
-        binding.searchInput.text = SpannableStringBuilder(string)
+        searchStringChangeListener(string)
 
         val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
         if (sharedPreferences.getBoolean(Constants().SHARED_PREF_AUTO_KEYBOARD, false)) {
@@ -227,29 +224,28 @@ internal class AppDrawer : Fragment() {
             val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
         }
-
-        searchStringChangeListener()
     }
 
     private fun searchStringRemover() {
         binding.backspace.setOnClickListener {
             if (binding.searchInput.text.toString().isNotEmpty()) {
                 val string = binding.searchInput.text.toString().substring(0, binding.searchInput.text.toString().length - 1)
-                binding.searchInput.text = SpannableStringBuilder(string)
-                searchStringChangeListener()
+                searchStringChangeListener(string)
+
                 if (binding.searchInput.text.toString().isEmpty()) {
                     binding.searchLayout.visibility = View.GONE
                 }
             }
         }
+
         binding.close.setOnClickListener { closeSearch() }
     }
 
-    private fun searchStringChangeListener() {
-        binding.searchInput.doAfterTextChanged {
+    private fun searchStringChangeListener(string: String) {
+        binding.searchInput.text = SpannableStringBuilder(string)
+        binding.searchInput.doOnTextChanged { inputText, _, _, _ ->
             binding.searchInput.setSelection(binding.searchInput.text.toString().length)
-            val string = binding.searchInput.text.toString()
-            filterAppsList(string)
+            filterAppsList(inputText.toString())
         }
     }
 
@@ -261,25 +257,22 @@ internal class AppDrawer : Fragment() {
         }
 
         // clear the current lists
-        appsAdapter.clear()
-        packageNamesArrayList.clear()
+        packageNameList.clear()
+        appsList.clear()
 
         /* check each package name and add only the ones
             that match the search string */
-        for (resolver in packageList) {
-            val appNm = resolver.loadLabel(packageManager) as String
-            if (appNm.replace("[^a-zA-Z0-9]".toRegex(), "").lowercase(Locale.getDefault())
+        for (resolver in packageInfoList) {
+            val appName = resolver.loadLabel(packageManager).toString()
+            if (appName.replace("[^a-zA-Z0-9]".toRegex(), "").lowercase(Locale.getDefault())
                     .contains(searchString)) {
-                appsAdapter.add(appNm)
-                packageNamesArrayList.add(resolver.activityInfo.packageName)
+                packageNameList.add(resolver.activityInfo.packageName)
+                appsList.add(appName)
             }
         }
 
-        // if only one app contains the search string, then launch it
-        if (appsAdapter.count == 1) {
-            startActivity(packageManager.getLaunchIntentForPackage(packageNamesArrayList[0]))
-        } else if (appsAdapter.count < 1) {
-            binding.appsCount.text = appsAdapter.count.toString()
+        if (appsList.size == 1) {
+            startActivity(packageManager.getLaunchIntentForPackage(packageNameList[0]))
         } else {
             showApps()
         }
@@ -292,12 +285,5 @@ internal class AppDrawer : Fragment() {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
         binding.searchLayout.visibility = View.GONE
-    }
-
-    override fun onResume() {
-        super.onResume()
-        closeSearch()
-        setupInitialView()
-        fetchApps()
     }
 }

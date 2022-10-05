@@ -61,6 +61,7 @@
         android:scrollbars="none"
         android:overScrollMode="never"
         android:paddingHorizontal="48dp"
-        android:layout_marginTop="96dp"/>
+        android:layout_marginTop="96dp"
+        app:layoutManager="LinearLayoutManager"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

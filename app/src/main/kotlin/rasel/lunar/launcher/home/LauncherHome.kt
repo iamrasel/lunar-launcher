@@ -30,7 +30,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chrisbanes.insetter.applyInsetter
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
@@ -77,7 +76,6 @@ internal class LauncherHome : Fragment() {
     }
 
     private fun showTodoList() {
-        binding.todos.layoutManager = LinearLayoutManager(context)
         binding.todos.adapter =
             context?.let { TodoAdapter(DatabaseHandler(context).todos, TodoManager(), fragmentActivity, it) }
     }

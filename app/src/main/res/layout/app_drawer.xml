@@ -25,6 +25,7 @@
             android:layout_weight="1"
             android:divider="@null"
             android:scrollbars="none"
+            android:listSelector="@android:color/transparent"
             android:transcriptMode="alwaysScroll"
             android:layout_gravity="bottom"/>
 
@@ -35,6 +36,7 @@
             android:layout_weight="1"
             android:divider="@null"
             android:scrollbars="none"
+            android:listSelector="@android:color/transparent"
             android:transcriptMode="alwaysScroll"
             android:layout_gravity="bottom"/>
 
@@ -44,16 +46,16 @@
             android:layout_height="match_parent"
             android:layout_weight="6">
 
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/apps_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
-                android:divider="@null"
                 android:overScrollMode="never"
                 android:layout_centerVertical="true"
                 android:clipChildren="false"
-                android:clipToPadding="false"/>
+                android:clipToPadding="false"
+                app:layoutManager="LinearLayoutManager"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/search_layout"
@@ -110,6 +112,7 @@
             android:layout_weight="1"
             android:divider="@null"
             android:scrollbars="none"
+            android:listSelector="@android:color/transparent"
             android:transcriptMode="alwaysScroll"
             android:layout_gravity="bottom"/>
 
@@ -120,6 +123,7 @@
             android:layout_weight="1"
             android:divider="@null"
             android:scrollbars="none"
+            android:listSelector="@android:color/transparent"
             android:transcriptMode="alwaysScroll"
             android:layout_gravity="bottom"/>
 

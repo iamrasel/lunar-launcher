@@ -30,7 +30,6 @@ import android.view.ViewGroup
 import androidx.core.app.JobIntentService.enqueueWork   // Todo: deprecated
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
 import rasel.lunar.launcher.LauncherActivity
@@ -94,7 +93,6 @@ internal class Feeds : Fragment() {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
             val items = resultData.getSerializable(Constants().RSS_ITEMS) as List<RSS>?
             if (items != null) {
-                binding.rss.layoutManager = LinearLayoutManager(context)
                 binding.rss.adapter = RssAdapter(items, requireContext())
                 binding.dataFetchingFailed.visibility = View.GONE
                 binding.loadingProgress.visibility = View.GONE
