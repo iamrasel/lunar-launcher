@@ -29,13 +29,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:padding="8dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/detailed_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_info"
+            android:layout_marginEnd="2dp"
             style="@style/Widget.Material3.FloatingActionButton.Surface"
             android:contentDescription="@null" />
 
@@ -44,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_activity"
+            android:layout_marginStart="2dp"
             style="@style/Widget.Material3.FloatingActionButton.Surface"
             android:contentDescription="@null" />
 
@@ -53,7 +57,7 @@
         android:id="@+id/fav_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:singleSelection="true">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/one"

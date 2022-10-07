@@ -52,9 +52,10 @@
 - [x] Launch from search
 - [x] Launch in freeform mode
 - [x] Total apps count
+- [ ] App appearance
 - [ ] App rename
 - [ ] App vault
-- [ ] Detailed app info
+- [x] Detailed app info
 
 </details>
 <details><summary>Feeds</summary>
