@@ -7,9 +7,21 @@
     android:padding="16dp">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/advance_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/choose_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_launcher"
+        style="@style/Widget.Material3.Button.ElevatedButton"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/advance_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/reset"
             android:layout_width="0dp"

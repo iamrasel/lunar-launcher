@@ -20,6 +20,7 @@ package rasel.lunar.launcher.settings.childs
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,27 +42,37 @@ internal class Advance : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.chooseLauncher.setOnClickListener {
+            requireContext().startActivity(Intent(Settings.ACTION_HOME_SETTINGS))
+            this.dismiss()
+        }
+
         binding.advanceSettings.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.reset.id -> {
-                        MaterialAlertDialogBuilder(requireActivity())
-                            .setTitle(R.string.reset)
-                            .setMessage(R.string.reset_message)
-                            .setPositiveButton(R.string.proceed) { dialog, _ ->
-                                dialog.dismiss()
-                                Runtime.getRuntime().exec("pm clear " + requireContext().packageName)
-                            }
-                            .setNeutralButton(android.R.string.cancel) {dialog, _ -> dialog.dismiss() }
-                            .show()
-                    }
-                    binding.restart.id -> {
-                        val intent = (requireContext().packageManager).getLaunchIntentForPackage(requireContext().packageName)
-                        requireContext().startActivity(Intent.makeRestartActivityTask(intent?.component))
-                        exitProcess(0)
-                    }
+                    binding.reset.id -> { reset() }
+                    binding.restart.id -> { restart() }
                 }
             }
         }
+    }
+
+    private fun reset() {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(R.string.reset)
+            .setMessage(R.string.reset_message)
+            .setPositiveButton(R.string.proceed) { dialog, _ ->
+                dialog.dismiss()
+                Runtime.getRuntime().exec("pm clear " + requireContext().packageName)
+            }
+            .setNeutralButton(android.R.string.cancel) {dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+    private fun restart() {
+        val intent = (requireContext().packageManager).getLaunchIntentForPackage(requireContext().packageName)
+        requireContext().startActivity(Intent.makeRestartActivityTask(intent?.component))
+        exitProcess(0)
     }
 }

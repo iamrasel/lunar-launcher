@@ -16,6 +16,7 @@
     <string name="authentication_failed">Authentication failed</string>
     <string name="authentication_subtitle">Authenticate with your device credential to proceed</string>
     <string name="celsius">Celsius</string>
+    <string name="choose_launcher">Choose Default Launcher</string>
     <string name="city_name">City Name</string>
     <string name="contact">Contact</string>
     <string name="copied_message">Copied to clipboard</string>
