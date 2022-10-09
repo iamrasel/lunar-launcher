@@ -19,45 +19,78 @@
 package rasel.lunar.launcher.apps
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.databinding.AppsChildBinding
+
 
 internal class AppsAdapter(
     private val fragmentActivity: FragmentActivity,
-    private val context: Context,
-    private val appsList: ArrayList<String>,
-    private val packageNameList: ArrayList<String>
-) : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
+    private val appsCount: MaterialTextView
+) : RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
 
-    private var packageManager: PackageManager = fragmentActivity.packageManager
+    private var oldList = ArrayList<Packages>()
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AppsViewHolder {
         val binding = AppsChildBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return ViewHolder(binding)
+        return AppsViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: AppsViewHolder, @SuppressLint("RecyclerView") i: Int) {
+        val position = oldList[i]
+
+        holder.view.childTextview.apply {
+            text = position.appName
+
+            setOnClickListener {
+                context.startActivity(fragmentActivity.packageManager.getLaunchIntentForPackage(position.packageName))
+            }
+
+            setOnLongClickListener {
+                AppMenus().show(fragmentActivity.supportFragmentManager, position.packageName)
+                true
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return appsList.size
+        appsCount.text = oldList.size.toString()
+        return oldList.size
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        holder.view.childTextview.text = appsList[position]
+    inner class AppsViewHolder(var view: AppsChildBinding) : RecyclerView.ViewHolder(view.root)
 
-        holder.view.childTextview.setOnClickListener {
-            context.startActivity(packageManager.getLaunchIntentForPackage(packageNameList[position]))
-        }
+    fun updateData(newList: List<Packages>) {
+        val diffUtil = AppsDiffUtil(oldList, newList)
+        val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
 
-        holder.view.childTextview.setOnLongClickListener {
-            AppMenus().show(fragmentActivity.supportFragmentManager, packageNameList[position])
-            true
-        }
+        oldList.clear()
+        oldList.addAll(newList)
+        diffUtilResult.dispatchUpdatesTo(this)
+    }
+}
+
+internal data class Packages(
+    val packageName: String,
+    val appName: String
+)
+
+internal class AppsDiffUtil(
+    private val oldList: List<Packages>, private val newList: List<Packages>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
     }
 
-    class ViewHolder(var view: AppsChildBinding) : RecyclerView.ViewHolder(view.root)
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
 }

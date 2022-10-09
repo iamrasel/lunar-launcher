@@ -53,14 +53,15 @@ import rasel.lunar.launcher.helpers.UniUtils
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
     private lateinit var fragmentActivity: FragmentActivity
     private lateinit var packageInfoList: List<ResolveInfo>
-    private lateinit var packageNameList: ArrayList<String>
-    private lateinit var appsList: ArrayList<String>
+    private var packagesList: ArrayList<Packages> = ArrayList()
     private lateinit var packageManager: PackageManager
+    private lateinit var appsAdapter: AppsAdapter
 
     private val leftSearchArray = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m")
     private val leftSearchArrayII = arrayOf("0", "1", "2", "3", "4", "\u290B")
@@ -70,22 +71,7 @@ internal class AppDrawer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
-        Insetter.builder()
-            .padding(windowInsetTypesOf(systemGestures = true))
-            .applyToView(binding.appsList)
-        Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.leftSearchList)
-            .applyToView(binding.leftSearchListII)
-        Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.rightSearchList)
-            .applyToView(binding.rightSearchListII)
-        Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .marginBottom(windowInsetTypesOf(ime = true))
-            .applyToView(binding.searchLayout)
-
+        setInsets()
         setupSearchColumns()
 
         fragmentActivity = if (isAdded) {
@@ -95,11 +81,10 @@ internal class AppDrawer : Fragment() {
         }
 
         packageManager = fragmentActivity.packageManager
-        packageNameList = ArrayList()
-        appsList = ArrayList()
-        binding.appsList.adapter =
-            context?.let { AppsAdapter(fragmentActivity, requireContext(), appsList, packageNameList) }
-        binding.appsCount.text = appsList.size.toString()
+        appsAdapter = AppsAdapter(fragmentActivity, binding.appsCount)
+        binding.appsList.adapter = appsAdapter.also { adapter ->
+                adapter.updateData(packagesList)
+        }
 
         return binding.root
     }
@@ -132,6 +117,24 @@ internal class AppDrawer : Fragment() {
         fetchApps()
     }
 
+    private fun setInsets() {
+        Insetter.builder()
+            .padding(windowInsetTypesOf(systemGestures = true))
+            .applyToView(binding.appsList)
+        Insetter.builder()
+            .marginBottom(windowInsetTypesOf(navigationBars = true))
+            .applyToView(binding.leftSearchList)
+            .applyToView(binding.leftSearchListII)
+        Insetter.builder()
+            .marginBottom(windowInsetTypesOf(navigationBars = true))
+            .applyToView(binding.rightSearchList)
+            .applyToView(binding.rightSearchListII)
+        Insetter.builder()
+            .marginBottom(windowInsetTypesOf(navigationBars = true))
+            .marginBottom(windowInsetTypesOf(ime = true))
+            .applyToView(binding.searchLayout)
+    }
+
     private fun setupSearchColumns() {
         binding.leftSearchList.adapter =
             ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, leftSearchArray)
@@ -160,27 +163,18 @@ internal class AppDrawer : Fragment() {
 
     private fun fetchApps() {
         getAppsList
-        // clear the lists before repopulating
-        packageNameList.clear()
-        appsList.clear()
-        // add package and app names to their respective lists
+        // add package and app names to the list
+        packagesList.clear()
         for (resolver in packageInfoList) {
-            packageNameList.add(resolver.activityInfo.packageName)
-            appsList.add(resolver.loadLabel(packageManager).toString())
+            val packages = Packages(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())
+            packagesList.add(packages)
         }
 
-        if (appsList.size < 1) {
+        if (packagesList.size < 1) {
             return
         } else {
-            showApps()
+            appsAdapter.updateData(packagesList)
         }
-    }
-
-    // show the apps list and total count
-    @SuppressLint("NotifyDataSetChanged")
-    private fun showApps() {
-        binding.appsList.adapter?.notifyDataSetChanged()
-        binding.appsCount.text = appsList.size.toString()
     }
 
     private fun controlOnSearchActions() {
@@ -193,7 +187,7 @@ internal class AppDrawer : Fragment() {
         binding.leftSearchListII.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
                 when (i) {
-                    leftSearchArrayII.size - 1 -> binding.appsList.smoothScrollToPosition(appsList.size - 1)
+                    leftSearchArrayII.size - 1 -> binding.appsList.smoothScrollToPosition(packagesList.size - 1)
                     else -> searchClickHelper(adapterView, i)
                 }
             }
@@ -213,7 +207,8 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun searchClickHelper(adapterView: AdapterView<*>, i: Int) {
-        if (appsList.size < 2) return
+        if (packagesList.size < 2) return
+
         binding.searchLayout.visibility = View.VISIBLE
         val string = binding.searchInput.text.toString() + adapterView.getItemAtPosition(i).toString()
         searchStringChangeListener(string)
@@ -250,31 +245,22 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun filterAppsList(searchString: String) {
-        // return if the search string is empty
-        if (searchString == "") {
-            fetchApps()
-            return
-        }
-
-        // clear the current lists
-        packageNameList.clear()
-        appsList.clear()
-
         /* check each package name and add only the ones
             that match the search string */
+        packagesList.clear()
         for (resolver in packageInfoList) {
             val appName = resolver.loadLabel(packageManager).toString()
             if (appName.replace("[^a-zA-Z0-9]".toRegex(), "").lowercase(Locale.getDefault())
                     .contains(searchString)) {
-                packageNameList.add(resolver.activityInfo.packageName)
-                appsList.add(appName)
+                val packages = Packages(resolver.activityInfo.packageName, appName)
+                packagesList.add(packages)
             }
         }
 
-        if (appsList.size == 1) {
-            startActivity(packageManager.getLaunchIntentForPackage(packageNameList[0]))
+        if (packagesList.size == 1) {
+            startActivity(packageManager.getLaunchIntentForPackage(packagesList[0].packageName))
         } else {
-            showApps()
+            appsAdapter.updateData(packagesList)
         }
     }
 
