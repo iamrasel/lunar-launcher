@@ -6,8 +6,8 @@
     <color name="status_bar">#00000000</color>
     <color name="navigation_bar">#00000000</color>
 
-    <color name="ic_launcher_bg_top">#FFBBBBBB</color>
-    <color name="ic_launcher_bg_bottom">#FF333333</color>
+    <color name="ic_launcher_primary">#FF121212</color>
+    <color name="ic_launcher_secondary">#FFE9F5F7</color>
 
     <color name="icon_color">#FFFFFFFF</color>
     <color name="apps_count">#FF000000</color>
