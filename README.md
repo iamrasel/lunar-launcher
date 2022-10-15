@@ -2,13 +2,13 @@
 	<img src='fastlane/metadata/android/en-US/images/icon.png' alt='Lunar Launcher' width='100' height='100'>
     <h2>Lunar Launcher</h2>
     <p>
-        <img src='https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white'>
-        <img src='https://img.shields.io/badge/SDK-26-vibrant?style=for-the-badge'>
-        <a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=for-the-badge'></a>
+        <img src='https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white'>
+        <img src='https://img.shields.io/badge/SDK-26-vibrant?style=flat-square'>
+        <a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=flat-square'></a>
         <br>
-		<img src='https://img.shields.io/badge/Maintained-yes-green?style=for-the-badge'>
-        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/CI_Push?style=for-the-badge'></a>
-		<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=for-the-badge'></a>
+		<img src='https://img.shields.io/badge/Maintained-yes-green?style=flat-square'>
+        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/CI_Push?style=flat-square'></a>
+		<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=flat-square'></a>
     </p>
 </div>
 
@@ -99,6 +99,18 @@ To get updated with the latest build head over to the [Actions](https://github.c
 
 </div>
 
+## Warning
+There is a similar app available in [Play Store](https://play.google.com/store/apps/details?id=rasel.lunar.launcher) with the same app and package name, which has _**NOT**_ been served by me. If anything bad happens to you for using that application, I will not be responsible.
+
+## Community
+If you want to share your thoughts with me or other users, join the Lunar Launcher's users community.
+<div align='center'>
+
+<a href='https://github.com/iamrasel/lunar-launcher/discussions'><img src='https://img.shields.io/badge/Discussions-333333?style=for-the-badge&logo=github'></a>
+<a href='https://t.me/LunarLauncher_chats'><img src='https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white'></a>
+
+</div>
+
 ## Permissions
 - `android.permission.ACCESS_NETWORK_STATE` - To check for active network connection
 - `android.permission.CALL_PHONE` - To make call
@@ -116,9 +128,9 @@ Do you like this app? If the answer is yes, then help me to continue this projec
 
 <div align='center'>
 
-| ![](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black) | [iamrasel](https://www.buymeacoffee.com/iamrasel) |
-|:-----------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
-|         ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)         |       `38mRQy6oDJjZNR3xxiNRVS5obqLMnwonFD`        |
-|        ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)        |   `0x9b2f72a19C78a73dDE4478a6d51BACf198671480`    |
+| ![](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black) | [iamrasel](https://www.buymeacoffee.com/iamrasel) |
+|:---------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
+|         ![](https://img.shields.io/badge/Bitcoin-000000?style=flat-square&logo=bitcoin&logoColor=white)         |       `38mRQy6oDJjZNR3xxiNRVS5obqLMnwonFD`        |
+|        ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=flat-square&logo=Ethereum&logoColor=white)        |   `0x9b2f72a19C78a73dDE4478a6d51BACf198671480`    |
 
 </div>
