@@ -43,7 +43,7 @@ internal class HomeUtils(
     private val context: Context = fragmentActivity.applicationContext
 
     fun getTimeFormat(): String? {
-        when (sharedPreferences.getInt(Constants().SHARED_PREF_TIME_FORMAT, 0)) {
+        when (sharedPreferences.getInt(Constants().KEY_TIME_FORMAT, 0)) {
             0 -> return if (DateFormat.is24HourFormat(context)) {
                 "kk:mm"
             } else {
@@ -67,7 +67,7 @@ internal class HomeUtils(
 
     fun getDateFormat(): String {
         val dateFormatValue = sharedPreferences.getString(
-            Constants().SHARED_PREF_DATE_FORMAT,
+            Constants().KEY_DATE_FORMAT,
             Constants().DEFAULT_DATE_FORMAT
         )
         return if (dateFormatValue!!.contains("x")) {
@@ -81,7 +81,7 @@ internal class HomeUtils(
         view.setOnTouchListener(object : SwipeTouchListener(context) {
             override fun onSwipeUp() {
                 super.onSwipeUp()
-                QuickAccess().show(fragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                QuickAccess().show(fragmentManager, Constants().BOTTOM_SHEET_TAG)
             }
             override fun onSwipeDown() {
                 super.onSwipeDown()
@@ -115,7 +115,7 @@ internal class HomeUtils(
         view.setOnTouchListener(object : SwipeTouchListener(context) {
             override fun onLongClick() {
                 super.onLongClick()
-                when (sharedPreferences.getBoolean(Constants().SHARED_PREF_TODO_LOCK, false)) {
+                when (sharedPreferences.getBoolean(Constants().KEY_TODO_LOCK, false)) {
                     false -> fragmentManager.beginTransaction().add(R.id.main_fragments_container, TodoManager())
                         .addToBackStack("").commit()
                     true -> {
@@ -132,7 +132,7 @@ internal class HomeUtils(
             }
             override fun onSwipeUp() {
                 super.onSwipeUp()
-                QuickAccess().show(fragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+                QuickAccess().show(fragmentManager, Constants().BOTTOM_SHEET_TAG)
             }
             override fun onSwipeDown() {
                 super.onSwipeDown()

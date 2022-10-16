@@ -25,13 +25,14 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
-import rasel.lunar.launcher.databinding.SettingsLookBinding
+import rasel.lunar.launcher.databinding.SettingsAppearancesBinding
 
-internal class Look : BottomSheetDialogFragment() {
-    private lateinit var binding : SettingsLookBinding
+
+internal class Appearances : BottomSheetDialogFragment() {
+    private lateinit var binding : SettingsAppearancesBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = SettingsLookBinding.inflate(inflater, container, false)
+        binding = SettingsAppearancesBinding.inflate(inflater, container, false)
 
         when (AppCompatDelegate.getDefaultNightMode()) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> binding.followSystemTheme.isChecked = true
@@ -48,15 +49,12 @@ internal class Look : BottomSheetDialogFragment() {
         binding.themeGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.followSystemTheme.id -> {
+                    binding.followSystemTheme.id ->
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    }
-                    binding.selectDarkTheme.id -> {
+                    binding.selectDarkTheme.id ->
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    }
-                    binding.selectLightTheme.id -> {
+                    binding.selectLightTheme.id ->
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }
                 }
             }
         }

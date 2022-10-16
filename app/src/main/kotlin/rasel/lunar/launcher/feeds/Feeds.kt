@@ -27,7 +27,7 @@ import android.os.ResultReceiver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.JobIntentService.enqueueWork   // Todo: deprecated
+import androidx.core.app.JobIntentService.enqueueWork
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import dev.chrisbanes.insetter.Insetter
@@ -51,27 +51,32 @@ internal class Feeds : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FeedsBinding.inflate(inflater, container, false)
 
+        setInsets()
+
         fragmentActivity = if (isAdded) {
             requireActivity()
         } else {
             LauncherActivity()
         }
 
+        feedsUtils = FeedsUtils(fragmentActivity)
+
+        return binding.root
+    }
+
+    private fun setInsets() {
         Insetter.builder()
-            .paddingBottom(windowInsetTypesOf(systemGestures = true))
+            .paddingBottom(windowInsetTypesOf(navigationBars = true))
             .applyToView(binding.rss)
         Insetter.builder()
             .marginTop(windowInsetTypesOf(statusBars = true))
             .applyToView(binding.ram)
             .applyToView(binding.cpu)
-
-        feedsUtils = FeedsUtils(fragmentActivity)
-        return binding.root
     }
 
     private fun startService() {
-        val rssUrl = fragmentActivity.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-            .getString(Constants().SHARED_PREF_FEED_URL, "")
+        val rssUrl = fragmentActivity.getSharedPreferences(Constants().PREFS_SETTINGS, Context.MODE_PRIVATE)
+            .getString(Constants().KEY_RSS_URL, "")
         if (UniUtils().isNetworkAvailable(fragmentActivity) && rssUrl != null && rssUrl.isNotEmpty()) {
             val intent = Intent(fragmentActivity, RssService::class.java)
             intent.putExtra(Constants().RSS_RECEIVER, resultReceiver)

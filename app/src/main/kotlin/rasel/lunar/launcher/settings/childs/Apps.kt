@@ -36,8 +36,8 @@ internal class Apps : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppsBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        autoKeyboard = sharedPreferences.getBoolean(Constants().SHARED_PREF_AUTO_KEYBOARD, false)
+        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        autoKeyboard = sharedPreferences.getBoolean(Constants().KEY_KEYBOARD_SEARCH, false)
 
         when (autoKeyboard) {
             false -> binding.keyboardAutoNegative.isChecked = true
@@ -52,8 +52,8 @@ internal class Apps : BottomSheetDialogFragment() {
         binding.keyboardAutoGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.keyboardAutoPositive.id -> SettingsPrefsUtils().autoKeyboard(requireContext(), true)
-                    binding.keyboardAutoNegative.id -> SettingsPrefsUtils().autoKeyboard(requireContext(), false)
+                    binding.keyboardAutoPositive.id -> SettingsPrefsUtils().keyboardSearch(requireContext(), true)
+                    binding.keyboardAutoNegative.id -> SettingsPrefsUtils().keyboardSearch(requireContext(), false)
                 }
             }
         }

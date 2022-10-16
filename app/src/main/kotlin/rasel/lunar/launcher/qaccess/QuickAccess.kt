@@ -60,17 +60,17 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     }
 
     private fun favApps() {
-        val prefsFavApps = requireContext().getSharedPreferences(Constants().SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE)
+        val prefsFavApps = requireContext().getSharedPreferences(Constants().PREFS_FAVORITE_APPS, Context.MODE_PRIVATE)
         for (position in 1..6) {
-            val packageValue = prefsFavApps.getString(Constants().FAV_APP_ + position.toString(), "").toString()
+            val packageValue = prefsFavApps.getString(Constants().KEY_APP_NO_ + position.toString(), "").toString()
             accessUtils.favApps(packageValue, imageView(), position)
         }
     }
 
     private fun shortcuts() {
-        val prefsShortcuts = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SHORTCUTS, Context.MODE_PRIVATE)
+        val prefsShortcuts = requireContext().getSharedPreferences(Constants().PREFS_SHORTCUTS, Context.MODE_PRIVATE)
         for (position in 1..6) {
-            val shortcutValue = prefsShortcuts.getString(Constants().SHORTCUT_NO_ + position.toString(), "").toString()
+            val shortcutValue = prefsShortcuts.getString(Constants().KEY_SHORTCUT_NO_ + position.toString(), "").toString()
             val splitShortcutValue = shortcutValue.split("||").toTypedArray()
 
             var shortcutType = ""

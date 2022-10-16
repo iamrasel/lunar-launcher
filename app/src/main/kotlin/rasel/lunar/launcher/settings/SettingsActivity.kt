@@ -39,9 +39,12 @@ internal class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /* set up view */
         binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        /* launch child settings dialogs on button clicks */
         binding.timeDate.setOnClickListener {
             TimeDate().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
@@ -70,12 +73,15 @@ internal class SettingsActivity : AppCompatActivity() {
             Advance().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
 
+        /* about and support dialogs */
         binding.about.setOnClickListener { aboutDialog() }
-        binding.donate.setOnClickListener { supportDialog() }
+        binding.support.setOnClickListener { supportDialog() }
 
+        /* show app version name */
         binding.version.text = BuildConfig.VERSION_NAME
     }
 
+    /* about dialog */
     private fun aboutDialog() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val aboutBinding = AboutBinding.inflate(this.layoutInflater)
@@ -83,21 +89,22 @@ internal class SettingsActivity : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
+    /* support dialog */
     private fun supportDialog() {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.support)
             .setMessage(R.string.support_message)
-
+            /* star button */
             .setNeutralButton(R.string.star) {dialog, _ ->
                 dialog.dismiss()
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamrasel/lunar-launcher")))
             }
-
+            /* donate button */
             .setPositiveButton(R.string.donate) { dialog, _ ->
                 dialog.dismiss()
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://iamrasel.github.io/donate")))
             }
-
             .show()
     }
+
 }

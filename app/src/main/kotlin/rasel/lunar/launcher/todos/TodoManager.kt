@@ -36,6 +36,7 @@ import rasel.lunar.launcher.databinding.TodoDialogBinding
 import rasel.lunar.launcher.databinding.TodoManagerBinding
 import java.util.*
 
+
 class TodoManager : Fragment() {
     private lateinit var binding: TodoManagerBinding
     private lateinit var fragmentActivity: FragmentActivity
@@ -43,13 +44,8 @@ class TodoManager : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = TodoManagerBinding.inflate(inflater, container, false)
-        Insetter.builder()
-            .paddingTop(windowInsetTypesOf(statusBars = true))
-            .applyToView(binding.todos)
-        Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.addNew)
-            .applyToView(binding.deleteAll)
+
+        setInsets()
 
         fragmentActivity = if (isAdded) {
             requireActivity()
@@ -66,6 +62,16 @@ class TodoManager : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.addNew.setOnClickListener { addNewDialog() }
         binding.deleteAll.setOnClickListener { deleteAllDialog() }
+    }
+
+    private fun setInsets() {
+        Insetter.builder()
+            .paddingTop(windowInsetTypesOf(statusBars = true))
+            .applyToView(binding.todos)
+        Insetter.builder()
+            .marginBottom(windowInsetTypesOf(navigationBars = true))
+            .applyToView(binding.addNew)
+            .applyToView(binding.deleteAll)
     }
 
     fun refreshList() {
@@ -120,7 +126,7 @@ class TodoManager : Fragment() {
     }
 
     override fun onResume() {
-        refreshList()
         super.onResume()
+        refreshList()
     }
 }

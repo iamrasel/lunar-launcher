@@ -28,8 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginHorizontal="36dp"
-            android:layout_marginBottom="36dp">
+            android:layout_marginHorizontal="36dp">
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:layout_width="match_parent"
@@ -64,7 +63,7 @@
                     android:id="@+id/apps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/apps"
+                    android:text="@string/app_drawer"
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>
@@ -72,7 +71,7 @@
                     android:id="@+id/look"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/look"
+                    android:text="@string/appearances"
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>
@@ -101,10 +100,10 @@
                     android:textAllCaps="true"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/donate"
+                    android:id="@+id/support"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/donate"
+                    android:text="@string/support"
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>

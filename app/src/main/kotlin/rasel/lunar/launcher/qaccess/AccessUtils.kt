@@ -52,7 +52,7 @@ internal class AccessUtils(
     private val bottomSheetDialogFragment: BottomSheetDialogFragment,
     private val fragmentActivity: FragmentActivity) {
     private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences(Constants().SHARED_PREFS_SHORTCUTS, Context.MODE_PRIVATE)
+        context.getSharedPreferences(Constants().PREFS_SHORTCUTS, Context.MODE_PRIVATE)
 
     fun volumeControllers(notifyBar: Slider, alarmBar: Slider, mediaBar: Slider, voiceBar: Slider, ringerBar: Slider) {
         val audioManager = fragmentActivity.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -108,7 +108,7 @@ internal class AccessUtils(
                 textView.background.setColorFilter(Color.parseColor("#$color"), PorterDuff.Mode.MULTIPLY)
             }
             textView.setOnClickListener {
-                if (shortcutType == Constants().TYPE_URL) {
+                if (shortcutType == Constants().SHORTCUT_TYPE_URL) {
                     var url = intentString
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
                         url = "http://$intentString"
@@ -116,7 +116,7 @@ internal class AccessUtils(
                     fragmentActivity.startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(url)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
-                } else if (shortcutType == Constants().TYPE_PHONE) {
+                } else if (shortcutType == Constants().SHORTCUT_TYPE_PHONE) {
                     if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         fragmentActivity.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
                     } else {
@@ -128,7 +128,7 @@ internal class AccessUtils(
                 bottomSheetDialogFragment.dismiss()
             }
             textView.setOnLongClickListener {
-                sharedPreferences.edit().putString(Constants().SHORTCUT_NO_ + position, "").apply()
+                sharedPreferences.edit().putString(Constants().KEY_SHORTCUT_NO_ + position, "").apply()
                 textView.text = "+"
                 textView.background.colorFilter = null
                 bottomSheetDialogFragment.onResume()
@@ -204,11 +204,11 @@ internal class AccessUtils(
             if (isChecked) {
                 when (checkedId) {
                     dialogBinding.contact.id -> {
-                        shortcutType = Constants().TYPE_PHONE
+                        shortcutType = Constants().SHORTCUT_TYPE_PHONE
                         dialogBinding.inputField.inputType = InputType.TYPE_CLASS_PHONE
                     }
                     dialogBinding.url.id -> {
-                        shortcutType = Constants().TYPE_URL
+                        shortcutType = Constants().SHORTCUT_TYPE_URL
                         dialogBinding.inputField.inputType = InputType.TYPE_TEXT_VARIATION_URI
                     }
                 }
@@ -222,7 +222,7 @@ internal class AccessUtils(
             val color = Objects.requireNonNull(dialogBinding.colorPicker.colorInput.text).toString().trim { it <= ' ' }
 
             if (shortcutType.isNotEmpty() && intentString.isNotEmpty() && thumbLetter.isNotEmpty() && color.isNotEmpty()) {
-                sharedPreferences.edit().putString(Constants().SHORTCUT_NO_ + position,
+                sharedPreferences.edit().putString(Constants().KEY_SHORTCUT_NO_ + position,
                     "$shortcutType||$intentString||$thumbLetter||$color").apply()
                 dialog.dismiss()
                 bottomSheetDialogFragment.onResume()

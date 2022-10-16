@@ -41,9 +41,9 @@ internal class More : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsMoreBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        feedUrl = sharedPreferences.getString(Constants().SHARED_PREF_FEED_URL, "").toString()
-        lockMode = sharedPreferences.getInt(Constants().SHARED_PREF_LOCK, 0)
+        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        feedUrl = sharedPreferences.getString(Constants().KEY_RSS_URL, "").toString()
+        lockMode = sharedPreferences.getInt(Constants().KEY_LOCK_METHOD, 0)
 
         binding.inputFeedUrl.setText(feedUrl)
 
@@ -69,10 +69,10 @@ internal class More : BottomSheetDialogFragment() {
         binding.lockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.selectLockNegative.id -> SettingsPrefsUtils().saveLockMode(requireContext(), 0)
-                    binding.selectLockAccessibility.id -> SettingsPrefsUtils().saveLockMode(requireContext(), 1)
-                    binding.selectLockAdmin.id -> SettingsPrefsUtils().saveLockMode(requireContext(), 2)
-                    binding.selectLockRoot.id -> SettingsPrefsUtils().saveLockMode(requireContext(), 3)
+                    binding.selectLockNegative.id -> SettingsPrefsUtils().saveLockMethod(requireContext(), 0)
+                    binding.selectLockAccessibility.id -> SettingsPrefsUtils().saveLockMethod(requireContext(), 1)
+                    binding.selectLockAdmin.id -> SettingsPrefsUtils().saveLockMethod(requireContext(), 2)
+                    binding.selectLockRoot.id -> SettingsPrefsUtils().saveLockMethod(requireContext(), 3)
                 }
             }
         }
@@ -84,6 +84,6 @@ internal class More : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        SettingsPrefsUtils().saveFeedUrl(requireContext(), getFeedUrl())
+        SettingsPrefsUtils().saveRssUrl(requireContext(), getFeedUrl())
     }
 }

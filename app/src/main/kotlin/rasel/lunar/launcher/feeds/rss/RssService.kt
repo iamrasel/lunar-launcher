@@ -32,8 +32,8 @@ import java.net.URL
 internal class RssService : JobIntentService() {   // Todo: deprecated
 
     override fun onHandleWork(intent: Intent) {
-        val settingsPrefs = getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        val rssUrl = settingsPrefs.getString(Constants().SHARED_PREF_FEED_URL, "")
+        val settingsPrefs = getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        val rssUrl = settingsPrefs.getString(Constants().KEY_RSS_URL, "")
         var rssItems: List<RSS?>? = null
 
         try {

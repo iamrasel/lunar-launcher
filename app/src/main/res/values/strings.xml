@@ -2,19 +2,23 @@
     <string name="about">About</string>
     <string name="accessibility">Accessibility</string>
     <string name="accessibility_service_description">
-        Accessibility service to allow Lunar Launcher to put the device to sleep, on Android Pie (API 28) and up.
+        Accessibility service to allow Lunar Launcher to put the device to sleep,
+        on Android Pie (API 28) and up.
     </string>
     <string name="accessibility_service_label">Lock Service</string>
     <string name="add_new">Add New</string>
     <string name="advance">Advance</string>
+    <string name="appearances">Appearances</string>
     <string name="application_theme">Application Theme</string>
-    <string name="apps">Apps</string>
+    <string name="app_drawer">App Drawer</string>
     <string name="app_info">App Info</string>
     <string name="app_store">App Store</string>
     <string name="argb">AARRGGBB</string>
     <string name="authentication_error">Authentication error</string>
     <string name="authentication_failed">Authentication failed</string>
-    <string name="authentication_subtitle">Authenticate with your device credential to proceed</string>
+    <string name="authentication_subtitle">
+        Authenticate with your device credential to proceed
+    </string>
     <string name="celsius">Celsius</string>
     <string name="choose_launcher">Choose Default Launcher</string>
     <string name="city_name">City Name</string>
@@ -24,37 +28,43 @@
     <string name="date_format">Date Format</string>
     <string name="delete">Delete</string>
     <string name="delete_all">Delete All</string>
-    <string name="delete_all_confirmation">Are you sure to delete all the todos?</string>
+    <string name="delete_all_confirmation">
+        Are you sure to delete all the existing todos?
+    </string>
     <string name="developer_name">Developed by: Md Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
-    <string name="device_admin_description">Allow to use double tap to lock feature</string>
+    <string name="device_admin_description">
+        Allow to use double tap to lock feature
+    </string>
     <string name="donate">Donate</string>
-    <string name="double_tap_lock">Double Tap Lock</string>
+    <string name="double_tap_lock">Double Tap Lock Method</string>
     <string name="empty_text_field">Text field is empty</string>
     <string name="fahrenheit">Fahrenheit</string>
-    <string name="feed_url">Feed Url</string>
+    <string name="feed_url">RSS Feed Url</string>
     <string name="first_install">First Install</string>
     <string name="follow_system">Follow System</string>
     <string name="freeform">Freeform</string>
     <string name="got_it">Got it</string>
-    <string name="keyboard_automatic">Search with keyboard</string>
     <string name="last_update">Last Update</string>
     <string name="light_theme">Light</string>
-    <string name="look">Look</string>
     <string name="lunar_settings">Lunar Settings</string>
     <string name="more">More</string>
     <string name="negative">Negative</string>
-    <string name="null_app_store_message">There\'s no app store is installed\non this device.</string>
+    <string name="null_app_store_message">
+        There\'s no app store is installed\non this device.
+    </string>
     <string name="owm_key">OWM API Key</string>
     <string name="positive">Positive</string>
     <string name="proceed">Proceed</string>
     <string name="reset">Reset</string>
-    <string name="reset_message">This operation will clear all the data stored for this application, and can\'t be undone.</string>
+    <string name="reset_message">
+        This operation will clear all the data stored for this application, and can\'t be undone.
+    </string>
     <string name="restart">Restart</string>
     <string name="root">Root</string>
     <string name="sdk">SDK</string>
-    <string name="show_city">Show City</string>
-    <string name="show_todos">Show Todos</string>
+    <string name="search_with_keyboard">Search With Keyboard</string>
+    <string name="show_city">Show City Name With Weather</string>
     <string name="star">Star</string>
     <string name="support">Support</string>
     <string name="support_message">Support the developer to keep this application free and alive.\n
@@ -65,6 +75,7 @@
     <string name="time_date">Time - Date</string>
     <string name="time_format">Time Format</string>
     <string name="todo">Todo</string>
+    <string name="todo_count">Number Of Todo On Home Screen</string>
     <string name="todo_manager">Todo Manager</string>
     <string name="todo_manager_lock">Todo Manager Lock</string>
     <string name="twelve">12 Hour</string>

@@ -105,8 +105,8 @@ internal class AppDrawer : Fragment() {
             override fun onDoubleClick() {
                 super.onDoubleClick()
                 UniUtils().lockMethod(
-                    requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-                        .getInt(Constants().SHARED_PREF_LOCK, 0), requireContext(), fragmentActivity)
+                    requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+                        .getInt(Constants().KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
             }
         })
     }
@@ -119,7 +119,8 @@ internal class AppDrawer : Fragment() {
 
     private fun setInsets() {
         Insetter.builder()
-            .padding(windowInsetTypesOf(systemGestures = true))
+            .paddingTop(windowInsetTypesOf(statusBars = true))
+            .paddingBottom(windowInsetTypesOf(navigationBars = true))
             .applyToView(binding.appsList)
         Insetter.builder()
             .marginBottom(windowInsetTypesOf(navigationBars = true))
@@ -130,8 +131,7 @@ internal class AppDrawer : Fragment() {
             .applyToView(binding.rightSearchList)
             .applyToView(binding.rightSearchListII)
         Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .marginBottom(windowInsetTypesOf(ime = true))
+            .marginBottom(windowInsetTypesOf(navigationBars = true, ime = true))
             .applyToView(binding.searchLayout)
     }
 
@@ -213,8 +213,8 @@ internal class AppDrawer : Fragment() {
         val string = binding.searchInput.text.toString() + adapterView.getItemAtPosition(i).toString()
         searchStringChangeListener(string)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        if (sharedPreferences.getBoolean(Constants().SHARED_PREF_AUTO_KEYBOARD, false)) {
+        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        if (sharedPreferences.getBoolean(Constants().KEY_KEYBOARD_SEARCH, false)) {
             binding.searchInput.requestFocus()
             val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)

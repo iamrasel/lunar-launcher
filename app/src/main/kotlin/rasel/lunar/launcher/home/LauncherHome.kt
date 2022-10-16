@@ -51,11 +51,8 @@ internal class LauncherHome : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = LauncherHomeBinding.inflate(inflater, container, false)
-        binding.root.applyInsetter {
-            type(systemGestures = true) {
-                margin()
-            }
-        }
+
+        setInsets()
 
         fragmentActivity = if (isAdded) {
             requireActivity()
@@ -65,7 +62,7 @@ internal class LauncherHome : Fragment() {
 
         _context = fragmentActivity.applicationContext
         fragManager = fragmentActivity.supportFragmentManager
-        sharedPreferences = _context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, 0)
+        sharedPreferences = _context.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
         homeUtils = HomeUtils(fragmentActivity, sharedPreferences)
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
 
@@ -75,12 +72,21 @@ internal class LauncherHome : Fragment() {
         return binding.root
     }
 
+    private fun setInsets() {
+        binding.root.applyInsetter {
+            type(statusBars = true, navigationBars = true) {
+                padding()
+            }
+        }
+    }
+
     private fun showTodoList() {
         binding.todos.adapter =
             context?.let { TodoAdapter(DatabaseHandler(context).todos, TodoManager(), fragmentActivity, it) }
     }
 
     override fun onResume() {
+        super.onResume()
         _context.registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) // Battery
 
         // Time and date
@@ -96,11 +102,10 @@ internal class LauncherHome : Fragment() {
         showTodoList()
 
         // handle gesture events
-        val lockMethod = sharedPreferences.getInt(Constants().SHARED_PREF_LOCK, 0)
+        val lockMethod = sharedPreferences.getInt(Constants().KEY_LOCK_METHOD, 0)
         homeUtils.rootViewGestures(binding.root, lockMethod)
         homeUtils.batteryProgressGestures(binding.batteryProgress, lockMethod)
         homeUtils.todosGestures(binding.todos, lockMethod)
-        super.onResume()
     }
 
     override fun onDestroy() {

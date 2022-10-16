@@ -27,68 +27,78 @@ import android.database.DatabaseUtils
 import rasel.lunar.launcher.helpers.Constants
 import java.util.ArrayList
 
+
 internal class DatabaseHandler(context: Context?) :
     SQLiteOpenHelper(context, Constants().TODO_DATABASE_NAME, null, Constants().TODO_DATABASE_VERSION) {
-    
+
+    private val constants = Constants()
+
+    /* create database */
     override fun onCreate(database: SQLiteDatabase) {
-        val createTodoTable = "CREATE TABLE " + Constants().TODO_TABLE + " (" +
-                Constants().TODO_COLUMN_ID + " integer PRIMARY KEY AUTOINCREMENT," +
-                Constants().TODO_COL_CREATED + " datetime DEFAULT CURRENT_TIMESTAMP," +
-                Constants().TODO_COLUMN_NAME + " varchar)"
+        val createTodoTable = "CREATE TABLE " + constants.TODO_TABLE_NAME + " (" +
+                constants.TODO_COLUMN_ID + " integer PRIMARY KEY AUTOINCREMENT," +
+                constants.TODO_COLUMN_CREATED + " datetime DEFAULT CURRENT_TIMESTAMP," +
+                constants.TODO_COLUMN_NAME + " varchar)"
         database.execSQL(createTodoTable)
     }
 
     override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {}
 
+    /* add new todo entry */
     fun addTodo(todo: Todo) {
         val database = writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(Constants().TODO_COLUMN_NAME, todo.name)
-        database.insert(Constants().TODO_TABLE, null, contentValues)
+        contentValues.put(constants.TODO_COLUMN_NAME, todo.name)
+        database.insert(constants.TODO_TABLE_NAME, null, contentValues)
     }
 
+    /* update or edit existing todo */
     fun updateTodo(todo: Todo) {
         val database = writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(Constants().TODO_COLUMN_NAME, todo.name)
+        contentValues.put(constants.TODO_COLUMN_NAME, todo.name)
         database.update(
-            Constants().TODO_TABLE,
+            constants.TODO_TABLE_NAME,
             contentValues,
-            Constants().TODO_COLUMN_ID + "=?",
+            constants.TODO_COLUMN_ID + "=?",
             arrayOf(todo.id.toString())
         )
     }
 
+    /* delete a single todo */
     fun deleteTodo(todoId: Long) {
-        val database = writableDatabase
-        database.delete(Constants().TODO_TABLE, Constants().TODO_COLUMN_ID + "=?", arrayOf(todoId.toString()))
+        writableDatabase.delete(constants.TODO_TABLE_NAME,
+            constants.TODO_COLUMN_ID + "=?", arrayOf(todoId.toString()))
     }
 
+    /* delete all existing todos at once */
     fun deleteAll() {
-        val database = writableDatabase
-        database.delete(Constants().TODO_TABLE, null, null)
+        writableDatabase.delete(constants.TODO_TABLE_NAME, null, null)
     }
 
     @get:SuppressLint("Range")
     val todos: ArrayList<Todo>
         get() {
             val todoList = ArrayList<Todo>()
-            val database = readableDatabase
-            val queryResult = database.rawQuery("SELECT * from " + Constants().TODO_TABLE, null)
+            val queryResult =
+                readableDatabase.rawQuery("SELECT * from " + constants.TODO_TABLE_NAME, null)
+
             if (queryResult.moveToFirst()) {
                 do {
                     val todo = Todo()
-                    todo.id = queryResult.getLong(queryResult.getColumnIndex(Constants().TODO_COLUMN_ID))
-                    todo.name = queryResult.getString(queryResult.getColumnIndex(Constants().TODO_COLUMN_NAME))
+                    todo.id = queryResult.getLong(queryResult.getColumnIndex(constants.TODO_COLUMN_ID))
+                    todo.name = queryResult.getString(queryResult.getColumnIndex(constants.TODO_COLUMN_NAME))
                     todoList.add(todo)
                 } while (queryResult.moveToNext())
             }
+
             queryResult.close()
             return todoList
         }
 
+    /* check if any item exists in the database */
     fun todoExists(): Boolean {
-        val database = readableDatabase
-        return DatabaseUtils.queryNumEntries(database, Constants().TODO_TABLE, 1.toString()) > 0
+        return DatabaseUtils.queryNumEntries(readableDatabase, constants.TODO_TABLE_NAME, 1.toString()) > 0
     }
+
 }

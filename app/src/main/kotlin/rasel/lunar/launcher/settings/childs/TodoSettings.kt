@@ -38,9 +38,9 @@ internal class TodoSettings : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTodoBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        showTodos = sharedPreferences.getInt(Constants().SHARED_PREF_SHOW_TODOS, 3)
-        todoLock = sharedPreferences.getBoolean(Constants().SHARED_PREF_TODO_LOCK, false)
+        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        showTodos = sharedPreferences.getInt(Constants().KEY_TODO_COUNTS, 3)
+        todoLock = sharedPreferences.getBoolean(Constants().KEY_TODO_LOCK, false)
         binding.showTodos.value = showTodos.toFloat()
 
         when (todoLock) {
@@ -54,7 +54,7 @@ internal class TodoSettings : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.showTodos.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-            SettingsPrefsUtils().showTodos(requireContext(), value.toInt())
+            SettingsPrefsUtils().todoCount(requireContext(), value.toInt())
         })
 
         binding.todoLockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->

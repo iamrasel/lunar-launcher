@@ -26,8 +26,8 @@ import rasel.lunar.launcher.helpers.Constants
 internal class FavouriteUtils {
 
     fun saveFavApps(context: Context, position: Int, packageName: String?) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString(Constants().FAV_APP_ + position, packageName).apply()
+        val sharedPreferences = context.getSharedPreferences(Constants().PREFS_FAVORITE_APPS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(Constants().KEY_APP_NO_ + position, packageName).apply()
     }
 
     fun saveFavPosition(
@@ -60,14 +60,14 @@ internal class FavouriteUtils {
     fun setPreview(
         context: Context, packageName: String, button1: MaterialButton, button2: MaterialButton,
         button3: MaterialButton, button4: MaterialButton, button5: MaterialButton, button6: MaterialButton) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_FAV_APPS, Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences(Constants().PREFS_FAVORITE_APPS, Context.MODE_PRIVATE)
         when (packageName) {
-            sharedPreferences.getString(Constants().FAV_APP_ + 1, "") -> button1.isChecked = true
-            sharedPreferences.getString(Constants().FAV_APP_ + 2, "") -> button2.isChecked = true
-            sharedPreferences.getString(Constants().FAV_APP_ + 3, "") -> button3.isChecked = true
-            sharedPreferences.getString(Constants().FAV_APP_ + 4, "") -> button4.isChecked = true
-            sharedPreferences.getString(Constants().FAV_APP_ + 5, "") -> button5.isChecked = true
-            sharedPreferences.getString(Constants().FAV_APP_ + 6, "") -> button6.isChecked = true
+            sharedPreferences.getString(Constants().KEY_APP_NO_ + 1, "") -> button1.isChecked = true
+            sharedPreferences.getString(Constants().KEY_APP_NO_ + 2, "") -> button2.isChecked = true
+            sharedPreferences.getString(Constants().KEY_APP_NO_ + 3, "") -> button3.isChecked = true
+            sharedPreferences.getString(Constants().KEY_APP_NO_ + 4, "") -> button4.isChecked = true
+            sharedPreferences.getString(Constants().KEY_APP_NO_ + 5, "") -> button5.isChecked = true
+            sharedPreferences.getString(Constants().KEY_APP_NO_ + 6, "") -> button6.isChecked = true
         }
     }
 }

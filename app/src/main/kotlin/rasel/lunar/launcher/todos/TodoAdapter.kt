@@ -35,21 +35,26 @@ import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
 import java.util.*
 
+
 internal class TodoAdapter(
     private val todoList: ArrayList<Todo>,
     private val todoManager: TodoManager,
     private val fragmentActivity: FragmentActivity,
-    private val context: Context) : RecyclerView.Adapter<TodoAdapter.ViewHolder>() {
-    private val currentFragment: Fragment?
+    private val context: Context) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
+    private val currentFragment: Fragment?
+    private val constants = Constants()
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TodoViewHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return ViewHolder(binding)
+        return TodoViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        val numberOfTodos = sharedPreferences.getInt(Constants().SHARED_PREF_SHOW_TODOS, 3)
+        /*  if current fragment is LauncherHome,
+            then return size following settings value */
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        val numberOfTodos = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3)
         return if (currentFragment !is TodoManager) {
             todoList.size.coerceAtMost(numberOfTodos)
         } else {
@@ -58,21 +63,25 @@ internal class TodoAdapter(
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(holder: TodoViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.view.itemText.text = "\u25CF  " + todoList[position].name
+
         if (currentFragment is TodoManager) {
+            /* preferences for TodoManager */
             holder.view.itemText.isSingleLine = false
             holder.view.itemText.setOnClickListener { updateDialog(position) }
+            /* copy texts on long click */
             holder.view.itemText.setOnLongClickListener {
                 UniUtils().copyToClipboard(fragmentActivity, context, todoList[position].name)
                 true
             }
         } else {
+            /* single line text for home screen */
             holder.view.itemText.isSingleLine = true
         }
     }
 
-    class ViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(
+    class TodoViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(
         view.root
     )
 

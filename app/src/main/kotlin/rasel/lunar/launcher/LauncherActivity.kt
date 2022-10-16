@@ -19,6 +19,7 @@
 package rasel.lunar.launcher
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -28,45 +29,49 @@ import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
 import rasel.lunar.launcher.helpers.ViewPagerAdapter
 
+
 internal class LauncherActivity : AppCompatActivity() {
 
     private lateinit var binding: LauncherActivityBinding
     private lateinit var viewPager: ViewPager2
+    private val constants = Constants()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = LauncherActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        /* vertically edge to edge view */
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        if (isFirstLaunch()) {
+        /*  if this is the first launch,
+            then remember the event and show the welcome dialog */
+        val prefsFirstLaunch = getSharedPreferences(constants.PREFS_FIRST_LAUNCH, 0)
+        if (prefsFirstLaunch.getBoolean(constants.KEY_FIRST_LAUNCH, true)) {
+            prefsFirstLaunch.edit().putBoolean(constants.KEY_FIRST_LAUNCH, false).apply()
             welcomeDialog()
         }
 
+        /* set up activity's view */
+        binding = LauncherActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupView()
+
+        /* handle navigation back events */
+        handleBackPress()
     }
 
-    private fun isFirstLaunch(): Boolean {
-        val firstLaunchPrefs =
-            getSharedPreferences(Constants().SHARED_PREFS_FIRST_LAUNCH, 0)
-        return if (firstLaunchPrefs.getBoolean(Constants().FIRST_LAUNCH, true)) {
-            firstLaunchPrefs.edit().putBoolean(Constants().FIRST_LAUNCH, false).apply()
-            true
-        } else {
-            false
-        }
-    }
-
+    /* build the welcome dialog */
     private fun welcomeDialog() {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.welcome)
             .setMessage(R.string.welcome_description)
             .setPositiveButton(R.string.got_it) { dialog, _ ->
                 dialog.dismiss()
+                /* ask for the permissions */
                 UniUtils().askPermissions(this)
             }.show()
     }
 
+    /* set up viewpager2 */
     private fun setupView() {
         viewPager = binding.viewPager
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
@@ -74,13 +79,19 @@ internal class LauncherActivity : AppCompatActivity() {
         viewPager.setCurrentItem(1, false)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount != 0) {
-            supportFragmentManager.popBackStack()
-        }
-        if (viewPager.currentItem != 1) {
-            viewPager.currentItem = 1
-        }
+    /* alternative of deprecated onBackPressed method */
+    private fun handleBackPress() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                /* while in todo manager, go back to home screen */
+                if (supportFragmentManager.backStackEntryCount != 0)
+                    supportFragmentManager.popBackStack()
+
+                /* while in feeds or app drawer, go back to home screen */
+                if (viewPager.currentItem != 1)
+                    viewPager.currentItem = 1
+            }
+        })
     }
+
 }

@@ -2,16 +2,17 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:gravity="center_horizontal"
     android:padding="16dp">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp">
     <com.google.android.material.button.MaterialButton
         android:id="@+id/choose_launcher"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_launcher"
         style="@style/Widget.Material3.Button.ElevatedButton"/>
@@ -19,21 +20,19 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/advance_settings"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginStart="8dp">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/reset"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/reset"
             style="@style/Widget.Material3.Button.ElevatedButton"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/restart"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/restart"
             style="@style/Widget.Material3.Button.ElevatedButton"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>

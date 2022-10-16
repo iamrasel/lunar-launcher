@@ -73,10 +73,10 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
     }
 
     init {
-        cityName = sharedPreferences.getString(Constants().SHARED_PREF_CITY_NAME, "").toString()
-        owmKey = sharedPreferences.getString(Constants().SHARED_PREF_OWM_KEY, "").toString()
-        tempUnitValue = sharedPreferences.getInt(Constants().SHARED_PREF_TEMP_UNIT, 0)
-        showCityValue = sharedPreferences.getBoolean(Constants().SHARED_PREF_SHOW_CITY, false)
+        cityName = sharedPreferences.getString(Constants().KEY_CITY_NAME, "").toString()
+        owmKey = sharedPreferences.getString(Constants().KEY_OWM_API, "").toString()
+        tempUnitValue = sharedPreferences.getInt(Constants().KEY_TEMP_UNIT, 0)
+        showCityValue = sharedPreferences.getBoolean(Constants().KEY_SHOW_CITY, false)
         weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmKey"
     }
 }

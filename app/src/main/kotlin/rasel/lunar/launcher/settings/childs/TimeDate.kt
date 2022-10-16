@@ -39,10 +39,10 @@ internal class TimeDate : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTimeDateBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        timeFormatValue = sharedPreferences.getInt(Constants().SHARED_PREF_TIME_FORMAT, 0)
+        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        timeFormatValue = sharedPreferences.getInt(Constants().KEY_TIME_FORMAT, 0)
         dateFormatValue =
-            sharedPreferences.getString(Constants().SHARED_PREF_DATE_FORMAT, Constants().DEFAULT_DATE_FORMAT).toString()
+            sharedPreferences.getString(Constants().KEY_DATE_FORMAT, Constants().DEFAULT_DATE_FORMAT).toString()
 
         when (timeFormatValue) {
             0 -> binding.followSystemTime.isChecked = true

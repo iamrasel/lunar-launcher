@@ -41,11 +41,11 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsWeatherBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, MODE_PRIVATE)
-        cityName = sharedPreferences.getString(Constants().SHARED_PREF_CITY_NAME, "").toString()
-        owmKey = sharedPreferences.getString(Constants().SHARED_PREF_OWM_KEY, "").toString()
-        tempUnit = sharedPreferences.getInt(Constants().SHARED_PREF_TEMP_UNIT, 0)
-        showCity = sharedPreferences.getBoolean(Constants().SHARED_PREF_SHOW_CITY, false)
+        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        cityName = sharedPreferences.getString(Constants().KEY_CITY_NAME, "").toString()
+        owmKey = sharedPreferences.getString(Constants().KEY_OWM_API, "").toString()
+        tempUnit = sharedPreferences.getInt(Constants().KEY_TEMP_UNIT, 0)
+        showCity = sharedPreferences.getBoolean(Constants().KEY_SHOW_CITY, false)
 
         binding.inputCity.setText(cityName)
         binding.inputOwm.setText(owmKey)
@@ -94,6 +94,6 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         SettingsPrefsUtils().saveCityName(requireContext(), getCityName())
-        SettingsPrefsUtils().saveOwmKey(requireContext(), getOwmKey())
+        SettingsPrefsUtils().saveOwmApi(requireContext(), getOwmKey())
     }
 }

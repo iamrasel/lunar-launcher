@@ -10,7 +10,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/show_todos"
+        android:text="@string/todo_count"
         android:textSize="16sp"/>
     <com.google.android.material.slider.Slider
         android:id="@+id/show_todos"

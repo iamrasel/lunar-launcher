@@ -21,60 +21,75 @@ package rasel.lunar.launcher.settings
 import android.content.Context
 import rasel.lunar.launcher.helpers.Constants
 
+
 internal class SettingsPrefsUtils {
-    
-    fun saveTimeFormat(context: Context, timeFormatValue: Int) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putInt(Constants().SHARED_PREF_TIME_FORMAT, timeFormatValue).apply()
+
+    private val constants = Constants()
+
+    /* save settings value for time format */
+    fun saveTimeFormat(context: Context, timeFormat: Int) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putInt(constants.KEY_TIME_FORMAT, timeFormat).apply()
     }
 
-    fun saveDateFormat(context: Context, dateFormatValue: String) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString(Constants().SHARED_PREF_DATE_FORMAT, dateFormatValue).apply()
+    /* save settings value for date format */
+    fun saveDateFormat(context: Context, dateFormat: String) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(constants.KEY_DATE_FORMAT, dateFormat).apply()
     }
 
+    /* save city name */
     fun saveCityName(context: Context, cityName: String) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString(Constants().SHARED_PREF_CITY_NAME, cityName).apply()
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(constants.KEY_CITY_NAME, cityName).apply()
     }
 
-    fun saveOwmKey(context: Context, owmKey: String) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString(Constants().SHARED_PREF_OWM_KEY, owmKey).apply()
+    /* save open weather map api key */
+    fun saveOwmApi(context: Context, owmApi: String) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(constants.KEY_OWM_API, owmApi).apply()
     }
 
+    /* save settings value for temperature unit */
     fun saveTempUnit(context: Context, tempUnit: Int) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putInt(Constants().SHARED_PREF_TEMP_UNIT, tempUnit).apply()
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putInt(constants.KEY_TEMP_UNIT, tempUnit).apply()
     }
 
+    /* save settings value for show city name with weather */
     fun showCity(context: Context, showCity: Boolean) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putBoolean(Constants().SHARED_PREF_SHOW_CITY, showCity).apply()
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean(constants.KEY_SHOW_CITY, showCity).apply()
     }
 
-    fun showTodos(context: Context, showTodos: Int) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putInt(Constants().SHARED_PREF_SHOW_TODOS, showTodos).apply()
+    /* save settings value for todo count on home screen */
+    fun todoCount(context: Context, todoCount: Int) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putInt(constants.KEY_TODO_COUNTS, todoCount).apply()
     }
 
+    /* save settings value todo manager lock */
     fun todoLock(context: Context, todoLock: Boolean) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putBoolean(Constants().SHARED_PREF_TODO_LOCK, todoLock).apply()
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean(constants.KEY_TODO_LOCK, todoLock).apply()
     }
 
-    fun autoKeyboard(context: Context, autoKeyboard: Boolean) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putBoolean(Constants().SHARED_PREF_AUTO_KEYBOARD, autoKeyboard).apply()
+    /* save settings value for search with keyboard */
+    fun keyboardSearch(context: Context, keyboardSearch: Boolean) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean(constants.KEY_KEYBOARD_SEARCH, keyboardSearch).apply()
     }
 
-    fun saveFeedUrl(context: Context, feedUrl: String) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString(Constants().SHARED_PREF_FEED_URL, feedUrl).apply()
+    /* save rss feed url */
+    fun saveRssUrl(context: Context, rssUrl: String) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(constants.KEY_RSS_URL, rssUrl).apply()
     }
 
-    fun saveLockMode(context: Context, lockMode: Int) {
-        val sharedPreferences = context.getSharedPreferences(Constants().SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putInt(Constants().SHARED_PREF_LOCK, lockMode).apply()
+    /* save settings value for double tap lock method */
+    fun saveLockMethod(context: Context, lockMethod: Int) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putInt(constants.KEY_LOCK_METHOD, lockMethod).apply()
     }
+
 }

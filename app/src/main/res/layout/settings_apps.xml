@@ -10,7 +10,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/keyboard_automatic"
+        android:text="@string/search_with_keyboard"
         android:textSize="16sp"/>
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/keyboard_auto_group"

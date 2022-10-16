@@ -110,7 +110,7 @@ internal class AppMenuUtils(
             val stringBuilder = StringBuilder()
             for (i in 0 until packageInfo.requestedPermissions.size) {
                 if (i != packageInfo.requestedPermissions.size - 1)
-                    stringBuilder.append("${packageInfo.requestedPermissions[i]}\n")
+                    stringBuilder.append("${packageInfo.requestedPermissions[i]}\n\n")
                 else
                     stringBuilder.append(packageInfo.requestedPermissions[i])
             }
