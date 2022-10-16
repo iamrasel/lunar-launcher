@@ -31,50 +31,73 @@ import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.settings.childs.*
 
+
 internal class SettingsActivity : AppCompatActivity() {
+
     private lateinit var binding: SettingsActivityBinding
-    
+    private val constants = Constants()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.version.text = BuildConfig.VERSION_NAME
 
         binding.timeDate.setOnClickListener {
-            TimeDate().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+            TimeDate().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
+
         binding.weather.setOnClickListener {
-            WeatherSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+            WeatherSettings().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
+
         binding.todo.setOnClickListener {
-            TodoSettings().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+            TodoSettings().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
+
         binding.apps.setOnClickListener {
-            Apps().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+            Apps().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
+
         binding.look.setOnClickListener {
-            Look().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+            Appearances().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
+
         binding.more.setOnClickListener {
-            More().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+            More().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
+
         binding.advance.setOnClickListener {
-            Advance().show(supportFragmentManager, Constants().MODAL_BOTTOM_SHEET_TAG)
+            Advance().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
-        binding.about.setOnClickListener {
-            val bottomSheetDialog = BottomSheetDialog(this)
-            val aboutBinding = AboutBinding.inflate(this.layoutInflater)
-            bottomSheetDialog.setContentView(aboutBinding.root)
-            bottomSheetDialog.show()
-        }
-        binding.donate.setOnClickListener {
-            MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.donate)
-                .setMessage(R.string.donate_message)
-                .setPositiveButton(R.string.proceed) { dialog, _ ->
-                    dialog.dismiss()
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://iamrasel.github.io/donate")))
-                }.show()
-        }
+
+        binding.about.setOnClickListener { aboutDialog() }
+        binding.donate.setOnClickListener { supportDialog() }
+
+        binding.version.text = BuildConfig.VERSION_NAME
+    }
+
+    private fun aboutDialog() {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val aboutBinding = AboutBinding.inflate(this.layoutInflater)
+        bottomSheetDialog.setContentView(aboutBinding.root)
+        bottomSheetDialog.show()
+    }
+
+    private fun supportDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.support)
+            .setMessage(R.string.support_message)
+
+            .setNeutralButton(R.string.star) {dialog, _ ->
+                dialog.dismiss()
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamrasel/lunar-launcher")))
+            }
+
+            .setPositiveButton(R.string.donate) { dialog, _ ->
+                dialog.dismiss()
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://iamrasel.github.io/donate")))
+            }
+
+            .show()
     }
 }
