@@ -27,21 +27,29 @@
         android:text="@string/developer_name"
         android:layout_marginTop="16dp"/>
 
-    <com.google.android.material.textview.MaterialTextView
+    <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/github_source"
-        android:autoLink="web"
-        android:gravity="center"
-        android:layout_marginTop="32dp"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/wiki"
-        android:autoLink="web"
-        android:gravity="center"
-        android:layout_marginTop="32dp"/>
+        android:layout_marginTop="24dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/source_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/source_code"
+            style="@style/Widget.Material3.Button.ElevatedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/wiki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wiki"
+            style="@style/Widget.Material3.Button.ElevatedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/telegram_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/telegram_group"
+            style="@style/Widget.Material3.Button.ElevatedButton"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
@@ -50,6 +58,6 @@
         android:autoLink="web"
         android:gravity="center"
         android:lineSpacingExtra="8dp"
-        android:layout_marginTop="32dp"/>
+        android:layout_marginTop="24dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

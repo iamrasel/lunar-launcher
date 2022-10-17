@@ -36,6 +36,7 @@ internal class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: SettingsActivityBinding
     private val constants = Constants()
+    private val sourceCode = "https://github.com/iamrasel/lunar-launcher"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +88,23 @@ internal class SettingsActivity : AppCompatActivity() {
         val aboutBinding = AboutBinding.inflate(this.layoutInflater)
         bottomSheetDialog.setContentView(aboutBinding.root)
         bottomSheetDialog.show()
+        bottomSheetDialog.dismissWithAnimation = true
+
+        /* source code at github */
+        aboutBinding.sourceCode.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(sourceCode)))
+        }
+        /* wiki at github */
+        aboutBinding.wiki.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamrasel/lunar-launcher/wiki")))
+        }
+        /* telegram community */
+        aboutBinding.telegramGroup.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/LunarLauncher_chats")))
+        }
     }
 
     /* support dialog */
@@ -97,7 +115,7 @@ internal class SettingsActivity : AppCompatActivity() {
             /* star button */
             .setNeutralButton(R.string.star) {dialog, _ ->
                 dialog.dismiss()
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamrasel/lunar-launcher")))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(sourceCode)))
             }
             /* donate button */
             .setPositiveButton(R.string.donate) { dialog, _ ->

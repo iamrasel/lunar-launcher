@@ -1,4 +1,5 @@
 <resources>
+
     <string name="about">About</string>
     <string name="accessibility">Accessibility</string>
     <string name="accessibility_service_description">
@@ -6,6 +7,11 @@
         on Android Pie (API 28) and up.
     </string>
     <string name="accessibility_service_label">Lock Service</string>
+    <string name="acknowledgements">
+        <b>Acknowledgements</b>\n
+        <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
+        <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>
+    </string>
     <string name="add_new">Add New</string>
     <string name="advance">Advance</string>
     <string name="appearances">Appearances</string>
@@ -65,12 +71,14 @@
     <string name="sdk">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
     <string name="show_city">Show City Name With Weather</string>
+    <string name="source_code">Source Code</string>
     <string name="star">Star</string>
     <string name="support">Support</string>
     <string name="support_message">Support the developer to keep this application free and alive.\n
         \n<li><b>Donate:</b> If possible, make direct donations to help and encourage the developer.</li>
         \n<li><b>Star:</b> Be a stargazer at Github to show your support.</li>
     </string>
+    <string name="telegram_group">Telegram Group</string>
     <string name="temp_unit">Temperature Unit</string>
     <string name="time_date">Time - Date</string>
     <string name="time_format">Time Format</string>
@@ -106,20 +114,6 @@
         \n<li>Tap and hold the favourite item - remove favourite</li>
         \n\nFor more information, visit the wiki page at Github.
     </string>
+    <string name="wiki">Wiki</string>
 
-
-
-    <string name="github_source">
-        <b>Source code</b>\n
-        <i><a href="https://github.com/iamrasel/lunar-launcher">https://github.com/iamrasel/lunar-launcher</a></i>
-    </string>
-    <string name="wiki">
-        <b>Wiki</b>\n
-        <i><a href="https://github.com/iamrasel/lunar-launcher/wiki">https://github.com/iamrasel/lunar-launcher/wiki</a></i>
-    </string>
-    <string name="acknowledgements">
-        <b>Acknowledgements</b>\n
-        <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
-        <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>
-    </string>
 </resources>
