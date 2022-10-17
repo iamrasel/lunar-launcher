@@ -30,18 +30,25 @@ import rasel.lunar.launcher.databinding.SettingsTodoBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.settings.SettingsPrefsUtils
 
+
 internal class TodoSettings : BottomSheetDialogFragment() {
+
     private lateinit var binding : SettingsTodoBinding
-    private var showTodos = 0
+    private val constants = Constants()
+    private val settingsPrefsUtils = SettingsPrefsUtils()
+    private var todoCount = 0
     private var todoLock : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTodoBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
-        showTodos = sharedPreferences.getInt(Constants().KEY_TODO_COUNTS, 3)
-        todoLock = sharedPreferences.getBoolean(Constants().KEY_TODO_LOCK, false)
-        binding.showTodos.value = showTodos.toFloat()
+        /* get saved values */
+        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
+        todoCount = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3)
+        todoLock = sharedPreferences.getBoolean(constants.KEY_TODO_LOCK, false)
+
+        /* initialize views according to the saved values */
+        binding.showTodos.value = todoCount.toFloat()
 
         when (todoLock) {
             false -> binding.todoLockNegative.isChecked = true
@@ -53,17 +60,21 @@ internal class TodoSettings : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        /* change todo count value */
         binding.showTodos.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-            SettingsPrefsUtils().todoCount(requireContext(), value.toInt())
+            settingsPrefsUtils.todoCount(requireContext(), value.toInt())
         })
 
+        /* change todo lock state value */
         binding.todoLockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.todoLockPositive.id -> SettingsPrefsUtils().todoLock(requireContext(), true)
-                    binding.todoLockNegative.id -> SettingsPrefsUtils().todoLock(requireContext(), false)
+                    binding.todoLockPositive.id -> settingsPrefsUtils.todoLock(requireContext(), true)
+                    binding.todoLockNegative.id -> settingsPrefsUtils.todoLock(requireContext(), false)
                 }
             }
         }
     }
+
 }

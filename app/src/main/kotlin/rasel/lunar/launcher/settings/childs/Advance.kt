@@ -33,6 +33,7 @@ import kotlin.system.exitProcess
 
 
 internal class Advance : BottomSheetDialogFragment() {
+
     private lateinit var binding : SettingsAdvanceBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -75,4 +76,5 @@ internal class Advance : BottomSheetDialogFragment() {
         requireContext().startActivity(Intent.makeRestartActivityTask(intent?.component))
         exitProcess(0)
     }
+
 }

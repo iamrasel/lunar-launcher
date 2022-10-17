@@ -29,15 +29,19 @@ import rasel.lunar.launcher.databinding.SettingsAppsBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.settings.SettingsPrefsUtils
 
+
 internal class Apps : BottomSheetDialogFragment() {
+
     private lateinit var binding : SettingsAppsBinding
+    private val constants = Constants()
+    private val settingsPrefsUtils = SettingsPrefsUtils()
     private var autoKeyboard = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppsBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
-        autoKeyboard = sharedPreferences.getBoolean(Constants().KEY_KEYBOARD_SEARCH, false)
+        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
+        autoKeyboard = sharedPreferences.getBoolean(constants.KEY_KEYBOARD_SEARCH, false)
 
         when (autoKeyboard) {
             false -> binding.keyboardAutoNegative.isChecked = true
@@ -49,13 +53,15 @@ internal class Apps : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.keyboardAutoGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.keyboardAutoPositive.id -> SettingsPrefsUtils().keyboardSearch(requireContext(), true)
-                    binding.keyboardAutoNegative.id -> SettingsPrefsUtils().keyboardSearch(requireContext(), false)
+                    binding.keyboardAutoPositive.id -> settingsPrefsUtils.keyboardSearch(requireContext(), true)
+                    binding.keyboardAutoNegative.id -> settingsPrefsUtils.keyboardSearch(requireContext(), false)
                 }
             }
         }
     }
+
 }

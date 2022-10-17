@@ -37,7 +37,8 @@ import rasel.lunar.launcher.databinding.TodoManagerBinding
 import java.util.*
 
 
-class TodoManager : Fragment() {
+internal class TodoManager : Fragment() {
+
     private lateinit var binding: TodoManagerBinding
     private lateinit var fragmentActivity: FragmentActivity
     private lateinit var databaseHandler: DatabaseHandler
@@ -45,6 +46,7 @@ class TodoManager : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = TodoManagerBinding.inflate(inflater, container, false)
 
+        /* set window insets */
         setInsets()
 
         fragmentActivity = if (isAdded) {
@@ -60,8 +62,14 @@ class TodoManager : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /* click listeners for add new and delete all buttons */
         binding.addNew.setOnClickListener { addNewDialog() }
         binding.deleteAll.setOnClickListener { deleteAllDialog() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshList()
     }
 
     private fun setInsets() {
@@ -79,38 +87,23 @@ class TodoManager : Fragment() {
             context?.let { TodoAdapter(databaseHandler.todos, this, fragmentActivity, it) }
     }
 
-    private fun deleteAllDialog() {
-        val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
-        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(context))
-        bottomSheetDialog.setContentView(dialogBinding.root)
-        bottomSheetDialog.show()
-
-        if (!databaseHandler.todoExists()) {
-            dialogBinding.todoOk.isEnabled = false
-        }
-        dialogBinding.todoInput.visibility = View.GONE
-        dialogBinding.todoOk.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_light))
-
-        dialogBinding.todoCancel.setOnClickListener { bottomSheetDialog.dismiss() }
-        dialogBinding.todoOk.setOnClickListener {
-            databaseHandler.deleteAll()
-            bottomSheetDialog.dismiss()
-            refreshList()
-        }
-    }
-
+    /* add new dialog */
     private fun addNewDialog() {
         val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
         val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(context))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
+        bottomSheetDialog.dismissWithAnimation = true
 
         dialogBinding.deleteAllConfirmation.visibility = View.GONE
+        /* automatic keyboard popup */
         dialogBinding.todoInput.requestFocus()
         val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(dialogBinding.todoInput, InputMethodManager.SHOW_IMPLICIT)
 
+        /* dismiss the dialog on cancel button click */
         dialogBinding.todoCancel.setOnClickListener { bottomSheetDialog.dismiss() }
+        /* add new item to the database */
         dialogBinding.todoOk.setOnClickListener {
             val todo = Todo()
             val todoString = Objects.requireNonNull(dialogBinding.todoInput.text).toString().trim { it <= ' ' }
@@ -125,8 +118,30 @@ class TodoManager : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        refreshList()
+    /* delete all dialog */
+    private fun deleteAllDialog() {
+        val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
+        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(context))
+        bottomSheetDialog.setContentView(dialogBinding.root)
+        bottomSheetDialog.show()
+        bottomSheetDialog.dismissWithAnimation = true
+
+        /* if any item does not exist, then disable the ok button */
+        if (!databaseHandler.todoExists()) {
+            dialogBinding.todoOk.isEnabled = false
+        }
+
+        dialogBinding.todoInput.visibility = View.GONE
+        dialogBinding.todoOk.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_light))
+
+        /* dismiss the dialog on cancel button click */
+        dialogBinding.todoCancel.setOnClickListener { bottomSheetDialog.dismiss() }
+        /* delete all the existing items from the database */
+        dialogBinding.todoOk.setOnClickListener {
+            databaseHandler.deleteAll()
+            bottomSheetDialog.dismiss()
+            refreshList()
+        }
     }
+
 }

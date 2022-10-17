@@ -52,7 +52,7 @@ internal class TodoAdapter(
 
     override fun getItemCount(): Int {
         /*  if current fragment is LauncherHome,
-            then return size following settings value */
+            then return size following the settings value */
         val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
         val numberOfTodos = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3)
         return if (currentFragment !is TodoManager) {
@@ -67,8 +67,9 @@ internal class TodoAdapter(
         holder.view.itemText.text = "\u25CF  " + todoList[position].name
 
         if (currentFragment is TodoManager) {
-            /* preferences for TodoManager */
+            /* multiline texts are enabled for TodoManager */
             holder.view.itemText.isSingleLine = false
+            /* launch edit or update dialog on item click */
             holder.view.itemText.setOnClickListener { updateDialog(position) }
             /* copy texts on long click */
             holder.view.itemText.setOnLongClickListener {
@@ -85,11 +86,13 @@ internal class TodoAdapter(
         view.root
     )
 
+    /* update dialog */
     private fun updateDialog(i: Int) {
         val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
         val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(todoManager.context))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
+        bottomSheetDialog.dismissWithAnimation = true
 
         val databaseHandler = DatabaseHandler(context)
         val todo = todoList[i]
@@ -100,11 +103,14 @@ internal class TodoAdapter(
         dialogBinding.todoCancel.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
         dialogBinding.todoOk.text = context.getString(R.string.update)
 
+        /* delete the item */
         dialogBinding.todoCancel.setOnClickListener {
             databaseHandler.deleteTodo(todoList[i].id)
             bottomSheetDialog.dismiss()
             todoManager.refreshList()
         }
+
+        /* update the item */
         dialogBinding.todoOk.setOnClickListener {
             val updatedTodoString = Objects.requireNonNull(dialogBinding.todoInput.text).toString().trim { it <= ' ' }
             if (updatedTodoString.isNotEmpty()) {
@@ -122,4 +128,5 @@ internal class TodoAdapter(
         val fragmentManager = fragmentActivity.supportFragmentManager
         currentFragment = fragmentManager.findFragmentById(R.id.main_fragments_container)
     }
+
 }

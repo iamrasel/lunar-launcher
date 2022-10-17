@@ -33,23 +33,28 @@ import rasel.lunar.launcher.helpers.UniUtils
 import rasel.lunar.launcher.settings.SettingsPrefsUtils
 import java.util.*
 
+
 internal class More : BottomSheetDialogFragment() {
+
     private lateinit var binding : SettingsMoreBinding
+    private val constants = Constants()
+    private val settingsPrefsUtils = SettingsPrefsUtils()
     private var lockMode = 0
     private lateinit var feedUrl: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsMoreBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
-        feedUrl = sharedPreferences.getString(Constants().KEY_RSS_URL, "").toString()
-        lockMode = sharedPreferences.getInt(Constants().KEY_LOCK_METHOD, 0)
+        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
+        feedUrl = sharedPreferences.getString(constants.KEY_RSS_URL, "").toString()
+        lockMode = sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0)
 
         binding.inputFeedUrl.setText(feedUrl)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             binding.selectLockAccessibility.isEnabled = false
         }
+
         if (!UniUtils().isRooted) {
             binding.selectLockRoot.isEnabled = false
         }
@@ -66,13 +71,14 @@ internal class More : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.lockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.selectLockNegative.id -> SettingsPrefsUtils().saveLockMethod(requireContext(), 0)
-                    binding.selectLockAccessibility.id -> SettingsPrefsUtils().saveLockMethod(requireContext(), 1)
-                    binding.selectLockAdmin.id -> SettingsPrefsUtils().saveLockMethod(requireContext(), 2)
-                    binding.selectLockRoot.id -> SettingsPrefsUtils().saveLockMethod(requireContext(), 3)
+                    binding.selectLockNegative.id -> settingsPrefsUtils.saveLockMethod(requireContext(), 0)
+                    binding.selectLockAccessibility.id -> settingsPrefsUtils.saveLockMethod(requireContext(), 1)
+                    binding.selectLockAdmin.id -> settingsPrefsUtils.saveLockMethod(requireContext(), 2)
+                    binding.selectLockRoot.id -> settingsPrefsUtils.saveLockMethod(requireContext(), 3)
                 }
             }
         }
@@ -84,6 +90,7 @@ internal class More : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        SettingsPrefsUtils().saveRssUrl(requireContext(), getFeedUrl())
+        settingsPrefsUtils.saveRssUrl(requireContext(), getFeedUrl())
     }
+
 }

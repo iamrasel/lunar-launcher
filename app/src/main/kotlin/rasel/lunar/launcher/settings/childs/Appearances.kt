@@ -29,6 +29,7 @@ import rasel.lunar.launcher.databinding.SettingsAppearancesBinding
 
 
 internal class Appearances : BottomSheetDialogFragment() {
+
     private lateinit var binding : SettingsAppearancesBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -46,6 +47,7 @@ internal class Appearances : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.themeGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
@@ -59,4 +61,5 @@ internal class Appearances : BottomSheetDialogFragment() {
             }
         }
     }
+
 }

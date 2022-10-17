@@ -31,29 +31,36 @@ import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.settings.SettingsPrefsUtils
 import java.util.*
 
+
 internal class WeatherSettings : BottomSheetDialogFragment() {
+
     private lateinit var binding : SettingsWeatherBinding
+    private val constants = Constants()
+    private val settingsPrefsUtils = SettingsPrefsUtils()
     private lateinit var cityName: String
-    private lateinit var owmKey: String
+    private lateinit var owmApi: String
     private var tempUnit = 0
     private var showCity : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsWeatherBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
-        cityName = sharedPreferences.getString(Constants().KEY_CITY_NAME, "").toString()
-        owmKey = sharedPreferences.getString(Constants().KEY_OWM_API, "").toString()
-        tempUnit = sharedPreferences.getInt(Constants().KEY_TEMP_UNIT, 0)
-        showCity = sharedPreferences.getBoolean(Constants().KEY_SHOW_CITY, false)
+        /* get saved values */
+        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
+        cityName = sharedPreferences.getString(constants.KEY_CITY_NAME, "").toString()
+        owmApi = sharedPreferences.getString(constants.KEY_OWM_API, "").toString()
+        tempUnit = sharedPreferences.getInt(constants.KEY_TEMP_UNIT, 0)
+        showCity = sharedPreferences.getBoolean(constants.KEY_SHOW_CITY, false)
 
+        /* initialize views according to the saved values */
         binding.inputCity.setText(cityName)
-        binding.inputOwm.setText(owmKey)
+        binding.inputOwm.setText(owmApi)
 
         when (tempUnit) {
             0 -> binding.selectCelsius.isChecked = true
             1 -> binding.selectFahrenheit.isChecked = true
         }
+
         when (showCity) {
             false -> binding.showCityNegative.isChecked = true
             true -> binding.showCityPositive.isChecked = true
@@ -64,36 +71,43 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        /* change temperature unit value */
         binding.tempGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.selectCelsius.id -> SettingsPrefsUtils().saveTempUnit(requireContext(), 0)
-                    binding.selectFahrenheit.id -> SettingsPrefsUtils().saveTempUnit(requireContext(), 1)
+                    binding.selectCelsius.id -> settingsPrefsUtils.saveTempUnit(requireContext(), 0)
+                    binding.selectFahrenheit.id -> settingsPrefsUtils.saveTempUnit(requireContext(), 1)
                 }
             }
         }
 
+        /* change show city value */
         binding.cityGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.showCityNegative.id -> SettingsPrefsUtils().showCity(requireContext(), false)
-                    binding.showCityPositive.id -> SettingsPrefsUtils().showCity(requireContext(), true)
+                    binding.showCityNegative.id -> settingsPrefsUtils.showCity(requireContext(), false)
+                    binding.showCityPositive.id -> settingsPrefsUtils.showCity(requireContext(), true)
                 }
             }
         }
     }
 
+    /* get city name string from it's input field */
     private fun getCityName(): String {
         return Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' }
     }
 
-    private fun getOwmKey(): String {
+    /* get open weather map api key from it's input field */
+    private fun getOwmApi(): String {
         return Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' }
     }
 
+    /* save above two values while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        SettingsPrefsUtils().saveCityName(requireContext(), getCityName())
-        SettingsPrefsUtils().saveOwmApi(requireContext(), getOwmKey())
+        settingsPrefsUtils.saveCityName(requireContext(), getCityName())
+        settingsPrefsUtils.saveOwmApi(requireContext(), getOwmApi())
     }
+
 }
