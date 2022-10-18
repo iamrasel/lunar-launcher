@@ -33,6 +33,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.LauncherActivity
@@ -42,6 +43,7 @@ import rasel.lunar.launcher.databinding.AppInfoDialogBinding
 import rasel.lunar.launcher.databinding.AppMenuBinding
 import rasel.lunar.launcher.helpers.UniUtils
 import java.util.ArrayList
+
 
 internal class AppMenus : BottomSheetDialogFragment() {
 
@@ -75,16 +77,15 @@ internal class AppMenus : BottomSheetDialogFragment() {
 
         binding.appName.text = packageManager.getApplicationLabel(appInfo)
         binding.appPackage.text = packageName
-        FavouriteUtils().setPreview(requireContext(), packageName, binding.one,
-            binding.two, binding.three, binding.four, binding.five, binding.six)
+
+        FavouriteUtils().previewAndClicks(requireContext(), packageName, binding.favGroup)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FavouriteUtils().saveFavPosition(binding.favGroup, binding.one, binding.two,
-            binding.three, binding.four, binding.five, binding.six, requireContext(), packageName)
+        (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
         binding.appPackage.setOnClickListener {
             UniUtils().copyToClipboard(fragmentActivity, requireContext(), packageName)

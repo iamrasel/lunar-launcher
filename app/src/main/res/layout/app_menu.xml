@@ -55,47 +55,10 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/fav_group"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:singleSelection="true">
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/three"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/four"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/five"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/six"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+        app:singleSelection="true"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

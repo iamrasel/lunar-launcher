@@ -19,55 +19,64 @@
 package rasel.lunar.launcher.apps
 
 import android.content.Context
-import com.google.android.material.button.MaterialButtonToggleGroup
+import android.content.Context.MODE_PRIVATE
+import android.content.res.ColorStateList
+import androidx.appcompat.widget.LinearLayoutCompat
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
+import rasel.lunar.launcher.R
 import rasel.lunar.launcher.helpers.Constants
+
 
 internal class FavouriteUtils {
 
+    private val constants = Constants()
+
+    /* save favorite package names to shared preferences */
     fun saveFavApps(context: Context, position: Int, packageName: String?) {
-        val sharedPreferences = context.getSharedPreferences(Constants().PREFS_FAVORITE_APPS, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString(Constants().KEY_APP_NO_ + position, packageName).apply()
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, MODE_PRIVATE)
+        sharedPreferences.edit().putString(constants.KEY_APP_NO_ + position, packageName).apply()
     }
 
-    fun saveFavPosition(
-        buttonToggleGroup: MaterialButtonToggleGroup, button1: MaterialButton, button2: MaterialButton,
-        button3: MaterialButton, button4: MaterialButton, button5: MaterialButton, button6: MaterialButton,
-        context: Context, packageName: String?) {
-        buttonToggleGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    button1.id -> saveFavApps(context, 1, packageName)
-                    button2.id -> saveFavApps(context, 2, packageName)
-                    button3.id -> saveFavApps(context, 3, packageName)
-                    button4.id -> saveFavApps(context, 4, packageName)
-                    button5.id -> saveFavApps(context, 5, packageName)
-                    button6.id -> saveFavApps(context, 6, packageName)
-                }
-            } else {
-                when (checkedId) {
-                    button1.id -> saveFavApps(context, 1, "")
-                    button2.id -> saveFavApps(context, 2, "")
-                    button3.id -> saveFavApps(context, 3, "")
-                    button4.id -> saveFavApps(context, 4, "")
-                    button5.id -> saveFavApps(context, 5, "")
-                    button6.id -> saveFavApps(context, 6, "")
+    /* manage initial preview and on clicks */
+    fun previewAndClicks(context: Context, packageName: String, buttonToggleGroup: MaterialButtonToggleGroup) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, MODE_PRIVATE)
+        val almostTransparent = ColorStateList.valueOf(context.getColor(R.color.almost_transparent))
+        
+        for (position in 1..6) {
+            val button = outlinedButton(context, buttonToggleGroup)
+            val savedPackageName = sharedPreferences.getString(constants.KEY_APP_NO_ + position, "")
+
+            /* set previews */
+            if (packageName == savedPackageName) button.isChecked = true
+            if (savedPackageName?.isNotEmpty() == true) button.strokeColor = almostTransparent
+
+            /* listen on clicks */
+            buttonToggleGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?,
+                                                           checkedId: Int, isChecked: Boolean ->
+                if (checkedId == button.id) {
+                    if (isChecked) {
+                        saveFavApps(context, position, packageName)
+                        button.strokeColor = almostTransparent
+                    } else {
+                        saveFavApps(context, position, "")
+                        button.strokeColor = ColorStateList.valueOf(context.getColor(android.R.color.darker_gray))
+                    }
                 }
             }
         }
     }
 
-    fun setPreview(
-        context: Context, packageName: String, button1: MaterialButton, button2: MaterialButton,
-        button3: MaterialButton, button4: MaterialButton, button5: MaterialButton, button6: MaterialButton) {
-        val sharedPreferences = context.getSharedPreferences(Constants().PREFS_FAVORITE_APPS, Context.MODE_PRIVATE)
-        when (packageName) {
-            sharedPreferences.getString(Constants().KEY_APP_NO_ + 1, "") -> button1.isChecked = true
-            sharedPreferences.getString(Constants().KEY_APP_NO_ + 2, "") -> button2.isChecked = true
-            sharedPreferences.getString(Constants().KEY_APP_NO_ + 3, "") -> button3.isChecked = true
-            sharedPreferences.getString(Constants().KEY_APP_NO_ + 4, "") -> button4.isChecked = true
-            sharedPreferences.getString(Constants().KEY_APP_NO_ + 5, "") -> button5.isChecked = true
-            sharedPreferences.getString(Constants().KEY_APP_NO_ + 6, "") -> button6.isChecked = true
-        }
+    /* create and add an outlined button to the toggle group */
+    private fun outlinedButton(context: Context, buttonToggleGroup: MaterialButtonToggleGroup): MaterialButton {
+        val style = com.google.android.material.R.attr.materialButtonOutlinedStyle
+        val button = MaterialButton(context, null, style)
+        button.layoutParams = LinearLayoutCompat.LayoutParams(
+            LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+            LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1F
+        )
+        buttonToggleGroup.addView(button)
+        return button
     }
+
 }
