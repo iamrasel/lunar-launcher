@@ -33,7 +33,7 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import rasel.lunar.launcher.databinding.ListItemBinding
 
-internal class RssAdapter(private val items: List<RSS>, private val context: Context) :
+internal class RssAdapter(private val items: List<Rss>, private val context: Context) :
     RecyclerView.Adapter<RssAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

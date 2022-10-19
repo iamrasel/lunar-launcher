@@ -35,23 +35,18 @@ import rasel.lunar.launcher.settings.SettingsPrefsUtils
 internal class TodoSettings : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsTodoBinding
-    private val constants = Constants()
     private val settingsPrefsUtils = SettingsPrefsUtils()
-    private var todoCount = 0
-    private var todoLock : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTodoBinding.inflate(inflater, container, false)
 
-        /* get saved values */
+        val constants = Constants()
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
-        todoCount = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3)
-        todoLock = sharedPreferences.getBoolean(constants.KEY_TODO_LOCK, false)
 
         /* initialize views according to the saved values */
-        binding.showTodos.value = todoCount.toFloat()
+        binding.showTodos.value = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3).toFloat()
 
-        when (todoLock) {
+        when (sharedPreferences.getBoolean(constants.KEY_TODO_LOCK, false)) {
             false -> binding.todoLockNegative.isChecked = true
             true -> binding.todoLockPositive.isChecked = true
         }

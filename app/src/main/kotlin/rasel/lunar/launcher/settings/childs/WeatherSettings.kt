@@ -36,33 +36,24 @@ import java.util.*
 internal class WeatherSettings : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsWeatherBinding
-    private val constants = Constants()
     private val settingsPrefsUtils = SettingsPrefsUtils()
-    private lateinit var cityName: String
-    private lateinit var owmApi: String
-    private var tempUnit = 0
-    private var showCity : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsWeatherBinding.inflate(inflater, container, false)
 
-        /* get saved values */
+        val constants = Constants()
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
-        cityName = sharedPreferences.getString(constants.KEY_CITY_NAME, "").toString()
-        owmApi = sharedPreferences.getString(constants.KEY_OWM_API, "").toString()
-        tempUnit = sharedPreferences.getInt(constants.KEY_TEMP_UNIT, 0)
-        showCity = sharedPreferences.getBoolean(constants.KEY_SHOW_CITY, false)
 
         /* initialize views according to the saved values */
-        binding.inputCity.setText(cityName)
-        binding.inputOwm.setText(owmApi)
+        binding.inputCity.setText(sharedPreferences.getString(constants.KEY_CITY_NAME, "").toString())
+        binding.inputOwm.setText(sharedPreferences.getString(constants.KEY_OWM_API, "").toString())
 
-        when (tempUnit) {
+        when (sharedPreferences.getInt(constants.KEY_TEMP_UNIT, 0)) {
             0 -> binding.selectCelsius.isChecked = true
             1 -> binding.selectFahrenheit.isChecked = true
         }
 
-        when (showCity) {
+        when (sharedPreferences.getBoolean(constants.KEY_SHOW_CITY, false)) {
             false -> binding.showCityNegative.isChecked = true
             true -> binding.showCityPositive.isChecked = true
         }
@@ -95,21 +86,13 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         }
     }
 
-    /* get city name string from it's input field */
-    private fun getCityName(): String {
-        return Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' }
-    }
-
-    /* get open weather map api key from it's input field */
-    private fun getOwmApi(): String {
-        return Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' }
-    }
-
-    /* save above two values while closing the dialog */
+    /* save input field values while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        settingsPrefsUtils.saveCityName(requireContext(), getCityName())
-        settingsPrefsUtils.saveOwmApi(requireContext(), getOwmApi())
+        settingsPrefsUtils.saveCityName(requireContext(),
+            Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' })
+        settingsPrefsUtils.saveOwmApi(requireContext(),
+            Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' })
     }
 
 }

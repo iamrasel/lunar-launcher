@@ -34,10 +34,10 @@ internal class LauncherActivity : AppCompatActivity() {
 
     private lateinit var binding: LauncherActivityBinding
     private lateinit var viewPager: ViewPager2
-    private val constants = Constants()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val constants = Constants()
 
         /* vertically edge to edge view */
         WindowCompat.setDecorFitsSystemWindows(window, false)

@@ -38,33 +38,32 @@ import java.util.*
 internal class More : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsMoreBinding
-    private val constants = Constants()
     private val settingsPrefsUtils = SettingsPrefsUtils()
-    private var lockMode = 0
-    private lateinit var feedUrl: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsMoreBinding.inflate(inflater, container, false)
 
+        val constants = Constants()
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
-        feedUrl = sharedPreferences.getString(constants.KEY_RSS_URL, "").toString()
-        lockMode = sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0)
 
-        binding.inputFeedUrl.setText(feedUrl)
+        /* initialize views according to the saved values */
+        binding.inputFeedUrl.setText(sharedPreferences.getString(constants.KEY_RSS_URL, "").toString())
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            binding.selectLockAccessibility.isEnabled = false
-        }
-
-        if (!UniUtils().isRooted) {
-            binding.selectLockRoot.isEnabled = false
-        }
-
-        when (lockMode) {
+        when (sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0)) {
             0 -> binding.selectLockNegative.isChecked = true
             1 -> binding.selectLockAccessibility.isChecked = true
             2 -> binding.selectLockAdmin.isChecked = true
             3 -> binding.selectLockRoot.isChecked = true
+        }
+
+        /* disable accessibility button for devices below android 9 */
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            binding.selectLockAccessibility.isEnabled = false
+        }
+
+        /* disable root button for non-rooted devices */
+        if (!UniUtils().isRooted) {
+            binding.selectLockRoot.isEnabled = false
         }
 
         return binding.root
@@ -74,6 +73,7 @@ internal class More : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
+        /* change lock method value */
         binding.lockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
@@ -86,13 +86,11 @@ internal class More : BottomSheetDialogFragment() {
         }
     }
 
-    private fun getFeedUrl(): String {
-        return Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' }
-    }
-
+    /* save input field value while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        settingsPrefsUtils.saveRssUrl(requireContext(), getFeedUrl())
+        settingsPrefsUtils.saveRssUrl(requireContext(),
+            Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' })
     }
 
 }

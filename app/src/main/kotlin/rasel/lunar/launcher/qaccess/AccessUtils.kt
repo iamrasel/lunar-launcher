@@ -21,7 +21,6 @@ package rasel.lunar.launcher.qaccess
 import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
@@ -47,13 +46,16 @@ import rasel.lunar.launcher.helpers.ColorPicker
 import rasel.lunar.launcher.helpers.Constants
 import java.util.*
 
+
 internal class AccessUtils(
     private val context: Context,
     private val bottomSheetDialogFragment: BottomSheetDialogFragment,
     private val fragmentActivity: FragmentActivity) {
-    private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences(Constants().PREFS_SHORTCUTS, Context.MODE_PRIVATE)
+    
+    private val constants = Constants()
+    private val sharedPreferences = context.getSharedPreferences(constants.PREFS_SHORTCUTS, Context.MODE_PRIVATE)
 
+    /* control the volumes */
     fun volumeControllers(notifyBar: Slider, alarmBar: Slider, mediaBar: Slider, voiceBar: Slider, ringerBar: Slider) {
         val audioManager = fragmentActivity.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         notifyBar.valueTo = audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION).toFloat()
@@ -93,6 +95,7 @@ internal class AccessUtils(
         }
     }
 
+    /* contact/url shortcuts */
     fun shortcutsUtil(textView: MaterialTextView, shortcutType: String, intentString: String,
                       thumbLetter: String, color: String, position: Int) {
         if (intentString.isEmpty()) {
@@ -108,7 +111,7 @@ internal class AccessUtils(
                 textView.background.setColorFilter(Color.parseColor("#$color"), PorterDuff.Mode.MULTIPLY)
             }
             textView.setOnClickListener {
-                if (shortcutType == Constants().SHORTCUT_TYPE_URL) {
+                if (shortcutType == constants.SHORTCUT_TYPE_URL) {
                     var url = intentString
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
                         url = "http://$intentString"
@@ -116,7 +119,7 @@ internal class AccessUtils(
                     fragmentActivity.startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(url)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
-                } else if (shortcutType == Constants().SHORTCUT_TYPE_PHONE) {
+                } else if (shortcutType == constants.SHORTCUT_TYPE_PHONE) {
                     if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         fragmentActivity.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
                     } else {
@@ -128,7 +131,7 @@ internal class AccessUtils(
                 bottomSheetDialogFragment.dismiss()
             }
             textView.setOnLongClickListener {
-                sharedPreferences.edit().putString(Constants().KEY_SHORTCUT_NO_ + position, "").apply()
+                sharedPreferences.edit().putString(constants.KEY_SHORTCUT_NO_ + position, "").apply()
                 textView.text = "+"
                 textView.background.colorFilter = null
                 bottomSheetDialogFragment.onResume()
@@ -137,22 +140,31 @@ internal class AccessUtils(
         }
     }
 
-    fun controlBrightness(seekBar: Slider) {
+    /* control the brightness */
+    fun controlBrightness(slider: Slider) {
         val resolver = fragmentActivity.contentResolver
-        seekBar.valueTo = 255f
+        /* set max value */
+        slider.valueTo = 255f
+
+        /* set slider value to current brightness value */
         try {
             val brightness = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
-            seekBar.value = brightness.toFloat()
+            slider.value = brightness.toFloat()
         } catch (settingNotFoundException: SettingNotFoundException) {
             settingNotFoundException.printStackTrace()
         }
-        seekBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+
+        /* listen slider value changes */
+        slider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+            /*  if write settings permission is not allowed already,
+                again ask for it to be granted */
             if (!Settings.System.canWrite(fragmentActivity)) {
                 fragmentActivity.startActivity(
                     Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
                         .setData(Uri.parse("package:" + fragmentActivity.packageName))
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
+            /* set the brightness according to the slider value */
             } else {
                 Settings.System.putInt(
                     resolver,
@@ -164,16 +176,20 @@ internal class AccessUtils(
         })
     }
 
+    /* favorite apps */
     fun favApps(packageName: String, imageView: AppCompatImageView, position: Int) {
         val packageManager = context.packageManager
+        /* package name is not empty for a specific position */
         if (packageName.isNotEmpty()) {
             try {
-                val appIcon = packageManager.getApplicationIcon(packageName)
-                imageView.setImageDrawable(appIcon)
+                /* show app icon */
+                imageView.setImageDrawable(packageManager.getApplicationIcon(packageName))
+                /* on click - open app */
                 imageView.setOnClickListener {
                     context.startActivity(packageManager.getLaunchIntentForPackage(packageName))
                     bottomSheetDialogFragment.dismiss()
                 }
+                /* on long click - remove from favorite apps */
                 imageView.setOnLongClickListener {
                     FavouriteUtils().saveFavApps(context, position, "")
                     imageView.visibility = View.GONE
@@ -188,6 +204,7 @@ internal class AccessUtils(
         }
     }
 
+    /* dialog for creating shortcuts */
     private fun shortcutsSaverDialog(position: Int) {
         val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
         val dialogBinding = ShortcutMakerBinding.inflate(fragmentActivity.layoutInflater)
@@ -195,38 +212,50 @@ internal class AccessUtils(
         val dialog = dialogBuilder.create()
         dialog.show()
 
+        /* set up color picker section */
         ColorPicker(dialogBinding.colorPicker.colorInput, dialogBinding.colorPicker.colorA,
             dialogBinding.colorPicker.colorR, dialogBinding.colorPicker.colorG,
             dialogBinding.colorPicker.colorB, dialogBinding.colorPicker.colorPicker).pickColor()
 
+        /* shortcut type chooser - contact/url */
         var shortcutType = ""
         dialogBinding.shortcutType.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
                     dialogBinding.contact.id -> {
-                        shortcutType = Constants().SHORTCUT_TYPE_PHONE
+                        shortcutType = constants.SHORTCUT_TYPE_PHONE
                         dialogBinding.inputField.inputType = InputType.TYPE_CLASS_PHONE
                     }
                     dialogBinding.url.id -> {
-                        shortcutType = Constants().SHORTCUT_TYPE_URL
+                        shortcutType = constants.SHORTCUT_TYPE_URL
                         dialogBinding.inputField.inputType = InputType.TYPE_TEXT_VARIATION_URI
                     }
                 }
             }
         }
 
+        /* close the dialog on cancel */
         dialogBinding.cancel.setOnClickListener { dialog.dismiss() }
+        /* save the shortcut value */
         dialogBinding.ok.setOnClickListener {
-            val intentString = Objects.requireNonNull(dialogBinding.inputField.text).toString().trim { it <= ' ' }
-            val thumbLetter = Objects.requireNonNull(dialogBinding.thumbField.text).toString().trim { it <= ' ' }.uppercase()
-            val color = Objects.requireNonNull(dialogBinding.colorPicker.colorInput.text).toString().trim { it <= ' ' }
+            /* get shortcut value */
+            val intentString =
+                Objects.requireNonNull(dialogBinding.inputField.text).toString().trim { it <= ' ' }
+            /* get thumbnail letter */
+            val thumbLetter =
+                Objects.requireNonNull(dialogBinding.thumbField.text).toString().trim { it <= ' ' }.uppercase()
+            /* get color value */
+            val color =
+                Objects.requireNonNull(dialogBinding.colorPicker.colorInput.text).toString().trim { it <= ' ' }
 
+            /* save the values if every field is filled */
             if (shortcutType.isNotEmpty() && intentString.isNotEmpty() && thumbLetter.isNotEmpty() && color.isNotEmpty()) {
-                sharedPreferences.edit().putString(Constants().KEY_SHORTCUT_NO_ + position,
+                sharedPreferences.edit().putString(constants.KEY_SHORTCUT_NO_ + position,
                     "$shortcutType||$intentString||$thumbLetter||$color").apply()
                 dialog.dismiss()
                 bottomSheetDialogFragment.onResume()
             }
         }
     }
+
 }

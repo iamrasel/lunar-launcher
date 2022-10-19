@@ -43,7 +43,6 @@ internal class TodoAdapter(
     private val context: Context) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
     private val currentFragment: Fragment?
-    private val constants = Constants()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TodoViewHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
@@ -53,6 +52,7 @@ internal class TodoAdapter(
     override fun getItemCount(): Int {
         /*  if current fragment is LauncherHome,
             then return size following the settings value */
+        val constants = Constants()
         val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
         val numberOfTodos = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3)
         return if (currentFragment !is TodoManager) {

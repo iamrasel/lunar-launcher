@@ -36,6 +36,7 @@ internal class Appearances : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppearancesBinding.inflate(inflater, container, false)
 
+        /* initialize views according to the saved values */
         when (AppCompatDelegate.getDefaultNightMode()) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> binding.followSystemTheme.isChecked = true
             AppCompatDelegate.MODE_NIGHT_YES -> binding.selectDarkTheme.isChecked = true
@@ -50,6 +51,7 @@ internal class Appearances : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
+        /* change theme */
         binding.themeGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {

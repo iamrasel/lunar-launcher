@@ -34,17 +34,16 @@ import rasel.lunar.launcher.settings.SettingsPrefsUtils
 internal class Apps : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsAppsBinding
-    private val constants = Constants()
     private val settingsPrefsUtils = SettingsPrefsUtils()
-    private var autoKeyboard = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppsBinding.inflate(inflater, container, false)
 
+        val constants = Constants()
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
-        autoKeyboard = sharedPreferences.getBoolean(constants.KEY_KEYBOARD_SEARCH, false)
 
-        when (autoKeyboard) {
+        /* initialize views according to the saved values */
+        when (sharedPreferences.getBoolean(constants.KEY_KEYBOARD_SEARCH, false)) {
             false -> binding.keyboardAutoNegative.isChecked = true
             true -> binding.keyboardAutoPositive.isChecked = true
         }
@@ -56,6 +55,7 @@ internal class Apps : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
+        /* change search with keyboard value */
         binding.keyboardAutoGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {

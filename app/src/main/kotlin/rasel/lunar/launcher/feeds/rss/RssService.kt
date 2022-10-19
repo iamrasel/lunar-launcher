@@ -34,7 +34,7 @@ internal class RssService : JobIntentService() {   // Todo: deprecated
     override fun onHandleWork(intent: Intent) {
         val settingsPrefs = getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
         val rssUrl = settingsPrefs.getString(Constants().KEY_RSS_URL, "")
-        var rssItems: List<RSS?>? = null
+        var rssItems: List<Rss?>? = null
 
         try {
             val parser = RssParser()

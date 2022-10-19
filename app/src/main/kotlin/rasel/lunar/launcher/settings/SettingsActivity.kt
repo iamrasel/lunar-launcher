@@ -35,11 +35,12 @@ import rasel.lunar.launcher.settings.childs.*
 internal class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: SettingsActivityBinding
-    private val constants = Constants()
     private val sourceCode = "https://github.com/iamrasel/lunar-launcher"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val constants = Constants()
 
         /* set up view */
         binding = SettingsActivityBinding.inflate(layoutInflater)

@@ -34,7 +34,7 @@ import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.databinding.FeedsBinding
-import rasel.lunar.launcher.feeds.rss.RSS
+import rasel.lunar.launcher.feeds.rss.Rss
 import rasel.lunar.launcher.feeds.rss.RssAdapter
 import rasel.lunar.launcher.feeds.rss.RssService
 import rasel.lunar.launcher.helpers.Constants
@@ -96,7 +96,7 @@ internal class Feeds : Fragment() {
     @Suppress("UNCHECKED_CAST")
     private val resultReceiver: ResultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
-            val items = resultData.getSerializable(Constants().RSS_ITEMS) as List<RSS>?
+            val items = resultData.getSerializable(Constants().RSS_ITEMS) as List<Rss>?
             if (items != null) {
                 binding.rss.adapter = RssAdapter(items, requireContext())
                 binding.dataFetchingFailed.visibility = View.GONE

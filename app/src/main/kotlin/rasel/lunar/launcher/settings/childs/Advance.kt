@@ -46,11 +46,13 @@ internal class Advance : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
+        /* open Default Home App screen from device settings */
         binding.chooseLauncher.setOnClickListener {
             requireContext().startActivity(Intent(Settings.ACTION_HOME_SETTINGS))
             this.dismiss()
         }
 
+        /* reset and restart button click listener */
         binding.advanceSettings.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
@@ -61,6 +63,7 @@ internal class Advance : BottomSheetDialogFragment() {
         }
     }
 
+    /* reset app data */
     private fun reset() {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(R.string.reset)
@@ -73,6 +76,7 @@ internal class Advance : BottomSheetDialogFragment() {
             .show()
     }
 
+    /* restart the app */
     private fun restart() {
         val intent = (requireContext().packageManager).getLaunchIntentForPackage(requireContext().packageName)
         requireContext().startActivity(Intent.makeRestartActivityTask(intent?.component))

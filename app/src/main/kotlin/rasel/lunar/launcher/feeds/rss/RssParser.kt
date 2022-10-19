@@ -29,7 +29,7 @@ import java.util.ArrayList
 internal class RssParser {
 
     @Throws(XmlPullParserException::class, IOException::class)
-    fun parse(inputStream: InputStream): List<RSS> {
+    fun parse(inputStream: InputStream): List<Rss> {
         return inputStream.use { stream ->
             val parser = Xml.newPullParser()
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
@@ -40,11 +40,11 @@ internal class RssParser {
     }
 
     @Throws(XmlPullParserException::class, IOException::class)
-    private fun readFeed(parser: XmlPullParser): List<RSS> {
+    private fun readFeed(parser: XmlPullParser): List<Rss> {
         parser.require(XmlPullParser.START_TAG, null, "rss")
         var title: String? = null
         var link: String? = null
-        val items: MutableList<RSS> = ArrayList()
+        val items: MutableList<Rss> = ArrayList()
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.eventType != XmlPullParser.START_TAG) {
                 continue
@@ -56,7 +56,7 @@ internal class RssParser {
                 link = readLink(parser)
             }
             if (title != null && link != null) {
-                val item = RSS(title, link)
+                val item = Rss(title, link)
                 items.add(item)
                 title = null
                 link = null

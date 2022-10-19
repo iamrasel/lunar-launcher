@@ -18,4 +18,4 @@
 
 package rasel.lunar.launcher.feeds.rss
 
-internal class RSS(val title: String, val link: String)
+internal class Rss(val title: String, val link: String)

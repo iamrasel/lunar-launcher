@@ -38,26 +38,21 @@ internal class TimeDate : BottomSheetDialogFragment() {
     private lateinit var binding : SettingsTimeDateBinding
     private val constants = Constants()
     private val settingsPrefsUtils = SettingsPrefsUtils()
-    private var timeFormat = 0
-    private lateinit var dateFormat: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTimeDateBinding.inflate(inflater, container, false)
 
-        /* get saved values */
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
-        timeFormat = sharedPreferences.getInt(constants.KEY_TIME_FORMAT, 0)
-        dateFormat =
-            sharedPreferences.getString(constants.KEY_DATE_FORMAT, constants.DEFAULT_DATE_FORMAT).toString()
 
         /* initialize views according to the saved values */
-        when (timeFormat) {
+        when (sharedPreferences.getInt(constants.KEY_TIME_FORMAT, 0)) {
             0 -> binding.followSystemTime.isChecked = true
             1 -> binding.selectTwelve.isChecked = true
             2 -> binding.selectTwentyFour.isChecked = true
         }
 
-        binding.dateFormat.setText(dateFormat)
+        binding.dateFormat
+            .setText(sharedPreferences.getString(constants.KEY_DATE_FORMAT, constants.DEFAULT_DATE_FORMAT).toString())
 
         return binding.root
     }
@@ -78,18 +73,16 @@ internal class TimeDate : BottomSheetDialogFragment() {
         }
     }
 
-    /* get date format value from it's input field */
-    private val getDateFormat: String
-        get() = Objects.requireNonNull(binding.dateFormat.text).toString().trim { it <= ' ' }
-
-    /*  if the input field is empty, then save the default value,
-        else save the above value */
+    /*  if the input field is empty, then save the default value.
+        else save the value from input field while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        if (getDateFormat.isEmpty()) {
+        val dateFormat = Objects.requireNonNull(binding.dateFormat.text).toString().trim { it <= ' ' }
+
+        if (dateFormat.isEmpty()) {
             settingsPrefsUtils.saveDateFormat(requireContext(), constants.DEFAULT_DATE_FORMAT)
         } else {
-            settingsPrefsUtils.saveDateFormat(requireContext(), getDateFormat)
+            settingsPrefsUtils.saveDateFormat(requireContext(), dateFormat)
         }
     }
 
