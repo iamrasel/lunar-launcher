@@ -30,6 +30,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.LauncherActivity
@@ -57,6 +58,11 @@ internal class QuickAccess : BottomSheetDialogFragment() {
         accessUtils.volumeControllers(binding.notification, binding.alarm, binding.media, binding.voice, binding.ring)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
     }
 
     private fun favApps() {

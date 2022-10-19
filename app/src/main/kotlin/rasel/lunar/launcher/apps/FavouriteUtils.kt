@@ -42,7 +42,7 @@ internal class FavouriteUtils {
     fun previewAndClicks(context: Context, packageName: String, buttonToggleGroup: MaterialButtonToggleGroup) {
         val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, MODE_PRIVATE)
         val almostTransparent = ColorStateList.valueOf(context.getColor(R.color.almost_transparent))
-        
+
         for (position in 1..6) {
             val button = outlinedButton(context, buttonToggleGroup)
             val savedPackageName = sharedPreferences.getString(constants.KEY_APP_NO_ + position, "")
