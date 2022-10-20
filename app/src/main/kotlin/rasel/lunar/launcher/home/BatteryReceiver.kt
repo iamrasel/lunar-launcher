@@ -26,28 +26,35 @@ import android.view.animation.AnimationUtils
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import rasel.lunar.launcher.R
 
+
 internal class BatteryReceiver(private val progressBar: CircularProgressIndicator) : BroadcastReceiver() {
 
-    private fun getBatteryPercentage(intent: Intent): Int {
+    /* get current battery percentage */
+    private fun batteryPercentage(intent: Intent): Int {
         val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
         val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
         val percentage = level / scale.toFloat()
         return (percentage * 100).toInt()
     }
 
-    private fun getChargingStatus(intent: Intent): Int {
+    /* get current charging status */
+    private fun chargingStatus(intent: Intent): Int {
         return intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        progressBar.progress = getBatteryPercentage(intent!!)
-        if (getChargingStatus(intent) == BatteryManager.BATTERY_STATUS_CHARGING ||
-            getChargingStatus(intent) == BatteryManager.BATTERY_STATUS_FULL) {
+        /* set battery percentage value to the circular progress bar */
+        progressBar.progress = batteryPercentage(intent!!)
+
+        /* progress bar animation */
+        if (chargingStatus(intent) == BatteryManager.BATTERY_STATUS_CHARGING ||
+            chargingStatus(intent) == BatteryManager.BATTERY_STATUS_FULL) {
             progressBar.startAnimation(
                 AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise)
             )
-        } else if (getChargingStatus(intent) == BatteryManager.BATTERY_STATUS_DISCHARGING) {
+        } else if (chargingStatus(intent) == BatteryManager.BATTERY_STATUS_DISCHARGING) {
             progressBar.clearAnimation()
         }
     }
+
 }

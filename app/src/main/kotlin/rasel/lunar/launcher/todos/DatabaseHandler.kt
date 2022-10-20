@@ -97,7 +97,7 @@ internal class DatabaseHandler(context: Context?) :
         }
 
     /* check if any item exists in the database */
-    fun todoExists(): Boolean {
+    val isTodoExists: Boolean get() {
         return DatabaseUtils.queryNumEntries(readableDatabase, constants.TODO_TABLE_NAME, 1.toString()) > 0
     }
 

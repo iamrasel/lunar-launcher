@@ -26,7 +26,9 @@ import android.os.Build
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 
+
 internal class LockService : AccessibilityService() {
+
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
     override fun onInterrupt() {}
 
@@ -37,15 +39,18 @@ internal class LockService : AccessibilityService() {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    /* check whether accessibility service is enabled */
     fun isAccessibilityServiceEnabled(context: Context): Boolean {
         val accessibilityManager =
             context.getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
         val accessibilityServiceInfoList: List<AccessibilityServiceInfo> =
             accessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK)
+
         for (enabledService in accessibilityServiceInfoList) {
             val enabledServiceInfo = enabledService.resolveInfo.serviceInfo
             if (enabledServiceInfo.packageName == context.packageName && enabledServiceInfo.name == LockService::class.java.name) return true
         }
         return false
     }
+
 }

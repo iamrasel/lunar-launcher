@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.home
 
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
@@ -29,7 +28,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import dev.chrisbanes.insetter.applyInsetter
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
@@ -39,12 +37,12 @@ import rasel.lunar.launcher.todos.DatabaseHandler
 import rasel.lunar.launcher.todos.TodoAdapter
 import rasel.lunar.launcher.todos.TodoManager
 
+
 internal class LauncherHome : Fragment() {
 
     private lateinit var binding: LauncherHomeBinding
     private lateinit var fragmentActivity: FragmentActivity
-    private lateinit var _context: Context
-    private lateinit var fragManager: FragmentManager
+    private val constants = Constants()
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var homeUtils: HomeUtils
     private lateinit var batteryReceiver: BatteryReceiver
@@ -52,6 +50,7 @@ internal class LauncherHome : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = LauncherHomeBinding.inflate(inflater, container, false)
 
+        /* set insets of the root view */
         setInsets()
 
         fragmentActivity = if (isAdded) {
@@ -60,18 +59,17 @@ internal class LauncherHome : Fragment() {
             LauncherActivity()
         }
 
-        _context = fragmentActivity.applicationContext
-        fragManager = fragmentActivity.supportFragmentManager
-        sharedPreferences = _context.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
+        sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
         homeUtils = HomeUtils(fragmentActivity, sharedPreferences)
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
 
-        fragManager.addOnBackStackChangedListener { this.showTodoList() }
-        _context.registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        /* refresh the todo list after getting back from TodoManager */
+        fragmentActivity.supportFragmentManager.addOnBackStackChangedListener { this.showTodoList() }
 
         return binding.root
     }
 
+    /* insets */
     private fun setInsets() {
         binding.root.applyInsetter {
             type(statusBars = true, navigationBars = true) {
@@ -80,6 +78,7 @@ internal class LauncherHome : Fragment() {
         }
     }
 
+    /* todo list */
     private fun showTodoList() {
         binding.todos.adapter =
             context?.let { TodoAdapter(DatabaseHandler(context).todos, TodoManager(), fragmentActivity, it) }
@@ -87,29 +86,34 @@ internal class LauncherHome : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        _context.registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) // Battery
+        /* register battery changes */
+        requireContext().registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
-        // Time and date
+        /* time and date */
         if (DateFormat.is24HourFormat(context)) {
-            binding.time.format24Hour = homeUtils.getTimeFormat()
-            binding.date.format24Hour = homeUtils.getDateFormat()
+            binding.time.format24Hour = homeUtils.timeFormat
+            binding.date.format24Hour = homeUtils.dateFormat
         } else {
-            binding.time.format12Hour = homeUtils.getTimeFormat()
-            binding.date.format12Hour = homeUtils.getDateFormat()
+            binding.time.format12Hour = homeUtils.timeFormat
+            binding.date.format12Hour = homeUtils.dateFormat
         }
 
-        WeatherExecutor(sharedPreferences).generateTempString(binding.temp, fragmentActivity) // Weather
+        /* show weather */
+        WeatherExecutor(sharedPreferences).generateWeatherString(binding.temp, fragmentActivity)
+        /* show todo list */
         showTodoList()
 
-        // handle gesture events
-        val lockMethod = sharedPreferences.getInt(Constants().KEY_LOCK_METHOD, 0)
+        /* handle gesture events */
+        val lockMethod = sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0)
         homeUtils.rootViewGestures(binding.root, lockMethod)
         homeUtils.batteryProgressGestures(binding.batteryProgress, lockMethod)
         homeUtils.todosGestures(binding.todos, lockMethod)
     }
 
-    override fun onDestroy() {
-        _context.unregisterReceiver(batteryReceiver)
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
+        /* unregister battery changes */
+        requireContext().unregisterReceiver(batteryReceiver)
     }
+
 }

@@ -33,26 +33,27 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import rasel.lunar.launcher.databinding.ListItemBinding
 
+
 internal class RssAdapter(private val items: List<Rss>, private val context: Context) :
-    RecyclerView.Adapter<RssAdapter.ViewHolder>() {
+    RecyclerView.Adapter<RssAdapter.RssViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RssViewHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return RssViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(holder: RssViewHolder, @SuppressLint("RecyclerView") position: Int) {
+        /* customize the first item */
         if (position == 0) {
             holder.view.itemText.text = "\u22B6  " + items[position].title + "  \u22B7"
             holder.view.itemText.gravity = Gravity.CENTER
             holder.view.itemText.setTextColor(ContextCompat.getColor(context, R.color.primary))
             holder.view.itemText.setTypeface(null, Typeface.BOLD)
             holder.view.itemText.textSize = 18f
+        /* reset customization for rest */
         } else {
             holder.view.itemText.text = items[position].title
             holder.view.itemText.gravity = holder.gravity
@@ -61,6 +62,7 @@ internal class RssAdapter(private val items: List<Rss>, private val context: Con
             holder.view.itemText.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.size)
         }
 
+        /* on click - open in browser */
         holder.view.itemText.setOnClickListener {
             val uri = Uri.parse(items[position].link)
             val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -68,10 +70,12 @@ internal class RssAdapter(private val items: List<Rss>, private val context: Con
         }
     }
 
-    class ViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(view.root) {
+    class RssViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(view.root) {
+        /* store previous styles for resetting */
         var gravity: Int = view.itemText.gravity
         var color: ColorStateList = view.itemText.textColors
         var typeface: Typeface = view.itemText.typeface
         var size: Float = view.itemText.textSize
     }
+
 }

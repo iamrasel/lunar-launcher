@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.feeds
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -40,6 +39,7 @@ import rasel.lunar.launcher.feeds.rss.RssService
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
 
+
 internal class Feeds : Fragment() {
 
     private lateinit var binding: FeedsBinding
@@ -47,10 +47,12 @@ internal class Feeds : Fragment() {
     private lateinit var feedsUtils: FeedsUtils
     private lateinit var handler: Handler
     private lateinit var runnable: Runnable
+    private val constants = Constants()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FeedsBinding.inflate(inflater, container, false)
 
+        /* set insets */
         setInsets()
 
         fragmentActivity = if (isAdded) {
@@ -64,6 +66,7 @@ internal class Feeds : Fragment() {
         return binding.root
     }
 
+    /* insets */
     private fun setInsets() {
         Insetter.builder()
             .paddingBottom(windowInsetTypesOf(navigationBars = true))
@@ -75,11 +78,11 @@ internal class Feeds : Fragment() {
     }
 
     private fun startService() {
-        val rssUrl = fragmentActivity.getSharedPreferences(Constants().PREFS_SETTINGS, Context.MODE_PRIVATE)
-            .getString(Constants().KEY_RSS_URL, "")
+        val rssUrl = fragmentActivity.getSharedPreferences(constants.PREFS_SETTINGS, 0)
+            .getString(constants.KEY_RSS_URL, "")
         if (UniUtils().isNetworkAvailable(fragmentActivity) && rssUrl != null && rssUrl.isNotEmpty()) {
             val intent = Intent(fragmentActivity, RssService::class.java)
-            intent.putExtra(Constants().RSS_RECEIVER, resultReceiver)
+            intent.putExtra(constants.RSS_RECEIVER, resultReceiver)
             enqueueWork(fragmentActivity, RssService::class.java, 101, intent)
         } else {
             resumeService()
@@ -96,7 +99,7 @@ internal class Feeds : Fragment() {
     @Suppress("UNCHECKED_CAST")
     private val resultReceiver: ResultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
-            val items = resultData.getSerializable(Constants().RSS_ITEMS) as List<Rss>?
+            val items = resultData.getSerializable(constants.RSS_ITEMS) as List<Rss>?
             if (items != null) {
                 binding.rss.adapter = RssAdapter(items, requireContext())
                 binding.dataFetchingFailed.visibility = View.GONE
@@ -132,4 +135,5 @@ internal class Feeds : Fragment() {
         super.onPause()
         handler.removeCallbacks(runnable)
     }
+
 }

@@ -18,14 +18,11 @@
 
 package rasel.lunar.launcher.helpers
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.admin.DevicePolicyManager
 import android.content.*
-import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
@@ -39,9 +36,11 @@ import androidx.fragment.app.FragmentActivity
 import rasel.lunar.launcher.R
 import java.io.DataOutputStream
 
+
 internal class UniUtils {
 
-    fun getScreenWidth(activity: Activity): Int {
+    /* get display width */
+    fun screenWidth(activity: Activity): Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val windowMetrics = activity.windowManager.currentWindowMetrics
             val insets = windowMetrics.windowInsets
@@ -54,7 +53,8 @@ internal class UniUtils {
         }
     }
 
-    fun getScreenHeight(activity: Activity): Int {
+    /* get display height */
+    fun screenHeight(activity: Activity): Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val windowMetrics = activity.windowManager.currentWindowMetrics
             val insets = windowMetrics.windowInsets
@@ -67,29 +67,15 @@ internal class UniUtils {
         }
     }
 
-    fun askPermissions(fragmentActivity: FragmentActivity) {
-        if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            fragmentActivity.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
-        }
-        if (!Settings.System.canWrite(fragmentActivity)) {
-            fragmentActivity.startActivity(
-                Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-                    .setData(Uri.parse("package:" + fragmentActivity.packageName))
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-        }
-    }
-
-    // Copies texts to clipboard
+    /* copy texts to clipboard */
     fun copyToClipboard(fragmentActivity: FragmentActivity, context: Context, copiedString: String?) {
         val clipBoard =
             fragmentActivity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clipData = ClipData.newPlainText("", copiedString)
-        clipBoard.setPrimaryClip(clipData)
+        clipBoard.setPrimaryClip(ClipData.newPlainText("", copiedString))
         Toast.makeText(context, context.getString(R.string.copied_message), Toast.LENGTH_SHORT).show()
     }
 
-    // Expands notification panel
+    /* expand notification panel */
     @SuppressLint("WrongConstant")
     fun expandNotificationPanel(context: Context) {
         try {
@@ -101,7 +87,7 @@ internal class UniUtils {
         }
     }
 
-    // Lock screen using device admin
+    /* lock screen using device admin */
     private fun lockDeviceAdmin(context: Context, fragmentActivity: FragmentActivity) {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         if (powerManager.isInteractive) {
@@ -110,6 +96,7 @@ internal class UniUtils {
             try {
                 policy.lockNow()
             } catch (exception: SecurityException) {
+                /* open device admin manager screen */
                 fragmentActivity.startActivity(
                     Intent().setComponent(
                         ComponentName(
@@ -123,7 +110,7 @@ internal class UniUtils {
         }
     }
 
-    // Lock screen using accessibility service
+    /* lock screen using accessibility service */
     private fun lockAccessibility(fragmentActivity: FragmentActivity) {
         if (LockService().isAccessibilityServiceEnabled(fragmentActivity.applicationContext)) {
             try {
@@ -135,11 +122,12 @@ internal class UniUtils {
                 exception.printStackTrace()
             }
         } else {
+            /* open accessibility service screen */
             fragmentActivity.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
         }
     }
 
-    // Lock screen using root
+    /* lock screen using root */
     private fun lockRoot() {
         try {
             val process = Runtime.getRuntime().exec("su")
@@ -155,7 +143,16 @@ internal class UniUtils {
         }
     }
 
-    // Checks if the device is rooted
+    /* lock using preferred method */
+    fun lockMethod(lockMethodValue: Int, context: Context, fragmentActivity: FragmentActivity) {
+        when (lockMethodValue) {
+            1 -> lockAccessibility(fragmentActivity)
+            2 -> lockDeviceAdmin(context, fragmentActivity)
+            3 -> lockRoot()
+        }
+    }
+
+    /* check if the device is rooted */
     val isRooted: Boolean get() {
         var process: Process? = null
         return try {
@@ -175,14 +172,7 @@ internal class UniUtils {
         }
     }
 
-    fun lockMethod(lockMethodValue: Int, context: Context, fragmentActivity: FragmentActivity) {
-        when (lockMethodValue) {
-            1 -> lockAccessibility(fragmentActivity)
-            2 -> lockDeviceAdmin(context, fragmentActivity)
-            3 -> lockRoot()
-        }
-    }
-
+    /* check if the device is connected to the internet */
     fun isNetworkAvailable(fragmentActivity: FragmentActivity): Boolean {
         val connectivityManager =
             fragmentActivity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -190,12 +180,13 @@ internal class UniUtils {
         @Suppress("DEPRECATION") return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
     }
 
+    /* check if authenticator available */
     fun canAuthenticate(context: Context): Boolean {
         val biometricManager = BiometricManager.from(context)
-        val canAuthenticate = biometricManager.canAuthenticate(Constants().AUTHENTICATOR_TYPE)
-        return canAuthenticate == BIOMETRIC_SUCCESS
+        return biometricManager.canAuthenticate(Constants().AUTHENTICATOR_TYPE) == BIOMETRIC_SUCCESS
     }
 
+    /* show device authenticator */
     fun biometricPromptInfo(title: String, fragmentActivity: FragmentActivity): BiometricPrompt.PromptInfo {
         return BiometricPrompt.PromptInfo.Builder()
             .setTitle(title)
@@ -204,4 +195,5 @@ internal class UniUtils {
             .setAllowedAuthenticators(Constants().AUTHENTICATOR_TYPE)
             .build()
     }
+
 }

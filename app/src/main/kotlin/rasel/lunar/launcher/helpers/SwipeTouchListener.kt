@@ -27,7 +27,9 @@ import android.view.View
 import android.view.View.OnTouchListener
 import kotlin.math.abs
 
+
 internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
+
     private val gestureDetector: GestureDetector
 
     @SuppressLint("ClickableViewAccessibility")
@@ -36,6 +38,7 @@ internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
     }
 
     private inner class GestureListener : SimpleOnGestureListener() {
+
         override fun onDown(e: MotionEvent): Boolean {
             return true
         }
@@ -96,4 +99,5 @@ internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
     init {
         gestureDetector = GestureDetector(c, GestureListener())
     }
+
 }

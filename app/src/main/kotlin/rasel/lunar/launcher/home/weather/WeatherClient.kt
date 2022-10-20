@@ -25,10 +25,13 @@ import java.lang.StringBuilder
 import java.net.HttpURLConnection
 import java.net.URL
 
+
 internal class WeatherClient {
+
     fun fetchWeather(wUrl: String?): String? {
         var httpURLConnection: HttpURLConnection? = null
         var bufferedReader: BufferedReader? = null
+
         try {
             val url = URL(wUrl)
             httpURLConnection = url.openConnection() as HttpURLConnection
@@ -55,6 +58,8 @@ internal class WeatherClient {
                 }
             }
         }
+
         return null
     }
+
 }

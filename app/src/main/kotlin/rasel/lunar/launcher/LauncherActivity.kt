@@ -18,7 +18,12 @@
 
 package rasel.lunar.launcher
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -26,7 +31,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.databinding.LauncherActivityBinding
 import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
 import rasel.lunar.launcher.helpers.ViewPagerAdapter
 
 
@@ -66,9 +70,24 @@ internal class LauncherActivity : AppCompatActivity() {
             .setMessage(R.string.welcome_description)
             .setPositiveButton(R.string.got_it) { dialog, _ ->
                 dialog.dismiss()
-                /* ask for the permissions */
-                UniUtils().askPermissions(this)
+                askPermissions()
             }.show()
+    }
+
+    /* ask for the permissions */
+    private fun askPermissions() {
+        /* phone permission */
+        if (this.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            this.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
+        }
+        /* modify system settings */
+        if (!Settings.System.canWrite(this)) {
+            this.startActivity(
+                Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                    .setData(Uri.parse("package:" + this.packageName))
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
     }
 
     /* set up viewpager2 */

@@ -25,7 +25,8 @@ import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
-class SysInfoUtils {
+
+internal class SysInfoUtils {
 
     @SuppressLint("DefaultLocale")
     fun deviceUptime(): String {

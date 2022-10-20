@@ -21,6 +21,7 @@ package rasel.lunar.launcher.helpers
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 
+
 @Suppress("PropertyName")
 internal class Constants {
 

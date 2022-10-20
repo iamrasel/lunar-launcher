@@ -53,7 +53,7 @@ internal class TodoAdapter(
         /*  if current fragment is LauncherHome,
             then return size following the settings value */
         val constants = Constants()
-        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)
         val numberOfTodos = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3)
         return if (currentFragment !is TodoManager) {
             todoList.size.coerceAtMost(numberOfTodos)

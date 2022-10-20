@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.settings.childs
 
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +40,7 @@ internal class TodoSettings : BottomSheetDialogFragment() {
         binding = SettingsTodoBinding.inflate(inflater, container, false)
 
         val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
+        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
         binding.showTodos.value = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3).toFloat()

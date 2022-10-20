@@ -26,6 +26,7 @@ import rasel.lunar.launcher.apps.AppDrawer
 import rasel.lunar.launcher.feeds.Feeds
 import rasel.lunar.launcher.home.LauncherHome
 
+
 internal class ViewPagerAdapter(fragmentManager: FragmentManager?, lifecycle: Lifecycle?) :
     FragmentStateAdapter(fragmentManager!!, lifecycle!!) {
 
@@ -41,4 +42,5 @@ internal class ViewPagerAdapter(fragmentManager: FragmentManager?, lifecycle: Li
     override fun getItemCount(): Int {
         return 3
     }
+
 }

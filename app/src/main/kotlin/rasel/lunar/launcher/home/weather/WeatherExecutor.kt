@@ -29,19 +29,25 @@ import rasel.lunar.launcher.helpers.UniUtils
 import java.util.concurrent.Executors
 import kotlin.math.roundToInt
 
-internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
-    private val cityName: String
-    private val owmKey: String
-    private val weatherUrl: String
-    private val tempUnitValue: Int
-    private val showCityValue: Boolean
 
-    fun generateTempString(materialTextView: MaterialTextView, fragmentActivity: FragmentActivity) {
+internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
+
+    private val cityName: String
+    private val owmApi: String
+    private val weatherUrl: String
+    private val tempUnit: Int
+    private val showCity: Boolean
+
+    fun generateWeatherString(materialTextView: MaterialTextView, fragmentActivity: FragmentActivity) {
         materialTextView.visibility = View.GONE
-        if (UniUtils().isNetworkAvailable(fragmentActivity) && cityName.isNotEmpty() && owmKey.isNotEmpty()) {
+
+        /*  run the executor if network is available,
+            and city name and owm api values are not empty */
+        if (UniUtils().isNetworkAvailable(fragmentActivity) && cityName.isNotEmpty() && owmApi.isNotEmpty()) {
             try {
                 val executor = Executors.newSingleThreadExecutor()
                 val handler = Handler(Looper.getMainLooper())
+
                 executor.execute {
                     var weather: Weather? = null
                     val jsonStr = WeatherClient().fetchWeather(weatherUrl)
@@ -49,18 +55,21 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
                         weather = JsonParser().getMyWeather(jsonStr)
                     }
                     val finalWeather = weather
+
                     handler.post {
                         if (finalWeather != null) {
-                            val temp = when (tempUnitValue) {
+                            /* set temperature unit */
+                            val temp = when (tempUnit) {
                                 0 -> (finalWeather.temperature - 273.15f).roundToInt().toString() + "ºC"
                                 1 -> ((finalWeather.temperature - 273.15f) * 1.8 + 32).roundToInt().toString() + "ºF"
                                 else -> throw AssertionError()
                             }
-
-                            val tempStr = when (showCityValue) {
+                            /* show/hide the city name */
+                            val tempStr = when (showCity) {
                                 false -> temp
                                 true -> "$temp at $cityName"
                             }
+
                             materialTextView.visibility = View.VISIBLE
                             materialTextView.text = tempStr
                         }
@@ -73,10 +82,12 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
     }
 
     init {
-        cityName = sharedPreferences.getString(Constants().KEY_CITY_NAME, "").toString()
-        owmKey = sharedPreferences.getString(Constants().KEY_OWM_API, "").toString()
-        tempUnitValue = sharedPreferences.getInt(Constants().KEY_TEMP_UNIT, 0)
-        showCityValue = sharedPreferences.getBoolean(Constants().KEY_SHOW_CITY, false)
-        weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmKey"
+        val constants = Constants()
+        cityName = sharedPreferences.getString(constants.KEY_CITY_NAME, "").toString()
+        owmApi = sharedPreferences.getString(constants.KEY_OWM_API, "").toString()
+        tempUnit = sharedPreferences.getInt(constants.KEY_TEMP_UNIT, 0)
+        showCity = sharedPreferences.getBoolean(constants.KEY_SHOW_CITY, false)
+        weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmApi"
     }
+
 }

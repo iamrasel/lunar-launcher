@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.settings.childs
 
-import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -42,7 +41,7 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         binding = SettingsWeatherBinding.inflate(inflater, container, false)
 
         val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
+        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
         binding.inputCity.setText(sharedPreferences.getString(constants.KEY_CITY_NAME, "").toString())

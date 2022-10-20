@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.home
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.text.format.DateFormat
@@ -26,7 +25,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.SwipeTouchListener
@@ -36,14 +34,20 @@ import rasel.lunar.launcher.settings.SettingsActivity
 import rasel.lunar.launcher.todos.TodoManager
 import java.util.*
 
+
 internal class HomeUtils(
     private val fragmentActivity: FragmentActivity,
     private val sharedPreferences: SharedPreferences) {
-    private val fragmentManager: FragmentManager = fragmentActivity.supportFragmentManager
-    private val context: Context = fragmentActivity.applicationContext
 
-    fun getTimeFormat(): String? {
-        when (sharedPreferences.getInt(Constants().KEY_TIME_FORMAT, 0)) {
+    private val fragmentManager = fragmentActivity.supportFragmentManager
+    private val context = fragmentActivity.applicationContext
+    private val constants = Constants()
+    private val uniUtils = UniUtils()
+    private val quickAccess = QuickAccess()
+
+    /* get time format string */
+    val timeFormat: String? get() {
+        when (sharedPreferences.getInt(constants.KEY_TIME_FORMAT, 0)) {
             0 -> return if (DateFormat.is24HourFormat(context)) {
                 "kk:mm"
             } else {
@@ -55,7 +59,8 @@ internal class HomeUtils(
         return null
     }
 
-    private fun getDateNumberSuffix(): String {
+    /* get date number suffix */
+    private val dateNumberSuffix: String get() {
         val calendar = Calendar.getInstance()
         return when (calendar[Calendar.DAY_OF_MONTH]) {
             1, 21, 31 -> "ˢᵗ"
@@ -65,64 +70,76 @@ internal class HomeUtils(
         }
     }
 
-    fun getDateFormat(): String {
+    /* get date format string */
+    val dateFormat: String get() {
         val dateFormatValue = sharedPreferences.getString(
-            Constants().KEY_DATE_FORMAT,
-            Constants().DEFAULT_DATE_FORMAT
+            constants.KEY_DATE_FORMAT,
+            constants.DEFAULT_DATE_FORMAT
         )
         return if (dateFormatValue!!.contains("x")) {
-            dateFormatValue.replace("x", getDateNumberSuffix())
+            dateFormatValue.replace("x", dateNumberSuffix)
         } else {
             dateFormatValue
         }
     }
 
+    /* gestures on root view */
     fun rootViewGestures(view: View, lockMethodValue: Int) {
         view.setOnTouchListener(object : SwipeTouchListener(context) {
+            /* open quick access panel on swipe up */
             override fun onSwipeUp() {
                 super.onSwipeUp()
-                QuickAccess().show(fragmentManager, Constants().BOTTOM_SHEET_TAG)
+                quickAccess.show(fragmentManager, constants.BOTTOM_SHEET_TAG)
             }
+            /* expand notification panel on swipe down */
             override fun onSwipeDown() {
                 super.onSwipeDown()
-                UniUtils().expandNotificationPanel(context)
+                uniUtils.expandNotificationPanel(context)
             }
+            /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                UniUtils().lockMethod(lockMethodValue, context, fragmentActivity)
+                uniUtils.lockMethod(lockMethodValue, context, fragmentActivity)
             }
         })
     }
 
+    /* gestures on battery progress indicator area */
     fun batteryProgressGestures(view: View, lockMethodValue: Int) {
         view.setOnTouchListener(object : SwipeTouchListener(context) {
+            /* open settings activity on long click */
             override fun onLongClick() {
                 super.onLongClick()
                 fragmentActivity.startActivity(Intent(context, SettingsActivity::class.java))
             }
+            /* expand notification panel on swipe down */
             override fun onSwipeDown() {
                 super.onSwipeDown()
-                UniUtils().expandNotificationPanel(context)
+                uniUtils.expandNotificationPanel(context)
             }
+            /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                UniUtils().lockMethod(lockMethodValue, context, fragmentActivity)
+                uniUtils.lockMethod(lockMethodValue, context, fragmentActivity)
             }
         })
     }
 
+    /* gestures on todo area */
     fun todosGestures(view: View, lockMethodValue: Int) {
         view.setOnTouchListener(object : SwipeTouchListener(context) {
+            /* open TodoManager on long click */
             override fun onLongClick() {
                 super.onLongClick()
-                when (sharedPreferences.getBoolean(Constants().KEY_TODO_LOCK, false)) {
+                when (sharedPreferences.getBoolean(constants.KEY_TODO_LOCK, false)) {
                     false -> fragmentManager.beginTransaction().add(R.id.main_fragments_container, TodoManager())
                         .addToBackStack("").commit()
+                    /* show authentication screen if lock is on */
                     true -> {
-                        if (UniUtils().canAuthenticate(context)) {
+                        if (uniUtils.canAuthenticate(context)) {
                             val biometricPrompt = BiometricPrompt(fragmentActivity, authenticationCallback)
                             try {
-                                biometricPrompt.authenticate(UniUtils().biometricPromptInfo(fragmentActivity.getString(R.string.todo_manager), fragmentActivity))
+                                biometricPrompt.authenticate(uniUtils.biometricPromptInfo(fragmentActivity.getString(R.string.todo_manager), fragmentActivity))
                             } catch (exception: Exception) {
                                 exception.printStackTrace()
                             }
@@ -130,21 +147,25 @@ internal class HomeUtils(
                     }
                 }
             }
+            /* open quick access panel on swipe up */
             override fun onSwipeUp() {
                 super.onSwipeUp()
-                QuickAccess().show(fragmentManager, Constants().BOTTOM_SHEET_TAG)
+                quickAccess.show(fragmentManager, constants.BOTTOM_SHEET_TAG)
             }
+            /* expand notification panel on swipe down */
             override fun onSwipeDown() {
                 super.onSwipeDown()
-                UniUtils().expandNotificationPanel(context)
+                uniUtils.expandNotificationPanel(context)
             }
+            /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                UniUtils().lockMethod(lockMethodValue, context, fragmentActivity)
+                uniUtils.lockMethod(lockMethodValue, context, fragmentActivity)
             }
         })
     }
 
+    /* authentication callback for TodoManager lock */
     private val authenticationCallback = object : BiometricPrompt.AuthenticationCallback() {
         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
             fragmentManager.beginTransaction().add(R.id.main_fragments_container, TodoManager())
@@ -157,4 +178,5 @@ internal class HomeUtils(
             Toast.makeText(context, fragmentActivity.getString(R.string.authentication_failed), Toast.LENGTH_SHORT).show()
         }
     }
+
 }

@@ -25,7 +25,6 @@ package rasel.lunar.launcher.apps
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
@@ -105,7 +104,7 @@ internal class AppDrawer : Fragment() {
             override fun onDoubleClick() {
                 super.onDoubleClick()
                 UniUtils().lockMethod(
-                    requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+                    requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, 0)
                         .getInt(Constants().KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
             }
         })
@@ -213,7 +212,7 @@ internal class AppDrawer : Fragment() {
         val string = binding.searchInput.text.toString() + adapterView.getItemAtPosition(i).toString()
         searchStringChangeListener(string)
 
-        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        val sharedPreferences = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, 0)
         if (sharedPreferences.getBoolean(Constants().KEY_KEYBOARD_SEARCH, false)) {
             binding.searchInput.requestFocus()
             val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

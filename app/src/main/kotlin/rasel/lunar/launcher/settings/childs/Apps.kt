@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.settings.childs
 
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,7 +39,7 @@ internal class Apps : BottomSheetDialogFragment() {
         binding = SettingsAppsBinding.inflate(inflater, container, false)
 
         val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
+        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
         when (sharedPreferences.getBoolean(constants.KEY_KEYBOARD_SEARCH, false)) {

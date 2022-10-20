@@ -26,6 +26,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
 
+
 internal class ColorPicker(
     private val editText: TextInputEditText, private val sliderA: Slider, private val sliderR: Slider,
     private val sliderG: Slider, private val sliderB: Slider, private val colorPreview: LinearLayoutCompat) {
@@ -58,31 +59,27 @@ internal class ColorPicker(
         })
 
         sliderA.addOnChangeListener(Slider.OnChangeListener { _: Slider?, _: Float, _: Boolean ->
-            val colorStr = getColorString()
-            editText.setText(colorStr.uppercase())
-            colorPreview.setBackgroundColor(Color.parseColor("#$colorStr"))
+            editText.setText(colorString.uppercase())
+            colorPreview.setBackgroundColor(Color.parseColor("#$colorString"))
         })
 
         sliderR.addOnChangeListener(Slider.OnChangeListener { _: Slider?, _: Float, _: Boolean ->
-            val colorStr = getColorString()
-            editText.setText(colorStr.uppercase())
-            colorPreview.setBackgroundColor(Color.parseColor("#$colorStr"))
+            editText.setText(colorString.uppercase())
+            colorPreview.setBackgroundColor(Color.parseColor("#$colorString"))
         })
 
         sliderG.addOnChangeListener(Slider.OnChangeListener { _: Slider?, _: Float, _: Boolean ->
-            val colorStr = getColorString()
-            editText.setText(colorStr.uppercase())
-            colorPreview.setBackgroundColor(Color.parseColor("#$colorStr"))
+            editText.setText(colorString.uppercase())
+            colorPreview.setBackgroundColor(Color.parseColor("#$colorString"))
         })
 
         sliderB.addOnChangeListener(Slider.OnChangeListener { _: Slider?, _: Float, _: Boolean ->
-            val colorStr = getColorString()
-            editText.setText(colorStr.uppercase())
-            colorPreview.setBackgroundColor(Color.parseColor("#$colorStr"))
+            editText.setText(colorString.uppercase())
+            colorPreview.setBackgroundColor(Color.parseColor("#$colorString"))
         })
     }
 
-    private fun getColorString(): String {
+    private val colorString: String get() {
         var a = Integer.toHexString((((255*sliderA.value)/sliderA.valueTo).toInt()))
         if(a.length==1) a = "0$a"
         var r = Integer.toHexString((((255*sliderR.value)/sliderR.valueTo).toInt()))
@@ -93,4 +90,5 @@ internal class ColorPicker(
         if(b.length==1) b = "0$b"
         return "$a$r$g$b"
     }
+
 }

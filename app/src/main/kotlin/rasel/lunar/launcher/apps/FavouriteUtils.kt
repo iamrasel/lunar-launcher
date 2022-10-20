@@ -19,7 +19,6 @@
 package rasel.lunar.launcher.apps
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.res.ColorStateList
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.google.android.material.button.MaterialButton
@@ -34,13 +33,13 @@ internal class FavouriteUtils {
 
     /* save favorite package names to shared preferences */
     fun saveFavApps(context: Context, position: Int, packageName: String?) {
-        val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
         sharedPreferences.edit().putString(constants.KEY_APP_NO_ + position, packageName).apply()
     }
 
     /* manage initial preview and on clicks */
     fun previewAndClicks(context: Context, packageName: String, buttonToggleGroup: MaterialButtonToggleGroup) {
-        val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
         val almostTransparent = ColorStateList.valueOf(context.getColor(R.color.almost_transparent))
 
         for (position in 1..6) {

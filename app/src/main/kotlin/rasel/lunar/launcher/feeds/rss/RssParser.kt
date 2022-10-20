@@ -26,6 +26,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.ArrayList
 
+
 internal class RssParser {
 
     @Throws(XmlPullParserException::class, IOException::class)
@@ -45,16 +46,19 @@ internal class RssParser {
         var title: String? = null
         var link: String? = null
         val items: MutableList<Rss> = ArrayList()
+
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.eventType != XmlPullParser.START_TAG) {
                 continue
             }
+
             val name = parser.name
             if (name == "title") {
                 title = readTitle(parser)
             } else if (name == "link") {
                 link = readLink(parser)
             }
+
             if (title != null && link != null) {
                 val item = Rss(title, link)
                 items.add(item)
@@ -90,4 +94,5 @@ internal class RssParser {
         }
         return result
     }
+
 }

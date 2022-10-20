@@ -29,10 +29,11 @@ import java.io.InputStream
 import java.io.Serializable
 import java.net.URL
 
-internal class RssService : JobIntentService() {   // Todo: deprecated
+
+internal class RssService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
-        val settingsPrefs = getSharedPreferences(Constants().PREFS_SETTINGS, MODE_PRIVATE)
+        val settingsPrefs = getSharedPreferences(Constants().PREFS_SETTINGS, 0)
         val rssUrl = settingsPrefs.getString(Constants().KEY_RSS_URL, "")
         var rssItems: List<Rss?>? = null
 
@@ -64,4 +65,5 @@ internal class RssService : JobIntentService() {   // Todo: deprecated
             null
         }
     }
+
 }

@@ -34,6 +34,7 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.helpers.UniUtils
 import java.util.*
 
+
 internal class AppMenuUtils(
     private val appMenus: AppMenus, private val fragmentActivity: FragmentActivity,
     private val context: Context, private val packageManager: PackageManager,
@@ -44,8 +45,8 @@ internal class AppMenuUtils(
         freeformIntent!!.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
         val rect = Rect(
-            0, UniUtils().getScreenHeight(fragmentActivity) / 2,
-            UniUtils().getScreenWidth(fragmentActivity), UniUtils().getScreenHeight(fragmentActivity))
+            0, UniUtils().screenHeight(fragmentActivity) / 2,
+            UniUtils().screenWidth(fragmentActivity), UniUtils().screenHeight(fragmentActivity))
         var activityOptions = activityOptions
         activityOptions = activityOptions.setLaunchBounds(rect)
         context.startActivity(freeformIntent, activityOptions.toBundle())

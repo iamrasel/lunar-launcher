@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.settings.childs
 
-import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
@@ -44,7 +43,7 @@ internal class More : BottomSheetDialogFragment() {
         binding = SettingsMoreBinding.inflate(inflater, container, false)
 
         val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, MODE_PRIVATE)
+        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
         binding.inputFeedUrl.setText(sharedPreferences.getString(constants.KEY_RSS_URL, "").toString())

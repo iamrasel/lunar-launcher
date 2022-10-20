@@ -35,6 +35,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
+
 internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
 
     private var sysInfoUtils = SysInfoUtils()

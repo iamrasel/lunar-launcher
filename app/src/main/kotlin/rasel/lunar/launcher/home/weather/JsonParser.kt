@@ -21,25 +21,30 @@ package rasel.lunar.launcher.home.weather
 import org.json.JSONException
 import org.json.JSONObject
 
+
 internal class JsonParser {
+
     fun getMyWeather(jsonStr: String): Weather {
         val weather = Weather()
+
         try {
             val jsonObject = JSONObject(jsonStr)
 
-            // Get weather condition
+            /* Get weather condition */
             val weatherJsonArray = jsonObject.getJSONArray("weather")
             val jsonObject1 = weatherJsonArray.getJSONObject(0)
             weather.weatherCondition = jsonObject1.getString("main")
             weather.weatherDescription = jsonObject1.getString("description")
             weather.weatherIconStr = jsonObject1.getString("icon")
 
-            // Get temperature
+            /* Get temperature */
             val jsonObject2 = jsonObject.getJSONObject("main")
             weather.temperature = jsonObject2.getDouble("temp").toFloat()
         } catch (jsonException: JSONException) {
             jsonException.printStackTrace()
         }
+
         return weather
     }
+
 }

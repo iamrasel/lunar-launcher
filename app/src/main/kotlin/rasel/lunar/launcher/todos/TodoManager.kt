@@ -127,7 +127,7 @@ internal class TodoManager : Fragment() {
         bottomSheetDialog.dismissWithAnimation = true
 
         /* if any item does not exist, then disable the ok button */
-        if (!databaseHandler.todoExists()) {
+        if (!databaseHandler.isTodoExists) {
             dialogBinding.todoOk.isEnabled = false
         }
 

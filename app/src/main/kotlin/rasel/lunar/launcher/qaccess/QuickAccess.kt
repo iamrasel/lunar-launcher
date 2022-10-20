@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.qaccess
 
-import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
@@ -74,16 +73,16 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* set up favorite apps */
     private fun favApps() {
-        val prefsFavApps = requireContext().getSharedPreferences(constants.PREFS_FAVORITE_APPS, Context.MODE_PRIVATE)
+        val prefsFavApps = requireContext().getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
         for (position in 1..6) {
             val packageValue = prefsFavApps.getString(constants.KEY_APP_NO_ + position.toString(), "").toString()
-            accessUtils.favApps(packageValue, imageView(), position)
+            accessUtils.favApps(packageValue, imageView, position)
         }
     }
 
     /* set up contact and url shortcuts */
     private fun shortcuts() {
-        val prefsShortcuts = requireContext().getSharedPreferences(constants.PREFS_SHORTCUTS, Context.MODE_PRIVATE)
+        val prefsShortcuts = requireContext().getSharedPreferences(constants.PREFS_SHORTCUTS, 0)
         for (position in 1..6) {
             val shortcutValue = prefsShortcuts.getString(constants.KEY_SHORTCUT_NO_ + position.toString(), "").toString()
             val splitShortcutValue = shortcutValue.split("||").toTypedArray()
@@ -102,12 +101,12 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 exception.printStackTrace()
             }
 
-            accessUtils.shortcutsUtil(textView(), shortcutType, intentString, thumbLetter, color, position)
+            accessUtils.shortcutsUtil(textView, shortcutType, intentString, thumbLetter, color, position)
         }
     }
 
     /* create image view for favorite app icons */
-    private fun imageView() : AppCompatImageView {
+    private val imageView: AppCompatImageView get() {
         val imageView = AppCompatImageView(fragmentActivity)
         imageView.layoutParams = LinearLayoutCompat.LayoutParams(
             LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
@@ -117,7 +116,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     }
 
     /* create text view for shortcut thumbnails */
-    private fun textView() : MaterialTextView {
+    private val textView: MaterialTextView get() {
         val relativeLayout = RelativeLayout(fragmentActivity)
         relativeLayout.layoutParams = LinearLayoutCompat.LayoutParams(
             LinearLayoutCompat.LayoutParams.WRAP_CONTENT,

@@ -23,7 +23,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
+
 internal class AdminReceiver : DeviceAdminReceiver() {
+
     override fun onDisabled(context: Context, intent: Intent) {
         super.onDisabled(context, intent)
         LocalBroadcastManager.getInstance(context).sendBroadcast(
@@ -37,4 +39,5 @@ internal class AdminReceiver : DeviceAdminReceiver() {
             Intent("device_admin_action_enabled")
         )
     }
+
 }

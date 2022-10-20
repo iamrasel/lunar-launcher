@@ -51,41 +51,50 @@ internal class AccessUtils(
     private val context: Context,
     private val bottomSheetDialogFragment: BottomSheetDialogFragment,
     private val fragmentActivity: FragmentActivity) {
-    
+
     private val constants = Constants()
-    private val sharedPreferences = context.getSharedPreferences(constants.PREFS_SHORTCUTS, Context.MODE_PRIVATE)
+    private val sharedPreferences = context.getSharedPreferences(constants.PREFS_SHORTCUTS, 0)
 
     /* control the volumes */
     fun volumeControllers(notifyBar: Slider, alarmBar: Slider, mediaBar: Slider, voiceBar: Slider, ringerBar: Slider) {
         val audioManager = fragmentActivity.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        /* max value */
         notifyBar.valueTo = audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION).toFloat()
         alarmBar.valueTo = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM).toFloat()
         mediaBar.valueTo = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC).toFloat()
         voiceBar.valueTo = audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL).toFloat()
         ringerBar.valueTo = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING).toFloat()
+        /* current value */
         notifyBar.value = audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION).toFloat()
         alarmBar.value = audioManager.getStreamVolume(AudioManager.STREAM_ALARM).toFloat()
         mediaBar.value = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
         voiceBar.value = audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL).toFloat()
         ringerBar.value = audioManager.getStreamVolume(AudioManager.STREAM_RING).toFloat()
 
+        /* slider change listener for alarm volume */
         alarmBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             audioManager.setStreamVolume(AudioManager.STREAM_ALARM, value.toInt(), 0)
         })
 
+        /* slider change listener for media volume */
         mediaBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value.toInt(), 0)
         })
 
+        /* slider change listener for voice call volume */
         voiceBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, value.toInt(), 0)
         })
 
+        /*  notify and ring volume sliders will work only if
+            the device isn't in dnd or silent mode */
         if (Settings.Global.getInt(fragmentActivity.contentResolver, "zen_mode") == 0 &&
             audioManager.ringerMode != AudioManager.RINGER_MODE_SILENT) {
+            /* slider change listener for notify volume */
             notifyBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
                 audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, value.toInt(), 0)
             })
+            /* slider change listener for ring volume */
             ringerBar.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
                 audioManager.setStreamVolume(AudioManager.STREAM_RING, value.toInt(), 0)
             })
@@ -98,11 +107,14 @@ internal class AccessUtils(
     /* contact/url shortcuts */
     fun shortcutsUtil(textView: MaterialTextView, shortcutType: String, intentString: String,
                       thumbLetter: String, color: String, position: Int) {
+        /* show plus sign for empty positions and set click listener */
         if (intentString.isEmpty()) {
             textView.text = "+"
             textView.setOnClickListener { shortcutsSaverDialog(position) }
         } else {
+            /* show thumbnail letter */
             textView.text = thumbLetter
+            /* set background color */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 textView.background.colorFilter =
                     BlendModeColorFilter(Color.parseColor("#$color"), BlendMode.MULTIPLY)
@@ -110,19 +122,28 @@ internal class AccessUtils(
                 @Suppress("DEPRECATION")
                 textView.background.setColorFilter(Color.parseColor("#$color"), PorterDuff.Mode.MULTIPLY)
             }
+
+            /* on normal click */
             textView.setOnClickListener {
+                /* type is url */
                 if (shortcutType == constants.SHORTCUT_TYPE_URL) {
                     var url = intentString
+                    /* add http before the url if it doesn't have http/https prefix */
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
                         url = "http://$intentString"
                     }
+                    /* open the url */
                     fragmentActivity.startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(url)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
+                /* type is contact */
                 } else if (shortcutType == constants.SHORTCUT_TYPE_PHONE) {
+                    /*  if the necessary permission is not granted already,
+                        ask for it again */
                     if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         fragmentActivity.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
                     } else {
+                        /* make phone call */
                         fragmentActivity.startActivity(
                             Intent(Intent.ACTION_CALL, Uri.parse("tel:$intentString"))
                         )
@@ -130,6 +151,8 @@ internal class AccessUtils(
                 }
                 bottomSheetDialogFragment.dismiss()
             }
+
+            /* reset the shortcut on long click */
             textView.setOnLongClickListener {
                 sharedPreferences.edit().putString(constants.KEY_SHORTCUT_NO_ + position, "").apply()
                 textView.text = "+"
