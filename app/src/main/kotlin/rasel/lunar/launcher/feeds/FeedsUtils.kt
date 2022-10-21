@@ -41,6 +41,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
     private var sysInfoUtils = SysInfoUtils()
     private val toGb = 1.07374182E9f
 
+	/* get and show ram info */
     @SuppressLint("DefaultLocale")
     fun ram(ram: MaterialTextView) {
         val memoryInfo = ActivityManager.MemoryInfo()
@@ -56,10 +57,11 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
                     "Used: " + String.format("%.03f", usedMem) + " GB<br>" +
                     "Available: " + String.format("%.03f", availMem) + " GB<br>" +
                     "Threshold: " + String.format("%.03f", thresholdMem) + " GB<br>" +
-                    "System Uptime: " + sysInfoUtils.deviceUptime(), Html.FROM_HTML_MODE_COMPACT
+                    "System Uptime: " + sysInfoUtils.deviceUptime, Html.FROM_HTML_MODE_COMPACT
         )
     }
 
+	/* get and show internal storage info */
     @SuppressLint("DefaultLocale")
     fun intStorage(intStorage: MaterialTextView) {
         val statFs = StatFs(Environment.getDataDirectory().path)
@@ -69,6 +71,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
         val usedIntStorage = totalIntStorage - availIntStorage
         val totalRootStorage = StatFs(Environment.getRootDirectory().path).blockCountLong *
                 StatFs(Environment.getRootDirectory().path).blockSizeLong / toGb
+
         intStorage.text = Html.fromHtml(
             "<h5>ROM</h5><br>" +
                     "Total: " + String.format("%.03f", totalIntStorage) + " GB<br>" +
@@ -78,6 +81,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
         )
     }
 
+	/* get and show cpu and battery info */
     fun cpuBattery(cpuBattery: MaterialTextView) {
         var cpuTemp = 0.0f
         try {
@@ -88,22 +92,26 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
+
         val intent = fragmentActivity.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         val batteryTemp = intent!!.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0).toFloat() / 10
         val voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0).toFloat() / 1000
+
         cpuBattery.text = Html.fromHtml(
             "<h5>CPU & Battery</h5><br>" +
                     "Cpu Temp: " + cpuTemp + " ºC<br>" +
-                    "Usage: " + sysInfoUtils.cpuUsage() + "<br>" +
-                    "Freq: " + sysInfoUtils.cpuFreq() + "<br>" +
+                    "Usage: " + sysInfoUtils.cpuUsage + "<br>" +
+                    "Freq: " + sysInfoUtils.cpuFreq + "<br>" +
                     "Battery Temp: " + batteryTemp + " ºC<br>" +
                     "Voltage: " + voltage + " V", Html.FROM_HTML_MODE_COMPACT
         )
     }
 
+	/* get and show external storage info */
     @SuppressLint("DefaultLocale")
     fun extStorage(extStorage: MaterialTextView) {
         val storages = ContextCompat.getExternalFilesDirs(fragmentActivity, null)
+        /* sd card is available */
         if (storages.size > 1 && storages[1] != null) {
             val statFs = StatFs(storages[1]!!.path)
             val blockSize = statFs.blockSizeLong
@@ -112,6 +120,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
             val usedExtStorage = totalExtStorage - availExtStorage
             val sdcardPaths = storages[1].path.split(File.separator).toTypedArray()
             val sdcardPath = File.separator + sdcardPaths[1] + File.separator + sdcardPaths[2] + File.separator
+
             extStorage.text = Html.fromHtml(
                 "<h5>SD Card</h5><br>" +
                         "Total: " + String.format("%.03f", totalExtStorage) + " GB<br>" +
@@ -119,6 +128,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
                         "Free: " + String.format("%.03f", availExtStorage) + " GB<br>" +
                         "Path: " + sdcardPath, Html.FROM_HTML_MODE_COMPACT
             )
+            /* open sd card directory */
             extStorage.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.setDataAndType(Uri.parse(sdcardPath), "resource/folder")
@@ -129,8 +139,10 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
                     exception.printStackTrace()
                 }
             }
+        /* sd card not found */
         } else {
             extStorage.text = Html.fromHtml("<h5>SD Card</h5><br>" + "Couldn't find", Html.FROM_HTML_MODE_COMPACT)
         }
     }
+
 }

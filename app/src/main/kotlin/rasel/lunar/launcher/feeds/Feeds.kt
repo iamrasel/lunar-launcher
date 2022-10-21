@@ -77,6 +77,7 @@ internal class Feeds : Fragment() {
             .applyToView(binding.cpu)
     }
 
+	/* start rss service if network is active and rss url is not empty */
     private fun startService() {
         val rssUrl = fragmentActivity.getSharedPreferences(constants.PREFS_SETTINGS, 0)
             .getString(constants.KEY_RSS_URL, "")
@@ -89,6 +90,7 @@ internal class Feeds : Fragment() {
         }
     }
 
+	/* retry to start rss service */
     private fun resumeService() {
         binding.rss.visibility = View.GONE
         binding.loadingProgress.visibility = View.GONE
@@ -96,6 +98,7 @@ internal class Feeds : Fragment() {
         binding.dataFetchingFailed.setOnClickListener { startService() }
     }
 
+	/* rss service's result receiver */
     @Suppress("UNCHECKED_CAST")
     private val resultReceiver: ResultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
@@ -115,11 +118,13 @@ internal class Feeds : Fragment() {
         super.onResume()
         startService()
 
+		/* show device infos */
         feedsUtils.ram(binding.ram)
         feedsUtils.cpuBattery(binding.cpu)
         feedsUtils.intStorage(binding.intStorage)
         feedsUtils.extStorage(binding.extStorage)
 
+		/* refresh ram and cpu infos in every 1 seconds */
         handler = Handler(Looper.getMainLooper())
         runnable = object : Runnable {
             override fun run() {
@@ -131,6 +136,7 @@ internal class Feeds : Fragment() {
         handler.post(runnable)
     }
 
+	/* remove the runnable's callback when no need */
     override fun onPause() {
         super.onPause()
         handler.removeCallbacks(runnable)

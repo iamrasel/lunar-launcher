@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.feeds
 
-import android.annotation.SuppressLint
 import android.os.SystemClock
 import java.io.RandomAccessFile
 import java.lang.Exception
@@ -28,8 +27,8 @@ import kotlin.math.roundToInt
 
 internal class SysInfoUtils {
 
-    @SuppressLint("DefaultLocale")
-    fun deviceUptime(): String {
+	/* generate device's uptime string */
+    val deviceUptime: String get() {
         var seconds = (SystemClock.uptimeMillis().toDouble() / 1000).roundToInt()
         val hours = TimeUnit.SECONDS.toHours(seconds.toLong())
         if (hours > 0) seconds -= TimeUnit.HOURS.toSeconds(hours).toInt()
@@ -39,7 +38,8 @@ internal class SysInfoUtils {
             else String.format("%02d:%02d", minutes, seconds)
     }
 
-    fun cpuUsage(): String {
+    /* cpu usage percentage */
+    val cpuUsage: String get() {
         val percentage: Int = if (maxCpuFrequency != 0) {
             100 * frequencyOfCore / maxCpuFrequency
         } else {
@@ -48,66 +48,68 @@ internal class SysInfoUtils {
         return "$percentage%"
     }
 
-    fun cpuFreq(): String {
-        @SuppressLint("DefaultLocale") val min = String.format("%.02f", minCpuFrequency.toFloat() / 1000)
-        @SuppressLint("DefaultLocale") val max = String.format("%.02f", maxCpuFrequency.toFloat() / 1000)
+    /* cpu frequency */
+    val cpuFreq: String get() {
+        val min = String.format("%.02f", minCpuFrequency.toFloat() / 1000)
+        val max = String.format("%.02f", maxCpuFrequency.toFloat() / 1000)
         return "$min - $max GHz"
     }
 
-    private val frequencyOfCore: Int
-        get() {
-            var currentFReq = 0
-            try {
-                val currentFreq: Double
-                val readerCurFreq =
-                    RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/scaling_cur_freq", "r")
-                val curFreq = readerCurFreq.readLine()
-                currentFreq = curFreq.toDouble() / 1000
-                readerCurFreq.close()
-                currentFReq = currentFreq.toInt()
-                println("$currentFReq----------------------------------------------------")
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-            return currentFReq
+    /* frequency of core */
+    private val frequencyOfCore: Int get() {
+        var currentFReq = 0
+        try {
+            val currentFreq: Double
+            val readerCurFreq =
+                RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/scaling_cur_freq", "r")
+            val curFreq = readerCurFreq.readLine()
+            currentFreq = curFreq.toDouble() / 1000
+            readerCurFreq.close()
+            currentFReq = currentFreq.toInt()
+            println("$currentFReq----------------------------------------------------")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
+        return currentFReq
+    }
 
-    private val minCpuFrequency: Int
-        get() {
-            var minFreq = -1
-            try {
-                val randomAccessFile =
-                    RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/cpuinfo_min_freq", "r")
-                while (true) {
-                    val line = randomAccessFile.readLine() ?: break
-                    val timeInState = line.toInt()
-                    if (timeInState > 0) {
-                        val freq = timeInState / 1000
-                        if (freq > minFreq) {
-                            minFreq = freq
-                        }
+    /* minimum cpu frequency */
+    private val minCpuFrequency: Int get() {
+        var minFreq = -1
+        try {
+            val randomAccessFile =
+                RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/cpuinfo_min_freq", "r")
+            while (true) {
+                val line = randomAccessFile.readLine() ?: break
+                val timeInState = line.toInt()
+                if (timeInState > 0) {
+                    val freq = timeInState / 1000
+                    if (freq > minFreq) {
+                        minFreq = freq
                     }
                 }
-            } catch (exception: Exception) {
-                exception.printStackTrace()
             }
-            return minFreq
+        } catch (exception: Exception) {
+            exception.printStackTrace()
         }
+        return minFreq
+    }
 
-    private val maxCpuFrequency: Int
-        get() {
-            var currentFReq = 0
-            try {
-                val currentFreq: Double
-                val readerCurFreq =
-                    RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/cpuinfo_max_freq", "r")
-                val curFreq = readerCurFreq.readLine()
-                currentFreq = curFreq.toDouble() / 1000
-                readerCurFreq.close()
-                currentFReq = currentFreq.toInt()
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-            return currentFReq
+    /* maximum cpu frequency */
+    private val maxCpuFrequency: Int get() {
+        var currentFReq = 0
+        try {
+            val currentFreq: Double
+            val readerCurFreq =
+                RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/cpuinfo_max_freq", "r")
+            val curFreq = readerCurFreq.readLine()
+            currentFreq = curFreq.toDouble() / 1000
+            readerCurFreq.close()
+            currentFReq = currentFreq.toInt()
+        } catch (exception: Exception) {
+            exception.printStackTrace()
         }
+        return currentFReq
+    }
+
 }

@@ -63,10 +63,13 @@ internal class AppMenus : BottomSheetDialogFragment() {
             LauncherActivity()
         }
 
+        /* get package name from fragment's tag */
         packageName = tag.toString()
+
         packageManager = requireContext().packageManager
         appMenuUtils = AppMenuUtils(this, fragmentActivity, requireContext(), packageManager, packageName)
 
+        /* get application info */
         appInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getApplicationInfo(packageName,
                 PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong()))
@@ -75,9 +78,11 @@ internal class AppMenus : BottomSheetDialogFragment() {
             packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
         }
 
+        /* set application name and package name */
         binding.appName.text = packageManager.getApplicationLabel(appInfo)
         binding.appPackage.text = packageName
 
+        /* favorite apps */
         FavouriteUtils().previewAndClicks(requireContext(), packageName, binding.favGroup)
 
         return binding.root
@@ -87,32 +92,38 @@ internal class AppMenus : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
+        /* copy package name */
         binding.appPackage.setOnClickListener {
             UniUtils().copyToClipboard(fragmentActivity, requireContext(), packageName)
         }
 
         binding.detailedInfo.setOnClickListener { detailedInfo() }
         binding.activityBrowser.setOnClickListener { activityBrowser() }
-        binding.appStore.setOnClickListener { appMenuUtils.openAppStore() }
-        binding.appFreeform.setOnClickListener { appMenuUtils.launchAsFreeform() }
-        binding.appInfo.setOnClickListener { appMenuUtils.openAppInfo() }
-        binding.appUninstall.setOnClickListener { appMenuUtils.uninstallApp() }
+        binding.appStore.setOnClickListener { appMenuUtils.appStore() }
+        binding.appFreeform.setOnClickListener { appMenuUtils.freeform() }
+        binding.appInfo.setOnClickListener { appMenuUtils.appInfo() }
+        binding.appUninstall.setOnClickListener { appMenuUtils.uninstall() }
     }
 
+    /* detailed info dialog */
     @SuppressLint("SetTextI18n")
     private fun detailedInfo() {
         val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
         val dialogBinding = AppInfoDialogBinding.inflate(fragmentActivity.layoutInflater)
         dialogBuilder.setView(dialogBinding.root)
         dialogBuilder.show()
+
+        /* show app name */
         dialogBinding.appName.text = packageManager.getApplicationLabel(appInfo)
 
+        /* get package info */
         val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
         } else {
             @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, 0)
         }
 
+        /* show infos */
         dialogBinding.mixed.text =
             "${resources.getString(R.string.version)}: ${packageInfo.versionName} (${PackageInfoCompat.getLongVersionCode(packageInfo).toInt()})\n" +
             "${resources.getString(R.string.sdk)}: ${appInfo.minSdkVersion} ~ ${appInfo.targetSdkVersion}\n" +
@@ -120,26 +131,31 @@ internal class AppMenus : BottomSheetDialogFragment() {
             "${resources.getString(R.string.first_install)}: ${appMenuUtils.dateTimeFormat(packageInfo.firstInstallTime)}\n" +
             "${resources.getString(R.string.last_update)}: ${appMenuUtils.dateTimeFormat(packageInfo.lastUpdateTime)}"
 
-        dialogBinding.permissions.text = appMenuUtils.permissionsForPackage()
+        /* show permissions */
+        dialogBinding.permissions.text = appMenuUtils.permissionsForPackage
     }
 
+    /* activity browser dialog */
     private fun activityBrowser() {
         val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
         val dialogBinding = ActivityBrowserDialogBinding.inflate(fragmentActivity.layoutInflater)
         dialogBuilder.setView(dialogBinding.root)
         val dialog = dialogBuilder.create()
         dialog.show()
+
+        /* show app name */
         dialogBinding.appName.text = packageManager.getApplicationLabel(appInfo)
 
+        /* get activity info */
         val activityInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getPackageInfo(
-                packageName,
-                PackageManager.PackageInfoFlags.of(PackageManager.GET_ACTIVITIES.toLong())
+                packageName, PackageManager.PackageInfoFlags.of(PackageManager.GET_ACTIVITIES.toLong())
             )
         } else {
             @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
         }
 
+        /* show activity list */
         val activityAdapter: ArrayAdapter<String> =
             ArrayAdapter(requireContext(), R.layout.list_item, R.id.item_text, ArrayList())
         if (activityInfo.activities.isNotEmpty()) {
@@ -150,14 +166,17 @@ internal class AppMenus : BottomSheetDialogFragment() {
             dialogBinding.activityList.adapter = activityAdapter
         }
 
+        /* listen item clicks */
         dialogBinding.activityList.onItemClickListener =
             AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, i: Int, _: Long ->
                 try {
+                    /* open activity */
                     val intent = Intent()
                     intent.component = ComponentName(packageName, activityAdapter.getItem(i).toString())
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     requireContext().startActivity(intent)
                 } catch (exception: Exception) {
+                    /* couldn't open activity */
                     exception.printStackTrace()
                     val exceptionShort = (exception.toString().split(": ").toTypedArray())[0]
                     Toast.makeText(requireContext(),
@@ -166,4 +185,5 @@ internal class AppMenus : BottomSheetDialogFragment() {
                 dialog.dismiss()
             }
     }
+
 }

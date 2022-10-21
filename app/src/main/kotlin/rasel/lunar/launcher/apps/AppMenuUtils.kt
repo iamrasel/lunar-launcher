@@ -40,20 +40,24 @@ internal class AppMenuUtils(
     private val context: Context, private val packageManager: PackageManager,
     private val packageName: String) {
 
-    fun launchAsFreeform() {
+    private val uniUtils = UniUtils()
+
+    /* launch app as a freeform window */
+    fun freeform() {
         val freeformIntent = context.packageManager.getLaunchIntentForPackage(packageName)
         freeformIntent!!.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
         val rect = Rect(
-            0, UniUtils().screenHeight(fragmentActivity) / 2,
-            UniUtils().screenWidth(fragmentActivity), UniUtils().screenHeight(fragmentActivity))
+            0, uniUtils.screenHeight(fragmentActivity) / 2,
+            uniUtils.screenWidth(fragmentActivity), uniUtils.screenHeight(fragmentActivity))
         var activityOptions = activityOptions
         activityOptions = activityOptions.setLaunchBounds(rect)
         context.startActivity(freeformIntent, activityOptions.toBundle())
         appMenus.dismiss()
     }
 
-    fun openAppInfo() {
+    /* open android's app info screen */
+    fun appInfo() {
         val infoIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         infoIntent.data = Uri.parse("package:$packageName")
         infoIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -61,20 +65,23 @@ internal class AppMenuUtils(
         appMenus.dismiss()
     }
 
-    fun openAppStore() {
+    /* open app's page in app store/market */
+    fun appStore() {
         try {
             val storeIntent = Intent(Intent.ACTION_VIEW)
             storeIntent.data = Uri.parse("market://details?id=$packageName")
             storeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(storeIntent)
         } catch (activityNotFoundException: ActivityNotFoundException) {
+            /* no app store found exception */
             Toast.makeText(context, context.getString(R.string.null_app_store_message), Toast.LENGTH_SHORT).show()
             activityNotFoundException.printStackTrace()
         }
         appMenus.dismiss()
     }
 
-    fun uninstallApp() {
+    /* uninstall the app */
+    fun uninstall() {
         val uninstallIntent = Intent(Intent.ACTION_DELETE)
         uninstallIntent.data = Uri.parse("package:$packageName")
         uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -82,36 +89,36 @@ internal class AppMenuUtils(
         appMenus.dismiss()
     }
 
-    private val activityOptions: ActivityOptions
-        get() {
-            val activityOptions = ActivityOptions.makeBasic()
-            val freeformStackId = 5
-            try {
-                val method =
-                    ActivityOptions::class.java.getMethod("setLaunchWindowingMode", Int::class.javaPrimitiveType)
-                method.invoke(activityOptions, freeformStackId)
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-            return activityOptions
+    /* get activity options for launching app in freeform mode */
+    private val activityOptions: ActivityOptions get() {
+        val activityOptions = ActivityOptions.makeBasic()
+        try {
+            val method =
+                ActivityOptions::class.java.getMethod("setLaunchWindowingMode", Int::class.javaPrimitiveType)
+            method.invoke(activityOptions, 5)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
         }
-
-    fun dateTimeFormat(long: Long) : String {
-        val sdf = SimpleDateFormat.getDateTimeInstance()
-        return sdf.format(Date(long))
+        return activityOptions
     }
 
-    fun permissionsForPackage() : String {
+    /* long value to local date-time format */
+    fun dateTimeFormat(long: Long) : String = SimpleDateFormat.getDateTimeInstance().format(Date(long))
+
+    /* get and arrange all the permissions for an application */
+    val permissionsForPackage : String get() {
         val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(PackageManager.GET_PERMISSIONS.toLong()))
         } else {
             @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
         }
+
         return if (packageInfo.requestedPermissions.isNotEmpty()) {
             val stringBuilder = StringBuilder()
             for (i in 0 until packageInfo.requestedPermissions.size) {
                 if (i != packageInfo.requestedPermissions.size - 1)
                     stringBuilder.append("${packageInfo.requestedPermissions[i]}\n\n")
+                /* don't add any new line after the last entry */
                 else
                     stringBuilder.append(packageInfo.requestedPermissions[i])
             }
@@ -120,4 +127,5 @@ internal class AppMenuUtils(
             ""
         }
     }
+
 }

@@ -28,10 +28,8 @@ import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.databinding.AppsChildBinding
 
 
-internal class AppsAdapter(
-    private val fragmentActivity: FragmentActivity,
-    private val appsCount: MaterialTextView
-) : RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
+internal class AppsAdapter(private val fragmentActivity: FragmentActivity, private val appsCount: MaterialTextView) :
+    RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
 
     private var oldList = ArrayList<Packages>()
 
@@ -44,12 +42,15 @@ internal class AppsAdapter(
         val position = oldList[i]
 
         holder.view.childTextview.apply {
+            /* show app name */
             text = position.appName
 
+            /* on click - open app */
             setOnClickListener {
                 context.startActivity(fragmentActivity.packageManager.getLaunchIntentForPackage(position.packageName))
             }
 
+            /* on long click - open app menu */
             setOnLongClickListener {
                 AppMenus().show(fragmentActivity.supportFragmentManager, position.packageName)
                 true
@@ -58,12 +59,14 @@ internal class AppsAdapter(
     }
 
     override fun getItemCount(): Int {
+        /* show app count */
         appsCount.text = oldList.size.toString()
         return oldList.size
     }
 
     inner class AppsViewHolder(var view: AppsChildBinding) : RecyclerView.ViewHolder(view.root)
 
+    /* update app list */
     fun updateData(newList: List<Packages>) {
         val diffUtil = AppsDiffUtil(oldList, newList)
         val diffUtilResult = DiffUtil.calculateDiff(diffUtil)

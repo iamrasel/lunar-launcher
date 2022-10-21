@@ -70,7 +70,7 @@ internal class RssAdapter(private val items: List<Rss>, private val context: Con
         }
     }
 
-    class RssViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class RssViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(view.root) {
         /* store previous styles for resetting */
         var gravity: Int = view.itemText.gravity
         var color: ColorStateList = view.itemText.textColors

@@ -82,7 +82,7 @@ internal class TodoAdapter(
         }
     }
 
-    class TodoViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(
+    inner class TodoViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(
         view.root
     )
 
