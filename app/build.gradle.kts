@@ -11,8 +11,8 @@ android {
         applicationId = "rasel.lunar.launcher"
         minSdk = 26
         targetSdk = 33
-        versionCode = 21
-        versionName = "2.1"
+        versionCode = 22
+        versionName = "2.1.1"
     }
 
     buildTypes {
@@ -64,7 +64,7 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.5.1")
     implementation ("androidx.biometric:biometric-ktx:1.2.0-alpha05")
     implementation ("androidx.core:core-ktx:1.9.0")
-    implementation ("com.google.android.material:material:1.6.1")
+    implementation ("com.google.android.material:material:1.7.0")
     implementation (kotlin("stdlib", version = kotlinVersion))
     implementation ("dev.chrisbanes.insetter:insetter:0.6.1")
 }

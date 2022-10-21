@@ -52,6 +52,7 @@
 - [x] Launch from search
 - [x] Launch in freeform mode
 - [x] Total apps count
+- [ ] App grid with icon (alternative)
 - [ ] App appearance
 - [ ] App rename
 - [ ] App vault
@@ -62,7 +63,10 @@
 
 - [x] Device stats
   - This section is temporary, will be replaced with more useful feature.
-- [x] RSS
+- [x] News feed
+  - [x] RSS
+  - [ ] Atom
+- [ ] Widget host
 
 </details>
 <details><summary>Quick Access</summary>
@@ -102,6 +106,14 @@ To get updated with the latest build head over to the [Actions](https://github.c
 ## Warning
 There is a similar app available in [Play Store](https://play.google.com/store/apps/details?id=rasel.lunar.launcher) with the same app and package name, which has _**NOT**_ been served by me. If anything bad happens to you for using that application, I will not be responsible.
 
+## Permissions
+- `android.permission.ACCESS_NETWORK_STATE` - To check for active network connection
+- `android.permission.CALL_PHONE` - To make call
+- `android.permission.EXPAND_STATUS_BAR` - To expand notification panel
+- `android.permission.INTERNET` - To fetch weather and feed data
+- `android.permission.REQUEST_DELETE_PACKAGES` - To uninstall apks
+- `android.permission.WRITE_SETTINGS` - To change system values like brightness
+
 ## Community
 If you want to share your thoughts with me or other users, join the Lunar Launcher's users community.
 <div align='center'>
@@ -110,14 +122,6 @@ If you want to share your thoughts with me or other users, join the Lunar Launch
 <a href='https://t.me/LunarLauncher_chats'><img src='https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white'></a>
 
 </div>
-
-## Permissions
-- `android.permission.ACCESS_NETWORK_STATE` - To check for active network connection
-- `android.permission.CALL_PHONE` - To make call
-- `android.permission.EXPAND_STATUS_BAR` - To expand notification panel
-- `android.permission.INTERNET` - To fetch weather and feed data
-- `android.permission.REQUEST_DELETE_PACKAGES` - To uninstall apks
-- `android.permission.WRITE_SETTINGS` - To change system values like brightness
 
 ## Credits
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
