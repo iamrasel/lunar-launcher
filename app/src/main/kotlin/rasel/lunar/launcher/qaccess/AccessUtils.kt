@@ -40,10 +40,10 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
-import rasel.lunar.launcher.apps.FavouriteUtils
 import rasel.lunar.launcher.databinding.ShortcutMakerBinding
 import rasel.lunar.launcher.helpers.ColorPicker
 import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.settings.PrefsUtil
 import java.util.*
 
 
@@ -214,7 +214,7 @@ internal class AccessUtils(
                 }
                 /* on long click - remove from favorite apps */
                 imageView.setOnLongClickListener {
-                    FavouriteUtils().saveFavApps(context, position, "")
+                    PrefsUtil().saveFavApps(context, position, "")
                     imageView.visibility = View.GONE
                     true
                 }

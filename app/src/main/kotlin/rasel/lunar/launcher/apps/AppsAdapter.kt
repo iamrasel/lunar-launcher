@@ -19,17 +19,20 @@
 package rasel.lunar.launcher.apps
 
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.databinding.AppsChildBinding
 
 
-internal class AppsAdapter(private val fragmentActivity: FragmentActivity, private val appsCount: MaterialTextView) :
-    RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
+internal class AppsAdapter(
+    private val packageManager: PackageManager,
+    private val fragmentManager: FragmentManager,
+    private val appsCount: MaterialTextView) : RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
 
     private var oldList = ArrayList<Packages>()
 
@@ -47,12 +50,12 @@ internal class AppsAdapter(private val fragmentActivity: FragmentActivity, priva
 
             /* on click - open app */
             setOnClickListener {
-                context.startActivity(fragmentActivity.packageManager.getLaunchIntentForPackage(position.packageName))
+                context.startActivity(packageManager.getLaunchIntentForPackage(position.packageName))
             }
 
             /* on long click - open app menu */
             setOnLongClickListener {
-                AppMenus().show(fragmentActivity.supportFragmentManager, position.packageName)
+                AppMenu().show(fragmentManager, position.packageName)
                 true
             }
         }

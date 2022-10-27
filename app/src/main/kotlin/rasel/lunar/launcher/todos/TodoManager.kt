@@ -84,7 +84,7 @@ internal class TodoManager : Fragment() {
 
     fun refreshList() {
         binding.todos.adapter =
-            context?.let { TodoAdapter(databaseHandler.todos, this, fragmentActivity, it) }
+            context?.let { TodoAdapter(databaseHandler.todos, this, fragmentActivity, requireContext()) }
     }
 
     /* add new dialog */

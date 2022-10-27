@@ -81,7 +81,7 @@ internal class LauncherHome : Fragment() {
     /* todo list */
     private fun showTodoList() {
         binding.todos.adapter =
-            context?.let { TodoAdapter(DatabaseHandler(context).todos, TodoManager(), fragmentActivity, it) }
+            context?.let { TodoAdapter(DatabaseHandler(context).todos, TodoManager(), fragmentActivity, requireContext()) }
     }
 
     override fun onResume() {

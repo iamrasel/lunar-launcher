@@ -84,7 +84,7 @@ internal class AppDrawer : Fragment() {
         }
 
         packageManager = fragmentActivity.packageManager
-        appsAdapter = AppsAdapter(fragmentActivity, binding.appsCount)
+        appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
 
         /* initialize apps list adapter */
         binding.appsList.adapter = appsAdapter.also { adapter ->

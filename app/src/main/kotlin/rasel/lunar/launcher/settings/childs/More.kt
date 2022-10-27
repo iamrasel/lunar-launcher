@@ -30,14 +30,14 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.databinding.SettingsMoreBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
-import rasel.lunar.launcher.settings.SettingsPrefsUtils
+import rasel.lunar.launcher.settings.PrefsUtil
 import java.util.*
 
 
 internal class More : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsMoreBinding
-    private val settingsPrefsUtils = SettingsPrefsUtils()
+    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsMoreBinding.inflate(inflater, container, false)
@@ -76,10 +76,10 @@ internal class More : BottomSheetDialogFragment() {
         binding.lockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.selectLockNegative.id -> settingsPrefsUtils.saveLockMethod(requireContext(), 0)
-                    binding.selectLockAccessibility.id -> settingsPrefsUtils.saveLockMethod(requireContext(), 1)
-                    binding.selectLockAdmin.id -> settingsPrefsUtils.saveLockMethod(requireContext(), 2)
-                    binding.selectLockRoot.id -> settingsPrefsUtils.saveLockMethod(requireContext(), 3)
+                    binding.selectLockNegative.id -> prefsUtil.saveLockMethod(requireContext(), 0)
+                    binding.selectLockAccessibility.id -> prefsUtil.saveLockMethod(requireContext(), 1)
+                    binding.selectLockAdmin.id -> prefsUtil.saveLockMethod(requireContext(), 2)
+                    binding.selectLockRoot.id -> prefsUtil.saveLockMethod(requireContext(), 3)
                 }
             }
         }
@@ -88,7 +88,7 @@ internal class More : BottomSheetDialogFragment() {
     /* save input field value while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        settingsPrefsUtils.saveRssUrl(requireContext(),
+        prefsUtil.saveRssUrl(requireContext(),
             Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' })
     }
 

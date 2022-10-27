@@ -28,13 +28,13 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsTodoBinding
 import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.SettingsPrefsUtils
+import rasel.lunar.launcher.settings.PrefsUtil
 
 
 internal class TodoSettings : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsTodoBinding
-    private val settingsPrefsUtils = SettingsPrefsUtils()
+    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTodoBinding.inflate(inflater, container, false)
@@ -59,15 +59,15 @@ internal class TodoSettings : BottomSheetDialogFragment() {
 
         /* change todo count value */
         binding.showTodos.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-            settingsPrefsUtils.todoCount(requireContext(), value.toInt())
+            prefsUtil.todoCount(requireContext(), value.toInt())
         })
 
         /* change todo lock state value */
         binding.todoLockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.todoLockPositive.id -> settingsPrefsUtils.todoLock(requireContext(), true)
-                    binding.todoLockNegative.id -> settingsPrefsUtils.todoLock(requireContext(), false)
+                    binding.todoLockPositive.id -> prefsUtil.todoLock(requireContext(), true)
+                    binding.todoLockNegative.id -> prefsUtil.todoLock(requireContext(), false)
                 }
             }
         }

@@ -24,7 +24,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -42,7 +41,7 @@ internal class TodoAdapter(
     private val fragmentActivity: FragmentActivity,
     private val context: Context) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    private val currentFragment: Fragment?
+    private val currentFragment = fragmentActivity.supportFragmentManager.findFragmentById(R.id.main_fragments_container)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TodoViewHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
@@ -89,7 +88,7 @@ internal class TodoAdapter(
     /* update dialog */
     private fun updateDialog(i: Int) {
         val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
-        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(todoManager.context))
+        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(todoManager.requireContext()))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
         bottomSheetDialog.dismissWithAnimation = true
@@ -122,11 +121,6 @@ internal class TodoAdapter(
                 dialogBinding.todoInput.error = context.getString(R.string.empty_text_field)
             }
         }
-    }
-
-    init {
-        val fragmentManager = fragmentActivity.supportFragmentManager
-        currentFragment = fragmentManager.findFragmentById(R.id.main_fragments_container)
     }
 
 }

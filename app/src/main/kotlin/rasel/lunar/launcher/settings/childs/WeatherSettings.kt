@@ -28,14 +28,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.databinding.SettingsWeatherBinding
 import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.SettingsPrefsUtils
+import rasel.lunar.launcher.settings.PrefsUtil
 import java.util.*
 
 
 internal class WeatherSettings : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsWeatherBinding
-    private val settingsPrefsUtils = SettingsPrefsUtils()
+    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsWeatherBinding.inflate(inflater, container, false)
@@ -68,8 +68,8 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         binding.tempGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.selectCelsius.id -> settingsPrefsUtils.saveTempUnit(requireContext(), 0)
-                    binding.selectFahrenheit.id -> settingsPrefsUtils.saveTempUnit(requireContext(), 1)
+                    binding.selectCelsius.id -> prefsUtil.saveTempUnit(requireContext(), 0)
+                    binding.selectFahrenheit.id -> prefsUtil.saveTempUnit(requireContext(), 1)
                 }
             }
         }
@@ -78,8 +78,8 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         binding.cityGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.showCityNegative.id -> settingsPrefsUtils.showCity(requireContext(), false)
-                    binding.showCityPositive.id -> settingsPrefsUtils.showCity(requireContext(), true)
+                    binding.showCityNegative.id -> prefsUtil.showCity(requireContext(), false)
+                    binding.showCityPositive.id -> prefsUtil.showCity(requireContext(), true)
                 }
             }
         }
@@ -88,9 +88,9 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
     /* save input field values while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        settingsPrefsUtils.saveCityName(requireContext(),
+        prefsUtil.saveCityName(requireContext(),
             Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' })
-        settingsPrefsUtils.saveOwmApi(requireContext(),
+        prefsUtil.saveOwmApi(requireContext(),
             Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' })
     }
 

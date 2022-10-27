@@ -132,7 +132,7 @@ internal class HomeUtils(
             override fun onLongClick() {
                 super.onLongClick()
                 when (sharedPreferences.getBoolean(constants.KEY_TODO_LOCK, false)) {
-                    false -> fragmentManager.beginTransaction().add(R.id.main_fragments_container, TodoManager())
+                    false -> fragmentManager.beginTransaction().replace(R.id.main_fragments_container, TodoManager())
                         .addToBackStack("").commit()
                     /* show authentication screen if lock is on */
                     true -> {
@@ -168,7 +168,7 @@ internal class HomeUtils(
     /* authentication callback for TodoManager lock */
     private val authenticationCallback = object : BiometricPrompt.AuthenticationCallback() {
         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-            fragmentManager.beginTransaction().add(R.id.main_fragments_container, TodoManager())
+            fragmentManager.beginTransaction().replace(R.id.main_fragments_container, TodoManager())
                 .addToBackStack("").commit()
         }
         override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {

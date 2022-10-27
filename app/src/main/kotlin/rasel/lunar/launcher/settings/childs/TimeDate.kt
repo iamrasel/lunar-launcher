@@ -28,7 +28,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.databinding.SettingsTimeDateBinding
 import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.SettingsPrefsUtils
+import rasel.lunar.launcher.settings.PrefsUtil
 import java.util.*
 
 
@@ -36,7 +36,7 @@ internal class TimeDate : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsTimeDateBinding
     private val constants = Constants()
-    private val settingsPrefsUtils = SettingsPrefsUtils()
+    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTimeDateBinding.inflate(inflater, container, false)
@@ -64,9 +64,9 @@ internal class TimeDate : BottomSheetDialogFragment() {
         binding.timeGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.followSystemTime.id -> settingsPrefsUtils.saveTimeFormat(requireContext(), 0)
-                    binding.selectTwelve.id -> settingsPrefsUtils.saveTimeFormat(requireContext(), 1)
-                    binding.selectTwentyFour.id -> settingsPrefsUtils.saveTimeFormat(requireContext(), 2)
+                    binding.followSystemTime.id -> prefsUtil.saveTimeFormat(requireContext(), 0)
+                    binding.selectTwelve.id -> prefsUtil.saveTimeFormat(requireContext(), 1)
+                    binding.selectTwentyFour.id -> prefsUtil.saveTimeFormat(requireContext(), 2)
                 }
             }
         }
@@ -79,9 +79,9 @@ internal class TimeDate : BottomSheetDialogFragment() {
         val dateFormat = Objects.requireNonNull(binding.dateFormat.text).toString().trim { it <= ' ' }
 
         if (dateFormat.isEmpty()) {
-            settingsPrefsUtils.saveDateFormat(requireContext(), constants.DEFAULT_DATE_FORMAT)
+            prefsUtil.saveDateFormat(requireContext(), constants.DEFAULT_DATE_FORMAT)
         } else {
-            settingsPrefsUtils.saveDateFormat(requireContext(), dateFormat)
+            prefsUtil.saveDateFormat(requireContext(), dateFormat)
         }
     }
 

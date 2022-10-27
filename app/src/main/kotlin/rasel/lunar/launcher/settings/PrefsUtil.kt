@@ -22,9 +22,15 @@ import android.content.Context
 import rasel.lunar.launcher.helpers.Constants
 
 
-internal class SettingsPrefsUtils {
+internal class PrefsUtil {
 
     private val constants = Constants()
+
+    /* save favorite package names */
+    fun saveFavApps(context: Context, position: Int, packageName: String?) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
+        sharedPreferences.edit().putString(constants.KEY_APP_NO_ + position, packageName).apply()
+    }
 
     /* save settings value for time format */
     fun saveTimeFormat(context: Context, timeFormat: Int) {

@@ -27,13 +27,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.databinding.SettingsAppsBinding
 import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.SettingsPrefsUtils
+import rasel.lunar.launcher.settings.PrefsUtil
 
 
 internal class Apps : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsAppsBinding
-    private val settingsPrefsUtils = SettingsPrefsUtils()
+    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppsBinding.inflate(inflater, container, false)
@@ -58,8 +58,8 @@ internal class Apps : BottomSheetDialogFragment() {
         binding.keyboardAutoGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
-                    binding.keyboardAutoPositive.id -> settingsPrefsUtils.keyboardSearch(requireContext(), true)
-                    binding.keyboardAutoNegative.id -> settingsPrefsUtils.keyboardSearch(requireContext(), false)
+                    binding.keyboardAutoPositive.id -> prefsUtil.keyboardSearch(requireContext(), true)
+                    binding.keyboardAutoNegative.id -> prefsUtil.keyboardSearch(requireContext(), false)
                 }
             }
         }
