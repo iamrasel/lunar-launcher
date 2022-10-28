@@ -36,12 +36,12 @@ import java.util.*
 
 
 internal class TodoAdapter(
-    private val todoList: ArrayList<Todo>,
-    private val todoManager: TodoManager,
     private val fragmentActivity: FragmentActivity,
-    private val context: Context) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+    private val context: Context,
+    private val todoManager: TodoManager?) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
     private val currentFragment = fragmentActivity.supportFragmentManager.findFragmentById(R.id.main_fragments_container)
+    private val todoList = DatabaseHandler(context).todos
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TodoViewHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
@@ -63,7 +63,9 @@ internal class TodoAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: TodoViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        holder.view.itemText.text = "\u25CF  " + todoList[position].name
+        val todo = todoList[position]
+
+        holder.view.itemText.text = "\u25CF  " + todo.name
 
         if (currentFragment is TodoManager) {
             /* multiline texts are enabled for TodoManager */
@@ -72,7 +74,7 @@ internal class TodoAdapter(
             holder.view.itemText.setOnClickListener { updateDialog(position) }
             /* copy texts on long click */
             holder.view.itemText.setOnLongClickListener {
-                UniUtils().copyToClipboard(fragmentActivity, context, todoList[position].name)
+                UniUtils().copyToClipboard(fragmentActivity, context, todo.name)
                 true
             }
         } else {
@@ -81,32 +83,30 @@ internal class TodoAdapter(
         }
     }
 
-    inner class TodoViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(
-        view.root
-    )
+    inner class TodoViewHolder(var view: ListItemBinding) : RecyclerView.ViewHolder(view.root)
 
     /* update dialog */
-    private fun updateDialog(i: Int) {
+    private fun updateDialog(position: Int) {
         val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
-        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(todoManager.requireContext()))
+        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(context))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
         bottomSheetDialog.dismissWithAnimation = true
 
         val databaseHandler = DatabaseHandler(context)
-        val todo = todoList[i]
+        val todo = databaseHandler.todos[position]
 
         dialogBinding.deleteAllConfirmation.visibility = View.GONE
-        dialogBinding.todoInput.setText(todoList[i].name)
+        dialogBinding.todoInput.setText(todo.name)
         dialogBinding.todoCancel.text = context.getString(R.string.delete)
         dialogBinding.todoCancel.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
         dialogBinding.todoOk.text = context.getString(R.string.update)
 
         /* delete the item */
         dialogBinding.todoCancel.setOnClickListener {
-            databaseHandler.deleteTodo(todoList[i].id)
+            databaseHandler.deleteTodo(todo.id)
             bottomSheetDialog.dismiss()
-            todoManager.refreshList()
+            todoManager!!.refreshList()
         }
 
         /* update the item */
@@ -116,7 +116,7 @@ internal class TodoAdapter(
                 todo.name = updatedTodoString
                 databaseHandler.updateTodo(todo)
                 bottomSheetDialog.dismiss()
-                todoManager.refreshList()
+                todoManager!!.refreshList()
             } else {
                 dialogBinding.todoInput.error = context.getString(R.string.empty_text_field)
             }

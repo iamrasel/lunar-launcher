@@ -66,6 +66,34 @@ internal class Feeds : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        startService()
+
+        /* show device infos */
+        feedsUtils.ram(binding.ram)
+        feedsUtils.cpuBattery(binding.cpu)
+        feedsUtils.intStorage(binding.intStorage)
+        feedsUtils.extStorage(binding.extStorage)
+
+        /* refresh ram and cpu infos in every 1 seconds */
+        handler = Handler(Looper.getMainLooper())
+        runnable = object : Runnable {
+            override fun run() {
+                feedsUtils.ram(binding.ram)
+                feedsUtils.cpuBattery(binding.cpu)
+                handler.postDelayed(this, 1000)
+            }
+        }
+        handler.post(runnable)
+    }
+
+    /* remove the runnable's callback when no need */
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable)
+    }
+
     /* insets */
     private fun setInsets() {
         Insetter.builder()
@@ -112,34 +140,6 @@ internal class Feeds : Fragment() {
                 resumeService()
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        startService()
-
-		/* show device infos */
-        feedsUtils.ram(binding.ram)
-        feedsUtils.cpuBattery(binding.cpu)
-        feedsUtils.intStorage(binding.intStorage)
-        feedsUtils.extStorage(binding.extStorage)
-
-		/* refresh ram and cpu infos in every 1 seconds */
-        handler = Handler(Looper.getMainLooper())
-        runnable = object : Runnable {
-            override fun run() {
-                feedsUtils.ram(binding.ram)
-                feedsUtils.cpuBattery(binding.cpu)
-                handler.postDelayed(this, 1000)
-            }
-        }
-        handler.post(runnable)
-    }
-
-	/* remove the runnable's callback when no need */
-    override fun onPause() {
-        super.onPause()
-        handler.removeCallbacks(runnable)
     }
 
 }

@@ -55,7 +55,7 @@ internal class TodoManager : Fragment() {
             LauncherActivity()
         }
 
-        databaseHandler = DatabaseHandler(context)
+        databaseHandler = DatabaseHandler(requireContext())
 
         return binding.root
     }
@@ -83,14 +83,13 @@ internal class TodoManager : Fragment() {
     }
 
     fun refreshList() {
-        binding.todos.adapter =
-            context?.let { TodoAdapter(databaseHandler.todos, this, fragmentActivity, requireContext()) }
+        binding.todos.adapter = TodoAdapter(fragmentActivity, requireContext(), this)
     }
 
     /* add new dialog */
     private fun addNewDialog() {
         val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
-        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(context))
+        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(requireContext()))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
         bottomSheetDialog.dismissWithAnimation = true
@@ -121,7 +120,7 @@ internal class TodoManager : Fragment() {
     /* delete all dialog */
     private fun deleteAllDialog() {
         val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
-        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(context))
+        val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(requireContext()))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
         bottomSheetDialog.dismissWithAnimation = true
