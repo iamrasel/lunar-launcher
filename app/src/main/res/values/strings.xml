@@ -70,6 +70,7 @@
     <string name="root">Root</string>
     <string name="sdk">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
+    <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>
     <string name="show_city">Show City Name With Weather</string>
     <string name="source_code">Source Code</string>
     <string name="star">Star</string>

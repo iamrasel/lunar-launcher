@@ -93,8 +93,7 @@ internal class LauncherActivity : AppCompatActivity() {
     /* set up viewpager2 */
     private fun setupView() {
         viewPager = binding.viewPager
-        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        viewPager.adapter = adapter
+        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         viewPager.setCurrentItem(1, false)
     }
 

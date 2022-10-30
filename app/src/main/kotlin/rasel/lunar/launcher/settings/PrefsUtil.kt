@@ -86,6 +86,12 @@ internal class PrefsUtil {
         sharedPreferences.edit().putBoolean(constants.KEY_KEYBOARD_SEARCH, keyboardSearch).apply()
     }
 
+    /* save shortcuts count value */
+    fun shortcutCount(context: Context, shortcutCount: Int) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        sharedPreferences.edit().putInt(constants.KEY_SHORTCUT_COUNT, shortcutCount).apply()
+    }
+
     /* save rss feed url */
     fun saveRssUrl(context: Context, rssUrl: String) {
         val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)

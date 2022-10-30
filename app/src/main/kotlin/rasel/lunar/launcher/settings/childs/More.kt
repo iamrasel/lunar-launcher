@@ -27,6 +27,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsMoreBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
@@ -46,6 +47,7 @@ internal class More : BottomSheetDialogFragment() {
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
+        binding.shortcutCount.value = sharedPreferences.getInt(constants.KEY_SHORTCUT_COUNT, 6).toFloat()
         binding.inputFeedUrl.setText(sharedPreferences.getString(constants.KEY_RSS_URL, "").toString())
 
         when (sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0)) {
@@ -71,6 +73,11 @@ internal class More : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
+
+        /* change shortcut count value */
+        binding.shortcutCount.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+            prefsUtil.shortcutCount(requireContext(), value.toInt())
+        })
 
         /* change lock method value */
         binding.lockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->

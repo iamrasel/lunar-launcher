@@ -144,9 +144,12 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* set up contact and url shortcuts */
     private fun shortcuts() {
-        val prefsShortcuts = requireContext().getSharedPreferences(constants.PREFS_SHORTCUTS, 0)
-        for (position in 1..6) {
-            val shortcutValue = prefsShortcuts.getString(constants.KEY_SHORTCUT_NO_ + position.toString(), "").toString()
+        val shortcutCount =
+            requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0).getInt(constants.KEY_SHORTCUT_COUNT, 6)
+        if (shortcutCount == 0) binding.shortcutsGroup.visibility = View.GONE
+
+        for (position in 1..shortcutCount) {
+            val shortcutValue = sharedPreferences.getString(constants.KEY_SHORTCUT_NO_ + position.toString(), "").toString()
             val splitShortcutValue = shortcutValue.split("||").toTypedArray()
 
             var shortcutType = ""

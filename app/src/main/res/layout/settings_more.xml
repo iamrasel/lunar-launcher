@@ -7,11 +7,25 @@
     android:gravity="center_horizontal"
     android:padding="16dp">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shortcut_count"
+        android:textSize="16sp"/>
+    <com.google.android.material.slider.Slider
+        android:id="@+id/shortcut_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="6"
+        android:stepSize="1"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="324dp"
         android:layout_height="wrap_content"
         android:hint="@string/feed_url"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        android:layout_marginTop="16dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_feed_url"
             android:layout_width="match_parent"
