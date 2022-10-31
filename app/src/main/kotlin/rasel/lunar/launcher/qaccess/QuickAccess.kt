@@ -19,6 +19,7 @@
 package rasel.lunar.launcher.qaccess
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -276,16 +277,17 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* dialog for creating shortcuts */
     private fun shortcutsSaverDialog(position: Int) {
-        val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
         val dialogBinding = ShortcutMakerBinding.inflate(fragmentActivity.layoutInflater)
-        dialogBuilder.setView(dialogBinding.root)
-        val dialog = dialogBuilder.create()
-        dialog.show()
+        val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
+            .setView(dialogBinding.root)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
 
         /* set up color picker section */
-        ColorPicker(dialogBinding.colorPicker.colorInput, dialogBinding.colorPicker.colorA,
+        ColorPicker("00000000", dialogBinding.colorPicker.colorInput, dialogBinding.colorPicker.colorA,
             dialogBinding.colorPicker.colorR, dialogBinding.colorPicker.colorG,
-            dialogBinding.colorPicker.colorB, dialogBinding.colorPicker.colorPicker).pickColor()
+            dialogBinding.colorPicker.colorB, dialogBinding.root).pickColor()
 
         /* shortcut type chooser - contact/url */
         var shortcutType = ""
@@ -304,10 +306,8 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             }
         }
 
-        /* close the dialog on cancel */
-        dialogBinding.cancel.setOnClickListener { dialog.dismiss() }
-        /* save the shortcut value */
-        dialogBinding.ok.setOnClickListener {
+        /* save the shortcut values */
+        dialogBuilder.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             /* get shortcut value */
             val intentString =
                 Objects.requireNonNull(dialogBinding.inputField.text).toString().trim { it <= ' ' }
@@ -322,7 +322,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             if (shortcutType.isNotEmpty() && intentString.isNotEmpty() && thumbLetter.isNotEmpty() && color.isNotEmpty()) {
                 sharedPreferences.edit().putString(constants.KEY_SHORTCUT_NO_ + position,
                     "$shortcutType||$intentString||$thumbLetter||$color").apply()
-                dialog.dismiss()
+                dialogBuilder.dismiss()
                 this.onResume()
             }
         }

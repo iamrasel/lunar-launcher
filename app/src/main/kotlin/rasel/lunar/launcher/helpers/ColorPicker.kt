@@ -27,13 +27,15 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
 
 
-internal class ColorPicker(
+internal class ColorPicker(private val initialColor: String,
     private val editText: TextInputEditText, private val sliderA: Slider, private val sliderR: Slider,
     private val sliderG: Slider, private val sliderB: Slider, private val colorPreview: LinearLayoutCompat) {
 
     @SuppressLint("SetTextI18n")
     fun pickColor() {
-        editText.setText("00000000")
+        editText.setText(initialColor)
+        stringToSlider(initialColor)
+        colorPreview.setBackgroundColor(Color.parseColor("#$initialColor"))
 
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
@@ -43,10 +45,7 @@ internal class ColorPicker(
                     sliderG.value = Integer.parseInt(s.substring(2..3), 16).toFloat()
                     sliderB.value = Integer.parseInt(s.substring(4..5), 16).toFloat()
                 } else if (s.length == 8){
-                    sliderA.value = Integer.parseInt(s.substring(0..1), 16).toFloat()
-                    sliderR.value = Integer.parseInt(s.substring(2..3), 16).toFloat()
-                    sliderG.value = Integer.parseInt(s.substring(4..5), 16).toFloat()
-                    sliderB.value = Integer.parseInt(s.substring(6..7), 16).toFloat()
+                    stringToSlider(s.toString())
                 } else if (s.isEmpty()) {
                     sliderA.value = 0F
                     sliderR.value = 0F
@@ -77,6 +76,13 @@ internal class ColorPicker(
             editText.setText(colorString.uppercase())
             colorPreview.setBackgroundColor(Color.parseColor("#$colorString"))
         })
+    }
+
+    private fun stringToSlider(s: String) {
+        sliderA.value = Integer.parseInt(s.substring(0..1), 16).toFloat()
+        sliderR.value = Integer.parseInt(s.substring(2..3), 16).toFloat()
+        sliderG.value = Integer.parseInt(s.substring(4..5), 16).toFloat()
+        sliderB.value = Integer.parseInt(s.substring(6..7), 16).toFloat()
     }
 
     private val colorString: String get() {
