@@ -29,9 +29,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import rasel.lunar.launcher.apps.AppDrawer
 import rasel.lunar.launcher.databinding.LauncherActivityBinding
+import rasel.lunar.launcher.feeds.Feeds
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.ViewPagerAdapter
+import rasel.lunar.launcher.home.LauncherHome
 
 
 internal class LauncherActivity : AppCompatActivity() {
@@ -93,7 +96,9 @@ internal class LauncherActivity : AppCompatActivity() {
     /* set up viewpager2 */
     private fun setupView() {
         viewPager = binding.viewPager
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        val fragments = mutableListOf(Feeds(), LauncherHome(), AppDrawer())
+        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, fragments, lifecycle)
+        viewPager.offscreenPageLimit = 1
         viewPager.setCurrentItem(1, false)
     }
 

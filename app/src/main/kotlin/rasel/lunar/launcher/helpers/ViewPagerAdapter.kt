@@ -22,25 +22,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import rasel.lunar.launcher.apps.AppDrawer
-import rasel.lunar.launcher.feeds.Feeds
-import rasel.lunar.launcher.home.LauncherHome
 
 
-internal class ViewPagerAdapter(fragmentManager: FragmentManager?, lifecycle: Lifecycle?) :
-    FragmentStateAdapter(fragmentManager!!, lifecycle!!) {
+internal class ViewPagerAdapter(
+    fragmentManager: FragmentManager, private val fragments: MutableList<Fragment>, lifecycle: Lifecycle) :
+    FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    override fun createFragment(position: Int): Fragment {
-        when (position) {
-            0 -> return Feeds()
-            1 -> return LauncherHome()
-            2 -> return AppDrawer()
-        }
-        return LauncherHome()
-    }
-
-    override fun getItemCount(): Int {
-        return 3
-    }
+    override fun createFragment(position: Int): Fragment = fragments[position]
+    override fun getItemCount(): Int = fragments.size
 
 }
