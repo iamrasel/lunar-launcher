@@ -56,6 +56,14 @@
                 android:clipToPadding="false"
                 app:layoutManager="LinearLayoutManager"/>
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/loading"
+                android:layout_width="136dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                app:trackColor="@color/almost_transparent"/>
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/search_layout"
                 android:layout_width="wrap_content"

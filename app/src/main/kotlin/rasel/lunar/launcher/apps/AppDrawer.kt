@@ -187,6 +187,7 @@ internal class AppDrawer : Fragment() {
             return
         } else {
             /* update the list */
+            binding.loading.visibility = View.GONE
             appsAdapter.updateData(packagesList)
         }
     }
