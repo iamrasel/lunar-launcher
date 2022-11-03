@@ -14,6 +14,7 @@
     </string>
     <string name="add_new">Add New</string>
     <string name="advance">Advance</string>
+    <string name="amazon">Amazon</string>
     <string name="appearances">Appearances</string>
     <string name="application_theme">Application Theme</string>
     <string name="app_drawer">App Drawer</string>
@@ -77,6 +78,7 @@
     <string name="support">Support</string>
     <string name="support_message">Support the developer to keep this application free and alive.\n
         \n<li><b>Donate:</b> If possible, make direct donations to help and encourage the developer.</li>
+        \n<li><b>Amazon:</b> Use my affiliate link while shopping on Amazon to get me rewarded.</li>
         \n<li><b>Star:</b> Be a stargazer at Github to show your support.</li>
     </string>
     <string name="telegram_group">Telegram Group</string>

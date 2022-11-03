@@ -99,7 +99,7 @@ internal class SettingsActivity : AppCompatActivity() {
         /* wiki at github */
         aboutBinding.wiki.setOnClickListener {
             bottomSheetDialog.dismiss()
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/iamrasel/lunar-launcher/wiki")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("$sourceCode/wiki")))
         }
         /* telegram community */
         aboutBinding.telegramGroup.setOnClickListener {
@@ -114,13 +114,15 @@ internal class SettingsActivity : AppCompatActivity() {
             .setTitle(R.string.support)
             .setMessage(R.string.support_message)
             /* star button */
-            .setNeutralButton(R.string.star) {dialog, _ ->
-                dialog.dismiss()
+            .setNeutralButton(R.string.star) { _, _ ->
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(sourceCode)))
             }
+            /* affiliate button */
+            .setNegativeButton(R.string.amazon) { _, _ ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://amzn.to/3gWFktS")))
+            }
             /* donate button */
-            .setPositiveButton(R.string.donate) { dialog, _ ->
-                dialog.dismiss()
+            .setPositiveButton(R.string.donate) { _, _ ->
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://iamrasel.github.io/donate")))
             }
             .show()
