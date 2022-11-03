@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 Mail me?
+  - name: 💬 Community
+    url: https://github.com/iamrasel/lunar-launcher#community
+    about: Join the community
+  - name: 💬 Email
     url: iamrasel@proton.me
     about: Contact me via sending email

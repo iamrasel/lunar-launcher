@@ -103,7 +103,7 @@ To get updated with the latest build, head over to the [Actions](https://github.
 
 </div>
 
-This app is also available on Google's Play Store, which is published by [Vedansh Nigam](https://github.com/vednig). If you don't have any issue with installing apps from Play Store, you can go ahead.
+This app is also available on Google's Play Store, which is forked and published by [Vedansh Nigam](https://github.com/vednig). If you don't have any issue with installing apps from Play Store, you can go ahead.
 <div align='center'>
 
 <a href='https://play.google.com/store/apps/details?id=rasel.lunar.launcher'><img src='https://img.shields.io/badge/Google_Play-34A853?style=for-the-badge&logo=google-play&logoColor=white'></a>

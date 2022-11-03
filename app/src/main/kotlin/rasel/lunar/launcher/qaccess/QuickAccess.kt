@@ -211,7 +211,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     /* set up favorite apps */
     private fun favApps() {
         val prefsFavApps = requireContext().getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
-        if (prefsFavApps.all.toString() == "{}") {
+        if (prefsFavApps.all.toString().length < 3) {
             binding.favAppsGroup.visibility = View.GONE
         } else {
             binding.favAppsGroup.visibility = View.VISIBLE
@@ -272,9 +272,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
             /* reset the shortcut on long click */
             textView.setOnLongClickListener {
-                sharedPreferences.edit().putString(constants.KEY_SHORTCUT_NO_ + position, "").apply()
-                textView.text = "+"
-                textView.background.colorFilter = null
+                sharedPreferences.edit().remove(constants.KEY_SHORTCUT_NO_ + position).apply()
                 this.onResume()
                 true
             }
