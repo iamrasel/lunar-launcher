@@ -95,16 +95,20 @@ As per version 14. Click on any image to enlarge it. To know more, explore and s
 </div>
 
 ## Download
-To get updated with the latest build head over to the [Actions](https://github.com/iamrasel/lunar-launcher/actions) tab and choose the latest workflow build from there.
+To get updated with the latest build, head over to the [Actions](https://github.com/iamrasel/lunar-launcher/actions) tab and choose the latest workflow build from there.
 <div align='center'>
 
 <a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'></a>
-<a href='https://f-droid.org/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976D2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
+<a href='https://f-droid.org/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976d2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
 
 </div>
 
-## Warning
-There is a similar app available in [Play Store](https://play.google.com/store/apps/details?id=rasel.lunar.launcher) with the same app and package name, which has _**NOT**_ been served by me. If anything bad happens to you for using that application, I will not be responsible.
+This app is also available on Google's Play Store, which is published by [Vedansh Nigam](https://github.com/vednig). If you don't have any issue with installing apps from Play Store, you can go ahead.
+<div align='center'>
+
+<a href='https://play.google.com/store/apps/details?id=rasel.lunar.launcher'><img src='https://img.shields.io/badge/Google_Play-34A853?style=for-the-badge&logo=google-play&logoColor=white'></a>
+
+</div>
 
 ## Permissions
 - `android.permission.ACCESS_NETWORK_STATE` - To check for active network connection
