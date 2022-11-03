@@ -32,6 +32,12 @@ internal class PrefsUtil {
         sharedPreferences.edit().putString(constants.KEY_APP_NO_ + position, packageName).apply()
     }
 
+    /* remove an entry saved by above method */
+    fun removeFavApps(context: Context, position: Int) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
+        sharedPreferences.edit().remove(constants.KEY_APP_NO_ + position).apply()
+    }
+
     /* save settings value for time format */
     fun saveTimeFormat(context: Context, timeFormat: Int) {
         val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)

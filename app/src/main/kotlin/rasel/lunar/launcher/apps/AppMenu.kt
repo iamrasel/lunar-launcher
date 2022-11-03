@@ -138,7 +138,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
                             prefsUtil.saveFavApps(requireContext(), position, packageName)
                             button.strokeColor = almostTransparent
                         } else {
-                            prefsUtil.saveFavApps(requireContext(), position, "")
+                            prefsUtil.removeFavApps(requireContext(), position)
                             button.strokeColor =
                                 ColorStateList.valueOf(requireContext().getColor(android.R.color.darker_gray))
                         }

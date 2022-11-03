@@ -76,7 +76,6 @@ internal class QuickAccess : BottomSheetDialogFragment() {
         /* set up volume sliders, brightness slider and favorite apps */
         volumeControllers()
         controlBrightness()
-        favApps()
 
         return binding.root
     }
@@ -89,9 +88,11 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        /* repopulate shortcuts */
+        /* repopulate shortcuts and apps */
         binding.shortcutsGroup.removeAllViews()
         shortcuts()
+        binding.favAppsGroup.removeAllViews()
+        favApps()
     }
 
     /* control the volumes */
@@ -210,9 +211,14 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     /* set up favorite apps */
     private fun favApps() {
         val prefsFavApps = requireContext().getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
-        for (position in 1..6) {
-            val packageValue = prefsFavApps.getString(constants.KEY_APP_NO_ + position.toString(), "").toString()
-            favApps(packageValue, imageView, position)
+        if (prefsFavApps.all.toString() == "{}") {
+            binding.favAppsGroup.visibility = View.GONE
+        } else {
+            binding.favAppsGroup.visibility = View.VISIBLE
+            for (position in 1..6) {
+                val packageValue = prefsFavApps.getString(constants.KEY_APP_NO_ + position.toString(), "").toString()
+                favApp(packageValue, imageView, position)
+            }
         }
     }
 
@@ -329,7 +335,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     }
 
     /* favorite apps */
-    private fun favApps(packageName: String, imageView: AppCompatImageView, position: Int) {
+    private fun favApp(packageName: String, imageView: AppCompatImageView, position: Int) {
         val packageManager = requireContext().packageManager
         /* package name is not empty for a specific position */
         if (packageName.isNotEmpty()) {
@@ -343,8 +349,8 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 }
                 /* on long click - remove from favorite apps */
                 imageView.setOnLongClickListener {
-                    PrefsUtil().saveFavApps(requireContext(), position, "")
-                    imageView.visibility = View.GONE
+                    PrefsUtil().removeFavApps(requireContext(), position)
+                    this.onResume()
                     true
                 }
             } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
