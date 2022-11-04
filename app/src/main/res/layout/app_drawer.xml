@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="216sp"
-        android:textColor="@color/apps_count"
+        android:textColor="@color/almost_transparent"
         android:layout_centerInParent="true"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
