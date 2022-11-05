@@ -26,6 +26,7 @@
     <string name="authentication_subtitle">
         Authenticate with your device credential to proceed
     </string>
+    <string name="background">Background</string>
     <string name="celsius">Celsius</string>
     <string name="choose_launcher">Choose Default Launcher</string>
     <string name="city_name">City Name</string>
@@ -33,6 +34,7 @@
     <string name="copied_message">Copied to clipboard</string>
     <string name="dark_theme">Dark</string>
     <string name="date_format">Date Format</string>
+    <string name="default_">Default</string>
     <string name="delete">Delete</string>
     <string name="delete_all">Delete All</string>
     <string name="delete_all_confirmation">

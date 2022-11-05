@@ -92,6 +92,12 @@ internal class PrefsUtil {
         sharedPreferences.edit().putBoolean(constants.KEY_KEYBOARD_SEARCH, keyboardSearch).apply()
     }
 
+    /* save window background color value*/
+    fun windowBackground(context: Context, windowBackground: String) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        sharedPreferences.edit().putString(constants.KEY_WINDOW_BACKGROUND, windowBackground).apply()
+    }
+
     /* save shortcuts count value */
     fun shortcutCount(context: Context, shortcutCount: Int) {
         val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)

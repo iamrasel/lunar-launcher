@@ -18,6 +18,10 @@
 
 package rasel.lunar.launcher.settings.childs
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,12 +30,20 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import rasel.lunar.launcher.R
+import rasel.lunar.launcher.databinding.ColorPickerBinding
 import rasel.lunar.launcher.databinding.SettingsAppearancesBinding
+import rasel.lunar.launcher.helpers.ColorPicker
+import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.settings.PrefsUtil
+import java.util.*
 
 
 internal class Appearances : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsAppearancesBinding
+    private lateinit var windowBackground : String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppearancesBinding.inflate(inflater, container, false)
@@ -63,6 +75,42 @@ internal class Appearances : BottomSheetDialogFragment() {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 }
             }
+        }
+
+        binding.background.setOnClickListener { selectBackground() }
+    }
+
+    @SuppressLint("ResourceType")
+    override fun onResume() {
+        super.onResume()
+        windowBackground = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, 0)
+            .getString(Constants().KEY_WINDOW_BACKGROUND, requireActivity().getString(R.color.window_background)).toString()
+        binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#$windowBackground"))
+    }
+
+    @SuppressLint("ResourceType")
+    private fun selectBackground() {
+        val prefsUtil = PrefsUtil()
+        val colorPickerBinding = ColorPickerBinding.inflate(requireActivity().layoutInflater)
+        val dialogBuilder = MaterialAlertDialogBuilder(requireActivity())
+            .setView(colorPickerBinding.root)
+            .setNeutralButton(R.string.default_, null)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                prefsUtil.windowBackground(requireContext(),
+                    Objects.requireNonNull(colorPickerBinding.colorInput.text).toString().trim { it <= ' ' })
+                this.onResume()
+            }
+            .show()
+
+        /* set up color picker section */
+        ColorPicker(windowBackground, colorPickerBinding.colorInput, colorPickerBinding.colorA,
+            colorPickerBinding.colorR, colorPickerBinding.colorG,
+            colorPickerBinding.colorB, colorPickerBinding.root).pickColor()
+
+        dialogBuilder.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+            colorPickerBinding.colorInput
+                .setText(requireActivity().getString(R.color.window_background).replace("#", ""))
         }
     }
 

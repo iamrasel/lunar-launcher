@@ -74,7 +74,7 @@ internal class LauncherHome : Fragment() {
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
 
         /* refresh the todo list after getting back from TodoManager */
-        fragManager.addOnBackStackChangedListener { this.showTodoList() }
+        fragManager.addOnBackStackChangedListener { showTodoList() }
 
         return binding.root
     }
