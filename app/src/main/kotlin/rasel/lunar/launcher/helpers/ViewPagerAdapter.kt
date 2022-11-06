@@ -28,7 +28,7 @@ internal class ViewPagerAdapter(
     fragmentManager: FragmentManager, private val fragments: MutableList<Fragment>, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    override fun createFragment(position: Int): Fragment = fragments[position]
     override fun getItemCount(): Int = fragments.size
+    override fun createFragment(position: Int): Fragment = fragments[position]
 
 }

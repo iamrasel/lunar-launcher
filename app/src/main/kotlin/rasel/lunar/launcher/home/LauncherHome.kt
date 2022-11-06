@@ -74,7 +74,9 @@ internal class LauncherHome : Fragment() {
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
 
         /* refresh the todo list after getting back from TodoManager */
-        fragManager.addOnBackStackChangedListener { showTodoList() }
+        fragManager.addOnBackStackChangedListener {
+            if (fragManager.backStackEntryCount == 0) showTodoList()
+        }
 
         return binding.root
     }
@@ -224,12 +226,14 @@ internal class LauncherHome : Fragment() {
 
     /* launch TodoManager fragment */
     private fun launchTodoManager() {
+        binding.root.visibility = View.GONE
         fragManager.beginTransaction().replace(R.id.main_fragments_container, TodoManager())
             .addToBackStack("").commit()
     }
 
     /* todo list */
     private fun showTodoList() {
+        binding.root.visibility = View.VISIBLE
         binding.todos.adapter = TodoAdapter(fragmentActivity, requireContext(), null)
     }
 

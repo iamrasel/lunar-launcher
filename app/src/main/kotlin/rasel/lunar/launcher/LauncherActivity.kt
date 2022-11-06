@@ -47,13 +47,13 @@ internal class LauncherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val constants = Constants()
 
         /* vertically edge to edge view */
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         /*  if this is the first launch,
             then remember the event and show the welcome dialog */
+        val constants = Constants()
         val prefsFirstLaunch = getSharedPreferences(constants.PREFS_FIRST_LAUNCH, 0)
         if (prefsFirstLaunch.getBoolean(constants.KEY_FIRST_LAUNCH, true)) {
             prefsFirstLaunch.edit().putBoolean(constants.KEY_FIRST_LAUNCH, false).apply()
@@ -125,12 +125,10 @@ internal class LauncherActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 /* while in todo manager, go back to home screen */
-                if (supportFragmentManager.backStackEntryCount != 0)
-                    supportFragmentManager.popBackStack()
+                if (supportFragmentManager.backStackEntryCount != 0) supportFragmentManager.popBackStack()
 
                 /* while in feeds or app drawer, go back to home screen */
-                if (viewPager.currentItem != 1)
-                    viewPager.currentItem = 1
+                if (viewPager.currentItem != 1) viewPager.currentItem = 1
             }
         })
     }
