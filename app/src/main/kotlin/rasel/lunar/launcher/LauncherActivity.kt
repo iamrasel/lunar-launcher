@@ -19,8 +19,11 @@
 package rasel.lunar.launcher
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -64,6 +67,21 @@ internal class LauncherActivity : AppCompatActivity() {
 
         /* handle navigation back events */
         handleBackPress()
+    }
+
+    override fun getTheme(): Resources.Theme {
+        /* show wallpaper as window background */
+        val theme = super.getTheme()
+        theme.applyStyle(R.style.BackgroundWallpaper, true)
+        return theme
+    }
+
+    @SuppressLint("ResourceType")
+    override fun onResume() {
+        super.onResume()
+        binding.root.setBackgroundColor(Color.parseColor(
+            "#${this.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
+            .getString(Constants().KEY_WINDOW_BACKGROUND, this.getString(R.color.window_background)).toString()}"))
     }
 
     /* build the welcome dialog */

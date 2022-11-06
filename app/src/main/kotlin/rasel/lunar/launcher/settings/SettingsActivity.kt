@@ -19,6 +19,7 @@
 package rasel.lunar.launcher.settings
 
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -81,6 +82,12 @@ internal class SettingsActivity : AppCompatActivity() {
 
         /* show app version name */
         binding.version.text = BuildConfig.VERSION_NAME
+    }
+
+    override fun getTheme(): Resources.Theme {
+        val theme = super.getTheme()
+        theme.applyStyle(R.style.BackgroundWallpaper, true)
+        return theme
     }
 
     /* about dialog */
