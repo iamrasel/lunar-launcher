@@ -40,14 +40,18 @@
             style="@style/Widget.Material3.Button.OutlinedButton"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/background"
+    <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/background"
-        app:icon="@drawable/rounded_bg"
-        app:iconTintMode="add"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Surface"/>
+        android:layout_marginTop="16dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/background"
+            app:icon="@drawable/rounded_bg"
+            app:iconTintMode="add"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

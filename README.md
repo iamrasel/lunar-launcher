@@ -12,7 +12,7 @@
     </p>
 </div>
 
-## Features/Todo
+## Features
 <details><summary>Global</summary>
 
 - [x] Appearances
@@ -99,14 +99,14 @@ To get updated with the latest build, head over to the [Actions](https://github.
 <div align='center'>
 
 <a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'></a>
-<a href='https://f-droid.org/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976d2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
+<a href='https://f-droid.org/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F-Droid-1976d2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
 
 </div>
 
 This app is also available on Google's Play Store, which is forked and published by [Vedansh Nigam](https://github.com/vednig). If you don't have any issue with installing apps from Play Store, you can go ahead.
 <div align='center'>
 
-<a href='https://play.google.com/store/apps/details?id=rasel.lunar.launcher'><img src='https://img.shields.io/badge/Google_Play-34A853?style=for-the-badge&logo=google-play&logoColor=white'></a>
+<a href='https://play.google.com/store/apps/details?id=rasel.lunar.launcher'><img src='https://img.shields.io/badge/Play_Store-34A853?style=for-the-badge&logo=google-play&logoColor=white'></a>
 
 </div>
 

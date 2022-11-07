@@ -22,7 +22,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -67,13 +66,6 @@ internal class LauncherActivity : AppCompatActivity() {
 
         /* handle navigation back events */
         handleBackPress()
-    }
-
-    override fun getTheme(): Resources.Theme {
-        /* show wallpaper as window background */
-        val theme = super.getTheme()
-        theme.applyStyle(R.style.BackgroundWallpaper, true)
-        return theme
     }
 
     @SuppressLint("ResourceType")

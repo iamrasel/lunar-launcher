@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.LunarLauncher" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.LunarLauncher" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Primary color -->
         <item name="colorPrimary">@color/primary</item>
+        <!-- Background -->
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
         <!-- System bar colors -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/status_bar</item>
