@@ -25,13 +25,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Gravity
 import androidx.core.content.ContextCompat
-import rasel.lunar.launcher.R
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import rasel.lunar.launcher.databinding.ListItemBinding
+import rasel.lunar.launcher.helpers.UniUtils
 
 
 internal class RssAdapter(private val items: List<Rss>, private val context: Context) :
@@ -45,28 +45,31 @@ internal class RssAdapter(private val items: List<Rss>, private val context: Con
     override fun getItemCount(): Int = items.size
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: RssViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(holder: RssViewHolder, position: Int) {
         /* customize the first item */
         if (position == 0) {
-            holder.view.itemText.text = "\u22B6  " + items[position].title + "  \u22B7"
-            holder.view.itemText.gravity = Gravity.CENTER
-            holder.view.itemText.setTextColor(ContextCompat.getColor(context, R.color.primary))
-            holder.view.itemText.setTypeface(null, Typeface.BOLD)
-            holder.view.itemText.textSize = 18f
+            holder.view.itemText.apply {
+                text = "\u22B6  " + items[position].title + "  \u22B7"
+                gravity = Gravity.CENTER
+                setTextColor(ContextCompat.getColor(context,
+                    UniUtils().getColorResId(context, com.google.android.material.R.attr.colorPrimary)))
+                setTypeface(null, Typeface.BOLD)
+                textSize = 18f
+            }
         /* reset customization for rest */
         } else {
-            holder.view.itemText.text = items[position].title
-            holder.view.itemText.gravity = holder.gravity
-            holder.view.itemText.setTextColor(holder.color)
-            holder.view.itemText.typeface = holder.typeface
-            holder.view.itemText.setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.size)
+            holder.view.itemText.apply {
+                text = items[position].title
+                gravity = holder.gravity
+                setTextColor(holder.color)
+                typeface = holder.typeface
+                setTextSize(TypedValue.COMPLEX_UNIT_PX, holder.size)
+            }
         }
 
         /* on click - open in browser */
         holder.view.itemText.setOnClickListener {
-            val uri = Uri.parse(items[position].link)
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            context.startActivity(intent)
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(items[position].link)))
         }
     }
 

@@ -19,7 +19,6 @@
 package rasel.lunar.launcher
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -35,6 +34,7 @@ import rasel.lunar.launcher.apps.AppDrawer
 import rasel.lunar.launcher.databinding.LauncherActivityBinding
 import rasel.lunar.launcher.feeds.Feeds
 import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.UniUtils
 import rasel.lunar.launcher.helpers.ViewPagerAdapter
 import rasel.lunar.launcher.home.LauncherHome
 
@@ -68,12 +68,12 @@ internal class LauncherActivity : AppCompatActivity() {
         handleBackPress()
     }
 
-    @SuppressLint("ResourceType")
     override fun onResume() {
         super.onResume()
         binding.root.setBackgroundColor(Color.parseColor(
             "#${this.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
-            .getString(Constants().KEY_WINDOW_BACKGROUND, this.getString(R.color.window_background)).toString()}"))
+                .getString(Constants().KEY_WINDOW_BACKGROUND,
+                this.getString(UniUtils().getColorResId(this, android.R.attr.colorBackground))).toString()}"))
     }
 
     /* build the welcome dialog */

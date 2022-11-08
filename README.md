@@ -52,6 +52,7 @@
 - [x] Launch from search
 - [x] Launch in freeform mode
 - [x] Total apps count
+- [ ] Gesture search
 - [ ] App grid with icon (alternative)
 - [ ] App appearance
 - [ ] App rename
@@ -99,7 +100,7 @@ To get updated with the latest build, head over to the [Actions](https://github.
 <div align='center'>
 
 <a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white'></a>
-<a href='https://f-droid.org/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F-Droid-1976d2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
+<a href='https://f-droid.org/packages/rasel.lunar.launcher'><img src='https://img.shields.io/badge/F_Droid-1976d2?style=for-the-badge&logo=f-droid&logoColor=white'></a>
 
 </div>
 

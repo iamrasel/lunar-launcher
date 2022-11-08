@@ -17,7 +17,7 @@
             android:indeterminate="false"
             android:max="100"
             android:layout_centerInParent="true"
-            app:indicatorColor="@color/icon_color"
+            app:indicatorColor="?android:attr/textColorPrimary"
             app:indicatorSize="288dp"
             app:trackThickness="4dp"/>
 

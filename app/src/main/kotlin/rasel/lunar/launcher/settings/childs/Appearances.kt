@@ -18,11 +18,11 @@
 
 package rasel.lunar.launcher.settings.childs
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +36,7 @@ import rasel.lunar.launcher.databinding.ColorPickerBinding
 import rasel.lunar.launcher.databinding.SettingsAppearancesBinding
 import rasel.lunar.launcher.helpers.ColorPicker
 import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.UniUtils
 import rasel.lunar.launcher.settings.PrefsUtil
 import java.util.*
 
@@ -80,15 +81,13 @@ internal class Appearances : BottomSheetDialogFragment() {
         binding.background.setOnClickListener { selectBackground() }
     }
 
-    @SuppressLint("ResourceType")
     override fun onResume() {
         super.onResume()
         windowBackground = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, 0)
-            .getString(Constants().KEY_WINDOW_BACKGROUND, requireActivity().getString(R.color.window_background)).toString()
+            .getString(Constants().KEY_WINDOW_BACKGROUND, requireActivity().getString(colorId())).toString()
         binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#$windowBackground"))
     }
 
-    @SuppressLint("ResourceType")
     private fun selectBackground() {
         val prefsUtil = PrefsUtil()
         val colorPickerBinding = ColorPickerBinding.inflate(requireActivity().layoutInflater)
@@ -109,9 +108,11 @@ internal class Appearances : BottomSheetDialogFragment() {
             colorPickerBinding.colorB, colorPickerBinding.root).pickColor()
 
         dialogBuilder.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            colorPickerBinding.colorInput
-                .setText(requireActivity().getString(R.color.window_background).replace("#", ""))
+            colorPickerBinding.colorInput.text =
+                SpannableStringBuilder(requireActivity().getString(colorId()).replace("#", ""))
         }
     }
+
+    private fun colorId(): Int = UniUtils().getColorResId(requireContext(), android.R.attr.colorBackground)
 
 }

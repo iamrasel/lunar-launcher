@@ -27,6 +27,7 @@ import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.WindowInsets
 import android.widget.Toast
 import androidx.biometric.BiometricManager
@@ -194,6 +195,13 @@ internal class UniUtils {
             .setConfirmationRequired(true)
             .setAllowedAuthenticators(Constants().AUTHENTICATOR_TYPE)
             .build()
+    }
+
+    /* get color red id from attribute */
+    fun getColorResId(context: Context, colorAttr: Int) : Int {
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(colorAttr, typedValue, true)
+        return typedValue.resourceId
     }
 
 }

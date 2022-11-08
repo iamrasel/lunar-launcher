@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/rounded_bg_top"
-        android:backgroundTint="@color/window_background"
+        android:backgroundTint="?android:attr/colorBackground"
         android:layout_marginTop="-24dp">
 
         <ScrollView

@@ -86,7 +86,7 @@
                     android:id="@+id/search_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:boxBackgroundColor="@color/window_background"
+                    app:boxBackgroundColor="?android:attr/colorBackground"
                     app:endIconMode="clear_text"
                     app:hintEnabled="false">
                     <com.google.android.material.textfield.TextInputEditText
