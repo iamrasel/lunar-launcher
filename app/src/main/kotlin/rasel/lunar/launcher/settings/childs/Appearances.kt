@@ -85,7 +85,11 @@ internal class Appearances : BottomSheetDialogFragment() {
         super.onResume()
         windowBackground = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, 0)
             .getString(Constants().KEY_WINDOW_BACKGROUND, requireActivity().getString(colorId())).toString()
-        binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#$windowBackground"))
+        binding.background.iconTint = if (windowBackground.contains("#")) {
+            ColorStateList.valueOf(Color.parseColor(windowBackground))
+        } else {
+            ColorStateList.valueOf(Color.parseColor("#${windowBackground}"))
+        }
     }
 
     private fun selectBackground() {
@@ -103,8 +107,8 @@ internal class Appearances : BottomSheetDialogFragment() {
             .show()
 
         /* set up color picker section */
-        ColorPicker(windowBackground, colorPickerBinding.colorInput, colorPickerBinding.colorA,
-            colorPickerBinding.colorR, colorPickerBinding.colorG,
+        ColorPicker(windowBackground.replace("#", ""), colorPickerBinding.colorInput,
+            colorPickerBinding.colorA, colorPickerBinding.colorR, colorPickerBinding.colorG,
             colorPickerBinding.colorB, colorPickerBinding.root).pickColor()
 
         dialogBuilder.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
