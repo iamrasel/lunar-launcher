@@ -272,11 +272,9 @@ internal class AppDrawer : Fragment() {
         packagesList.clear()
         for (resolver in packageInfoList) {
             val appName = resolver.loadLabel(packageManager).toString()
-            /* ignore symbols except a-z, A-Z or 0-9 */
-            if (appName.replace("[^a-zA-Z0-9]".toRegex(), "").lowercase(Locale.getDefault())
+            if (appName.replace("\\W".toRegex(), "").lowercase(Locale.getDefault())
                     .contains(searchString)) {
-                val packages = Packages(resolver.activityInfo.packageName, appName)
-                packagesList.add(packages)
+                packagesList.add(Packages(resolver.activityInfo.packageName, appName))
             }
         }
 
