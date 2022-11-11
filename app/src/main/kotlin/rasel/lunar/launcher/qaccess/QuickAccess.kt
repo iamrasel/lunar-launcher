@@ -335,6 +335,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     /* favorite apps */
     private fun favApp(packageName: String, imageView: AppCompatImageView, position: Int) {
         val packageManager = requireContext().packageManager
+        val prefsUtil = PrefsUtil()
         /* package name is not empty for a specific position */
         if (packageName.isNotEmpty()) {
             try {
@@ -347,11 +348,12 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 }
                 /* on long click - remove from favorite apps */
                 imageView.setOnLongClickListener {
-                    PrefsUtil().removeFavApps(requireContext(), position)
+                    prefsUtil.removeFavApps(requireContext(), position)
                     this.onResume()
                     true
                 }
             } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
+                prefsUtil.removeFavApps(requireContext(), position)
                 imageView.visibility = View.GONE
                 nameNotFoundException.printStackTrace()
             }

@@ -129,6 +129,18 @@ internal class AppMenu : BottomSheetDialogFragment() {
             if (packageName == savedPackageName) button.isChecked = true
             if (savedPackageName?.isNotEmpty() == true) button.strokeColor = almostTransparent
 
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                    packageManager.getPackageInfo(savedPackageName!!, PackageManager.PackageInfoFlags.of(0))
+                else
+                    @Suppress("DEPRECATION") packageManager.getPackageInfo(savedPackageName!!, 0)
+            } catch (e: PackageManager.NameNotFoundException) {
+                prefsUtil.removeFavApps(requireContext(), position)
+                button.strokeColor =
+                    ColorStateList.valueOf(requireContext().getColor(android.R.color.darker_gray))
+                e.printStackTrace()
+            }
+
             /* listen on clicks */
             binding.favGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?,
                                                            checkedId: Int, isChecked: Boolean ->
