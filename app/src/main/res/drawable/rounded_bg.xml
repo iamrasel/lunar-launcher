@@ -8,7 +8,7 @@
                 android:color="@android:color/transparent" />
             <stroke
                 android:width="0.5dp"
-                android:color="@color/almost_transparent" />
+                android:color="?attr/scrimBackground" />
         </shape>
     </item>
     <item android:state_pressed="false">
@@ -16,7 +16,7 @@
             <corners
                 android:radius="12dp" />
             <solid
-                android:color="@color/almost_transparent" />
+                android:color="?attr/scrimBackground" />
             <stroke
                 android:width="8dp"
                 android:color="@android:color/transparent" />

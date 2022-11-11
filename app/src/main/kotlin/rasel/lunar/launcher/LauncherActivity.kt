@@ -70,14 +70,11 @@ internal class LauncherActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val colorString = this.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
+        binding.root.setBackgroundColor(Color.parseColor("#${
+            this.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
             .getString(Constants().KEY_WINDOW_BACKGROUND,
-                this.getString(UniUtils().getColorResId(this, android.R.attr.colorBackground))).toString()
-        if (colorString.contains("#")) {
-            binding.root.setBackgroundColor(Color.parseColor(colorString))
-        } else {
-            binding.root.setBackgroundColor(Color.parseColor("#$colorString"))
-        }
+                this.getString(UniUtils().getColorResId(this, android.R.attr.colorBackground))
+                    .replace("#", ""))}"))
     }
 
     /* build the welcome dialog */

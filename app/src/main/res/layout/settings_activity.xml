@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lunar_settings"
+            android:textColor="?attr/colorControlNormal"
             style="@style/TextAppearance.Material3.HeadlineLarge"/>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -22,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/rounded_bg_top"
-        android:backgroundTint="?android:attr/colorBackground"
+        android:backgroundTint="?attr/colorSurface"
         android:layout_marginTop="-24dp">
 
         <ScrollView

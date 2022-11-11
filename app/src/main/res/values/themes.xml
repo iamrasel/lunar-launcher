@@ -13,5 +13,6 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
         <!-- Widgets -->
         <item name="sliderStyle">@style/Slider</item>
+        <item name="scrimBackground">@color/almost_transparent</item>
     </style>
 </resources>

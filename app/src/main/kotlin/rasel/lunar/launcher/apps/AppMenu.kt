@@ -115,11 +115,15 @@ internal class AppMenu : BottomSheetDialogFragment() {
     }
 
     /* manage initial preview and clicks for favorite apps */
+    @SuppressLint("PrivateResource")
     private fun favoriteApps() {
         val prefsUtil = PrefsUtil()
         val constants = Constants()
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
-        val almostTransparent = ColorStateList.valueOf(requireContext().getColor(R.color.almost_transparent))
+        val enabledStroke =
+            ColorStateList.valueOf(requireContext().getColor(com.google.android.material.R.color.material_on_surface_stroke))
+        val disabledStroke =
+            ColorStateList.valueOf(requireContext().getColor(com.google.android.material.R.color.m3_chip_stroke_color))
 
         for (position in 1..6) {
             val button = outlinedButton
@@ -127,7 +131,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
             /* set previews */
             if (packageName == savedPackageName) button.isChecked = true
-            if (savedPackageName?.isNotEmpty() == true) button.strokeColor = almostTransparent
+            if (savedPackageName?.isNotEmpty() == true) button.strokeColor = enabledStroke
 
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -136,8 +140,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
                     @Suppress("DEPRECATION") packageManager.getPackageInfo(savedPackageName!!, 0)
             } catch (e: PackageManager.NameNotFoundException) {
                 prefsUtil.removeFavApps(requireContext(), position)
-                button.strokeColor =
-                    ColorStateList.valueOf(requireContext().getColor(android.R.color.darker_gray))
+                button.strokeColor = disabledStroke
                 e.printStackTrace()
             }
 
@@ -148,11 +151,10 @@ internal class AppMenu : BottomSheetDialogFragment() {
                     if (checkedId == button.id) {
                         if (isChecked) {
                             prefsUtil.saveFavApps(requireContext(), position, packageName)
-                            button.strokeColor = almostTransparent
+                            button.strokeColor = enabledStroke
                         } else {
                             prefsUtil.removeFavApps(requireContext(), position)
-                            button.strokeColor =
-                                ColorStateList.valueOf(requireContext().getColor(android.R.color.darker_gray))
+                            button.strokeColor = disabledStroke
                         }
                     }
                 } catch (e: Exception) {

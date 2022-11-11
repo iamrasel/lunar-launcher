@@ -3,6 +3,11 @@
     <style name="Slider" parent="Widget.Material3.Slider">
         <item name="thumbRadius">8dp</item>
         <item name="trackCornerRadius">8dp</item>
-        <item name="trackColorInactive">@color/almost_transparent</item>
+        <item name="trackColorInactive">?attr/scrimBackground</item>
+    </style>
+
+    <style name="SolidNavBar">
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
     </style>
 </resources>

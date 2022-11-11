@@ -84,12 +84,8 @@ internal class Appearances : BottomSheetDialogFragment() {
     override fun onResume() {
         super.onResume()
         windowBackground = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, 0)
-            .getString(Constants().KEY_WINDOW_BACKGROUND, requireActivity().getString(colorId())).toString()
-        binding.background.iconTint = if (windowBackground.contains("#")) {
-            ColorStateList.valueOf(Color.parseColor(windowBackground))
-        } else {
-            ColorStateList.valueOf(Color.parseColor("#${windowBackground}"))
-        }
+            .getString(Constants().KEY_WINDOW_BACKGROUND, defaultColorString()).toString()
+        binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#${windowBackground}"))
     }
 
     private fun selectBackground() {
@@ -107,16 +103,18 @@ internal class Appearances : BottomSheetDialogFragment() {
             .show()
 
         /* set up color picker section */
-        ColorPicker(windowBackground.replace("#", ""), colorPickerBinding.colorInput,
-            colorPickerBinding.colorA, colorPickerBinding.colorR, colorPickerBinding.colorG,
+        ColorPicker(windowBackground, colorPickerBinding.colorInput, colorPickerBinding.colorA,
+            colorPickerBinding.colorR, colorPickerBinding.colorG,
             colorPickerBinding.colorB, colorPickerBinding.root).pickColor()
 
         dialogBuilder.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             colorPickerBinding.colorInput.text =
-                SpannableStringBuilder(requireActivity().getString(colorId()).replace("#", ""))
+                SpannableStringBuilder(defaultColorString())
         }
     }
 
-    private fun colorId(): Int = UniUtils().getColorResId(requireContext(), android.R.attr.colorBackground)
+    private fun defaultColorString() =
+        requireActivity().getString(UniUtils().getColorResId(
+            requireContext(), android.R.attr.colorBackground)).replace("#", "")
 
 }

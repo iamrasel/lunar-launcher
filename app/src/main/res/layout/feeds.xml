@@ -67,7 +67,7 @@
             android:layout_height="match_parent"
             android:scrollbars="none"
             android:background="@drawable/rounded_bg_top"
-            android:backgroundTint="@color/almost_transparent"
+            android:backgroundTint="?attr/scrimBackground"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:visibility="gone"
