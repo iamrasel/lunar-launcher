@@ -7,7 +7,7 @@
         on Android Pie (API 28) and up.
     </string>
     <string name="accessibility_service_label">Lock Service</string>
-    <string name="acknowledgements">
+    <string name="acknowledgements" translatable="false">
         <b>Acknowledgements</b>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
         <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>
@@ -20,7 +20,7 @@
     <string name="app_drawer">App Drawer</string>
     <string name="app_info">App Info</string>
     <string name="app_store">App Store</string>
-    <string name="argb">AARRGGBB</string>
+    <string name="argb" translatable="false">AARRGGBB</string>
     <string name="authentication_error">Authentication error</string>
     <string name="authentication_failed">Authentication failed</string>
     <string name="authentication_subtitle">
@@ -40,7 +40,7 @@
     <string name="delete_all_confirmation">
         Are you sure to delete all the existing todos?
     </string>
-    <string name="developer_name">Developed by: Md Rasel Hossain</string>
+    <string name="developer_name" translatable="false">Developed by: Md Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
     <string name="device_admin_description">
         Allow to use double tap to lock feature
@@ -71,7 +71,7 @@
     </string>
     <string name="restart">Restart</string>
     <string name="root">Root</string>
-    <string name="sdk">SDK</string>
+    <string name="sdk" translatable="false">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
     <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>
     <string name="show_city">Show City Name With Weather</string>
@@ -80,7 +80,7 @@
     <string name="support">Support</string>
     <string name="support_message">Support the developer to keep this application free and alive.\n
         \n<li><b>Donate:</b> If possible, make direct donations to help and encourage the developer.</li>
-        \n<li><b>Amazon:</b> Use my affiliate link while shopping on Amazon to get me rewarded.</li>
+        \n<li><b>Amazon:</b> Use the affiliate link while shopping on Amazon to get the developer rewarded.</li>
         \n<li><b>Star:</b> Be a stargazer at Github to show your support.</li>
     </string>
     <string name="telegram_group">Telegram Group</string>
@@ -93,7 +93,7 @@
     <string name="todo_manager_lock">Todo Manager Lock</string>
     <string name="twelve">12 Hour</string>
     <string name="twenty_four">24 Hour</string>
-    <string name="uid">UID</string>
+    <string name="uid" translatable="false">UID</string>
     <string name="unable_to_launch">Unable to launch</string>
     <string name="uninstall">Uninstall</string>
     <string name="update">Update</string>
