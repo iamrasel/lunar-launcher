@@ -1,7 +1,6 @@
 <resources>
 
     <string name="about">About</string>
-    <string name="accessibility">Accessibility</string>
     <string name="accessibility_service_description">
         Accessibility service to allow Lunar Launcher to put the device to sleep,
         on Android Pie (API 28) and up.
@@ -41,7 +40,6 @@
         Are you sure to delete all the existing todos?
     </string>
     <string name="developer_name" translatable="false">Developed by: Md Rasel Hossain</string>
-    <string name="device_admin">Device Admin</string>
     <string name="device_admin_description">
         Allow to use double tap to lock feature
     </string>
@@ -70,7 +68,6 @@
         This operation will clear all the data stored for this application, and can\'t be undone.
     </string>
     <string name="restart">Restart</string>
-    <string name="root">Root</string>
     <string name="sdk" translatable="false">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
     <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>

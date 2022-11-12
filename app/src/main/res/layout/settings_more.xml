@@ -51,25 +51,29 @@
             android:id="@+id/select_lock_negative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/negative"
+            app:icon="@drawable/ic_negative"
+            app:iconGravity="textTop"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/select_lock_accessibility"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/accessibility"
+            app:icon="@drawable/ic_accessibility"
+            app:iconGravity="textTop"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/select_lock_admin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/device_admin"
+            app:icon="@drawable/ic_admin"
+            app:iconGravity="textTop"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/select_lock_root"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/root"
+            app:icon="@drawable/ic_root"
+            app:iconGravity="textTop"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
