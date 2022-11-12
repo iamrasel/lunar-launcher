@@ -63,6 +63,7 @@
     <string name="owm_key">OWM API Key</string>
     <string name="positive">Positive</string>
     <string name="proceed">Proceed</string>
+    <string name="quick_launch">Quick Launch</string>
     <string name="reset">Reset</string>
     <string name="reset_message">
         This operation will clear all the data stored for this application, and can\'t be undone.

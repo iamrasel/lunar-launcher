@@ -47,6 +47,11 @@ internal class Apps : BottomSheetDialogFragment() {
             true -> binding.keyboardAutoPositive.isChecked = true
         }
 
+        when (sharedPreferences.getBoolean(constants.KEY_QUICK_LAUNCH, true)) {
+            true -> binding.quickLaunchPositive.isChecked = true
+            false -> binding.quickLaunchNegative.isChecked = true
+        }
+
         return binding.root
     }
 
@@ -60,6 +65,16 @@ internal class Apps : BottomSheetDialogFragment() {
                 when (checkedId) {
                     binding.keyboardAutoPositive.id -> prefsUtil.keyboardSearch(requireContext(), true)
                     binding.keyboardAutoNegative.id -> prefsUtil.keyboardSearch(requireContext(), false)
+                }
+            }
+        }
+
+        /* change settings for quick launch */
+        binding.quickLaunchGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
+            if (isChecked) {
+                when (checkedId) {
+                    binding.quickLaunchPositive.id -> prefsUtil.quickLaunch(requireContext(), true)
+                    binding.quickLaunchNegative.id -> prefsUtil.quickLaunch(requireContext(), false)
                 }
             }
         }

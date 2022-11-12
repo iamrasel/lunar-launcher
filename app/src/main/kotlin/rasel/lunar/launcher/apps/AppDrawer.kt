@@ -233,8 +233,8 @@ internal class AppDrawer : Fragment() {
         searchStringChangeListener(string)
 
         /* pop up the keyboard */
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
-        if (sharedPreferences.getBoolean(constants.KEY_KEYBOARD_SEARCH, false)) {
+        if (requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
+                .getBoolean(constants.KEY_KEYBOARD_SEARCH, false)) {
             binding.searchInput.requestFocus()
             val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
@@ -280,7 +280,12 @@ internal class AppDrawer : Fragment() {
 
         if (packagesList.size == 1) {
             /* if only one app found, then launch it */
-            startActivity(packageManager.getLaunchIntentForPackage(packagesList[0].packageName))
+            if (requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
+                    .getBoolean(constants.KEY_QUICK_LAUNCH, true)) {
+                startActivity(packageManager.getLaunchIntentForPackage(packagesList[0].packageName))
+            } else {
+                appsAdapter.updateData(packagesList)
+            }
         } else {
             /* update the app list with filtered result */
             appsAdapter.updateData(packagesList)

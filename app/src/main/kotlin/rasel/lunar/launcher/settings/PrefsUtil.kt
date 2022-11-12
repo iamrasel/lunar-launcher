@@ -92,6 +92,12 @@ internal class PrefsUtil {
         sharedPreferences.edit().putBoolean(constants.KEY_KEYBOARD_SEARCH, keyboardSearch).apply()
     }
 
+    /* settings for quick launch */
+    fun quickLaunch(context: Context, quickLaunch: Boolean) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        sharedPreferences.edit().putBoolean(constants.KEY_QUICK_LAUNCH, quickLaunch).apply()
+    }
+
     /* save window background color value*/
     fun windowBackground(context: Context, windowBackground: String) {
         val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)

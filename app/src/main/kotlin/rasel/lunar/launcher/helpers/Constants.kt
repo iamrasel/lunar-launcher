@@ -40,6 +40,7 @@ internal class Constants {
     @JvmField val KEY_TODO_COUNTS = "todo_count"
     @JvmField val KEY_TODO_LOCK = "todo_lock"
     @JvmField val KEY_KEYBOARD_SEARCH = "keyboard_search"
+    @JvmField val KEY_QUICK_LAUNCH = "quick_launch"
     @JvmField val KEY_WINDOW_BACKGROUND = "window_background"
     @JvmField val KEY_SHORTCUT_COUNT = "shortcut_count"
     @JvmField val KEY_RSS_URL = "rss_url"
