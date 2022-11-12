@@ -27,6 +27,7 @@
     </string>
     <string name="background">Background</string>
     <string name="celsius">Celsius</string>
+    <string name="change_wallpaper">Change Wallpaper</string>
     <string name="choose_launcher">Choose Default Launcher</string>
     <string name="city_name">City Name</string>
     <string name="contact">Contact</string>
@@ -52,6 +53,7 @@
     <string name="follow_system">Follow System</string>
     <string name="freeform">Freeform</string>
     <string name="got_it">Got it</string>
+    <string name="image_pick_failed">Failed to get image</string>
     <string name="last_update">Last Update</string>
     <string name="light_theme">Light</string>
     <string name="lunar_settings">Lunar Settings</string>
@@ -73,6 +75,7 @@
     <string name="search_with_keyboard">Search With Keyboard</string>
     <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>
     <string name="show_city">Show City Name With Weather</string>
+    <string name="something_went_wrong">Something went wrong</string>
     <string name="source_code">Source Code</string>
     <string name="star">Star</string>
     <string name="support">Support</string>
@@ -97,6 +100,7 @@
     <string name="update">Update</string>
     <string name="url">Url</string>
     <string name="version">Version</string>
+    <string name="wallpaper_change_success">Wallpaper changed successfully</string>
     <string name="weather">Weather</string>
     <string name="welcome">Welcome</string>
     <string name="welcome_description">Welcome to Lunar Launcher. This is your first launch; if you are a first time user,
