@@ -17,9 +17,9 @@
 
 - [x] Appearances
   - [x] Material Design 3
-  - [ ] Material You support
+  - [x] Material You support
   - [x] Day/night theme
-  - [ ] Wallpaper with dim support
+  - [x] Wallpaper with dim support
 - [x] Double tap: lock/sleep
   - [x] Accessibility (SDK >= 28)
   - [x] Device admin
@@ -83,16 +83,15 @@
 ## Screenshots
 As per version 14. Click on any image to enlarge it. To know more, explore and see for yourself.
 
-<div align='center'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/1.png' width=130>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/2.png' width=130>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/3.png' width=130>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/4.png' width=130>
-	<br>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/5.png' width=130>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/6.png' width=130>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/7.png' width=130>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/8.png' width=130>
+<div style='width:90%; margin:0 auto; overflow-x:scroll; white-space:nowrap;'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/1.png' style='width:120px; display:inline-block;'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/2.png' style='width:120px; display:inline-block;'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/3.png' style='width:120px; display:inline-block;'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/4.png' style='width:120px; display:inline-block;'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/5.png' style='width:120px; display:inline-block;'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/6.png' style='width:120px; display:inline-block;'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/7.png' style='width:120px; display:inline-block;'>
+	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/8.png' style='width:120px; display:inline-block;'>
 </div>
 
 ## Download
@@ -116,7 +115,10 @@ This app is also available on Google's Play Store, which is forked and published
 - `android.permission.CALL_PHONE` - To make call
 - `android.permission.EXPAND_STATUS_BAR` - To expand notification panel
 - `android.permission.INTERNET` - To fetch weather and feed data
+- `android.permission.READ_EXTERNAL_STORAGE` - To get images to set as wallpaper (sdk < 33)
+  - `android.permission.READ_MEDIA_IMAGES` - To get images to set as wallpaper (sdk 33+)
 - `android.permission.REQUEST_DELETE_PACKAGES` - To uninstall apks
+- `android.permission.SET_WALLPAPER` - To set wallpaper
 - `android.permission.WRITE_SETTINGS` - To change system values like brightness
 
 ## Community
