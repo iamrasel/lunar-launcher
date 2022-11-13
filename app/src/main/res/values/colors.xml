@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_primary">#FFE9F5F7</color>
-    <color name="ic_launcher_secondary">#FF121212</color>
-
+    <color name="ic_launcher_primary">#FFFFFBFE</color>
+    <color name="ic_launcher_secondary">#FF1C1B1F</color>
     <color name="almost_transparent">#11000000</color>
-
     <color name="red">#FFFF0000</color>
     <color name="green">#FF00FF00</color>
     <color name="blue">#FF0000FF</color>
