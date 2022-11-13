@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:boxBackgroundColor="?attr/scrimBackground"
+            app:boxBackgroundColor="?attr/colorSurface"
             app:endIconMode="clear_text"
             app:hintEnabled="false">
             <com.google.android.material.textfield.TextInputEditText
@@ -64,7 +64,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="?attr/scrimBackground"
+        app:boxBackgroundColor="?attr/colorSurface"
         app:endIconMode="clear_text"
         app:hintEnabled="false"
         android:padding="16dp">

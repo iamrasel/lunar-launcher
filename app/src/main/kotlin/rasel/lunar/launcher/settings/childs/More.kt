@@ -21,12 +21,12 @@ package rasel.lunar.launcher.settings.childs
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsMoreBinding
 import rasel.lunar.launcher.helpers.Constants
@@ -48,7 +48,7 @@ internal class More : BottomSheetDialogFragment() {
 
         /* initialize views according to the saved values */
         binding.shortcutCount.value = sharedPreferences.getInt(constants.KEY_SHORTCUT_COUNT, 6).toFloat()
-        binding.inputFeedUrl.setText(sharedPreferences.getString(constants.KEY_RSS_URL, "").toString())
+        binding.inputFeedUrl.text = SpannableStringBuilder(sharedPreferences.getString(constants.KEY_RSS_URL, ""))
 
         when (sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0)) {
             0 -> binding.selectLockNegative.isChecked = true
@@ -80,14 +80,12 @@ internal class More : BottomSheetDialogFragment() {
         })
 
         /* change lock method value */
-        binding.lockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.selectLockNegative.id -> prefsUtil.saveLockMethod(requireContext(), 0)
-                    binding.selectLockAccessibility.id -> prefsUtil.saveLockMethod(requireContext(), 1)
-                    binding.selectLockAdmin.id -> prefsUtil.saveLockMethod(requireContext(), 2)
-                    binding.selectLockRoot.id -> prefsUtil.saveLockMethod(requireContext(), 3)
-                }
+        binding.lockGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.selectLockNegative.id -> prefsUtil.saveLockMethod(requireContext(), 0)
+                binding.selectLockAccessibility.id -> prefsUtil.saveLockMethod(requireContext(), 1)
+                binding.selectLockAdmin.id -> prefsUtil.saveLockMethod(requireContext(), 2)
+                binding.selectLockRoot.id -> prefsUtil.saveLockMethod(requireContext(), 3)
             }
         }
     }

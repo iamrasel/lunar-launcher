@@ -41,40 +41,36 @@
         android:text="@string/double_tap_lock"
         android:textSize="16sp"
         android:layout_marginTop="16dp"/>
-    <com.google.android.material.button.MaterialButtonToggleGroup
+    <com.google.android.material.chip.ChipGroup
         android:id="@+id/lock_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:singleSelection="true"
-        app:selectionRequired="true">
-        <com.google.android.material.button.MaterialButton
+        app:selectionRequired="true"
+        app:singleSelection="true">
+        <com.google.android.material.chip.Chip
             android:id="@+id/select_lock_negative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_negative"
-            app:iconGravity="textTop"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
+            android:text="@string/negative"
+            style="@style/Widget.Material3.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
             android:id="@+id/select_lock_accessibility"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_accessibility"
-            app:iconGravity="textTop"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
+            android:text="@string/accessibility"
+            style="@style/Widget.Material3.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
             android:id="@+id/select_lock_admin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_admin"
-            app:iconGravity="textTop"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
+            android:text="@string/device_admin"
+            style="@style/Widget.Material3.Chip.Filter"/>
+        <com.google.android.material.chip.Chip
             android:id="@+id/select_lock_root"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_root"
-            app:iconGravity="textTop"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            android:text="@string/root"
+            style="@style/Widget.Material3.Chip.Filter"/>
+    </com.google.android.material.chip.ChipGroup>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -157,15 +157,15 @@ internal class Appearances : BottomSheetDialogFragment() {
                     if (bitmap != null) {
                         WallpaperManager.getInstance(requireContext()).setBitmap(bitmap)
                         Toast.makeText(requireContext(),
-                            requireActivity().getString(R.string.wallpaper_change_success), Toast.LENGTH_LONG).show()
+                            requireActivity().getString(R.string.wallpaper_change_success), Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(requireContext(),
-                            requireActivity().getString(R.string.image_pick_failed), Toast.LENGTH_LONG).show()
+                            requireActivity().getString(R.string.image_pick_failed), Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
                     Toast.makeText(requireContext(),
-                        requireActivity().getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
+                        requireActivity().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

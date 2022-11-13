@@ -25,7 +25,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dev.chrisbanes.insetter.applyInsetter
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AboutBinding
@@ -45,13 +44,6 @@ internal class SettingsActivity : AppCompatActivity() {
         /* set up view */
         binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        /* set inset */
-        binding.root.applyInsetter {
-            type(navigationBars = true) {
-                margin()
-            }
-        }
 
         val constants = Constants()
 
