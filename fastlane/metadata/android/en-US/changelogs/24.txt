@@ -1,0 +1,7 @@
+- new: material you (dynamic color)
+- new: set custom color or wallpaper as background
+- new: option to change wallpaper
+- new: settings to prevent app from launch while searching
+- fix: app search with non-english characters
+- fix: app stays as favorite after uninstallation
+- improvement: color and layout
