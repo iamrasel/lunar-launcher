@@ -83,16 +83,18 @@
 ## Screenshots
 As per version 14. Click on any image to enlarge it. To know more, explore and see for yourself.
 
-<div style='width:90%; margin:0 auto; overflow-x:scroll; white-space:nowrap;'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/1.png' style='width:120px; display:inline-block;'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/2.png' style='width:120px; display:inline-block;'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/3.png' style='width:120px; display:inline-block;'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/4.png' style='width:120px; display:inline-block;'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/5.png' style='width:120px; display:inline-block;'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/6.png' style='width:120px; display:inline-block;'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/7.png' style='width:120px; display:inline-block;'>
-	<img src='fastlane/metadata/android/en-US/images/phoneScreenshots/8.png' style='width:120px; display:inline-block;'>
-</div>
+<table>
+	<tr>
+		<td><img src='fastlane/metadata/android/en-US/images/phoneScreenshots/1.png' width='120'></td>
+		<td><img src='fastlane/metadata/android/en-US/images/phoneScreenshots/2.png' width='120'></td>
+		<td><img src='fastlane/metadata/android/en-US/images/phoneScreenshots/3.png' width='120'></td>
+		<td><img src='fastlane/metadata/android/en-US/images/phoneScreenshots/4.png' width='120'></td>
+		<td><img src='fastlane/metadata/android/en-US/images/phoneScreenshots/5.png' width='120'></td>
+		<td><img src='fastlane/metadata/android/en-US/images/phoneScreenshots/6.png' width='120'></td>
+		<td><img src='fastlane/metadata/android/en-US/images/phoneScreenshots/7.png' width='120'></td>
+		<td><img src='fastlane/metadata/android/en-US/images/phoneScreenshots/8.png' width='120'></td>
+	</tr>
+</table>
 
 ## Download
 To get updated with the latest build, head over to the [Actions](https://github.com/iamrasel/lunar-launcher/actions) tab and choose the latest workflow build from there.
