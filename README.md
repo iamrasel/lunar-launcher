@@ -17,9 +17,9 @@
 
 - [x] Appearances
   - [x] Material Design 3
-  - [x] Material You support
+  - [x] Material You
   - [x] Day/night theme
-  - [x] Wallpaper with dim support
+  - [x] Wallpaper with color filter support
 - [x] Double tap: lock/sleep
   - [x] Accessibility (SDK >= 28)
   - [x] Device admin
@@ -135,6 +135,7 @@ If you want to share your thoughts with me or other users, join the Lunar Launch
 ## Credits
 - [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
 - [https://github.com/chrisbanes/insetter](https://github.com/chrisbanes/insetter)
+- [https://github.com/cachapa/ExpandableLayout](https://github.com/cachapa/ExpandableLayout)
 
 ## Donation
 Do you like this app? If the answer is yes, then help me to continue this project. My current old laptop, which has only 4gb ram, has been serving me with it's last breaths. So I need to replace it with a decent one for developing, please help me with that. Donate me any amount you wish.

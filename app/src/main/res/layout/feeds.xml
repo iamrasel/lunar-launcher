@@ -3,91 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/expandable_group"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="4dp"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        app:singleSelection="true">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/expand_rss"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/ram"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:background="@drawable/rounded_bg"/>
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/cpu"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:background="@drawable/rounded_bg"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:text="@string/rss_feed"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/expand_system_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/int_storage"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:background="@drawable/rounded_bg"/>
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/ext_storage"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:background="@drawable/rounded_bg"
-                android:clickable="true"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:text="@string/system_info"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rss"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/feeds_rss"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:background="@drawable/rounded_bg_top"
-            android:backgroundTint="?attr/scrimBackground"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:visibility="gone"
-            app:layoutManager="LinearLayoutManager"/>
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/loading_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:indeterminate="true"
-            app:trackThickness="2dp" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/data_fetching_failed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_refresh"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
-            android:contentDescription="@null"
-            style="@style/Widget.Material3.FloatingActionButton.Surface" />
+            layout="@layout/feeds_rss"/>
+        <include
+            android:id="@+id/feeds_sys_infos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/feeds_sys_infos"/>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Widgets"
+        android:gravity="center_horizontal"
+        android:textSize="28sp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

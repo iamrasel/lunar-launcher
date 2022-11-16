@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.cachapa.expandablelayout.ExpandableLayout
+    android:id="@+id/expandable_rss"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:el_duration="1000"
+    app:el_expanded="false"
+    app:el_parallax="0.5"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rss"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:background="@drawable/rounded_bg"
+            android:visibility="gone"
+            app:layoutManager="LinearLayoutManager"/>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            app:trackThickness="2dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_refresh"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            style="@style/Widget.Material3.FloatingActionButton.Surface" />
+
+    </RelativeLayout>
+
+</net.cachapa.expandablelayout.ExpandableLayout>

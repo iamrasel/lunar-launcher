@@ -29,8 +29,12 @@ import android.view.ViewGroup
 import androidx.core.app.JobIntentService.enqueueWork
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.windowInsetTypesOf
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.button.MaterialButtonToggleGroup
+import dev.chrisbanes.insetter.applyInsetter
+import kotlinx.coroutines.*
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.databinding.FeedsBinding
 import rasel.lunar.launcher.feeds.rss.Rss
@@ -44,10 +48,6 @@ internal class Feeds : Fragment() {
 
     private lateinit var binding: FeedsBinding
     private lateinit var fragmentActivity: FragmentActivity
-    private lateinit var feedsUtils: FeedsUtils
-    private lateinit var handler: Handler
-    private lateinit var runnable: Runnable
-    private val constants = Constants()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FeedsBinding.inflate(inflater, container, false)
@@ -61,52 +61,48 @@ internal class Feeds : Fragment() {
             LauncherActivity()
         }
 
-        feedsUtils = FeedsUtils(fragmentActivity)
+        expandCollapse()
 
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        startService()
-
-        /* show device infos */
-        feedsUtils.ram(binding.ram)
-        feedsUtils.cpuBattery(binding.cpu)
-        feedsUtils.intStorage(binding.intStorage)
-        feedsUtils.extStorage(binding.extStorage)
-
-        /* refresh ram and cpu infos in every 1 seconds */
-        handler = Handler(Looper.getMainLooper())
-        runnable = object : Runnable {
-            override fun run() {
-                feedsUtils.ram(binding.ram)
-                feedsUtils.cpuBattery(binding.cpu)
-                handler.postDelayed(this, 1000)
-            }
-        }
-        handler.post(runnable)
-    }
-
-    /* remove the runnable's callback when no need */
-    override fun onPause() {
-        super.onPause()
-        handler.removeCallbacks(runnable)
-    }
-
     /* insets */
     private fun setInsets() {
-        Insetter.builder()
-            .paddingBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.rss)
-        Insetter.builder()
-            .marginTop(windowInsetTypesOf(statusBars = true))
-            .applyToView(binding.ram)
-            .applyToView(binding.cpu)
+        binding.root.applyInsetter {
+            type(statusBars = true, navigationBars = true) {
+                padding()
+            }
+        }
+    }
+
+    /* control view's expand-collapse actions */
+    private fun expandCollapse() {
+        binding.expandableGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
+            if (isChecked) {
+                when (checkedId) {
+                    binding.expandRss.id -> {
+                        binding.feedsSysInfos.expandableSystemInfo.collapse()
+                        binding.feedsRss.expandableRss.expand()
+                        startService()
+                    }
+                    binding.expandSystemInfo.id -> {
+                        binding.feedsRss.expandableRss.collapse()
+                        binding.feedsSysInfos.expandableSystemInfo.expand()
+                        systemInfo()
+                    }
+                }
+            } else {
+                when (checkedId) {
+                    binding.expandRss.id -> binding.feedsRss.expandableRss.collapse()
+                    binding.expandSystemInfo.id -> binding.feedsSysInfos.expandableSystemInfo.collapse()
+                }
+            }
+        }
     }
 
 	/* start rss service if network is active and rss url is not empty */
     private fun startService() {
+        val constants = Constants()
         val rssUrl = fragmentActivity.getSharedPreferences(constants.PREFS_SETTINGS, 0)
             .getString(constants.KEY_RSS_URL, "")
         if (UniUtils().isNetworkAvailable(fragmentActivity) && rssUrl != null && rssUrl.isNotEmpty()) {
@@ -120,24 +116,40 @@ internal class Feeds : Fragment() {
 
 	/* retry to start rss service */
     private fun resumeService() {
-        binding.rss.visibility = View.GONE
-        binding.loadingProgress.visibility = View.GONE
-        binding.dataFetchingFailed.visibility = View.VISIBLE
-        binding.dataFetchingFailed.setOnClickListener { startService() }
+        binding.feedsRss.rss.visibility = View.GONE
+        binding.feedsRss.loading.visibility = View.GONE
+        binding.feedsRss.refresh.visibility = View.VISIBLE
+        binding.feedsRss.refresh.setOnClickListener { startService() }
     }
 
 	/* rss service's result receiver */
     @Suppress("UNCHECKED_CAST")
     private val resultReceiver: ResultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
-            val items = resultData.getSerializable(constants.RSS_ITEMS) as List<Rss>?
+            val items = resultData.getSerializable(Constants().RSS_ITEMS) as List<Rss>?
             if (items != null) {
-                binding.rss.adapter = RssAdapter(items, requireContext())
-                binding.dataFetchingFailed.visibility = View.GONE
-                binding.loadingProgress.visibility = View.GONE
-                binding.rss.visibility = View.VISIBLE
+                binding.feedsRss.rss.adapter = RssAdapter(items, requireContext())
+                binding.feedsRss.refresh.visibility = View.GONE
+                binding.feedsRss.loading.visibility = View.GONE
+                binding.feedsRss.rss.visibility = View.VISIBLE
             } else {
                 resumeService()
+            }
+        }
+    }
+
+    private fun systemInfo() {
+        val feedsUtils = FeedsUtils(fragmentActivity)
+        feedsUtils.intStorage(binding.feedsSysInfos.intStorage)
+        feedsUtils.extStorage(binding.feedsSysInfos.extStorage)
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                while (isActive) {
+                    feedsUtils.ram(binding.feedsSysInfos.ram)
+                    feedsUtils.cpuBattery(binding.feedsSysInfos.cpu)
+                    delay(1000)
+                }
             }
         }
     }

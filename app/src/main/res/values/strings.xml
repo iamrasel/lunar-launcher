@@ -10,7 +10,8 @@
     <string name="acknowledgements" translatable="false">
         <b>Acknowledgements</b>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
-        <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>
+        <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>\n
+        <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
     </string>
     <string name="add_new">Add New</string>
     <string name="advance">Advance</string>
@@ -74,6 +75,7 @@
     </string>
     <string name="restart">Restart</string>
     <string name="root">Root</string>
+    <string name="rss_feed">RSS Feed</string>
     <string name="sdk" translatable="false">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
     <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>
@@ -87,6 +89,7 @@
         \n<li><b>Amazon:</b> Use the affiliate link while shopping on Amazon to get the developer rewarded.</li>
         \n<li><b>Star:</b> Be a stargazer at Github to show your support.</li>
     </string>
+    <string name="system_info">System Info</string>
     <string name="telegram_group">Telegram Group</string>
     <string name="temp_unit">Temperature Unit</string>
     <string name="time_date">Time - Date</string>

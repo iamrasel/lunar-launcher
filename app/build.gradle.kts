@@ -64,7 +64,9 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.5.1")
     implementation ("androidx.biometric:biometric-ktx:1.2.0-alpha05")
     implementation ("androidx.core:core-ktx:1.9.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
     implementation ("com.google.android.material:material:1.7.0")
     implementation (kotlin("stdlib", version = kotlinVersion))
+    implementation ("com.github.cachapa:ExpandableLayout:2.9.2")
     implementation ("dev.chrisbanes.insetter:insetter:0.6.1")
 }
