@@ -78,10 +78,10 @@
                     android:textAllCaps="true"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/more"
+                    android:id="@+id/misc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/more"
+                    android:text="@string/misc"
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>

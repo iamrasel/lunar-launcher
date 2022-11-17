@@ -28,20 +28,20 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.Slider
-import rasel.lunar.launcher.databinding.SettingsMoreBinding
+import rasel.lunar.launcher.databinding.SettingsMiscBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.UniUtils
 import rasel.lunar.launcher.settings.PrefsUtil
 import java.util.*
 
 
-internal class More : BottomSheetDialogFragment() {
+internal class Misc : BottomSheetDialogFragment() {
 
-    private lateinit var binding : SettingsMoreBinding
+    private lateinit var binding : SettingsMiscBinding
     private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = SettingsMoreBinding.inflate(inflater, container, false)
+        binding = SettingsMiscBinding.inflate(inflater, container, false)
 
         val constants = Constants()
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)

@@ -68,8 +68,8 @@ internal class SettingsActivity : AppCompatActivity() {
             Appearances().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
 
-        binding.more.setOnClickListener {
-            More().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
+        binding.misc.setOnClickListener {
+            Misc().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
         }
 
         binding.advance.setOnClickListener {
