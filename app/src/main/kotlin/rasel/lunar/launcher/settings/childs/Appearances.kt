@@ -39,7 +39,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.ColorPickerBinding
@@ -76,16 +75,14 @@ internal class Appearances : BottomSheetDialogFragment() {
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
         /* change theme */
-        binding.themeGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.followSystemTheme.id ->
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    binding.selectDarkTheme.id ->
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    binding.selectLightTheme.id ->
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                }
+        binding.themeGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.followSystemTheme.id ->
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                binding.selectDarkTheme.id ->
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                binding.selectLightTheme.id ->
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
 
@@ -97,7 +94,7 @@ internal class Appearances : BottomSheetDialogFragment() {
         super.onResume()
         windowBackground = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, 0)
             .getString(Constants().KEY_WINDOW_BACKGROUND, defaultColorString()).toString()
-        binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#${windowBackground}"))
+        binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#$windowBackground"))
     }
 
     private fun selectBackground() {
@@ -115,8 +112,8 @@ internal class Appearances : BottomSheetDialogFragment() {
             .show()
 
         /* set up color picker section */
-        ColorPicker(windowBackground, colorPickerBinding.colorInput, colorPickerBinding.colorA,
-            colorPickerBinding.colorR, colorPickerBinding.colorG,
+        ColorPicker(windowBackground, colorPickerBinding.colorInput,
+            colorPickerBinding.colorA, colorPickerBinding.colorR, colorPickerBinding.colorG,
             colorPickerBinding.colorB, colorPickerBinding.root).pickColor()
 
         dialogBuilder.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {

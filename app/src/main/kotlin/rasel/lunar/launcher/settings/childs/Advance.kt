@@ -26,7 +26,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.R
@@ -52,15 +51,9 @@ internal class Advance : BottomSheetDialogFragment() {
             this.dismiss()
         }
 
-        /* reset and restart button click listener */
-        binding.advanceSettings.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.reset.id -> { reset() }
-                    binding.restart.id -> { restart() }
-                }
-            }
-        }
+        /* reset and restart button click listeners */
+        binding.reset.setOnClickListener { reset() }
+        binding.restart.setOnClickListener { restart() }
     }
 
     /* reset app data */

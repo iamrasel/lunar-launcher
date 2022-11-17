@@ -25,7 +25,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.databinding.SettingsTimeDateBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.settings.PrefsUtil
@@ -61,13 +60,11 @@ internal class TimeDate : BottomSheetDialogFragment() {
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
         /* change time format value */
-        binding.timeGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.followSystemTime.id -> prefsUtil.saveTimeFormat(requireContext(), 0)
-                    binding.selectTwelve.id -> prefsUtil.saveTimeFormat(requireContext(), 1)
-                    binding.selectTwentyFour.id -> prefsUtil.saveTimeFormat(requireContext(), 2)
-                }
+        binding.timeGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.followSystemTime.id -> prefsUtil.saveTimeFormat(requireContext(), 0)
+                binding.selectTwelve.id -> prefsUtil.saveTimeFormat(requireContext(), 1)
+                binding.selectTwentyFour.id -> prefsUtil.saveTimeFormat(requireContext(), 2)
             }
         }
     }

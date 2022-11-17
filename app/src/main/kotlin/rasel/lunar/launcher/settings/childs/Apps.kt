@@ -24,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.databinding.SettingsAppsBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.settings.PrefsUtil
@@ -60,22 +59,18 @@ internal class Apps : BottomSheetDialogFragment() {
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
         /* change search with keyboard value */
-        binding.keyboardAutoGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.keyboardAutoPositive.id -> prefsUtil.keyboardSearch(requireContext(), true)
-                    binding.keyboardAutoNegative.id -> prefsUtil.keyboardSearch(requireContext(), false)
-                }
+        binding.keyboardAutoGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.keyboardAutoPositive.id -> prefsUtil.keyboardSearch(requireContext(), true)
+                binding.keyboardAutoNegative.id -> prefsUtil.keyboardSearch(requireContext(), false)
             }
         }
 
         /* change settings for quick launch */
-        binding.quickLaunchGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.quickLaunchPositive.id -> prefsUtil.quickLaunch(requireContext(), true)
-                    binding.quickLaunchNegative.id -> prefsUtil.quickLaunch(requireContext(), false)
-                }
+        binding.quickLaunchGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.quickLaunchPositive.id -> prefsUtil.quickLaunch(requireContext(), true)
+                binding.quickLaunchNegative.id -> prefsUtil.quickLaunch(requireContext(), false)
             }
         }
     }

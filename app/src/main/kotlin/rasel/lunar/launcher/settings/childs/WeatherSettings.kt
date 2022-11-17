@@ -25,7 +25,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButtonToggleGroup
 import rasel.lunar.launcher.databinding.SettingsWeatherBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.settings.PrefsUtil
@@ -65,22 +64,18 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
         /* change temperature unit value */
-        binding.tempGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.selectCelsius.id -> prefsUtil.saveTempUnit(requireContext(), 0)
-                    binding.selectFahrenheit.id -> prefsUtil.saveTempUnit(requireContext(), 1)
-                }
+        binding.tempGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.selectCelsius.id -> prefsUtil.saveTempUnit(requireContext(), 0)
+                binding.selectFahrenheit.id -> prefsUtil.saveTempUnit(requireContext(), 1)
             }
         }
 
         /* change show city value */
-        binding.cityGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.showCityNegative.id -> prefsUtil.showCity(requireContext(), false)
-                    binding.showCityPositive.id -> prefsUtil.showCity(requireContext(), true)
-                }
+        binding.cityGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.showCityNegative.id -> prefsUtil.showCity(requireContext(), false)
+                binding.showCityPositive.id -> prefsUtil.showCity(requireContext(), true)
             }
         }
     }

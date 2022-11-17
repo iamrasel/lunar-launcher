@@ -12,31 +12,31 @@
         android:layout_height="wrap_content"
         android:text="@string/time_format"
         android:textSize="16sp"/>
-    <com.google.android.material.button.MaterialButtonToggleGroup
+    <com.google.android.material.chip.ChipGroup
         android:id="@+id/time_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:singleSelection="true"
-        app:selectionRequired="true">
-        <com.google.android.material.button.MaterialButton
+        app:selectionRequired="true"
+        app:singleSelection="true">
+        <com.google.android.material.chip.Chip
             android:id="@+id/select_twelve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/twelve"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+        <com.google.android.material.chip.Chip
             android:id="@+id/follow_system_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/follow_system"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+        <com.google.android.material.chip.Chip
             android:id="@+id/select_twenty_four"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/twenty_four"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+    </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="248dp"

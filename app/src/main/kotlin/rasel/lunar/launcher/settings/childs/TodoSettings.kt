@@ -24,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsTodoBinding
 import rasel.lunar.launcher.helpers.Constants
@@ -63,12 +62,10 @@ internal class TodoSettings : BottomSheetDialogFragment() {
         })
 
         /* change todo lock state value */
-        binding.todoLockGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
-            if (isChecked) {
-                when (checkedId) {
-                    binding.todoLockPositive.id -> prefsUtil.todoLock(requireContext(), true)
-                    binding.todoLockNegative.id -> prefsUtil.todoLock(requireContext(), false)
-                }
+        binding.todoLockGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.todoLockPositive.id -> prefsUtil.todoLock(requireContext(), true)
+                binding.todoLockNegative.id -> prefsUtil.todoLock(requireContext(), false)
             }
         }
     }

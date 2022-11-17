@@ -52,25 +52,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/negative"
-            style="@style/Widget.Material3.Chip.Filter"/>
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/select_lock_accessibility"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accessibility"
-            style="@style/Widget.Material3.Chip.Filter"/>
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/select_lock_admin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/device_admin"
-            style="@style/Widget.Material3.Chip.Filter"/>
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/select_lock_root"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/root"
-            style="@style/Widget.Material3.Chip.Filter"/>
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
     </com.google.android.material.chip.ChipGroup>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

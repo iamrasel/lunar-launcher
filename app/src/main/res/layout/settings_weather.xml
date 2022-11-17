@@ -42,25 +42,25 @@
         android:text="@string/temp_unit"
         android:textSize="16sp"
         android:layout_marginTop="16dp"/>
-    <com.google.android.material.button.MaterialButtonToggleGroup
+    <com.google.android.material.chip.ChipGroup
         android:id="@+id/temp_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:singleSelection="true"
-        app:selectionRequired="true">
-        <com.google.android.material.button.MaterialButton
+        app:selectionRequired="true"
+        app:singleSelection="true">
+        <com.google.android.material.chip.Chip
             android:id="@+id/select_celsius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/celsius"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+        <com.google.android.material.chip.Chip
             android:id="@+id/select_fahrenheit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fahrenheit"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+    </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
@@ -68,24 +68,24 @@
         android:text="@string/show_city"
         android:textSize="16sp"
         android:layout_marginTop="16dp"/>
-    <com.google.android.material.button.MaterialButtonToggleGroup
+    <com.google.android.material.chip.ChipGroup
         android:id="@+id/city_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:singleSelection="true"
-        app:selectionRequired="true">
-        <com.google.android.material.button.MaterialButton
+        app:selectionRequired="true"
+        app:singleSelection="true">
+        <com.google.android.material.chip.Chip
             android:id="@+id/show_city_positive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/positive"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+        <com.google.android.material.chip.Chip
             android:id="@+id/show_city_negative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/negative"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+    </com.google.android.material.chip.ChipGroup>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

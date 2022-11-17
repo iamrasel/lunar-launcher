@@ -14,16 +14,12 @@
         android:layout_height="wrap_content"
         android:textSize="22sp"/>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/app_package"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/app_package"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Material3.Button.TextButton"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+        android:layout_marginTop="8dp"
+        style="@style/Widget.Material3.Button.TextButton"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
@@ -66,7 +62,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="16dp">
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -84,9 +80,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/app_info"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
-        </com.google.android.material.button.MaterialButtonToggleGroup>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -105,7 +101,7 @@
                 android:text="@string/uninstall"
                 android:textColor="@android:color/holo_red_light"
                 style="@style/Widget.Material3.Button.ElevatedButton"/>
-        </com.google.android.material.button.MaterialButtonToggleGroup>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
