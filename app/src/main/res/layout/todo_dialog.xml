@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/surrounding">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/delete_all_confirmation"
@@ -21,20 +21,15 @@
         android:hint="@string/todo"
         app:endIconMode="clear_text"
         app:errorEnabled="true">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/todo_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:singleLine="true"/>
-
+            android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/todo_cancel"
             android:layout_width="wrap_content"
@@ -42,7 +37,6 @@
             android:layout_weight="1"
             android:text="@android:string/cancel"
             style="@style/Widget.Material3.Button.ElevatedButton"/>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/todo_ok"
             android:layout_width="wrap_content"
@@ -50,7 +44,6 @@
             android:layout_weight="1"
             android:text="@android:string/ok"
             style="@style/Widget.Material3.Button.ElevatedButton"/>
-
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

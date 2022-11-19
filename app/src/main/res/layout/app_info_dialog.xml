@@ -4,26 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingHorizontal="@dimen/surrounding">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="@dimen/surrounding"
+        style="@style/TextAppearance.Material3.TitleMedium"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mixed"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
+        android:layout_height="wrap_content"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="24dp">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/permissions"
             android:layout_width="wrap_content"

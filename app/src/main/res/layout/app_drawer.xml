@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/apps_count"
@@ -78,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@drawable/rounded_bg"
-                    android:paddingHorizontal="12dp"
+                    android:paddingHorizontal="@dimen/surrounding"
                     android:src="@drawable/ic_close"
                     android:contentDescription="@null"/>
 
@@ -86,7 +87,7 @@
                     android:id="@+id/search_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:boxBackgroundColor="?android:attr/colorBackground"
+                    app:boxBackgroundColor="?attr/colorSurface"
                     app:endIconMode="clear_text"
                     app:hintEnabled="false">
                     <com.google.android.material.textfield.TextInputEditText
@@ -104,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@drawable/rounded_bg"
-                    android:paddingHorizontal="12dp"
+                    android:paddingHorizontal="@dimen/surrounding"
                     android:src="@drawable/ic_back"
                     android:contentDescription="@null"/>
 

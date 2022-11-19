@@ -373,8 +373,8 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
         val textView = MaterialTextView(fragmentActivity)
         textView.layoutParams = LinearLayoutCompat.LayoutParams(
-            (54 * resources.displayMetrics.density).toInt(),
-            (54 * resources.displayMetrics.density).toInt())
+            (48 * resources.displayMetrics.density).toInt(),
+            (48 * resources.displayMetrics.density).toInt())
         textView.gravity = Gravity.CENTER
         textView.textSize = 20 * resources.displayMetrics.density
         textView.setTypeface(null, Typeface.BOLD)

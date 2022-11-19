@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.cachapa.expandablelayout.ExpandableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/expandable_rss"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:el_duration="1000"
     app:el_expanded="false"
-    app:el_parallax="0.5"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:el_parallax="0.5">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
-            android:background="@drawable/rounded_bg"
             android:visibility="gone"
             app:layoutManager="LinearLayoutManager"/>
 

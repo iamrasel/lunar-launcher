@@ -167,10 +167,11 @@ internal class AppMenu : BottomSheetDialogFragment() {
     /* detailed info dialog */
     @SuppressLint("SetTextI18n")
     private fun detailedInfo() {
-        val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
         val dialogBinding = AppInfoDialogBinding.inflate(fragmentActivity.layoutInflater)
-        dialogBuilder.setView(dialogBinding.root)
-        dialogBuilder.show()
+        MaterialAlertDialogBuilder(fragmentActivity)
+            .setView(dialogBinding.root)
+            .setPositiveButton(android.R.string.cancel, null)
+            .show()
 
         /* show app name */
         dialogBinding.appName.text = packageManager.getApplicationLabel(appInfo)
@@ -196,11 +197,11 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
     /* activity browser dialog */
     private fun activityBrowser() {
-        val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
         val dialogBinding = ActivityBrowserDialogBinding.inflate(fragmentActivity.layoutInflater)
-        dialogBuilder.setView(dialogBinding.root)
-        val dialog = dialogBuilder.create()
-        dialog.show()
+        val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
+            .setView(dialogBinding.root)
+            .setPositiveButton(android.R.string.cancel, null)
+            .show()
 
         /* show app name */
         dialogBinding.appName.text = packageManager.getApplicationLabel(appInfo)
@@ -241,7 +242,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
                     Toast.makeText(requireContext(),
                         "${resources.getString(R.string.unable_to_launch)} -\n$exceptionShort", Toast.LENGTH_LONG).show()
                 }
-                dialog.dismiss()
+                dialogBuilder.dismiss()
             }
     }
 

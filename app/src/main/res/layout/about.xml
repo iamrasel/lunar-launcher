@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:padding="16dp">
+    android:padding="@dimen/surrounding">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="wrap_content"
@@ -16,16 +16,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="@dimen/distance"
+        style="@style/TextAppearance.Material3.TitleMedium"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/developer_name"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="@dimen/surrounding"/>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="wrap_content"
@@ -57,7 +56,7 @@
         android:text="@string/acknowledgements"
         android:autoLink="web"
         android:gravity="center"
-        android:lineSpacingExtra="8dp"
+        android:lineSpacingExtra="6dp"
         android:layout_marginTop="24dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

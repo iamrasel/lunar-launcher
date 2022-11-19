@@ -23,7 +23,6 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.Uri
 import android.os.BatteryManager
 import android.os.Environment
 import android.os.StatFs
@@ -128,17 +127,6 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
                         "Free: " + String.format("%.03f", availExtStorage) + " GB<br>" +
                         "Path: " + sdcardPath, Html.FROM_HTML_MODE_COMPACT
             )
-            /* open sd card directory */
-            extStorage.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.setDataAndType(Uri.parse(sdcardPath), "resource/folder")
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                try {
-                    fragmentActivity.startActivity(intent)
-                } catch (exception: Exception) {
-                    exception.printStackTrace()
-                }
-            }
         /* sd card not found */
         } else {
             extStorage.text = Html.fromHtml("<h5>SD Card</h5><br>" + "Couldn't find", Html.FROM_HTML_MODE_COMPACT)

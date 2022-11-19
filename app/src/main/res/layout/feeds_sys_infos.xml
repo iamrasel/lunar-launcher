@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.cachapa.expandablelayout.ExpandableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/expandable_system_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:el_duration="1000"
     app:el_expanded="false"
-    app:el_parallax="0.5"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:el_parallax="0.5">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -20,14 +20,12 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_marginBottom="4dp">
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/ram"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/rounded_bg"
                 android:layout_marginEnd="4dp" />
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/cpu"
@@ -35,9 +33,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/rounded_bg"
                 android:layout_marginStart="4dp" />
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -46,26 +42,20 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_marginTop="4dp">
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/int_storage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/rounded_bg"
                 android:layout_marginEnd="4dp" />
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/ext_storage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/rounded_bg"
-                android:clickable="true"
                 android:layout_marginStart="4dp" />
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

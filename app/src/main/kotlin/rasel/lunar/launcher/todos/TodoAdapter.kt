@@ -96,11 +96,13 @@ internal class TodoAdapter(
         val databaseHandler = DatabaseHandler(context)
         val todo = databaseHandler.todos[position]
 
-        dialogBinding.deleteAllConfirmation.visibility = View.GONE
-        dialogBinding.todoInput.setText(todo.name)
-        dialogBinding.todoCancel.text = context.getString(R.string.delete)
-        dialogBinding.todoCancel.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
-        dialogBinding.todoOk.text = context.getString(R.string.update)
+        dialogBinding.apply {
+            deleteAllConfirmation.visibility = View.GONE
+            todoInput.setText(todo.name)
+            todoCancel.text = context.getString(R.string.delete)
+            todoCancel.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+            todoOk.text = context.getString(R.string.update)
+        }
 
         /* delete the item */
         dialogBinding.todoCancel.setOnClickListener {

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:focusable="true"
     android:clickable="true"
-    android:paddingHorizontal="16dp">
+    android:paddingHorizontal="@dimen/surrounding">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todos"
@@ -25,11 +25,10 @@
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
-
+        android:layout_marginBottom="@dimen/distance">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_all"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/delete_all"
@@ -37,10 +36,9 @@
             app:iconGravity="textStart"
             app:iconSize="20dp"
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_new"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/add_new"
@@ -48,7 +46,6 @@
             app:iconGravity="textStart"
             app:iconSize="20dp"
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
-
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
