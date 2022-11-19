@@ -56,6 +56,7 @@ internal class LauncherHome : Fragment() {
     private lateinit var batteryReceiver: BatteryReceiver
     private val constants = Constants()
     private val uniUtils = UniUtils()
+    private var shouldResume = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = LauncherHomeBinding.inflate(inflater, container, false)
@@ -73,11 +74,6 @@ internal class LauncherHome : Fragment() {
         sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
 
-        /* refresh the todo list after getting back from TodoManager */
-        fragManager.addOnBackStackChangedListener {
-            if (fragManager.backStackEntryCount == 0) showTodoList()
-        }
-
         return binding.root
     }
 
@@ -87,32 +83,46 @@ internal class LauncherHome : Fragment() {
         rootViewGestures()
         batteryProgressGestures()
         todosGestures()
+
+        /* refresh the todo list after getting back from TodoManager */
+        fragManager.addOnBackStackChangedListener {
+            shouldResume = if (fragManager.backStackEntryCount == 0) {
+                binding.root.visibility = View.VISIBLE
+                showTodoList()
+                true
+            } else {
+                binding.root.visibility = View.GONE
+                false
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        /* register battery changes */
-        requireContext().registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        if (shouldResume) {
+            /* register battery changes */
+            requireContext().registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
-        /* time and date */
-        if (DateFormat.is24HourFormat(requireContext())) {
-            binding.time.format24Hour = timeFormat
-            binding.date.format24Hour = dateFormat
-        } else {
-            binding.time.format12Hour = timeFormat
-            binding.date.format12Hour = dateFormat
+            /* time and date */
+            if (DateFormat.is24HourFormat(requireContext())) {
+                binding.time.format24Hour = timeFormat
+                binding.date.format24Hour = dateFormat
+            } else {
+                binding.time.format12Hour = timeFormat
+                binding.date.format12Hour = dateFormat
+            }
+
+            /* show weather */
+            WeatherExecutor(sharedPreferences).generateWeatherString(binding.temp, fragmentActivity)
+            /* show todo list */
+            showTodoList()
         }
-
-        /* show weather */
-        WeatherExecutor(sharedPreferences).generateWeatherString(binding.temp, fragmentActivity)
-        /* show todo list */
-        showTodoList()
     }
 
     override fun onPause() {
         super.onPause()
         /* unregister battery changes */
-        requireContext().unregisterReceiver(batteryReceiver)
+        if (shouldResume) requireContext().unregisterReceiver(batteryReceiver)
     }
 
     /* insets */
@@ -226,14 +236,12 @@ internal class LauncherHome : Fragment() {
 
     /* launch TodoManager fragment */
     private fun launchTodoManager() {
-        binding.root.visibility = View.GONE
         fragManager.beginTransaction().replace(R.id.main_fragments_container, TodoManager())
             .addToBackStack("").commit()
     }
 
     /* todo list */
     private fun showTodoList() {
-        binding.root.visibility = View.VISIBLE
         binding.todos.adapter = TodoAdapter(fragmentActivity, requireContext(), null)
     }
 
