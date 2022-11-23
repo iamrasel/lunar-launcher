@@ -31,6 +31,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.R
+import rasel.lunar.launcher.helpers.Constants
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -75,6 +76,12 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
             exception.printStackTrace()
         }
 
+        val finalCpuTemp = when (tempUnit) {
+            0 -> "$cpuTemp ºC"
+            1 -> "${String.format("%.02f", cpuTemp * 1.8 + 32)} ºF"
+            else -> "$cpuTemp ºC"
+        }
+
         val cpuFreq = "${String.format("%.02f", minCpuFrequency.toFloat() / 1000)} - " +
                 "${String.format("%.02f", maxCpuFrequency.toFloat() / 1000)} GHz"
 
@@ -84,7 +91,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
         }
         cpu.text = Html.fromHtml(
             "<b>${string(R.string.cpu)}</b><br>" +
-                    "${string(R.string.temperature)}: $cpuTemp ºC | " +
+                    "${string(R.string.temperature)}: $finalCpuTemp | " +
                     "${string(R.string.frequency)}: $cpuFreq",
             Html.FROM_HTML_MODE_COMPACT)
     }
@@ -142,6 +149,12 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
         val batteryTemp = batteryIntent!!.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0).toFloat() / 10
         val voltage = batteryIntent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0).toFloat() / 1000
 
+        val finalBatteryTemp = when (tempUnit) {
+            0 -> "$batteryTemp ºC"
+            1 -> "${String.format("%.02f", batteryTemp * 1.8 + 32)} ºF"
+            else -> "$batteryTemp ºC"
+        }
+
         var sdPath = string(R.string.na)
         if (extStorages.size > 1 && extStorages[1] != null) {
             val sdcardPaths = extStorages[1]!!.path.split(File.separator).toTypedArray()
@@ -152,7 +165,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
             "${longToString(SystemClock.elapsedRealtime())}\n" +
             "${longToString(SystemClock.uptimeMillis())}\n" +
             "${String.format("%.02f", memoryInfo.threshold / 1048576f)} MB\n" +
-            "$batteryTemp ºC\n" +
+            "$finalBatteryTemp\n" +
             "$voltage V\n" +
             "${String.format("%.03f", totalRootStorage)} GB\n" +
             "$sdPath\n" +
@@ -161,10 +174,6 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
     }
 
 
-    private val extStorages: Array<File?> get() {
-        return ContextCompat.getExternalFilesDirs(fragmentActivity, null)
-    }
-
     private val memoryInfo: ActivityManager.MemoryInfo get() {
         val memoryInfo = ActivityManager.MemoryInfo()
         val activityManager = fragmentActivity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -172,7 +181,15 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
         return memoryInfo
     }
 
-    /* device's uptime */
+    private val tempUnit: Int get() {
+        return fragmentActivity.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
+            .getInt(Constants().KEY_TEMP_UNIT, 0)
+    }
+
+    private val extStorages: Array<File?> get() {
+        return ContextCompat.getExternalFilesDirs(fragmentActivity, null)
+    }
+
     private fun longToString(long: Long) : String {
         var seconds = (long.toDouble() / 1000).roundToInt()
         val hours = TimeUnit.SECONDS.toHours(seconds.toLong())
