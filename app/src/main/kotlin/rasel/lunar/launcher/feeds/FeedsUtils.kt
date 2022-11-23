@@ -23,65 +23,48 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.BatteryManager
-import android.os.Environment
-import android.os.StatFs
+import android.os.*
 import android.text.Html
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textview.MaterialTextView
+import rasel.lunar.launcher.R
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import java.io.RandomAccessFile
+import java.net.InetAddress
+import java.net.NetworkInterface
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 
 internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
 
-    private var sysInfoUtils = SysInfoUtils()
     private val toGb = 1.07374182E9f
+    private fun string(id: Int) : String { return fragmentActivity.getString(id) }
 
-	/* get and show ram info */
-    @SuppressLint("DefaultLocale")
-    fun ram(ram: MaterialTextView) {
-        val memoryInfo = ActivityManager.MemoryInfo()
-        val activityManager = fragmentActivity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        activityManager.getMemoryInfo(memoryInfo)
+    /* ram info */
+    fun ram(ramProgress: LinearProgressIndicator, ram: MaterialTextView) {
         val totalMem = memoryInfo.totalMem / toGb
         val availMem = memoryInfo.availMem / toGb
-        val thresholdMem = memoryInfo.threshold / toGb
         val usedMem = totalMem - availMem
+
+        ramProgress.progress = (usedMem * 100 / totalMem).toInt()
         ram.text = Html.fromHtml(
-            "<h5>RAM</h5><br>" +
-                    "Total: " + String.format("%.03f", totalMem) + " GB<br>" +
-                    "Used: " + String.format("%.03f", usedMem) + " GB<br>" +
-                    "Available: " + String.format("%.03f", availMem) + " GB<br>" +
-                    "Threshold: " + String.format("%.03f", thresholdMem) + " GB<br>" +
-                    "System Uptime: " + sysInfoUtils.deviceUptime, Html.FROM_HTML_MODE_COMPACT
-        )
+            "<b>${string(R.string.ram)}</b><br>" +
+                    "${string(R.string.total)}: ${String.format("%.03f", totalMem)} GB | " +
+                    "${string(R.string.used)}: ${String.format("%.03f", usedMem)} GB | " +
+                    "${string(R.string.free)}: ${String.format("%.03f", availMem)} GB",
+            Html.FROM_HTML_MODE_COMPACT)
     }
 
-	/* get and show internal storage info */
-    @SuppressLint("DefaultLocale")
-    fun intStorage(intStorage: MaterialTextView) {
-        val statFs = StatFs(Environment.getDataDirectory().path)
-        val blockSize = statFs.blockSizeLong
-        val totalIntStorage = statFs.blockCountLong * blockSize / toGb
-        val availIntStorage = statFs.availableBlocksLong * blockSize / toGb
-        val usedIntStorage = totalIntStorage - availIntStorage
-        val totalRootStorage = StatFs(Environment.getRootDirectory().path).blockCountLong *
-                StatFs(Environment.getRootDirectory().path).blockSizeLong / toGb
 
-        intStorage.text = Html.fromHtml(
-            "<h5>ROM</h5><br>" +
-                    "Total: " + String.format("%.03f", totalIntStorage) + " GB<br>" +
-                    "Used: " + String.format("%.03f", usedIntStorage) + " GB<br>" +
-                    "Free: " + String.format("%.03f", availIntStorage) + " GB<br>" +
-                    "Root: " + String.format("%.03f", totalRootStorage) + " GB", Html.FROM_HTML_MODE_COMPACT
-        )
-    }
-
-	/* get and show cpu and battery info */
-    fun cpuBattery(cpuBattery: MaterialTextView) {
+    /* cpu and battery info */
+    fun cpu(cpuProgress: LinearProgressIndicator, cpu: MaterialTextView) {
         var cpuTemp = 0.0f
         try {
             val cpuTempProcess = Runtime.getRuntime().exec("cat sys/class/thermal/thermal_zone0/temp")
@@ -92,45 +75,194 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
             exception.printStackTrace()
         }
 
-        val intent = fragmentActivity.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-        val batteryTemp = intent!!.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0).toFloat() / 10
-        val voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0).toFloat() / 1000
+        val cpuFreq = "${String.format("%.02f", minCpuFrequency.toFloat() / 1000)} - " +
+                "${String.format("%.02f", maxCpuFrequency.toFloat() / 1000)} GHz"
 
-        cpuBattery.text = Html.fromHtml(
-            "<h5>CPU & Battery</h5><br>" +
-                    "Cpu Temp: " + cpuTemp + " ºC<br>" +
-                    "Usage: " + sysInfoUtils.cpuUsage + "<br>" +
-                    "Freq: " + sysInfoUtils.cpuFreq + "<br>" +
-                    "Battery Temp: " + batteryTemp + " ºC<br>" +
-                    "Voltage: " + voltage + " V", Html.FROM_HTML_MODE_COMPACT
-        )
+        cpuProgress.progress = when (maxCpuFrequency) {
+            0 -> 30
+            else -> frequencyOfCore * 100 / maxCpuFrequency
+        }
+        cpu.text = Html.fromHtml(
+            "<b>${string(R.string.cpu)}</b><br>" +
+                    "${string(R.string.temperature)}: $cpuTemp ºC | " +
+                    "${string(R.string.frequency)}: $cpuFreq",
+            Html.FROM_HTML_MODE_COMPACT)
     }
 
-	/* get and show external storage info */
-    @SuppressLint("DefaultLocale")
-    fun extStorage(extStorage: MaterialTextView) {
-        val storages = ContextCompat.getExternalFilesDirs(fragmentActivity, null)
-        /* sd card is available */
-        if (storages.size > 1 && storages[1] != null) {
-            val statFs = StatFs(storages[1]!!.path)
-            val blockSize = statFs.blockSizeLong
-            val totalExtStorage = statFs.blockCountLong * blockSize / toGb
-            val availExtStorage = statFs.availableBlocksLong * blockSize / toGb
-            val usedExtStorage = totalExtStorage - availExtStorage
-            val sdcardPaths = storages[1].path.split(File.separator).toTypedArray()
-            val sdcardPath = File.separator + sdcardPaths[1] + File.separator + sdcardPaths[2] + File.separator
 
+    /* internal storage */
+    fun intStorage(intProgress: LinearProgressIndicator, intStorage: MaterialTextView) {
+        val statFs = StatFs(Environment.getDataDirectory().path)
+        val totalStorage = statFs.blockCountLong * statFs.blockSizeLong / toGb
+        val availStorage = statFs.availableBlocksLong * statFs.blockSizeLong / toGb
+        val usedStorage = totalStorage - availStorage
+
+        intProgress.progress = (usedStorage * 100 / totalStorage).toInt()
+        intStorage.text = Html.fromHtml(
+            "<b>${string(R.string.int_storage)}</b><br>" +
+                    "${string(R.string.total)}: ${String.format("%.03f", totalStorage)} GB | " +
+                    "${string(R.string.used)}: ${String.format("%.03f", usedStorage)} GB | " +
+                    "${string(R.string.free)}: ${String.format("%.03f", availStorage)} GB",
+            Html.FROM_HTML_MODE_COMPACT)
+    }
+
+
+	/* external storage */
+    fun extStorage(extProgress : LinearProgressIndicator, extStorage : MaterialTextView) {
+        /* sd card is available */
+        if (extStorages.size > 1 && extStorages[1] != null) {
+            val statFs = StatFs(extStorages[1]!!.path)
+            val blockSize = statFs.blockSizeLong
+            val totalStorage = statFs.blockCountLong * blockSize / toGb
+            val availStorage = statFs.availableBlocksLong * blockSize / toGb
+            val usedStorage = totalStorage - availStorage
+
+            extProgress.progress = (usedStorage * 100 / totalStorage).toInt()
             extStorage.text = Html.fromHtml(
-                "<h5>SD Card</h5><br>" +
-                        "Total: " + String.format("%.03f", totalExtStorage) + " GB<br>" +
-                        "Used: " + String.format("%.03f", usedExtStorage) + " GB<br>" +
-                        "Free: " + String.format("%.03f", availExtStorage) + " GB<br>" +
-                        "Path: " + sdcardPath, Html.FROM_HTML_MODE_COMPACT
-            )
+                "<b>${string(R.string.ext_storage)}</b><br>" +
+                        "${string(R.string.total)}: ${String.format("%.03f", totalStorage)} GB | " +
+                        "${string(R.string.used)}: ${String.format("%.03f", usedStorage)} GB | " +
+                        "${string(R.string.free)}: ${String.format("%.03f", availStorage)} GB",
+                Html.FROM_HTML_MODE_COMPACT)
         /* sd card not found */
         } else {
-            extStorage.text = Html.fromHtml("<h5>SD Card</h5><br>" + "Couldn't find", Html.FROM_HTML_MODE_COMPACT)
+            extProgress.visibility = View.GONE
+            extStorage.text =
+                Html.fromHtml(string(R.string.sd_card_failed), Html.FROM_HTML_MODE_COMPACT)
         }
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    fun misc(misc: MaterialTextView) {
+        val totalRootStorage = StatFs(Environment.getRootDirectory().path).blockCountLong *
+                StatFs(Environment.getRootDirectory().path).blockSizeLong / toGb
+
+        val batteryIntent = fragmentActivity.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        val batteryTemp = batteryIntent!!.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0).toFloat() / 10
+        val voltage = batteryIntent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0).toFloat() / 1000
+
+        var sdPath = string(R.string.na)
+        if (extStorages.size > 1 && extStorages[1] != null) {
+            val sdcardPaths = extStorages[1]!!.path.split(File.separator).toTypedArray()
+            sdPath = File.separator + sdcardPaths[1] + File.separator + sdcardPaths[2] + File.separator
+        }
+
+        misc.text =
+            "${longToString(SystemClock.elapsedRealtime())}\n" +
+            "${longToString(SystemClock.uptimeMillis())}\n" +
+            "${String.format("%.02f", memoryInfo.threshold / 1048576f)} MB\n" +
+            "$batteryTemp ºC\n" +
+            "$voltage V\n" +
+            "${String.format("%.03f", totalRootStorage)} GB\n" +
+            "$sdPath\n" +
+            "${getIpAddress(true)}\n" +
+            "${getIpAddress(false)}"
+    }
+
+
+    private val extStorages: Array<File?> get() {
+        return ContextCompat.getExternalFilesDirs(fragmentActivity, null)
+    }
+
+    private val memoryInfo: ActivityManager.MemoryInfo get() {
+        val memoryInfo = ActivityManager.MemoryInfo()
+        val activityManager = fragmentActivity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        activityManager.getMemoryInfo(memoryInfo)
+        return memoryInfo
+    }
+
+    /* device's uptime */
+    private fun longToString(long: Long) : String {
+        var seconds = (long.toDouble() / 1000).roundToInt()
+        val hours = TimeUnit.SECONDS.toHours(seconds.toLong())
+        if (hours > 0) seconds -= TimeUnit.HOURS.toSeconds(hours).toInt()
+        val minutes = if (seconds > 0) TimeUnit.SECONDS.toMinutes(seconds.toLong()) else 0
+        if (minutes > 0) seconds -= TimeUnit.MINUTES.toSeconds(minutes).toInt()
+        return if (hours > 0) String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        else String.format("%02d:%02d", minutes, seconds)
+    }
+
+    /* frequency of core */
+    private val frequencyOfCore: Int get() {
+        var currentFReq = 0
+        try {
+            val currentFreq: Double
+            val readerCurFreq =
+                RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/scaling_cur_freq", "r")
+            val curFreq = readerCurFreq.readLine()
+            currentFreq = curFreq.toDouble() / 1000
+            readerCurFreq.close()
+            currentFReq = currentFreq.toInt()
+            println("$currentFReq----------------------------------------------------")
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+        }
+        return currentFReq
+    }
+
+    /* minimum cpu frequency */
+    private val minCpuFrequency: Int get() {
+        var minFreq = -1
+        try {
+            val randomAccessFile =
+                RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/cpuinfo_min_freq", "r")
+            while (true) {
+                val line = randomAccessFile.readLine() ?: break
+                val timeInState = line.toInt()
+                if (timeInState > 0) {
+                    val freq = timeInState / 1000
+                    if (freq > minFreq) {
+                        minFreq = freq
+                    }
+                }
+            }
+        } catch (exception: java.lang.Exception) {
+            exception.printStackTrace()
+        }
+        return minFreq
+    }
+
+    /* maximum cpu frequency */
+    private val maxCpuFrequency: Int get() {
+        var currentFReq = 0
+        try {
+            val currentFreq: Double
+            val readerCurFreq =
+                RandomAccessFile("/sys/devices/system/cpu/cpu" + 0 + "/cpufreq/cpuinfo_max_freq", "r")
+            val curFreq = readerCurFreq.readLine()
+            currentFreq = curFreq.toDouble() / 1000
+            readerCurFreq.close()
+            currentFReq = currentFreq.toInt()
+        } catch (exception: java.lang.Exception) {
+            exception.printStackTrace()
+        }
+        return currentFReq
+    }
+
+    private fun getIpAddress(getIPv4: Boolean): String {
+        try {
+            val interfaces: List<NetworkInterface> = Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (interFace in interfaces) {
+                val addresses: List<InetAddress> = Collections.list(interFace.inetAddresses)
+                for (address in addresses) {
+                    if (!address.isLoopbackAddress) {
+                        val addressStr = address.hostAddress
+                        val isIPv4 = addressStr!!.indexOf(':') < 0
+                        if (getIPv4) {
+                            if (isIPv4) return addressStr
+                        } else {
+                            if (!isIPv4) {
+                                val endIndex = addressStr.indexOf('%')
+                                return if (endIndex < 0) addressStr
+                                else addressStr.substring(0, endIndex)
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e: java.lang.Exception) { e.printStackTrace() }
+        return string(R.string.na)
     }
 
 }

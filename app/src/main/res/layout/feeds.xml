@@ -4,21 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/distance">
+    android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/expandable_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:singleSelection="true">
+        app:singleSelection="true"
+        android:layout_margin="@dimen/distance">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/expand_rss"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/rss_feed"
-            android:insetBottom="0dp"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/expand_system_info"
@@ -26,14 +25,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/system_info"
-            android:insetBottom="0dp"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_bg">
+        android:layout_marginHorizontal="@dimen/distance"
+        android:layout_marginBottom="@dimen/distance">
         <include
             android:id="@+id/feeds_rss"
             android:layout_width="match_parent"
@@ -42,15 +41,14 @@
         <include
             android:id="@+id/feeds_sys_infos"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             layout="@layout/feeds_sys_infos"/>
     </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Widgets"
-        android:gravity="center_horizontal"
-        android:textSize="28sp"/>
+        android:text="soon"
+        android:gravity="center"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

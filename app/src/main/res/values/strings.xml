@@ -34,6 +34,7 @@
     <string name="city_name">City Name</string>
     <string name="contact">Contact</string>
     <string name="copied_message">Copied to clipboard</string>
+    <string name="cpu">CPU</string>
     <string name="dark_theme">Dark</string>
     <string name="date_format">Date Format</string>
     <string name="default_">Default</string>
@@ -50,17 +51,26 @@
     <string name="donate">Donate</string>
     <string name="double_tap_lock">Double Tap Lock Method</string>
     <string name="empty_text_field">Text field is empty</string>
+    <string name="ext_storage">External Storage</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="feed_url">RSS Feed Url</string>
     <string name="first_install">First Install</string>
     <string name="follow_system">Follow System</string>
+    <string name="free">Free</string>
     <string name="freeform">Freeform</string>
+    <string name="frequency">Frequency</string>
     <string name="got_it">Got it</string>
     <string name="image_pick_failed">Failed to get image</string>
+    <string name="int_storage">Internal Storage</string>
     <string name="last_update">Last Update</string>
     <string name="light_theme">Light</string>
     <string name="lunar_settings">Lunar Settings</string>
     <string name="misc">Misc</string>
+    <string name="misc_info_titles">
+        Device Uptime\nSystem Active\nMemory Threshold\nBattery Temperature\nBattery Voltage
+        \nRoot Storage\nSD Card Path\nIPv4\nIPv6
+    </string>
+    <string name="na">N/A</string>
     <string name="negative">Negative</string>
     <string name="null_app_store_message">
         There\'s no app store is installed\non this device.
@@ -69,6 +79,7 @@
     <string name="positive">Positive</string>
     <string name="proceed">Proceed</string>
     <string name="quick_launch">Quick Launch</string>
+    <string name="ram">RAM</string>
     <string name="reset">Reset</string>
     <string name="reset_message">
         This operation will clear all the data stored for this application, and can\'t be undone.
@@ -77,6 +88,7 @@
     <string name="root">Root</string>
     <string name="rss_feed">RSS Feed</string>
     <string name="sdk" translatable="false">SDK</string>
+    <string name="sd_card_failed">Failed to detect any SD card</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
     <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>
     <string name="show_city">Show City Name With Weather</string>
@@ -91,6 +103,7 @@
     </string>
     <string name="system_info">System Info</string>
     <string name="telegram_group">Telegram Group</string>
+    <string name="temperature">Temperature</string>
     <string name="temp_unit">Temperature Unit</string>
     <string name="time_date">Time - Date</string>
     <string name="time_format">Time Format</string>
@@ -98,6 +111,7 @@
     <string name="todo_count">Number Of Todo On Home Screen</string>
     <string name="todo_manager">Todo Manager</string>
     <string name="todo_manager_lock">Todo Manager Lock</string>
+    <string name="total">Total</string>
     <string name="twelve">12 Hour</string>
     <string name="twenty_four">24 Hour</string>
     <string name="uid" translatable="false">UID</string>
@@ -105,6 +119,7 @@
     <string name="uninstall">Uninstall</string>
     <string name="update">Update</string>
     <string name="url">Url</string>
+    <string name="used">Used</string>
     <string name="version">Version</string>
     <string name="wallpaper_change_success">Wallpaper changed successfully</string>
     <string name="weather">Weather</string>

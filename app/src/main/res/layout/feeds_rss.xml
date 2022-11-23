@@ -17,6 +17,7 @@
             android:id="@+id/rss"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/rounded_bg"
             android:scrollbars="none"
             android:visibility="gone"
             app:layoutManager="LinearLayoutManager"/>
