@@ -1,5 +1,0 @@
-- Between 0-7, any number of todos on home screen. Not just 0, 3 or 5.
-- Crush fix: fragment is not attached to an activity.
-- Open sdcard directory by clicking on it's info from Feeds screen.
-- Custom date format, input `x` to show date number suffix.
-**This release will cause app crash; solution: uninstall previous version.**

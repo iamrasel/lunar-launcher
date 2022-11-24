@@ -138,7 +138,7 @@ If you want to share your thoughts with me or other users, join the Lunar Launch
 - [https://github.com/cachapa/ExpandableLayout](https://github.com/cachapa/ExpandableLayout)
 
 ## Donation
-Do you like this app? If the answer is yes, then help me to continue this project. My current old laptop, which has only 4gb ram, has been serving me with it's last breaths. So I need to replace it with a decent one for developing, please help me with that. Donate me any amount you wish.
+Please support the development by donating. As Lunar Launcher is a free application, it needs support to keep it free and alive. Purchasing is not a requirement, donation is. 😊
 
 <div align='center'>
 
@@ -148,3 +148,5 @@ Do you like this app? If the answer is yes, then help me to continue this projec
 |        ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=flat-square&logo=Ethereum&logoColor=white)        |   `0x9b2f72a19C78a73dDE4478a6d51BACf198671480`    |
 
 </div>
+
+There is also another way to support, just go through this [Amazon affiliate link](https://amzn.to/3gWFktS) while shopping there. It won't cost you any extra bucks, win-win for both of us. 😉

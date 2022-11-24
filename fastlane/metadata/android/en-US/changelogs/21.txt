@@ -1,3 +1,0 @@
-- new: detailed app info - versions, sdks, permissions
-- new: browse and launch app activities
-- improvements: some visuals and app drawer performance

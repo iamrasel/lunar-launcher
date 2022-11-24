@@ -1,2 +1,0 @@
-- Launcher icon changed
-- Several improvements

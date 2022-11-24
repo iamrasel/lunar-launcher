@@ -1,5 +1,0 @@
-- [New : project level] Kotlin support
-- [New] Lunar Settings in apps list
-- [New] Todo manager access lock
-- [Fix] Device sleep/lock not working after previous release
-- [Fix] Random item style in RSS while scrolling
