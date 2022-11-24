@@ -101,7 +101,7 @@
         \n<li><b>Amazon:</b> Use the affiliate link while shopping on Amazon to get the developer rewarded.</li>
         \n<li><b>Star:</b> Be a stargazer at Github to show your support.</li>
     </string>
-    <string name="system_info">System Info</string>
+    <string name="system_stats">System Stats</string>
     <string name="telegram_group">Telegram Group</string>
     <string name="temperature">Temperature</string>
     <string name="temp_unit">Temperature Unit</string>
@@ -129,7 +129,7 @@
         \n\nAt first, after you close this dialog, you will be asked to grant following permissions. If you refuse to allow
         them, this app won\'t work as expected.
         \n\n<li><b>Modify system settings -</b> To control brightness using a slider</li>
-        \n<li><b>Phone -</b> To make call to favourite contacts</li>
+        \n<li><b>Phone -</b> To make call from shortcuts</li>
         \n\nIf you still have any doubt, you can check the source code anytime, it is fully open-source.
         \n\n<b><u>Gestures:</u></b>
         \n<li>Swipe up - quick access</li>

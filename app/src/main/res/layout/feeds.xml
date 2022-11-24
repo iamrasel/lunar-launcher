@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/system_info"
+            android:text="@string/system_stats"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 

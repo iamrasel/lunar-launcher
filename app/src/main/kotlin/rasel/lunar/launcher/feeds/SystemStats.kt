@@ -32,6 +32,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.UniUtils
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -43,7 +44,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
 
-internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
+internal class SystemStats(private val fragmentActivity: FragmentActivity) {
 
     private val toGb = 1.07374182E9f
     private fun string(id: Int) : String { return fragmentActivity.getString(id) }
@@ -78,7 +79,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
 
         val finalCpuTemp = when (tempUnit) {
             0 -> "$cpuTemp ºC"
-            1 -> "${String.format("%.02f", cpuTemp * 1.8 + 32)} ºF"
+            1 -> "${String.format("%.01f", cpuTemp * 1.8 + 32)} ºF"
             else -> "$cpuTemp ºC"
         }
 
@@ -151,7 +152,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
 
         val finalBatteryTemp = when (tempUnit) {
             0 -> "$batteryTemp ºC"
-            1 -> "${String.format("%.02f", batteryTemp * 1.8 + 32)} ºF"
+            1 -> "${String.format("%.01f", batteryTemp * 1.8 + 32)} ºF"
             else -> "$batteryTemp ºC"
         }
 
@@ -269,7 +270,7 @@ internal class FeedsUtils(private val fragmentActivity: FragmentActivity) {
                         if (getIPv4) {
                             if (isIPv4) return addressStr
                         } else {
-                            if (!isIPv4) {
+                            if (!isIPv4 && UniUtils().isNetworkAvailable(fragmentActivity)) {
                                 val endIndex = addressStr.indexOf('%')
                                 return if (endIndex < 0) addressStr
                                 else addressStr.substring(0, endIndex)
