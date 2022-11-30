@@ -104,6 +104,12 @@ internal class PrefsUtil {
         sharedPreferences.edit().putString(constants.KEY_WINDOW_BACKGROUND, windowBackground).apply()
     }
 
+    /* back to home on resume */
+    fun backHome(context: Context, backHome: Boolean) {
+        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        sharedPreferences.edit().putBoolean(constants.KEY_BACK_HOME, backHome).apply()
+    }
+
     /* save shortcuts count value */
     fun shortcutCount(context: Context, shortcutCount: Int) {
         val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)

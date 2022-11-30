@@ -47,6 +47,11 @@ internal class Misc : BottomSheetDialogFragment() {
         val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
+        when (sharedPreferences.getBoolean(constants.KEY_BACK_HOME, false)) {
+            true -> binding.backHomePositive.isChecked = true
+            false -> binding.backHomeNegative.isChecked = true
+        }
+
         binding.shortcutCount.value = sharedPreferences.getInt(constants.KEY_SHORTCUT_COUNT, 6).toFloat()
         binding.inputFeedUrl.text = SpannableStringBuilder(sharedPreferences.getString(constants.KEY_RSS_URL, ""))
 
@@ -73,6 +78,13 @@ internal class Misc : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
+
+        binding.backHomeGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.backHomePositive.id -> prefsUtil.backHome(requireContext(), true)
+                binding.backHomeNegative.id -> prefsUtil.backHome(requireContext(), false)
+            }
+        }
 
         /* change shortcut count value */
         binding.shortcutCount.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->

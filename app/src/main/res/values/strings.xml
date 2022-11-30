@@ -28,6 +28,7 @@
         Authenticate with your device credential to proceed
     </string>
     <string name="background">Background</string>
+    <string name="back_home">Always Go Back to Home Screen</string>
     <string name="celsius">Celsius</string>
     <string name="change_wallpaper">Change Wallpaper</string>
     <string name="choose_launcher">Choose Default Launcher</string>

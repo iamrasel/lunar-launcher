@@ -70,11 +70,14 @@ internal class LauncherActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val settingsPrefs = getSharedPreferences(Constants().PREFS_SETTINGS, 0)
+
         binding.root.setBackgroundColor(Color.parseColor("#${
-            this.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
-            .getString(Constants().KEY_WINDOW_BACKGROUND,
-                this.getString(UniUtils().getColorResId(this, android.R.attr.colorBackground))
+            settingsPrefs.getString(Constants().KEY_WINDOW_BACKGROUND,
+                getString(UniUtils().getColorResId(this, android.R.attr.colorBackground))
                     .replace("#", ""))}"))
+
+        if (settingsPrefs.getBoolean(Constants().KEY_BACK_HOME, false)) viewPager.currentItem = 1
     }
 
     /* build the welcome dialog */
