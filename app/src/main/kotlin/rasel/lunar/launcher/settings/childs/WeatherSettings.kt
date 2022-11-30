@@ -26,32 +26,37 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import rasel.lunar.launcher.databinding.SettingsWeatherBinding
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.PrefsUtil
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_CITY_NAME
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_OWM_API
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHOW_CITY
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TEMP_UNIT
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveCityName
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveOwmApi
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveTempUnit
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.showCity
 import java.util.*
 
 
 internal class WeatherSettings : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsWeatherBinding
-    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsWeatherBinding.inflate(inflater, container, false)
 
-        val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        val sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
-        binding.inputCity.setText(sharedPreferences.getString(constants.KEY_CITY_NAME, "").toString())
-        binding.inputOwm.setText(sharedPreferences.getString(constants.KEY_OWM_API, "").toString())
+        binding.inputCity.setText(sharedPreferences.getString(KEY_CITY_NAME, "").toString())
+        binding.inputOwm.setText(sharedPreferences.getString(KEY_OWM_API, "").toString())
 
-        when (sharedPreferences.getInt(constants.KEY_TEMP_UNIT, 0)) {
+        when (sharedPreferences.getInt(KEY_TEMP_UNIT, 0)) {
             0 -> binding.selectCelsius.isChecked = true
             1 -> binding.selectFahrenheit.isChecked = true
         }
 
-        when (sharedPreferences.getBoolean(constants.KEY_SHOW_CITY, false)) {
+        when (sharedPreferences.getBoolean(KEY_SHOW_CITY, false)) {
             false -> binding.showCityNegative.isChecked = true
             true -> binding.showCityPositive.isChecked = true
         }
@@ -66,16 +71,16 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         /* change temperature unit value */
         binding.tempGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.selectCelsius.id -> prefsUtil.saveTempUnit(requireContext(), 0)
-                binding.selectFahrenheit.id -> prefsUtil.saveTempUnit(requireContext(), 1)
+                binding.selectCelsius.id -> saveTempUnit(requireContext(), 0)
+                binding.selectFahrenheit.id -> saveTempUnit(requireContext(), 1)
             }
         }
 
         /* change show city value */
         binding.cityGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.showCityNegative.id -> prefsUtil.showCity(requireContext(), false)
-                binding.showCityPositive.id -> prefsUtil.showCity(requireContext(), true)
+                binding.showCityNegative.id -> showCity(requireContext(), false)
+                binding.showCityPositive.id -> showCity(requireContext(), true)
             }
         }
     }
@@ -83,10 +88,8 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
     /* save input field values while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        prefsUtil.saveCityName(requireContext(),
-            Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' })
-        prefsUtil.saveOwmApi(requireContext(),
-            Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' })
+        saveCityName(requireContext(), Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' })
+        saveOwmApi(requireContext(), Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' })
     }
 
 }

@@ -40,14 +40,18 @@ import rasel.lunar.launcher.databinding.FeedsBinding
 import rasel.lunar.launcher.feeds.rss.Rss
 import rasel.lunar.launcher.feeds.rss.RssAdapter
 import rasel.lunar.launcher.feeds.rss.RssService
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_RSS_URL
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.Constants.Companion.RSS_ITEMS
+import rasel.lunar.launcher.helpers.Constants.Companion.RSS_RECEIVER
+import rasel.lunar.launcher.helpers.UniUtils.Companion.isNetworkAvailable
 
 
 internal class Feeds : Fragment() {
 
     private lateinit var binding: FeedsBinding
     private lateinit var fragmentActivity: FragmentActivity
+    private val rssJobId = 101
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FeedsBinding.inflate(inflater, container, false)
@@ -102,13 +106,12 @@ internal class Feeds : Fragment() {
 
 	/* start rss service if network is active and rss url is not empty */
     private fun startService() {
-        val constants = Constants()
-        val rssUrl = fragmentActivity.getSharedPreferences(constants.PREFS_SETTINGS, 0)
-            .getString(constants.KEY_RSS_URL, "")
-        if (UniUtils().isNetworkAvailable(fragmentActivity) && rssUrl != null && rssUrl.isNotEmpty()) {
+        val rssUrl = fragmentActivity.getSharedPreferences(PREFS_SETTINGS, 0)
+            .getString(KEY_RSS_URL, "")
+        if (isNetworkAvailable(fragmentActivity) && rssUrl != null && rssUrl.isNotEmpty()) {
             val intent = Intent(fragmentActivity, RssService::class.java)
-            intent.putExtra(constants.RSS_RECEIVER, resultReceiver)
-            enqueueWork(fragmentActivity, RssService::class.java, 101, intent)
+            intent.putExtra(RSS_RECEIVER, resultReceiver)
+            enqueueWork(fragmentActivity, RssService::class.java, rssJobId, intent)
         } else {
             resumeService()
         }
@@ -126,7 +129,7 @@ internal class Feeds : Fragment() {
     @Suppress("UNCHECKED_CAST")
     private val resultReceiver: ResultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
-            val items = resultData.getSerializable(Constants().RSS_ITEMS) as List<Rss>?
+            val items = resultData.getSerializable(RSS_ITEMS) as List<Rss>?
             if (items != null) {
                 binding.feedsRss.rss.adapter = RssAdapter(items, requireContext())
                 binding.feedsRss.refresh.visibility = View.GONE

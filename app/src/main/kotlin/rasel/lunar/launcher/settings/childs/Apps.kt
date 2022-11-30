@@ -25,28 +25,29 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import rasel.lunar.launcher.databinding.SettingsAppsBinding
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.PrefsUtil
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.keyboardSearch
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.quickLaunch
 
 
 internal class Apps : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsAppsBinding
-    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppsBinding.inflate(inflater, container, false)
 
-        val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        val sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
-        when (sharedPreferences.getBoolean(constants.KEY_KEYBOARD_SEARCH, false)) {
+        when (sharedPreferences.getBoolean(KEY_KEYBOARD_SEARCH, false)) {
             false -> binding.keyboardAutoNegative.isChecked = true
             true -> binding.keyboardAutoPositive.isChecked = true
         }
 
-        when (sharedPreferences.getBoolean(constants.KEY_QUICK_LAUNCH, true)) {
+        when (sharedPreferences.getBoolean(KEY_QUICK_LAUNCH, true)) {
             true -> binding.quickLaunchPositive.isChecked = true
             false -> binding.quickLaunchNegative.isChecked = true
         }
@@ -61,16 +62,16 @@ internal class Apps : BottomSheetDialogFragment() {
         /* change search with keyboard value */
         binding.keyboardAutoGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.keyboardAutoPositive.id -> prefsUtil.keyboardSearch(requireContext(), true)
-                binding.keyboardAutoNegative.id -> prefsUtil.keyboardSearch(requireContext(), false)
+                binding.keyboardAutoPositive.id -> keyboardSearch(requireContext(), true)
+                binding.keyboardAutoNegative.id -> keyboardSearch(requireContext(), false)
             }
         }
 
         /* change settings for quick launch */
         binding.quickLaunchGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.quickLaunchPositive.id -> prefsUtil.quickLaunch(requireContext(), true)
-                binding.quickLaunchNegative.id -> prefsUtil.quickLaunch(requireContext(), false)
+                binding.quickLaunchPositive.id -> quickLaunch(requireContext(), true)
+                binding.quickLaunchNegative.id -> quickLaunch(requireContext(), false)
             }
         }
     }

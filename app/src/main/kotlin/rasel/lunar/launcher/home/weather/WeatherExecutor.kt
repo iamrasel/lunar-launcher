@@ -24,8 +24,11 @@ import android.os.Looper
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.textview.MaterialTextView
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_CITY_NAME
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_OWM_API
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHOW_CITY
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TEMP_UNIT
+import rasel.lunar.launcher.helpers.UniUtils.Companion.isNetworkAvailable
 import java.util.concurrent.Executors
 import kotlin.math.roundToInt
 
@@ -43,7 +46,7 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
 
         /*  run the executor if network is available,
             and city name and owm api values are not empty */
-        if (UniUtils().isNetworkAvailable(fragmentActivity) && cityName.isNotEmpty() && owmApi.isNotEmpty()) {
+        if (isNetworkAvailable(fragmentActivity) && cityName.isNotEmpty() && owmApi.isNotEmpty()) {
             try {
                 val executor = Executors.newSingleThreadExecutor()
                 val handler = Handler(Looper.getMainLooper())
@@ -82,11 +85,10 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
     }
 
     init {
-        val constants = Constants()
-        cityName = sharedPreferences.getString(constants.KEY_CITY_NAME, "").toString()
-        owmApi = sharedPreferences.getString(constants.KEY_OWM_API, "").toString()
-        tempUnit = sharedPreferences.getInt(constants.KEY_TEMP_UNIT, 0)
-        showCity = sharedPreferences.getBoolean(constants.KEY_SHOW_CITY, false)
+        cityName = sharedPreferences.getString(KEY_CITY_NAME, "").toString()
+        owmApi = sharedPreferences.getString(KEY_OWM_API, "").toString()
+        tempUnit = sharedPreferences.getInt(KEY_TEMP_UNIT, 0)
+        showCity = sharedPreferences.getBoolean(KEY_SHOW_CITY, false)
         weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmApi"
     }
 

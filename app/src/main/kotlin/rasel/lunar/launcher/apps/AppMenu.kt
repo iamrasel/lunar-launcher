@@ -51,9 +51,13 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.ActivityBrowserDialogBinding
 import rasel.lunar.launcher.databinding.AppInfoDialogBinding
 import rasel.lunar.launcher.databinding.AppMenuBinding
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
-import rasel.lunar.launcher.settings.PrefsUtil
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APP_NO_
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
+import rasel.lunar.launcher.helpers.UniUtils.Companion.copyToClipboard
+import rasel.lunar.launcher.helpers.UniUtils.Companion.screenHeight
+import rasel.lunar.launcher.helpers.UniUtils.Companion.screenWidth
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.removeFavApps
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveFavApps
 import java.util.*
 
 
@@ -64,7 +68,6 @@ internal class AppMenu : BottomSheetDialogFragment() {
     private lateinit var packageName: String
     private lateinit var packageManager: PackageManager
     private lateinit var appInfo: ApplicationInfo
-    private val uniUtils = UniUtils()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppMenuBinding.inflate(inflater, container, false)
@@ -103,7 +106,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
         /* copy package name */
         binding.appPackage.setOnClickListener {
-            uniUtils.copyToClipboard(fragmentActivity, requireContext(), packageName)
+            copyToClipboard(fragmentActivity, requireContext(), packageName)
         }
 
         binding.detailedInfo.setOnClickListener { detailedInfo() }
@@ -117,9 +120,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
     /* manage initial preview and clicks for favorite apps */
     @SuppressLint("PrivateResource")
     private fun favoriteApps() {
-        val prefsUtil = PrefsUtil()
-        val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
+        val sharedPreferences = requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
         val enabledStroke =
             ColorStateList.valueOf(requireContext().getColor(com.google.android.material.R.color.material_on_surface_stroke))
         val disabledStroke =
@@ -127,7 +128,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
         for (position in 1..6) {
             val button = outlinedButton
-            val savedPackageName = sharedPreferences.getString(constants.KEY_APP_NO_ + position, "")
+            val savedPackageName = sharedPreferences.getString(KEY_APP_NO_ + position, "")
 
             /* set previews */
             if (packageName == savedPackageName) button.isChecked = true
@@ -139,7 +140,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
                 else
                     @Suppress("DEPRECATION") packageManager.getPackageInfo(savedPackageName!!, 0)
             } catch (e: PackageManager.NameNotFoundException) {
-                prefsUtil.removeFavApps(requireContext(), position)
+                removeFavApps(requireContext(), position)
                 button.strokeColor = disabledStroke
                 e.printStackTrace()
             }
@@ -150,10 +151,10 @@ internal class AppMenu : BottomSheetDialogFragment() {
                 try {
                     if (checkedId == button.id) {
                         if (isChecked) {
-                            prefsUtil.saveFavApps(requireContext(), position, packageName)
+                            saveFavApps(requireContext(), position, packageName)
                             button.strokeColor = enabledStroke
                         } else {
-                            prefsUtil.removeFavApps(requireContext(), position)
+                            removeFavApps(requireContext(), position)
                             button.strokeColor = disabledStroke
                         }
                     }
@@ -268,8 +269,8 @@ internal class AppMenu : BottomSheetDialogFragment() {
         freeformIntent!!.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
         val rect = Rect(
-            0, uniUtils.screenHeight(fragmentActivity) / 2,
-            uniUtils.screenWidth(fragmentActivity), uniUtils.screenHeight(fragmentActivity))
+            0, screenHeight(fragmentActivity) / 2,
+            screenWidth(fragmentActivity), screenHeight(fragmentActivity))
         var activityOptions = activityOptions
         activityOptions = activityOptions.setLaunchBounds(rect)
         requireContext().startActivity(freeformIntent, activityOptions.toBundle())

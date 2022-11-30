@@ -36,9 +36,18 @@ import dev.chrisbanes.insetter.applyInsetter
 import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
-import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.Constants.Companion.BOTTOM_SHEET_TAG
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_DATE_FORMAT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DATE_FORMAT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TIME_FORMAT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TODO_LOCK
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.helpers.SwipeTouchListener
-import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.helpers.UniUtils.Companion.biometricPromptInfo
+import rasel.lunar.launcher.helpers.UniUtils.Companion.canAuthenticate
+import rasel.lunar.launcher.helpers.UniUtils.Companion.expandNotificationPanel
+import rasel.lunar.launcher.helpers.UniUtils.Companion.lockMethod
 import rasel.lunar.launcher.home.weather.WeatherExecutor
 import rasel.lunar.launcher.qaccess.QuickAccess
 import rasel.lunar.launcher.settings.SettingsActivity
@@ -54,8 +63,6 @@ internal class LauncherHome : Fragment() {
     private lateinit var fragManager: FragmentManager
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var batteryReceiver: BatteryReceiver
-    private val constants = Constants()
-    private val uniUtils = UniUtils()
     private var shouldResume = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -71,7 +78,7 @@ internal class LauncherHome : Fragment() {
         }
 
         fragManager = fragmentActivity.supportFragmentManager
-        sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
 
         return binding.root
@@ -141,18 +148,17 @@ internal class LauncherHome : Fragment() {
             /* open quick access panel on swipe up */
             override fun onSwipeUp() {
                 super.onSwipeUp()
-                QuickAccess().show(fragManager, constants.BOTTOM_SHEET_TAG)
+                QuickAccess().show(fragManager, BOTTOM_SHEET_TAG)
             }
             /* expand notification panel on swipe down */
             override fun onSwipeDown() {
                 super.onSwipeDown()
-                uniUtils.expandNotificationPanel(requireContext())
+                expandNotificationPanel(requireContext())
             }
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                uniUtils.lockMethod(
-                    sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
             }
         })
     }
@@ -169,13 +175,12 @@ internal class LauncherHome : Fragment() {
             /* expand notification panel on swipe down */
             override fun onSwipeDown() {
                 super.onSwipeDown()
-                uniUtils.expandNotificationPanel(requireContext())
+                expandNotificationPanel(requireContext())
             }
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                uniUtils.lockMethod(
-                    sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
             }
         })
     }
@@ -187,14 +192,14 @@ internal class LauncherHome : Fragment() {
             /* open TodoManager on long click */
             override fun onLongClick() {
                 super.onLongClick()
-                when (sharedPreferences.getBoolean(constants.KEY_TODO_LOCK, false)) {
+                when (sharedPreferences.getBoolean(KEY_TODO_LOCK, false)) {
                     false -> launchTodoManager()
                     /* show authentication screen if lock is on */
                     true -> {
-                        if (uniUtils.canAuthenticate(requireContext())) {
+                        if (canAuthenticate(requireContext())) {
                             val biometricPrompt = BiometricPrompt(fragmentActivity, authenticationCallback)
                             try {
-                                biometricPrompt.authenticate(uniUtils.biometricPromptInfo(fragmentActivity.getString(R.string.todo_manager), fragmentActivity))
+                                biometricPrompt.authenticate(biometricPromptInfo(fragmentActivity.getString(R.string.todo_manager), fragmentActivity))
                             } catch (exception: Exception) {
                                 exception.printStackTrace()
                             }
@@ -205,18 +210,17 @@ internal class LauncherHome : Fragment() {
             /* open quick access panel on swipe up */
             override fun onSwipeUp() {
                 super.onSwipeUp()
-                QuickAccess().show(fragManager, constants.BOTTOM_SHEET_TAG)
+                QuickAccess().show(fragManager, BOTTOM_SHEET_TAG)
             }
             /* expand notification panel on swipe down */
             override fun onSwipeDown() {
                 super.onSwipeDown()
-                uniUtils.expandNotificationPanel(requireContext())
+                expandNotificationPanel(requireContext())
             }
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                uniUtils.lockMethod(
-                    sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
             }
         })
     }
@@ -247,7 +251,7 @@ internal class LauncherHome : Fragment() {
 
     /* get time format string */
     private val timeFormat: String? get() {
-        when (sharedPreferences.getInt(constants.KEY_TIME_FORMAT, 0)) {
+        when (sharedPreferences.getInt(KEY_TIME_FORMAT, 0)) {
             0 -> return if (DateFormat.is24HourFormat(requireContext())) {
                 "kk:mm"
             } else {
@@ -272,10 +276,7 @@ internal class LauncherHome : Fragment() {
 
     /* get date format string */
     private val dateFormat: String get() {
-        val dateFormatValue = sharedPreferences.getString(
-            constants.KEY_DATE_FORMAT,
-            constants.DEFAULT_DATE_FORMAT
-        )
+        val dateFormatValue = sharedPreferences.getString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT)
         return if (dateFormatValue!!.contains("x")) {
             dateFormatValue.replace("x", dateNumberSuffix)
         } else {

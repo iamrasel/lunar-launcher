@@ -51,8 +51,15 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.QuickAccessBinding
 import rasel.lunar.launcher.databinding.ShortcutMakerBinding
 import rasel.lunar.launcher.helpers.ColorPicker
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.PrefsUtil
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APP_NO_
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_COUNT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_NO_
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SHORTCUTS
+import rasel.lunar.launcher.helpers.Constants.Companion.SHORTCUT_TYPE_PHONE
+import rasel.lunar.launcher.helpers.Constants.Companion.SHORTCUT_TYPE_URL
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.removeFavApps
 import java.util.*
 
 
@@ -61,7 +68,6 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     private lateinit var binding: QuickAccessBinding
     private lateinit var fragmentActivity: FragmentActivity
     private lateinit var sharedPreferences: SharedPreferences
-    private val constants = Constants()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = QuickAccessBinding.inflate(inflater, container, false)
@@ -72,7 +78,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             LauncherActivity()
         }
 
-        sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SHORTCUTS, 0)
+        sharedPreferences = requireContext().getSharedPreferences(PREFS_SHORTCUTS, 0)
         /* set up volume sliders, brightness slider and favorite apps */
         volumeControllers()
         controlBrightness()
@@ -147,11 +153,11 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     /* set up contact and url shortcuts */
     private fun shortcuts() {
         val shortcutCount =
-            requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0).getInt(constants.KEY_SHORTCUT_COUNT, 6)
+            requireContext().getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_SHORTCUT_COUNT, 6)
         if (shortcutCount == 0) binding.shortcutsGroup.visibility = View.GONE
 
         for (position in 1..shortcutCount) {
-            val shortcutValue = sharedPreferences.getString(constants.KEY_SHORTCUT_NO_ + position.toString(), "").toString()
+            val shortcutValue = sharedPreferences.getString(KEY_SHORTCUT_NO_ + position.toString(), "").toString()
             val splitShortcutValue = shortcutValue.split("||").toTypedArray()
 
             var shortcutType = ""
@@ -210,13 +216,13 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* set up favorite apps */
     private fun favApps() {
-        val prefsFavApps = requireContext().getSharedPreferences(constants.PREFS_FAVORITE_APPS, 0)
+        val prefsFavApps = requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
         if (prefsFavApps.all.toString().length < 3) {
             binding.favAppsGroup.visibility = View.GONE
         } else {
             binding.favAppsGroup.visibility = View.VISIBLE
             for (position in 1..6) {
-                val packageValue = prefsFavApps.getString(constants.KEY_APP_NO_ + position.toString(), "").toString()
+                val packageValue = prefsFavApps.getString(KEY_APP_NO_ + position.toString(), "").toString()
                 favApp(packageValue, imageView, position)
             }
         }
@@ -244,7 +250,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             /* on normal click */
             textView.setOnClickListener {
                 /* type is url */
-                if (shortcutType == constants.SHORTCUT_TYPE_URL) {
+                if (shortcutType == SHORTCUT_TYPE_URL) {
                     var url = intentString
                     /* add http before the url if it doesn't have http/https prefix */
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -255,7 +261,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                         Intent(Intent.ACTION_VIEW, Uri.parse(url)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
                     /* type is contact */
-                } else if (shortcutType == constants.SHORTCUT_TYPE_PHONE) {
+                } else if (shortcutType == SHORTCUT_TYPE_PHONE) {
                     /*  if the necessary permission is not granted already,
                         ask for it again */
                     if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -272,7 +278,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
             /* reset the shortcut on long click */
             textView.setOnLongClickListener {
-                sharedPreferences.edit().remove(constants.KEY_SHORTCUT_NO_ + position).apply()
+                sharedPreferences.edit().remove(KEY_SHORTCUT_NO_ + position).apply()
                 this.onResume()
                 true
             }
@@ -299,11 +305,11 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             if (isChecked) {
                 when (checkedId) {
                     dialogBinding.contact.id -> {
-                        shortcutType = constants.SHORTCUT_TYPE_PHONE
+                        shortcutType = SHORTCUT_TYPE_PHONE
                         dialogBinding.inputField.inputType = InputType.TYPE_CLASS_PHONE
                     }
                     dialogBinding.url.id -> {
-                        shortcutType = constants.SHORTCUT_TYPE_URL
+                        shortcutType = SHORTCUT_TYPE_URL
                         dialogBinding.inputField.inputType = InputType.TYPE_TEXT_VARIATION_URI
                     }
                 }
@@ -324,7 +330,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
             /* save the values if every field is filled */
             if (shortcutType.isNotEmpty() && intentString.isNotEmpty() && thumbLetter.isNotEmpty() && color.isNotEmpty()) {
-                sharedPreferences.edit().putString(constants.KEY_SHORTCUT_NO_ + position,
+                sharedPreferences.edit().putString(KEY_SHORTCUT_NO_ + position,
                     "$shortcutType||$intentString||$thumbLetter||$color").apply()
                 dialogBuilder.dismiss()
                 this.onResume()
@@ -335,7 +341,6 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     /* favorite apps */
     private fun favApp(packageName: String, imageView: AppCompatImageView, position: Int) {
         val packageManager = requireContext().packageManager
-        val prefsUtil = PrefsUtil()
         /* package name is not empty for a specific position */
         if (packageName.isNotEmpty()) {
             try {
@@ -348,12 +353,12 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 }
                 /* on long click - remove from favorite apps */
                 imageView.setOnLongClickListener {
-                    prefsUtil.removeFavApps(requireContext(), position)
+                    removeFavApps(requireContext(), position)
                     this.onResume()
                     true
                 }
             } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
-                prefsUtil.removeFavApps(requireContext(), position)
+                removeFavApps(requireContext(), position)
                 imageView.visibility = View.GONE
                 nameNotFoundException.printStackTrace()
             }

@@ -35,57 +35,123 @@ import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
 import rasel.lunar.launcher.R
+import rasel.lunar.launcher.helpers.Constants.Companion.ACCESSIBILITY_SERVICE_LOCK_SCREEN
+import rasel.lunar.launcher.helpers.Constants.Companion.AUTHENTICATOR_TYPE
 import java.io.DataOutputStream
 
 
 internal class UniUtils {
 
-    /* get display width */
-    fun screenWidth(activity: Activity): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val windowMetrics = activity.windowManager.currentWindowMetrics
-            val insets = windowMetrics.windowInsets
-                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
-            windowMetrics.bounds.width() - insets.left - insets.right
-        } else {
-            val displayMetrics = DisplayMetrics()
-            @Suppress("DEPRECATION") activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-            displayMetrics.widthPixels
-        }
-    }
+    companion object {
 
-    /* get display height */
-    fun screenHeight(activity: Activity): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val windowMetrics = activity.windowManager.currentWindowMetrics
-            val insets = windowMetrics.windowInsets
-                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
-            windowMetrics.bounds.height() - insets.top - insets.bottom
-        } else {
-            val displayMetrics = DisplayMetrics()
-            @Suppress("DEPRECATION") activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-            displayMetrics.heightPixels
+        /* get display width */
+        fun screenWidth(activity: Activity): Int {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val windowMetrics = activity.windowManager.currentWindowMetrics
+                val insets = windowMetrics.windowInsets
+                    .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+                windowMetrics.bounds.width() - insets.left - insets.right
+            } else {
+                val displayMetrics = DisplayMetrics()
+                @Suppress("DEPRECATION") activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+                displayMetrics.widthPixels
+            }
         }
-    }
 
-    /* copy texts to clipboard */
-    fun copyToClipboard(fragmentActivity: FragmentActivity, context: Context, copiedString: String?) {
-        val clipBoard =
-            fragmentActivity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipBoard.setPrimaryClip(ClipData.newPlainText("", copiedString))
-        Toast.makeText(context, context.getString(R.string.copied_message), Toast.LENGTH_SHORT).show()
-    }
-
-    /* expand notification panel */
-    @SuppressLint("WrongConstant")
-    fun expandNotificationPanel(context: Context) {
-        try {
-            Class.forName("android.app.StatusBarManager")
-                .getMethod("expandNotificationsPanel")
-                .invoke(context.getSystemService("statusbar"))
-        } catch (exception: Exception) {
-            exception.printStackTrace()
+        /* get display height */
+        fun screenHeight(activity: Activity): Int {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val windowMetrics = activity.windowManager.currentWindowMetrics
+                val insets = windowMetrics.windowInsets
+                    .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+                windowMetrics.bounds.height() - insets.top - insets.bottom
+            } else {
+                val displayMetrics = DisplayMetrics()
+                @Suppress("DEPRECATION") activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+                displayMetrics.heightPixels
+            }
         }
+
+        /* copy texts to clipboard */
+        fun copyToClipboard(fragmentActivity: FragmentActivity, context: Context, copiedString: String?) {
+            val clipBoard =
+                fragmentActivity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            clipBoard.setPrimaryClip(ClipData.newPlainText("", copiedString))
+            Toast.makeText(context, context.getString(R.string.copied_message), Toast.LENGTH_SHORT).show()
+        }
+
+        /* expand notification panel */
+        @SuppressLint("WrongConstant")
+        fun expandNotificationPanel(context: Context) {
+            try {
+                Class.forName("android.app.StatusBarManager")
+                    .getMethod("expandNotificationsPanel")
+                    .invoke(context.getSystemService("statusbar"))
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+        }
+
+        /* lock using preferred method */
+        fun lockMethod(lockMethodValue: Int, context: Context, fragmentActivity: FragmentActivity) {
+            when (lockMethodValue) {
+                1 -> UniUtils().lockAccessibility(fragmentActivity)
+                2 -> UniUtils().lockDeviceAdmin(context, fragmentActivity)
+                3 -> UniUtils().lockRoot()
+            }
+        }
+
+        /* check if the device is rooted */
+        val isRooted: Boolean get() {
+            var process: Process? = null
+            return try {
+                process = Runtime.getRuntime().exec("su")
+                true
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+                false
+            } finally {
+                if (process != null) {
+                    try {
+                        process.destroy()
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
+                }
+            }
+        }
+
+        /* check if the device is connected to the internet */
+        fun isNetworkAvailable(fragmentActivity: FragmentActivity): Boolean {
+            val connectivityManager =
+                fragmentActivity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            @Suppress("DEPRECATION") val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            @Suppress("DEPRECATION") return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
+        }
+
+        /* check if authenticator available */
+        fun canAuthenticate(context: Context): Boolean {
+            val biometricManager = BiometricManager.from(context)
+            return biometricManager.canAuthenticate(AUTHENTICATOR_TYPE) == BIOMETRIC_SUCCESS
+        }
+
+        /* show device authenticator */
+        fun biometricPromptInfo(title: String, fragmentActivity: FragmentActivity): BiometricPrompt.PromptInfo {
+            return BiometricPrompt.PromptInfo.Builder()
+                .setTitle(title)
+                .setSubtitle(fragmentActivity.getString(R.string.authentication_subtitle))
+                .setConfirmationRequired(true)
+                .setAllowedAuthenticators(AUTHENTICATOR_TYPE)
+                .build()
+        }
+
+        /* get color red id from attribute */
+        fun getColorResId(context: Context, colorAttr: Int) : Int {
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(colorAttr, typedValue, true)
+            return typedValue.resourceId
+        }
+
     }
 
     /* lock screen using device admin */
@@ -117,7 +183,7 @@ internal class UniUtils {
             try {
                 fragmentActivity.startService(
                     Intent(fragmentActivity.applicationContext, LockService::class.java)
-                        .setAction(Constants().ACCESSIBILITY_SERVICE_LOCK_SCREEN)
+                        .setAction(ACCESSIBILITY_SERVICE_LOCK_SCREEN)
                 )
             } catch (exception: Exception) {
                 exception.printStackTrace()
@@ -142,66 +208,6 @@ internal class UniUtils {
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
-    }
-
-    /* lock using preferred method */
-    fun lockMethod(lockMethodValue: Int, context: Context, fragmentActivity: FragmentActivity) {
-        when (lockMethodValue) {
-            1 -> lockAccessibility(fragmentActivity)
-            2 -> lockDeviceAdmin(context, fragmentActivity)
-            3 -> lockRoot()
-        }
-    }
-
-    /* check if the device is rooted */
-    val isRooted: Boolean get() {
-        var process: Process? = null
-        return try {
-            process = Runtime.getRuntime().exec("su")
-            true
-        } catch (exception: Exception) {
-            exception.printStackTrace()
-            false
-        } finally {
-            if (process != null) {
-                try {
-                    process.destroy()
-                } catch (exception: Exception) {
-                    exception.printStackTrace()
-                }
-            }
-        }
-    }
-
-    /* check if the device is connected to the internet */
-    fun isNetworkAvailable(fragmentActivity: FragmentActivity): Boolean {
-        val connectivityManager =
-            fragmentActivity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        @Suppress("DEPRECATION") val activeNetworkInfo = connectivityManager.activeNetworkInfo
-        @Suppress("DEPRECATION") return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
-    }
-
-    /* check if authenticator available */
-    fun canAuthenticate(context: Context): Boolean {
-        val biometricManager = BiometricManager.from(context)
-        return biometricManager.canAuthenticate(Constants().AUTHENTICATOR_TYPE) == BIOMETRIC_SUCCESS
-    }
-
-    /* show device authenticator */
-    fun biometricPromptInfo(title: String, fragmentActivity: FragmentActivity): BiometricPrompt.PromptInfo {
-        return BiometricPrompt.PromptInfo.Builder()
-            .setTitle(title)
-            .setSubtitle(fragmentActivity.getString(R.string.authentication_subtitle))
-            .setConfirmationRequired(true)
-            .setAllowedAuthenticators(Constants().AUTHENTICATOR_TYPE)
-            .build()
-    }
-
-    /* get color red id from attribute */
-    fun getColorResId(context: Context, colorAttr: Int) : Int {
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(colorAttr, typedValue, true)
-        return typedValue.resourceId
     }
 
 }

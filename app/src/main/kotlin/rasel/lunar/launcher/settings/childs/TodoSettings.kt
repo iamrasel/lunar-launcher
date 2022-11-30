@@ -26,25 +26,26 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsTodoBinding
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.settings.PrefsUtil
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TODO_COUNTS
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TODO_LOCK
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.todoCount
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.todoLock
 
 
 internal class TodoSettings : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsTodoBinding
-    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTodoBinding.inflate(inflater, container, false)
 
-        val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        val sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
-        binding.showTodos.value = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3).toFloat()
+        binding.showTodos.value = sharedPreferences.getInt(KEY_TODO_COUNTS, 3).toFloat()
 
-        when (sharedPreferences.getBoolean(constants.KEY_TODO_LOCK, false)) {
+        when (sharedPreferences.getBoolean(KEY_TODO_LOCK, false)) {
             false -> binding.todoLockNegative.isChecked = true
             true -> binding.todoLockPositive.isChecked = true
         }
@@ -58,14 +59,14 @@ internal class TodoSettings : BottomSheetDialogFragment() {
 
         /* change todo count value */
         binding.showTodos.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-            prefsUtil.todoCount(requireContext(), value.toInt())
+            todoCount(requireContext(), value.toInt())
         })
 
         /* change todo lock state value */
         binding.todoLockGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.todoLockPositive.id -> prefsUtil.todoLock(requireContext(), true)
-                binding.todoLockNegative.id -> prefsUtil.todoLock(requireContext(), false)
+                binding.todoLockPositive.id -> todoLock(requireContext(), true)
+                binding.todoLockNegative.id -> todoLock(requireContext(), false)
             }
         }
     }

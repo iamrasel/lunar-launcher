@@ -19,7 +19,10 @@
 package rasel.lunar.launcher
 
 import android.app.Application
+import android.content.ComponentCallbacks2
+import android.database.sqlite.SQLiteDatabase
 import com.google.android.material.color.DynamicColors
+
 
 internal class LunarLauncher : Application() {
 
@@ -27,6 +30,11 @@ internal class LunarLauncher : Application() {
         super.onCreate()
         // Apply dynamic color
         DynamicColors.applyToActivitiesIfAvailable(this)
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) SQLiteDatabase.releaseMemory()
     }
 
 }

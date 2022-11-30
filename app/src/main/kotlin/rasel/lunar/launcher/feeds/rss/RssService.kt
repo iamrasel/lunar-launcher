@@ -23,7 +23,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.ResultReceiver
 import androidx.core.app.JobIntentService
-import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_RSS_URL
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.Constants.Companion.RSS_ITEMS
+import rasel.lunar.launcher.helpers.Constants.Companion.RSS_RECEIVER
 import java.io.IOException
 import java.io.InputStream
 import java.io.Serializable
@@ -33,8 +36,8 @@ import java.net.URL
 internal class RssService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
-        val settingsPrefs = getSharedPreferences(Constants().PREFS_SETTINGS, 0)
-        val rssUrl = settingsPrefs.getString(Constants().KEY_RSS_URL, "")
+        val settingsPrefs = getSharedPreferences(PREFS_SETTINGS, 0)
+        val rssUrl = settingsPrefs.getString(KEY_RSS_URL, "")
         var rssItems: List<Rss?>? = null
 
         try {
@@ -45,12 +48,12 @@ internal class RssService : JobIntentService() {
         }
 
         val bundle = Bundle()
-        bundle.putSerializable(Constants().RSS_ITEMS, rssItems as? Serializable)
+        bundle.putSerializable(RSS_ITEMS, rssItems as? Serializable)
 
         val receiver = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(Constants().RSS_RECEIVER, ResultReceiver::class.java)
+            intent.getParcelableExtra(RSS_RECEIVER, ResultReceiver::class.java)
         } else {
-            @Suppress("DEPRECATION") intent.getParcelableExtra(Constants().RSS_RECEIVER)
+            @Suppress("DEPRECATION") intent.getParcelableExtra(RSS_RECEIVER)
         }
 
         receiver?.send(0, bundle)

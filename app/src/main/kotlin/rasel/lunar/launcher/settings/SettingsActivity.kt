@@ -29,7 +29,7 @@ import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AboutBinding
 import rasel.lunar.launcher.databinding.SettingsActivityBinding
-import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.Constants.Companion.BOTTOM_SHEET_TAG
 import rasel.lunar.launcher.settings.childs.*
 
 
@@ -45,35 +45,33 @@ internal class SettingsActivity : AppCompatActivity() {
         binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val constants = Constants()
-
         /* launch child settings dialogs on button clicks */
         binding.timeDate.setOnClickListener {
-            TimeDate().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
+            TimeDate().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 
         binding.weather.setOnClickListener {
-            WeatherSettings().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
+            WeatherSettings().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 
         binding.todo.setOnClickListener {
-            TodoSettings().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
+            TodoSettings().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 
         binding.apps.setOnClickListener {
-            Apps().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
+            Apps().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 
         binding.look.setOnClickListener {
-            Appearances().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
+            Appearances().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 
         binding.misc.setOnClickListener {
-            Misc().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
+            Misc().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 
         binding.advance.setOnClickListener {
-            Advance().show(supportFragmentManager, constants.BOTTOM_SHEET_TAG)
+            Advance().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 
         /* about and support dialogs */

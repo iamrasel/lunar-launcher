@@ -29,33 +29,38 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsMiscBinding
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
-import rasel.lunar.launcher.settings.PrefsUtil
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BACK_HOME
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_RSS_URL
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_COUNT
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.UniUtils.Companion.isRooted
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.backHome
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveLockMethod
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveRssUrl
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.shortcutCount
 import java.util.*
 
 
 internal class Misc : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsMiscBinding
-    private val prefsUtil = PrefsUtil()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsMiscBinding.inflate(inflater, container, false)
 
-        val constants = Constants()
-        val sharedPreferences = requireContext().getSharedPreferences(constants.PREFS_SETTINGS, 0)
+        val sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* initialize views according to the saved values */
-        when (sharedPreferences.getBoolean(constants.KEY_BACK_HOME, false)) {
+        when (sharedPreferences.getBoolean(KEY_BACK_HOME, false)) {
             true -> binding.backHomePositive.isChecked = true
             false -> binding.backHomeNegative.isChecked = true
         }
 
-        binding.shortcutCount.value = sharedPreferences.getInt(constants.KEY_SHORTCUT_COUNT, 6).toFloat()
-        binding.inputFeedUrl.text = SpannableStringBuilder(sharedPreferences.getString(constants.KEY_RSS_URL, ""))
+        binding.shortcutCount.value = sharedPreferences.getInt(KEY_SHORTCUT_COUNT, 6).toFloat()
+        binding.inputFeedUrl.text = SpannableStringBuilder(sharedPreferences.getString(KEY_RSS_URL, ""))
 
-        when (sharedPreferences.getInt(constants.KEY_LOCK_METHOD, 0)) {
+        when (sharedPreferences.getInt(KEY_LOCK_METHOD, 0)) {
             0 -> binding.selectLockNegative.isChecked = true
             1 -> binding.selectLockAccessibility.isChecked = true
             2 -> binding.selectLockAdmin.isChecked = true
@@ -68,7 +73,7 @@ internal class Misc : BottomSheetDialogFragment() {
         }
 
         /* disable root button for non-rooted devices */
-        if (!UniUtils().isRooted) {
+        if (!isRooted) {
             binding.selectLockRoot.isEnabled = false
         }
 
@@ -81,23 +86,23 @@ internal class Misc : BottomSheetDialogFragment() {
 
         binding.backHomeGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.backHomePositive.id -> prefsUtil.backHome(requireContext(), true)
-                binding.backHomeNegative.id -> prefsUtil.backHome(requireContext(), false)
+                binding.backHomePositive.id -> backHome(requireContext(), true)
+                binding.backHomeNegative.id -> backHome(requireContext(), false)
             }
         }
 
         /* change shortcut count value */
         binding.shortcutCount.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-            prefsUtil.shortcutCount(requireContext(), value.toInt())
+            shortcutCount(requireContext(), value.toInt())
         })
 
         /* change lock method value */
         binding.lockGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.selectLockNegative.id -> prefsUtil.saveLockMethod(requireContext(), 0)
-                binding.selectLockAccessibility.id -> prefsUtil.saveLockMethod(requireContext(), 1)
-                binding.selectLockAdmin.id -> prefsUtil.saveLockMethod(requireContext(), 2)
-                binding.selectLockRoot.id -> prefsUtil.saveLockMethod(requireContext(), 3)
+                binding.selectLockNegative.id -> saveLockMethod(requireContext(), 0)
+                binding.selectLockAccessibility.id -> saveLockMethod(requireContext(), 1)
+                binding.selectLockAdmin.id -> saveLockMethod(requireContext(), 2)
+                binding.selectLockRoot.id -> saveLockMethod(requireContext(), 3)
             }
         }
     }
@@ -105,8 +110,7 @@ internal class Misc : BottomSheetDialogFragment() {
     /* save input field value while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        prefsUtil.saveRssUrl(requireContext(),
-            Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' })
+        saveRssUrl(requireContext(), Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' })
     }
 
 }

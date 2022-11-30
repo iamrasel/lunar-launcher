@@ -44,9 +44,10 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.ColorPickerBinding
 import rasel.lunar.launcher.databinding.SettingsAppearancesBinding
 import rasel.lunar.launcher.helpers.ColorPicker
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
-import rasel.lunar.launcher.settings.PrefsUtil
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WINDOW_BACKGROUND
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.UniUtils.Companion.getColorResId
+import rasel.lunar.launcher.settings.PrefsUtil.Companion.windowBackground
 import java.io.IOException
 import java.util.*
 
@@ -92,20 +93,19 @@ internal class Appearances : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        windowBackground = requireContext().getSharedPreferences(Constants().PREFS_SETTINGS, 0)
-            .getString(Constants().KEY_WINDOW_BACKGROUND, defaultColorString()).toString()
+        windowBackground = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
+            .getString(KEY_WINDOW_BACKGROUND, defaultColorString()).toString()
         binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#$windowBackground"))
     }
 
     private fun selectBackground() {
-        val prefsUtil = PrefsUtil()
         val colorPickerBinding = ColorPickerBinding.inflate(requireActivity().layoutInflater)
         val dialogBuilder = MaterialAlertDialogBuilder(requireActivity())
             .setView(colorPickerBinding.root)
             .setNeutralButton(R.string.default_, null)
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                prefsUtil.windowBackground(requireContext(),
+                windowBackground(requireContext(),
                     Objects.requireNonNull(colorPickerBinding.colorInput.text).toString().trim { it <= ' ' })
                 this.onResume()
             }
@@ -131,7 +131,7 @@ internal class Appearances : BottomSheetDialogFragment() {
     }
 
     private fun defaultColorString() =
-        requireActivity().getString(UniUtils().getColorResId(
+        requireActivity().getString(getColorResId(
             requireContext(), android.R.attr.colorBackground)).replace("#", "")
 
     private var wallpaperChangeLauncher =

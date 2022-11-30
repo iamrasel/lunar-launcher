@@ -24,21 +24,24 @@ import android.content.ContentValues
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.DatabaseUtils
-import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.Constants.Companion.TODO_COLUMN_CREATED
+import rasel.lunar.launcher.helpers.Constants.Companion.TODO_COLUMN_ID
+import rasel.lunar.launcher.helpers.Constants.Companion.TODO_COLUMN_NAME
+import rasel.lunar.launcher.helpers.Constants.Companion.TODO_DATABASE_NAME
+import rasel.lunar.launcher.helpers.Constants.Companion.TODO_DATABASE_VERSION
+import rasel.lunar.launcher.helpers.Constants.Companion.TODO_TABLE_NAME
 import java.util.ArrayList
 
 
 internal class DatabaseHandler(context: Context?) :
-    SQLiteOpenHelper(context, Constants().TODO_DATABASE_NAME, null, Constants().TODO_DATABASE_VERSION) {
-
-    private val constants = Constants()
+    SQLiteOpenHelper(context, TODO_DATABASE_NAME, null, TODO_DATABASE_VERSION) {
 
     /* create database */
     override fun onCreate(database: SQLiteDatabase) {
-        val createTodoTable = "CREATE TABLE " + constants.TODO_TABLE_NAME + " (" +
-                constants.TODO_COLUMN_ID + " integer PRIMARY KEY AUTOINCREMENT," +
-                constants.TODO_COLUMN_CREATED + " datetime DEFAULT CURRENT_TIMESTAMP," +
-                constants.TODO_COLUMN_NAME + " varchar)"
+        val createTodoTable = "CREATE TABLE " + TODO_TABLE_NAME + " (" +
+                TODO_COLUMN_ID + " integer PRIMARY KEY AUTOINCREMENT," +
+                TODO_COLUMN_CREATED + " datetime DEFAULT CURRENT_TIMESTAMP," +
+                TODO_COLUMN_NAME + " varchar)"
         database.execSQL(createTodoTable)
     }
 
@@ -48,32 +51,32 @@ internal class DatabaseHandler(context: Context?) :
     fun addTodo(todo: Todo) {
         val database = writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(constants.TODO_COLUMN_NAME, todo.name)
-        database.insert(constants.TODO_TABLE_NAME, null, contentValues)
+        contentValues.put(TODO_COLUMN_NAME, todo.name)
+        database.insert(TODO_TABLE_NAME, null, contentValues)
     }
 
     /* update or edit existing todo */
     fun updateTodo(todo: Todo) {
         val database = writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(constants.TODO_COLUMN_NAME, todo.name)
+        contentValues.put(TODO_COLUMN_NAME, todo.name)
         database.update(
-            constants.TODO_TABLE_NAME,
+            TODO_TABLE_NAME,
             contentValues,
-            constants.TODO_COLUMN_ID + "=?",
+            "$TODO_COLUMN_ID=?",
             arrayOf(todo.id.toString())
         )
     }
 
     /* delete a single todo */
     fun deleteTodo(todoId: Long) {
-        writableDatabase.delete(constants.TODO_TABLE_NAME,
-            constants.TODO_COLUMN_ID + "=?", arrayOf(todoId.toString()))
+        writableDatabase.delete(TODO_TABLE_NAME,
+            "$TODO_COLUMN_ID=?", arrayOf(todoId.toString()))
     }
 
     /* delete all existing todos at once */
     fun deleteAll() {
-        writableDatabase.delete(constants.TODO_TABLE_NAME, null, null)
+        writableDatabase.delete(TODO_TABLE_NAME, null, null)
     }
 
     @get:SuppressLint("Range")
@@ -81,13 +84,13 @@ internal class DatabaseHandler(context: Context?) :
         get() {
             val todoList = ArrayList<Todo>()
             val queryResult =
-                readableDatabase.rawQuery("SELECT * from " + constants.TODO_TABLE_NAME, null)
+                readableDatabase.rawQuery("SELECT * from $TODO_TABLE_NAME", null)
 
             if (queryResult.moveToFirst()) {
                 do {
                     val todo = Todo()
-                    todo.id = queryResult.getLong(queryResult.getColumnIndex(constants.TODO_COLUMN_ID))
-                    todo.name = queryResult.getString(queryResult.getColumnIndex(constants.TODO_COLUMN_NAME))
+                    todo.id = queryResult.getLong(queryResult.getColumnIndex(TODO_COLUMN_ID))
+                    todo.name = queryResult.getString(queryResult.getColumnIndex(TODO_COLUMN_NAME))
                     todoList.add(todo)
                 } while (queryResult.moveToNext())
             }
@@ -98,7 +101,7 @@ internal class DatabaseHandler(context: Context?) :
 
     /* check if any item exists in the database */
     val isTodoExists: Boolean get() {
-        return DatabaseUtils.queryNumEntries(readableDatabase, constants.TODO_TABLE_NAME, 1.toString()) > 0
+        return DatabaseUtils.queryNumEntries(readableDatabase, TODO_TABLE_NAME, 1.toString()) > 0
     }
 
 }

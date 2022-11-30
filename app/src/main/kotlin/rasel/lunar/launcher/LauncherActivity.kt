@@ -33,8 +33,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.apps.AppDrawer
 import rasel.lunar.launcher.databinding.LauncherActivityBinding
 import rasel.lunar.launcher.feeds.Feeds
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BACK_HOME
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_FIRST_LAUNCH
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WINDOW_BACKGROUND
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FIRST_LAUNCH
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.UniUtils.Companion.getColorResId
 import rasel.lunar.launcher.helpers.ViewPagerAdapter
 import rasel.lunar.launcher.home.LauncherHome
 
@@ -52,10 +56,9 @@ internal class LauncherActivity : AppCompatActivity() {
 
         /*  if this is the first launch,
             then remember the event and show the welcome dialog */
-        val constants = Constants()
-        val prefsFirstLaunch = getSharedPreferences(constants.PREFS_FIRST_LAUNCH, 0)
-        if (prefsFirstLaunch.getBoolean(constants.KEY_FIRST_LAUNCH, true)) {
-            prefsFirstLaunch.edit().putBoolean(constants.KEY_FIRST_LAUNCH, false).apply()
+        val prefsFirstLaunch = getSharedPreferences(PREFS_FIRST_LAUNCH, 0)
+        if (prefsFirstLaunch.getBoolean(KEY_FIRST_LAUNCH, true)) {
+            prefsFirstLaunch.edit().putBoolean(KEY_FIRST_LAUNCH, false).apply()
             welcomeDialog()
         }
 
@@ -70,14 +73,14 @@ internal class LauncherActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val settingsPrefs = getSharedPreferences(Constants().PREFS_SETTINGS, 0)
+        val settingsPrefs = getSharedPreferences(PREFS_SETTINGS, 0)
 
         binding.root.setBackgroundColor(Color.parseColor("#${
-            settingsPrefs.getString(Constants().KEY_WINDOW_BACKGROUND,
-                getString(UniUtils().getColorResId(this, android.R.attr.colorBackground))
+            settingsPrefs.getString(KEY_WINDOW_BACKGROUND,
+                getString(getColorResId(this, android.R.attr.colorBackground))
                     .replace("#", ""))}"))
 
-        if (settingsPrefs.getBoolean(Constants().KEY_BACK_HOME, false)) viewPager.currentItem = 1
+        if (settingsPrefs.getBoolean(KEY_BACK_HOME, false)) viewPager.currentItem = 1
     }
 
     /* build the welcome dialog */

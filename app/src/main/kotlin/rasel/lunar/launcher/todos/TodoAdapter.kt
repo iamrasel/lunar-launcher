@@ -30,8 +30,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.ListItemBinding
 import rasel.lunar.launcher.databinding.TodoDialogBinding
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TODO_COUNTS
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.UniUtils.Companion.copyToClipboard
 import java.util.*
 
 
@@ -51,9 +52,8 @@ internal class TodoAdapter(
     override fun getItemCount(): Int {
         /*  if current fragment is LauncherHome,
             then return size following the settings value */
-        val constants = Constants()
-        val sharedPreferences = context.getSharedPreferences(constants.PREFS_SETTINGS, 0)
-        val numberOfTodos = sharedPreferences.getInt(constants.KEY_TODO_COUNTS, 3)
+        val sharedPreferences = context.getSharedPreferences(PREFS_SETTINGS, 0)
+        val numberOfTodos = sharedPreferences.getInt(KEY_TODO_COUNTS, 3)
         return if (currentFragment !is TodoManager) {
             todoList.size.coerceAtMost(numberOfTodos)
         } else {
@@ -74,7 +74,7 @@ internal class TodoAdapter(
             holder.view.itemText.setOnClickListener { updateDialog(position) }
             /* copy texts on long click */
             holder.view.itemText.setOnLongClickListener {
-                UniUtils().copyToClipboard(fragmentActivity, context, todo.name)
+                copyToClipboard(fragmentActivity, context, todo.name)
                 true
             }
         } else {

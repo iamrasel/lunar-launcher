@@ -31,7 +31,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import rasel.lunar.launcher.databinding.ListItemBinding
-import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.helpers.UniUtils.Companion.getColorResId
 
 
 internal class RssAdapter(private val items: List<Rss>, private val context: Context) :
@@ -52,7 +52,7 @@ internal class RssAdapter(private val items: List<Rss>, private val context: Con
                 text = "\u22B6  " + items[position].title + "  \u22B7"
                 gravity = Gravity.CENTER
                 setTextColor(ContextCompat.getColor(context,
-                    UniUtils().getColorResId(context, com.google.android.material.R.attr.colorPrimary)))
+                    getColorResId(context, com.google.android.material.R.attr.colorPrimary)))
                 setTypeface(null, Typeface.BOLD)
                 textSize = 18f
             }

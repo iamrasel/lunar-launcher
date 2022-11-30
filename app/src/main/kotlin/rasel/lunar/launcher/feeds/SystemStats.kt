@@ -31,8 +31,9 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.R
-import rasel.lunar.launcher.helpers.Constants
-import rasel.lunar.launcher.helpers.UniUtils
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TEMP_UNIT
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.UniUtils.Companion.isNetworkAvailable
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -183,8 +184,8 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
     }
 
     private val tempUnit: Int get() {
-        return fragmentActivity.getSharedPreferences(Constants().PREFS_SETTINGS, 0)
-            .getInt(Constants().KEY_TEMP_UNIT, 0)
+        return fragmentActivity.getSharedPreferences(PREFS_SETTINGS, 0)
+            .getInt(KEY_TEMP_UNIT, 0)
     }
 
     private val extStorages: Array<File?> get() {
@@ -270,7 +271,7 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
                         if (getIPv4) {
                             if (isIPv4) return addressStr
                         } else {
-                            if (!isIPv4 && UniUtils().isNetworkAvailable(fragmentActivity)) {
+                            if (!isIPv4 && isNetworkAvailable(fragmentActivity)) {
                                 val endIndex = addressStr.indexOf('%')
                                 return if (endIndex < 0) addressStr
                                 else addressStr.substring(0, endIndex)
