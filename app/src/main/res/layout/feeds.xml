@@ -45,10 +45,9 @@
             layout="@layout/feeds_sys_infos"/>
     </RelativeLayout>
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/widget_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="soon"
-        android:gravity="center"/>
+        android:layout_height="match_parent"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

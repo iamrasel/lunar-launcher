@@ -23,9 +23,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.ResultReceiver
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.core.app.JobIntentService.enqueueWork
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -36,6 +35,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import dev.chrisbanes.insetter.applyInsetter
 import kotlinx.coroutines.*
 import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.FeedsBinding
 import rasel.lunar.launcher.feeds.rss.Rss
 import rasel.lunar.launcher.feeds.rss.RssAdapter
@@ -65,9 +65,34 @@ internal class Feeds : Fragment() {
             LauncherActivity()
         }
 
-        expandCollapse()
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        expandCollapse()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerForContextMenu(binding.widgetContainer)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterForContextMenu(binding.widgetContainer)
+    }
+
+    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menu.clearHeader()
+        fragmentActivity.menuInflater.inflate(R.menu.add_widget, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.add_widget)
+            Toast.makeText(requireContext(), "soon", Toast.LENGTH_SHORT).show()
+        return super.onContextItemSelected(item)
     }
 
     /* insets */
