@@ -27,9 +27,9 @@ import android.view.Gravity
 import androidx.core.content.ContextCompat
 import android.graphics.Typeface
 import android.util.TypedValue
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
 import rasel.lunar.launcher.databinding.ListItemBinding
 import rasel.lunar.launcher.helpers.UniUtils.Companion.getColorResId
 
@@ -69,7 +69,8 @@ internal class RssAdapter(private val items: List<Rss>, private val context: Con
 
         /* on click - open in browser */
         holder.view.itemText.setOnClickListener {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(items[position].link)))
+            val customTabsIntent = CustomTabsIntent.Builder().setUrlBarHidingEnabled(true).build()
+            customTabsIntent.launchUrl(context, Uri.parse(items[position].link))
         }
     }
 
