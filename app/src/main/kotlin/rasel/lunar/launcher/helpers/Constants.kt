@@ -51,6 +51,8 @@ internal class Constants {
         /* --- */
         const val DEFAULT_DATE_FORMAT = "EEE dx MMM, yyyy"
         const val BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG"
+        const val MAX_SHORTCUTS = 6
+        const val MAX_FAVORITE_APPS = 6
         const val ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.LOCK_SCREEN_SERVICE"
         const val AUTHENTICATOR_TYPE = BIOMETRIC_WEAK or DEVICE_CREDENTIAL
 

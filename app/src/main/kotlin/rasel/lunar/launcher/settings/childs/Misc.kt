@@ -33,6 +33,7 @@ import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BACK_HOME
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_RSS_URL
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_COUNT
+import rasel.lunar.launcher.helpers.Constants.Companion.MAX_SHORTCUTS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.helpers.UniUtils.Companion.isRooted
 import rasel.lunar.launcher.settings.PrefsUtil.Companion.backHome
@@ -57,7 +58,7 @@ internal class Misc : BottomSheetDialogFragment() {
             false -> binding.backHomeNegative.isChecked = true
         }
 
-        binding.shortcutCount.value = sharedPreferences.getInt(KEY_SHORTCUT_COUNT, 6).toFloat()
+        binding.shortcutCount.value = sharedPreferences.getInt(KEY_SHORTCUT_COUNT, MAX_SHORTCUTS).toFloat()
         binding.inputFeedUrl.text = SpannableStringBuilder(sharedPreferences.getString(KEY_RSS_URL, ""))
 
         when (sharedPreferences.getInt(KEY_LOCK_METHOD, 0)) {

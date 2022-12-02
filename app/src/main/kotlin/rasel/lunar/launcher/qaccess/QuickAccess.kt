@@ -54,6 +54,8 @@ import rasel.lunar.launcher.helpers.ColorPicker
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APP_NO_
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_COUNT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_NO_
+import rasel.lunar.launcher.helpers.Constants.Companion.MAX_FAVORITE_APPS
+import rasel.lunar.launcher.helpers.Constants.Companion.MAX_SHORTCUTS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SHORTCUTS
@@ -153,7 +155,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     /* set up contact and url shortcuts */
     private fun shortcuts() {
         val shortcutCount =
-            requireContext().getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_SHORTCUT_COUNT, 6)
+            requireContext().getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_SHORTCUT_COUNT, MAX_SHORTCUTS)
         if (shortcutCount == 0) binding.shortcutsGroup.visibility = View.GONE
 
         for (position in 1..shortcutCount) {
@@ -221,7 +223,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             binding.favAppsGroup.visibility = View.GONE
         } else {
             binding.favAppsGroup.visibility = View.VISIBLE
-            for (position in 1..6) {
+            for (position in 1..MAX_FAVORITE_APPS) {
                 val packageValue = prefsFavApps.getString(KEY_APP_NO_ + position.toString(), "").toString()
                 favApp(packageValue, imageView, position)
             }

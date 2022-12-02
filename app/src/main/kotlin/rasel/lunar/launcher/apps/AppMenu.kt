@@ -52,6 +52,7 @@ import rasel.lunar.launcher.databinding.ActivityBrowserDialogBinding
 import rasel.lunar.launcher.databinding.AppInfoDialogBinding
 import rasel.lunar.launcher.databinding.AppMenuBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APP_NO_
+import rasel.lunar.launcher.helpers.Constants.Companion.MAX_FAVORITE_APPS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
 import rasel.lunar.launcher.helpers.UniUtils.Companion.copyToClipboard
 import rasel.lunar.launcher.helpers.UniUtils.Companion.screenHeight
@@ -126,7 +127,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
         val disabledStroke =
             ColorStateList.valueOf(requireContext().getColor(com.google.android.material.R.color.m3_chip_stroke_color))
 
-        for (position in 1..6) {
+        for (position in 1..MAX_FAVORITE_APPS) {
             val button = outlinedButton
             val savedPackageName = sharedPreferences.getString(KEY_APP_NO_ + position, "")
 
