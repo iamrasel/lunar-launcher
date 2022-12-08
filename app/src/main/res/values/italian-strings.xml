@@ -1,0 +1,149 @@
+<resources>
+
+    <string name="about">Maggiori informazioni</string>
+    <string name="accessibility">Accessibilità</string>
+    <string name="accessibility_service_description">
+		Servizio di accessibilità per permettere a Lunar Launcher di bloccare il dispositivo,
+        su Android Pie (API 28) e successivi.
+    </string>
+    <string name="accessibility_service_label">Servizio di blocco</string>
+    <string name="acknowledgements" translatable="false">
+        <b>Ringraziamenti</b>\n
+        <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
+        <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>\n
+        <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
+    </string>
+    <string name="add_new">Aggiungi</string>
+    <string name="add_widget">Aggiungi widget</string>
+    <string name="advance">Avanzate</string>
+    <string name="amazon">Amazon</string>
+    <string name="appearances">Stile</string>
+    <string name="application_theme">Tema applicazione</string>
+    <string name="app_drawer">Pannello applicazioni</string>
+    <string name="app_info">Informazioni app</string>
+    <string name="app_store">Negozio app</string>
+    <string name="argb" translatable="false">AARRGGBB</string>
+    <string name="authentication_error">Errore di autenticazione</string>
+    <string name="authentication_failed">Autenticazione fallita</string>
+    <string name="authentication_subtitle">
+        Autenticarsi con le credenziali del dispositivo per procedere
+    </string>
+    <string name="background">Colore di fondo</string>
+    <string name="back_home">Torna sempre alla schermata principale</string>
+    <string name="celsius">Celsius</string>
+    <string name="change_wallpaper">Cambia sfondo</string>
+    <string name="choose_launcher">Scegli il launcher predefinito</string>
+    <string name="city_name">Nome della città</string>
+    <string name="contact">Contatti</string>
+    <string name="copied_message">Copiato negli appunti</string>
+    <string name="cpu">CPU</string>
+    <string name="dark_theme">Scuro</string>
+    <string name="date_format">Formato Data</string>
+    <string name="default_">Predefinito</string>
+    <string name="delete">Cancella</string>
+    <string name="delete_all">Cancella tutto</string>
+    <string name="delete_all_confirmation">
+		È sicuro/a di cancellare tutte le note?
+	</string>
+    <string name="developer_name" translatable="false">Sviluppato da: Md Rasel Hossain</string>
+    <string name="device_admin">Amministratore del dispositivo</string>
+    <string name="device_admin_description">
+        Permetti il blocco dello schermo con due tocchi
+    </string>
+    <string name="donate">Donazioni</string>
+    <string name="double_tap_lock">Blocco schermo con due tocchi</string>
+    <string name="empty_text_field">Il campo è vuoto</string>
+    <string name="ext_storage">Archiviazione esterna</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="feed_url">Indirizzo del flusso RSS</string>
+    <string name="first_install">Prima installazione</string>
+    <string name="follow_system">Come da sistema</string>
+    <string name="free">Libero</string>
+    <string name="freeform">Forma libera</string>
+    <string name="frequency">Frequenza</string>
+    <string name="got_it">Capito</string>
+    <string name="image_pick_failed">Immagine non ottenuta</string>
+    <string name="int_storage">Archiviazione interna</string>
+    <string name="last_update">Ultimo aggiornamento</string>
+    <string name="light_theme">Chiaro</string>
+    <string name="lunar_settings">Impostazioni di Lunar</string>
+    <string name="misc">Varie</string>
+    <string name="misc_info_titles">
+        Tempo di uptime\nSistema attivo da\nSoglia della Memoria\nTemperatura della Batteria\nTensione della Batteria
+        \nArchiviazione di Root\nPercorso della scheda SD\nIPv4\nIPv6
+    </string>
+    <string name="na">N/A</string>
+    <string name="negative">Negativo</string>
+    <string name="null_app_store_message">
+        Non ci sono Negozi installati in questo dispositivo.
+    </string>
+    <string name="owm_key">Chiave API OWM</string>
+    <string name="positive">Affermativo</string>
+    <string name="proceed">Procedere</string>
+    <string name="quick_launch">Avvio Rapido</string>
+    <string name="ram">RAM</string>
+    <string name="reset">Reset</string>
+    <string name="reset_message">
+		Questa operazione cancellerà tutti i dati salvati per questa applicazione. I dati non saranno ripristinabili.
+    </string>
+    <string name="restart">Riavvia</string>
+    <string name="root">Root</string>
+    <string name="rss_feed">Flusso RSS</string>
+    <string name="sdk" translatable="false">SDK</string>
+    <string name="sd_card_failed">Nessuna scheda SD rilevata</string>
+    <string name="search_with_keyboard">Cerca con tastiera</string>
+    <string name="shortcut_count">Numero di scorciatoie (Url/Contatti)</string>
+    <string name="show_city">Mostra il nome della città con il meteo</string>
+    <string name="something_went_wrong">Qualcosa è andato storto</string>
+    <string name="source_code">Codice sorgente</string>
+    <string name="star">Stella</string>
+    <string name="support">Supporto</string>
+    <string name="support_message">Supporti lo sviluppatore per mantenere l'applicazione viva e gratuita:\n
+        \n<li><b>Donazioni:</b> se possibile, può fare una donazione diretta ed incoraggiare lo sviluppatore.</li>
+        \n<li><b>Amazon:</b> può usare il link di affiliazione mentre fa acquisti su Amazon per ricompensare lo sviluppatore.</li>
+        \n<li><b>Metta una stella:</b> può mostrare il suo supporto su Github mettendo una stella.</li>
+    </string>
+    <string name="system_stats">Statistiche di sistema</string>
+    <string name="telegram_group">Grruppo Telegram</string>
+    <string name="temperature">Temperatura</string>
+    <string name="temp_unit">Unità della temperatura</string>
+    <string name="time_date">Data e ora</string>
+    <string name="time_format">Formato ora</string>
+    <string name="todo">Note</string>
+    <string name="todo_count">Numero di note nella schermata principale</string>
+    <string name="todo_manager">Gestore delle note</string>
+    <string name="todo_manager_lock">Blocco delle note</string>
+    <string name="total">Totale</string>
+    <string name="twelve">12 ore</string>
+    <string name="twenty_four">24 ore</string>
+    <string name="uid" translatable="false">UID</string>
+    <string name="unable_to_launch">Impossibile avviare</string>
+    <string name="uninstall">Disinstalla</string>
+    <string name="update">Aggiorna</string>
+    <string name="url">Url</string>
+    <string name="used">Usata</string>
+    <string name="version">Versione</string>
+    <string name="wallpaper_change_success">Sfondo cambiato con successo</string>
+    <string name="weather">Meteo</string>
+    <string name="welcome">Benvenuti</string>
+    <string name="welcome_description">Benvenuti su Lunar Launcher. Questo è il suo primo avvio; se siete un utente per la prima volta,
+		<b>legga questo testo prima di procedere</b>.
+		\n\nCome prima cosa, appena chiuso questo dialogo, le verrà chiesto di fornire le seguenti autorizzazioni. Se si rifiuta di fornirle,
+		questa applicazione non funzionerà come previsto.
+        \n\n<li><b>Modifica dei parametri di sistema -</b> Per controllare la luminosità utilizzando il cursore</li>
+        \n<li><b>Telefono -</b> Per effettuare chiamate dalle scorciatoie</li>
+        \n\nSe ha ancora qualche dubbio, può verificare il codice sorgente in qualsiasi momento. Questa applicazione è completamente open-source.
+        \n\n<b><u>Gesti:</u></b>
+        \n<li>Scorrere verso l\'alto - accesso rapido</li>
+        \n<li>Scorrere verso il basso - pannello delle notifiche</li>
+        \n<li>Scorrere a destra - pannello delle informazioni</li>
+        \n<li>Scorrere a sinistra - pannello delle applicazioni</li>
+		\n<li>Premere e mantenere sull'indicatore della batteria - impostazioni del launcher</li>
+        \n<li>Premere e mantenere sulla parte inferiore dello schermo - gestore delle note</li>
+        \n<li>Doppio tocco - blocco del dispositivo (attivare dalle impostazioni)</li>
+        \n<li>Premere e mantenere l'elemento dei preferiti - rimuove l'elemento</li>
+        \n\nPer maggiori informazioni, visitare la wiki su Github.
+    </string>
+    <string name="wiki">Wiki</string>
+
+</resources>
