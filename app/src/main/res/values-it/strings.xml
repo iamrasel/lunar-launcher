@@ -98,7 +98,7 @@
     <string name="source_code">Codice sorgente</string>
     <string name="star">Stella</string>
     <string name="support">Supporto</string>
-    <string name="support_message">Supporti lo sviluppatore per mantenere l'applicazione viva e gratuita:\n
+    <string name="support_message">Supporti lo sviluppatore per mantenere l\'applicazione viva e gratuita:\n
         \n<li><b>Donazioni:</b> se possibile, può fare una donazione diretta ed incoraggiare lo sviluppatore.</li>
         \n<li><b>Amazon:</b> può usare il link di affiliazione mentre fa acquisti su Amazon per ricompensare lo sviluppatore.</li>
         \n<li><b>Metta una stella:</b> può mostrare il suo supporto su Github mettendo una stella.</li>
@@ -138,10 +138,10 @@
         \n<li>Scorrere verso il basso - pannello delle notifiche</li>
         \n<li>Scorrere a destra - pannello delle informazioni</li>
         \n<li>Scorrere a sinistra - pannello delle applicazioni</li>
-		\n<li>Premere e mantenere sull'indicatore della batteria - impostazioni del launcher</li>
+		\n<li>Premere e mantenere sull\'indicatore della batteria - impostazioni del launcher</li>
         \n<li>Premere e mantenere sulla parte inferiore dello schermo - gestore delle note</li>
         \n<li>Doppio tocco - blocco del dispositivo (attivare dalle impostazioni)</li>
-        \n<li>Premere e mantenere l'elemento dei preferiti - rimuove l'elemento</li>
+        \n<li>Premere e mantenere l\'elemento dei preferiti - rimuove l\'elemento</li>
         \n\nPer maggiori informazioni, visitare la wiki su Github.
     </string>
     <string name="wiki">Wiki</string>
