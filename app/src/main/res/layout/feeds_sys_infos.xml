@@ -15,87 +15,25 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ram_parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/rounded_bg"
-            android:padding="@dimen/surrounding">
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/ram_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:trackThickness="@dimen/surrounding"
-                app:trackColor="?attr/scrimBackground"/>
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/ram"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center_horizontal"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/cpu_parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/rounded_bg"
-            android:padding="@dimen/surrounding"
-            android:layout_marginTop="@dimen/distance">
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/cpu_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:trackThickness="@dimen/surrounding"
-                app:trackColor="?attr/scrimBackground"/>
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/cpu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center_horizontal"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/int_parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/rounded_bg"
-            android:padding="@dimen/surrounding"
-            android:layout_marginTop="@dimen/distance">
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/int_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:trackThickness="@dimen/surrounding"
-                app:trackColor="?attr/scrimBackground"/>
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/int_storage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center_horizontal"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ext_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/rounded_bg"
-            android:padding="@dimen/surrounding"
-            android:layout_marginTop="@dimen/distance">
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/ext_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:trackThickness="@dimen/surrounding"
-                app:trackColor="?attr/scrimBackground"/>
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/ext_storage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center_horizontal"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:orientation="vertical"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

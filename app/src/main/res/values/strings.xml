@@ -53,7 +53,6 @@
     <string name="donate">Donate</string>
     <string name="double_tap_lock">Double Tap Lock Method</string>
     <string name="empty_text_field">Text field is empty</string>
-    <string name="ext_storage">External Storage</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="feed_url">RSS Feed Url</string>
     <string name="first_install">First Install</string>
@@ -63,14 +62,13 @@
     <string name="frequency">Frequency</string>
     <string name="got_it">Got it</string>
     <string name="image_pick_failed">Failed to get image</string>
-    <string name="int_storage">Internal Storage</string>
     <string name="last_update">Last Update</string>
     <string name="light_theme">Light</string>
     <string name="lunar_settings">Lunar Settings</string>
     <string name="misc">Misc</string>
     <string name="misc_info_titles">
         Device Uptime\nSystem Active\nMemory Threshold\nBattery Temperature\nBattery Voltage
-        \nRoot Storage\nSD Card Path\nIPv4\nIPv6
+        \nRoot Storage\nIPv4\nIPv6
     </string>
     <string name="na">N/A</string>
     <string name="negative">Negative</string>
@@ -90,7 +88,6 @@
     <string name="root">Root</string>
     <string name="rss_feed">RSS Feed</string>
     <string name="sdk" translatable="false">SDK</string>
-    <string name="sd_card_failed">Failed to detect any SD card</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
     <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>
     <string name="show_city">Show City Name With Weather</string>

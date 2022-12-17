@@ -170,11 +170,11 @@ internal class Feeds : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 val systemStats = SystemStats(fragmentActivity)
-                systemStats.intStorage(binding.feedsSysInfos.intProgress, binding.feedsSysInfos.intStorage)
-                systemStats.extStorage(binding.feedsSysInfos.extProgress, binding.feedsSysInfos.extStorage)
+                systemStats.intStorage(binding.feedsSysInfos.intParent)
+                systemStats.extStorage(binding.feedsSysInfos.extParent)
                 while (isActive) {
-                    systemStats.ram(binding.feedsSysInfos.ramProgress, binding.feedsSysInfos.ram)
-                    systemStats.cpu(binding.feedsSysInfos.cpuProgress, binding.feedsSysInfos.cpu)
+                    systemStats.ram(binding.feedsSysInfos.ramParent)
+                    systemStats.cpu(binding.feedsSysInfos.cpuParent)
                     systemStats.misc(binding.feedsSysInfos.misc)
                     delay(1000)
                 }

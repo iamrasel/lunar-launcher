@@ -25,12 +25,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.*
 import android.text.Html
+import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.R
+import rasel.lunar.launcher.databinding.ChildSysInfoBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TEMP_UNIT
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.helpers.UniUtils.Companion.isNetworkAvailable
@@ -49,15 +51,20 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
 
     private val toGb = 1.07374182E9f
     private fun string(id: Int) : String { return fragmentActivity.getString(id) }
+    private val inflater : LayoutInflater get() { return fragmentActivity.layoutInflater }
 
     /* ram info */
-    fun ram(ramProgress: LinearProgressIndicator, ram: MaterialTextView) {
+    fun ram(ramParent: LinearLayoutCompat) {
+        ramParent.removeAllViews()
+        val binding = ChildSysInfoBinding.inflate(inflater)
+        ramParent.addView(binding.root)
+
         val totalMem = memoryInfo.totalMem / toGb
         val availMem = memoryInfo.availMem / toGb
         val usedMem = totalMem - availMem
 
-        ramProgress.progress = (usedMem * 100 / totalMem).toInt()
-        ram.text = Html.fromHtml(
+        binding.indicator.progress = (usedMem * 100 / totalMem).toInt()
+        binding.textView.text = Html.fromHtml(
             "<b>${string(R.string.ram)}</b><br>" +
                     "${string(R.string.total)}: ${String.format("%.03f", totalMem)} GB | " +
                     "${string(R.string.used)}: ${String.format("%.03f", usedMem)} GB | " +
@@ -67,7 +74,11 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
 
 
     /* cpu and battery info */
-    fun cpu(cpuProgress: LinearProgressIndicator, cpu: MaterialTextView) {
+    fun cpu(cpuParent: LinearLayoutCompat) {
+        cpuParent.removeAllViews()
+        val binding = ChildSysInfoBinding.inflate(inflater)
+        cpuParent.addView(binding.root)
+
         var cpuTemp = 0.0f
         try {
             val cpuTempProcess = Runtime.getRuntime().exec("cat sys/class/thermal/thermal_zone0/temp")
@@ -87,11 +98,11 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
         val cpuFreq = "${String.format("%.02f", minCpuFrequency.toFloat() / 1000)} - " +
                 "${String.format("%.02f", maxCpuFrequency.toFloat() / 1000)} GHz"
 
-        cpuProgress.progress = when (maxCpuFrequency) {
+        binding.indicator.progress = when (maxCpuFrequency) {
             0 -> 30
             else -> frequencyOfCore * 100 / maxCpuFrequency
         }
-        cpu.text = Html.fromHtml(
+        binding.textView.text = Html.fromHtml(
             "<b>${string(R.string.cpu)}</b><br>" +
                     "${string(R.string.temperature)}: $finalCpuTemp | " +
                     "${string(R.string.frequency)}: $cpuFreq",
@@ -100,15 +111,20 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
 
 
     /* internal storage */
-    fun intStorage(intProgress: LinearProgressIndicator, intStorage: MaterialTextView) {
-        val statFs = StatFs(Environment.getDataDirectory().path)
+    fun intStorage(intParent: LinearLayoutCompat) {
+        intParent.removeAllViews()
+        val binding = ChildSysInfoBinding.inflate(inflater)
+        intParent.addView(binding.root)
+
+        val intPath = Environment.getExternalStorageDirectory().absolutePath
+        val statFs = StatFs(intPath)
         val totalStorage = statFs.blockCountLong * statFs.blockSizeLong / toGb
         val availStorage = statFs.availableBlocksLong * statFs.blockSizeLong / toGb
         val usedStorage = totalStorage - availStorage
 
-        intProgress.progress = (usedStorage * 100 / totalStorage).toInt()
-        intStorage.text = Html.fromHtml(
-            "<b>${string(R.string.int_storage)}</b><br>" +
+        binding.indicator.progress = (usedStorage * 100 / totalStorage).toInt()
+        binding.textView.text = Html.fromHtml(
+            "<b>${intPath + File.separator}</b><br>" +
                     "${string(R.string.total)}: ${String.format("%.03f", totalStorage)} GB | " +
                     "${string(R.string.used)}: ${String.format("%.03f", usedStorage)} GB | " +
                     "${string(R.string.free)}: ${String.format("%.03f", availStorage)} GB",
@@ -117,27 +133,36 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
 
 
 	/* external storage */
-    fun extStorage(extProgress : LinearProgressIndicator, extStorage : MaterialTextView) {
+    fun extStorage(extParent: LinearLayoutCompat) {
+        val extStorages = ContextCompat.getExternalFilesDirs(fragmentActivity, null)
         /* sd card is available */
-        if (extStorages.size > 1 && extStorages[1] != null) {
-            val statFs = StatFs(extStorages[1]!!.path)
-            val blockSize = statFs.blockSizeLong
-            val totalStorage = statFs.blockCountLong * blockSize / toGb
-            val availStorage = statFs.availableBlocksLong * blockSize / toGb
-            val usedStorage = totalStorage - availStorage
+        if (extStorages.size > 1) {
+            extParent.removeAllViews()
+            for (i in 1 until extStorages.size) {
+                if (extStorages[i] != null) {
+                    val binding = ChildSysInfoBinding.inflate(inflater)
+                    extParent.addView(binding.root)
 
-            extProgress.progress = (usedStorage * 100 / totalStorage).toInt()
-            extStorage.text = Html.fromHtml(
-                "<b>${string(R.string.ext_storage)}</b><br>" +
-                        "${string(R.string.total)}: ${String.format("%.03f", totalStorage)} GB | " +
-                        "${string(R.string.used)}: ${String.format("%.03f", usedStorage)} GB | " +
-                        "${string(R.string.free)}: ${String.format("%.03f", availStorage)} GB",
-                Html.FROM_HTML_MODE_COMPACT)
-        /* sd card not found */
+                    val statFs = StatFs(extStorages[i]!!.path)
+                    val blockSize = statFs.blockSizeLong
+                    val totalStorage = statFs.blockCountLong * blockSize / toGb
+                    val availStorage = statFs.availableBlocksLong * blockSize / toGb
+                    val usedStorage = totalStorage - availStorage
+
+                    val sdcardPaths = extStorages[i]!!.path.split(File.separator).toTypedArray()
+                    val sdPath = File.separator + sdcardPaths[1] + File.separator + sdcardPaths[2] + File.separator
+
+                    binding.indicator.progress = (usedStorage * 100 / totalStorage).toInt()
+                    binding.textView.text = Html.fromHtml(
+                        "<b>$sdPath</b><br>" +
+                                "${string(R.string.total)}: ${String.format("%.03f", totalStorage)} GB | " +
+                                "${string(R.string.used)}: ${String.format("%.03f", usedStorage)} GB | " +
+                                "${string(R.string.free)}: ${String.format("%.03f", availStorage)} GB",
+                        Html.FROM_HTML_MODE_COMPACT)
+                }
+            }
         } else {
-            extProgress.visibility = View.GONE
-            extStorage.text =
-                Html.fromHtml(string(R.string.sd_card_failed), Html.FROM_HTML_MODE_COMPACT)
+            extParent.visibility = View.GONE
         }
     }
 
@@ -157,12 +182,6 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
             else -> "$batteryTemp ºC"
         }
 
-        var sdPath = string(R.string.na)
-        if (extStorages.size > 1 && extStorages[1] != null) {
-            val sdcardPaths = extStorages[1]!!.path.split(File.separator).toTypedArray()
-            sdPath = File.separator + sdcardPaths[1] + File.separator + sdcardPaths[2] + File.separator
-        }
-
         misc.text =
             "${longToString(SystemClock.elapsedRealtime())}\n" +
             "${longToString(SystemClock.uptimeMillis())}\n" +
@@ -170,7 +189,6 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
             "$finalBatteryTemp\n" +
             "$voltage V\n" +
             "${String.format("%.03f", totalRootStorage)} GB\n" +
-            "$sdPath\n" +
             "${getIpAddress(true)}\n" +
             "${getIpAddress(false)}"
     }
@@ -186,10 +204,6 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
     private val tempUnit: Int get() {
         return fragmentActivity.getSharedPreferences(PREFS_SETTINGS, 0)
             .getInt(KEY_TEMP_UNIT, 0)
-    }
-
-    private val extStorages: Array<File?> get() {
-        return ContextCompat.getExternalFilesDirs(fragmentActivity, null)
     }
 
     private fun longToString(long: Long) : String {
