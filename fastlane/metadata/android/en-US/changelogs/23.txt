@@ -1,3 +1,0 @@
-- Optimizations and performance improvements
-- Ability to change the number of url/contact shortcuts
-- Amazon affiliate link in Support dialog

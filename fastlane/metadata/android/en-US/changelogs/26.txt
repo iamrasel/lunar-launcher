@@ -1,0 +1,5 @@
+- Optimized memory usage
+- Support multiple external storage info
+- Settings to go back to home screen on resume
+- Open rss urls through custom tabs
+- Italian translation by @Motodavide

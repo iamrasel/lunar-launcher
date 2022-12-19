@@ -91,7 +91,7 @@ internal class Feeds : Fragment() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add_widget)
-            Toast.makeText(requireContext(), "soon", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please wait patiently!", Toast.LENGTH_SHORT).show()
         return super.onContextItemSelected(item)
     }
 
