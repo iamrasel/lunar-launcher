@@ -7,7 +7,7 @@
         <a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=flat-square'></a>
         <br>
 		<img src='https://img.shields.io/badge/Maintained-yes-green?style=flat-square'>
-        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/workflow/status/iamrasel/lunar-launcher/CI_Push?style=flat-square'></a>
+        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/actions/workflow/status/iamrasel/lunar-launcher/ci_push.yml?branch=main&style=flat-square'></a>
 		<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=flat-square'></a>
     </p>
 	<a href="https://www.buymeacoffee.com/iamrasel"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=iamrasel&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
