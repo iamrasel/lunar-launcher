@@ -45,9 +45,15 @@
             layout="@layout/feeds_sys_infos"/>
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/widget_container"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/widget_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

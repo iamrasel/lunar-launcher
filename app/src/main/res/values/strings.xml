@@ -7,7 +7,7 @@
         on Android Pie (API 28) and up.
     </string>
     <string name="accessibility_service_label">Lock Service</string>
-    <string name="acknowledgements" translatable="false">
+    <string name="acknowledgements">
         <b>Acknowledgements</b>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
         <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>\n
@@ -39,13 +39,14 @@
     <string name="cpu">CPU</string>
     <string name="dark_theme">Dark</string>
     <string name="date_format">Date Format</string>
+    <string name="decrease_height">Decrease Height</string>
     <string name="default_">Default</string>
     <string name="delete">Delete</string>
     <string name="delete_all">Delete All</string>
     <string name="delete_all_confirmation">
         Are you sure to delete all the existing todos?
     </string>
-    <string name="developer_name" translatable="false">Developed by: Md Rasel Hossain</string>
+    <string name="developer_name">Developed by: Md Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
     <string name="device_admin_description">
         Allow to use double tap to lock feature
@@ -62,6 +63,7 @@
     <string name="frequency">Frequency</string>
     <string name="got_it">Got it</string>
     <string name="image_pick_failed">Failed to get image</string>
+    <string name="increase_height">Increase Height</string>
     <string name="last_update">Last Update</string>
     <string name="light_theme">Light</string>
     <string name="lunar_settings">Lunar Settings</string>
@@ -70,6 +72,8 @@
         Device Uptime\nSystem Active\nMemory Threshold\nBattery Temperature\nBattery Voltage
         \nRoot Storage\nIPv4\nIPv6
     </string>
+    <string name="move_up">Move Up</string>
+    <string name="move_down">Move Down</string>
     <string name="na">N/A</string>
     <string name="negative">Negative</string>
     <string name="null_app_store_message">

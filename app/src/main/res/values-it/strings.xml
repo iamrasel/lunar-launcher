@@ -7,7 +7,7 @@
         su Android Pie (API 28) e successivi.
     </string>
     <string name="accessibility_service_label">Servizio di blocco</string>
-    <string name="acknowledgements" translatable="false">
+    <string name="acknowledgements">
         <b>Ringraziamenti</b>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
         <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>\n
@@ -22,7 +22,7 @@
     <string name="app_drawer">Pannello applicazioni</string>
     <string name="app_info">Informazioni app</string>
     <string name="app_store">Negozio app</string>
-    <string name="argb" translatable="false">AARRGGBB</string>
+    <string name="argb">AARRGGBB</string>
     <string name="authentication_error">Errore di autenticazione</string>
     <string name="authentication_failed">Autenticazione fallita</string>
     <string name="authentication_subtitle">
@@ -45,7 +45,7 @@
     <string name="delete_all_confirmation">
 		È sicuro/a di cancellare tutte le note?
 	</string>
-    <string name="developer_name" translatable="false">Sviluppato da: Md Rasel Hossain</string>
+    <string name="developer_name">Sviluppato da: Md Rasel Hossain</string>
     <string name="device_admin">Amministratore del dispositivo</string>
     <string name="device_admin_description">
         Permetti il blocco dello schermo con due tocchi
@@ -87,7 +87,7 @@
     <string name="restart">Riavvia</string>
     <string name="root">Root</string>
     <string name="rss_feed">Flusso RSS</string>
-    <string name="sdk" translatable="false">SDK</string>
+    <string name="sdk">SDK</string>
     <string name="search_with_keyboard">Cerca con tastiera</string>
     <string name="shortcut_count">Numero di scorciatoie (Url/Contatti)</string>
     <string name="show_city">Mostra il nome della città con il meteo</string>
@@ -113,7 +113,7 @@
     <string name="total">Totale</string>
     <string name="twelve">12 ore</string>
     <string name="twenty_four">24 ore</string>
-    <string name="uid" translatable="false">UID</string>
+    <string name="uid">UID</string>
     <string name="unable_to_launch">Impossibile avviare</string>
     <string name="uninstall">Disinstalla</string>
     <string name="update">Aggiorna</string>
