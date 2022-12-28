@@ -26,11 +26,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
-import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.TodoDialogBinding
 import rasel.lunar.launcher.databinding.TodoManagerBinding
@@ -40,7 +39,6 @@ import java.util.*
 internal class TodoManager : Fragment() {
 
     private lateinit var binding: TodoManagerBinding
-    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var databaseHandler: DatabaseHandler
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -48,12 +46,6 @@ internal class TodoManager : Fragment() {
 
         /* set window insets */
         setInsets()
-
-        fragmentActivity = if (isAdded) {
-            requireActivity()
-        } else {
-            LauncherActivity()
-        }
 
         databaseHandler = DatabaseHandler(requireContext())
 
@@ -83,12 +75,12 @@ internal class TodoManager : Fragment() {
     }
 
     fun refreshList() {
-        binding.todos.adapter = TodoAdapter(fragmentActivity, requireContext(), this)
+        binding.todos.adapter = TodoAdapter(this, requireContext())
     }
 
     /* add new dialog */
     private fun addNewDialog() {
-        val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
+        val bottomSheetDialog = BottomSheetDialog(lActivity!!)
         val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(requireContext()))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
@@ -97,7 +89,7 @@ internal class TodoManager : Fragment() {
         dialogBinding.deleteAllConfirmation.visibility = View.GONE
         /* automatic keyboard popup */
         dialogBinding.todoInput.requestFocus()
-        val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(dialogBinding.todoInput, InputMethodManager.SHOW_IMPLICIT)
 
         /* dismiss the dialog on cancel button click */
@@ -119,7 +111,7 @@ internal class TodoManager : Fragment() {
 
     /* delete all dialog */
     private fun deleteAllDialog() {
-        val bottomSheetDialog = BottomSheetDialog(fragmentActivity)
+        val bottomSheetDialog = BottomSheetDialog(lActivity!!)
         val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(requireContext()))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()

@@ -30,10 +30,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import dev.chrisbanes.insetter.applyInsetter
-import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.BOTTOM_SHEET_TAG
@@ -59,7 +58,6 @@ import java.util.*
 internal class LauncherHome : Fragment() {
 
     private lateinit var binding: LauncherHomeBinding
-    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var fragManager: FragmentManager
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var batteryReceiver: BatteryReceiver
@@ -71,13 +69,7 @@ internal class LauncherHome : Fragment() {
         /* set insets of the root view */
         setInsets()
 
-        fragmentActivity = if (isAdded) {
-            requireActivity()
-        } else {
-            LauncherActivity()
-        }
-
-        fragManager = fragmentActivity.supportFragmentManager
+        fragManager = lActivity!!.supportFragmentManager
         sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
 
@@ -120,7 +112,7 @@ internal class LauncherHome : Fragment() {
             }
 
             /* show weather */
-            WeatherExecutor(sharedPreferences).generateWeatherString(binding.temp, fragmentActivity)
+            WeatherExecutor(sharedPreferences).generateWeatherString(binding.temp, lActivity!!)
             /* show todo list */
             showTodoList()
         }
@@ -158,7 +150,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), lActivity!!)
             }
         })
     }
@@ -170,7 +162,7 @@ internal class LauncherHome : Fragment() {
             /* open settings activity on long click */
             override fun onLongClick() {
                 super.onLongClick()
-                fragmentActivity.startActivity(Intent(requireContext(), SettingsActivity::class.java))
+                lActivity!!.startActivity(Intent(requireContext(), SettingsActivity::class.java))
             }
             /* expand notification panel on swipe down */
             override fun onSwipeDown() {
@@ -180,7 +172,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), lActivity!!)
             }
         })
     }
@@ -197,9 +189,9 @@ internal class LauncherHome : Fragment() {
                     /* show authentication screen if lock is on */
                     true -> {
                         if (canAuthenticate(requireContext())) {
-                            val biometricPrompt = BiometricPrompt(fragmentActivity, authenticationCallback)
+                            val biometricPrompt = BiometricPrompt(lActivity!!, authenticationCallback)
                             try {
-                                biometricPrompt.authenticate(biometricPromptInfo(fragmentActivity.getString(R.string.todo_manager), fragmentActivity))
+                                biometricPrompt.authenticate(biometricPromptInfo(lActivity!!.getString(R.string.todo_manager), lActivity!!))
                             } catch (exception: Exception) {
                                 exception.printStackTrace()
                             }
@@ -220,7 +212,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), lActivity!!)
             }
         })
     }
@@ -231,10 +223,10 @@ internal class LauncherHome : Fragment() {
             launchTodoManager()
         }
         override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-            Toast.makeText(requireContext(), fragmentActivity.getString(R.string.authentication_error), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), lActivity!!.getString(R.string.authentication_error), Toast.LENGTH_SHORT).show()
         }
         override fun onAuthenticationFailed() {
-            Toast.makeText(requireContext(), fragmentActivity.getString(R.string.authentication_failed), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), lActivity!!.getString(R.string.authentication_failed), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -246,7 +238,7 @@ internal class LauncherHome : Fragment() {
 
     /* todo list */
     private fun showTodoList() {
-        binding.todos.adapter = TodoAdapter(fragmentActivity, requireContext(), null)
+        binding.todos.adapter = TodoAdapter(null, requireContext())
     }
 
     /* get time format string */

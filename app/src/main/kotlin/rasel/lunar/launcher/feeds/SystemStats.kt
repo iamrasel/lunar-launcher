@@ -29,8 +29,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.textview.MaterialTextView
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.ChildSysInfoBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TEMP_UNIT
@@ -47,11 +47,11 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
 
-internal class SystemStats(private val fragmentActivity: FragmentActivity) {
+internal class SystemStats {
 
     private val toGb = 1.07374182E9f
-    private fun string(id: Int) : String { return fragmentActivity.getString(id) }
-    private val inflater : LayoutInflater get() { return fragmentActivity.layoutInflater }
+    private fun string(id: Int) : String { return lActivity!!.getString(id) }
+    private val inflater : LayoutInflater get() { return lActivity!!.layoutInflater }
 
     /* ram info */
     fun ram(ramParent: LinearLayoutCompat) {
@@ -134,7 +134,7 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
 
 	/* external storage */
     fun extStorage(extParent: LinearLayoutCompat) {
-        val extStorages = ContextCompat.getExternalFilesDirs(fragmentActivity, null)
+        val extStorages = ContextCompat.getExternalFilesDirs(lActivity!!, null)
         /* sd card is available */
         if (extStorages.size > 1) {
             extParent.removeAllViews()
@@ -172,7 +172,7 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
         val totalRootStorage = StatFs(Environment.getRootDirectory().path).blockCountLong *
                 StatFs(Environment.getRootDirectory().path).blockSizeLong / toGb
 
-        val batteryIntent = fragmentActivity.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        val batteryIntent = lActivity!!.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         val batteryTemp = batteryIntent!!.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0).toFloat() / 10
         val voltage = batteryIntent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0).toFloat() / 1000
 
@@ -196,15 +196,13 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
 
     private val memoryInfo: ActivityManager.MemoryInfo get() {
         val memoryInfo = ActivityManager.MemoryInfo()
-        val activityManager = fragmentActivity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val activityManager = lActivity!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         activityManager.getMemoryInfo(memoryInfo)
         return memoryInfo
     }
 
-    private val tempUnit: Int get() {
-        return fragmentActivity.getSharedPreferences(PREFS_SETTINGS, 0)
-            .getInt(KEY_TEMP_UNIT, 0)
-    }
+    private val tempUnit: Int get() =
+        lActivity!!.getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_TEMP_UNIT, 0)
 
     private fun longToString(long: Long) : String {
         var seconds = (long.toDouble() / 1000).roundToInt()
@@ -285,7 +283,7 @@ internal class SystemStats(private val fragmentActivity: FragmentActivity) {
                         if (getIPv4) {
                             if (isIPv4) return addressStr
                         } else {
-                            if (!isIPv4 && isNetworkAvailable(fragmentActivity)) {
+                            if (!isIPv4 && isNetworkAvailable(lActivity!!)) {
                                 val endIndex = addressStr.indexOf('%')
                                 return if (endIndex < 0) addressStr
                                 else addressStr.substring(0, endIndex)

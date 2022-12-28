@@ -29,14 +29,13 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.JobIntentService.enqueueWork
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButtonToggleGroup
 import dev.chrisbanes.insetter.applyInsetter
 import kotlinx.coroutines.*
-import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.FeedsBinding
 import rasel.lunar.launcher.feeds.rss.Rss
@@ -52,7 +51,6 @@ import rasel.lunar.launcher.helpers.UniUtils.Companion.isNetworkAvailable
 internal class Feeds : Fragment() {
 
     private lateinit var binding: FeedsBinding
-    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var appWidgetManager: AppWidgetManager
     private lateinit var appWidgetHost: WidgetHost
 
@@ -67,12 +65,6 @@ internal class Feeds : Fragment() {
 
         /* set insets */
         setInsets()
-
-        fragmentActivity = if (isAdded) {
-            requireActivity()
-        } else {
-            LauncherActivity()
-        }
 
         appWidgetManager = AppWidgetManager.getInstance(requireContext())
         appWidgetHost = WidgetHost(requireContext(), widgetHostId)
@@ -100,7 +92,7 @@ internal class Feeds : Fragment() {
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         menu.clearHeader()
-        fragmentActivity.menuInflater.inflate(R.menu.add_widget, menu)
+        lActivity!!.menuInflater.inflate(R.menu.add_widget, menu)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -144,12 +136,12 @@ internal class Feeds : Fragment() {
 
 	/* start rss service if network is active and rss url is not empty */
     private fun startService() {
-        val rssUrl = fragmentActivity.getSharedPreferences(PREFS_SETTINGS, 0)
+        val rssUrl = lActivity!!.getSharedPreferences(PREFS_SETTINGS, 0)
             .getString(KEY_RSS_URL, "")
-        if (isNetworkAvailable(fragmentActivity) && rssUrl != null && rssUrl.isNotEmpty()) {
-            val intent = Intent(fragmentActivity, RssService::class.java)
+        if (isNetworkAvailable(lActivity!!) && rssUrl != null && rssUrl.isNotEmpty()) {
+            val intent = Intent(lActivity!!, RssService::class.java)
             intent.putExtra(RSS_RECEIVER, resultReceiver)
-            enqueueWork(fragmentActivity, RssService::class.java, rssJobId, intent)
+            enqueueWork(lActivity!!, RssService::class.java, rssJobId, intent)
         } else {
             resumeService()
         }
@@ -182,7 +174,7 @@ internal class Feeds : Fragment() {
     private fun systemInfo() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                val systemStats = SystemStats(fragmentActivity)
+                val systemStats = SystemStats()
                 systemStats.intStorage(binding.feedsSysInfos.intParent)
                 systemStats.extStorage(binding.feedsSysInfos.extParent)
                 while (isActive) {
@@ -253,7 +245,7 @@ internal class Feeds : Fragment() {
         val appWidgetInfo = appWidgetManager.getAppWidgetInfo(appWidgetId)
 
         val hostView =
-            appWidgetHost.createView(fragmentActivity.applicationContext, appWidgetId, appWidgetInfo) as WidgetHostView
+            appWidgetHost.createView(lActivity!!.applicationContext, appWidgetId, appWidgetInfo) as WidgetHostView
         hostView.setAppWidget(appWidgetId, appWidgetInfo)
         val params =
             LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, 200)

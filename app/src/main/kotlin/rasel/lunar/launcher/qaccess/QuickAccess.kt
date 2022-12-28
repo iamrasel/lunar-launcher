@@ -39,14 +39,13 @@ import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
-import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.QuickAccessBinding
 import rasel.lunar.launcher.databinding.ShortcutMakerBinding
@@ -68,17 +67,10 @@ import java.util.*
 internal class QuickAccess : BottomSheetDialogFragment() {
 
     private lateinit var binding: QuickAccessBinding
-    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = QuickAccessBinding.inflate(inflater, container, false)
-
-        fragmentActivity = if (isAdded) {
-            requireActivity()
-        } else {
-            LauncherActivity()
-        }
 
         sharedPreferences = requireContext().getSharedPreferences(PREFS_SHORTCUTS, 0)
         /* set up volume sliders, brightness slider and favorite apps */
@@ -105,7 +97,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* control the volumes */
     private fun volumeControllers() {
-        val audioManager = fragmentActivity.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val audioManager = lActivity!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         /* max value */
         binding.notification.valueTo = audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION).toFloat()
         binding.alarm.valueTo = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM).toFloat()
@@ -136,7 +128,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
         /*  notify and ring volume sliders will work only if
             the device isn't in dnd or silent mode */
-        if (Settings.Global.getInt(fragmentActivity.contentResolver, "zen_mode") == 0 &&
+        if (Settings.Global.getInt(lActivity!!.contentResolver, "zen_mode") == 0 &&
             audioManager.ringerMode != AudioManager.RINGER_MODE_SILENT) {
             /* slider change listener for notify volume */
             binding.notification.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
@@ -182,7 +174,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* control the brightness */
     private fun controlBrightness() {
-        val resolver = fragmentActivity.contentResolver
+        val resolver = lActivity!!.contentResolver
         /* set max value */
         binding.brightness.valueTo = 255f
 
@@ -198,10 +190,10 @@ internal class QuickAccess : BottomSheetDialogFragment() {
         binding.brightness.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             /*  if write settings permission is not allowed already,
                 again ask for it to be granted */
-            if (!Settings.System.canWrite(fragmentActivity)) {
-                fragmentActivity.startActivity(
+            if (!Settings.System.canWrite(lActivity!!)) {
+                lActivity!!.startActivity(
                     Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-                        .setData(Uri.parse("package:" + fragmentActivity.packageName))
+                        .setData(Uri.parse("package:" + lActivity!!.packageName))
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
                 /* set the brightness according to the slider value */
@@ -259,18 +251,18 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                         url = "http://$intentString"
                     }
                     /* open the url */
-                    fragmentActivity.startActivity(
+                    lActivity!!.startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(url)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
                     /* type is contact */
                 } else if (shortcutType == SHORTCUT_TYPE_PHONE) {
                     /*  if the necessary permission is not granted already,
                         ask for it again */
-                    if (fragmentActivity.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        fragmentActivity.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
+                    if (lActivity!!.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        lActivity!!.requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
                     } else {
                         /* make phone call */
-                        fragmentActivity.startActivity(
+                        lActivity!!.startActivity(
                             Intent(Intent.ACTION_CALL, Uri.parse("tel:$intentString"))
                         )
                     }
@@ -289,8 +281,8 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* dialog for creating shortcuts */
     private fun shortcutsSaverDialog(position: Int) {
-        val dialogBinding = ShortcutMakerBinding.inflate(fragmentActivity.layoutInflater)
-        val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
+        val dialogBinding = ShortcutMakerBinding.inflate(lActivity!!.layoutInflater)
+        val dialogBuilder = MaterialAlertDialogBuilder(lActivity!!)
             .setView(dialogBinding.root)
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok, null)
@@ -371,14 +363,14 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* create text view for shortcut thumbnails */
     private val textView: MaterialTextView get() {
-        val relativeLayout = RelativeLayout(fragmentActivity)
+        val relativeLayout = RelativeLayout(lActivity!!)
         relativeLayout.layoutParams = LinearLayoutCompat.LayoutParams(
             LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
             LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1F)
         relativeLayout.gravity = Gravity.CENTER
         binding.shortcutsGroup.addView(relativeLayout)
 
-        val textView = MaterialTextView(fragmentActivity)
+        val textView = MaterialTextView(lActivity!!)
         textView.layoutParams = LinearLayoutCompat.LayoutParams(
             (48 * resources.displayMetrics.density).toInt(),
             (48 * resources.displayMetrics.density).toInt())
@@ -392,7 +384,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* create image view for favorite app icons */
     private val imageView: AppCompatImageView get() {
-        val imageView = AppCompatImageView(fragmentActivity)
+        val imageView = AppCompatImageView(lActivity!!)
         imageView.layoutParams = LinearLayoutCompat.LayoutParams(
             LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
             LinearLayoutCompat.LayoutParams.MATCH_PARENT, 1F)

@@ -40,10 +40,9 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
-import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
@@ -60,7 +59,6 @@ import kotlin.collections.ArrayList
 internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
-    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var packageInfoList: List<ResolveInfo>
     private var packagesList: ArrayList<Packages> = ArrayList()
     private lateinit var packageManager: PackageManager
@@ -79,13 +77,7 @@ internal class AppDrawer : Fragment() {
         setInsets()
         setupSearchColumns()
 
-        fragmentActivity = if (isAdded) {
-            requireActivity()
-        } else {
-            LauncherActivity()
-        }
-
-        packageManager = fragmentActivity.packageManager
+        packageManager = lActivity!!.packageManager
         appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
 
         /* initialize apps list adapter */
@@ -116,7 +108,7 @@ internal class AppDrawer : Fragment() {
                 super.onDoubleClick()
                 lockMethod(
                     requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-                        .getInt(KEY_LOCK_METHOD, 0), requireContext(), fragmentActivity)
+                        .getInt(KEY_LOCK_METHOD, 0), requireContext(), lActivity!!)
             }
         })
     }
@@ -238,7 +230,7 @@ internal class AppDrawer : Fragment() {
         if (requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
                 .getBoolean(KEY_KEYBOARD_SEARCH, false)) {
             binding.searchInput.requestFocus()
-            val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
         }
     }
@@ -298,7 +290,7 @@ internal class AppDrawer : Fragment() {
     private fun closeSearch() {
         binding.searchInput.text?.clear()
         binding.searchInput.let { view ->
-            val inputMethodManager = fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
         binding.searchLayout.visibility = View.GONE

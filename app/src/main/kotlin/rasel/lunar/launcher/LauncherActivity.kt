@@ -48,8 +48,16 @@ internal class LauncherActivity : AppCompatActivity() {
     private lateinit var binding: LauncherActivityBinding
     private lateinit var viewPager: ViewPager2
 
+    companion object {
+        private var instance: LauncherActivity? = null
+        @JvmStatic
+        val lActivity : LauncherActivity? get() = instance
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        instance = this
 
         /* vertically edge to edge view */
         WindowCompat.setDecorFitsSystemWindows(window, false)

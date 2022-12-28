@@ -40,13 +40,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.pm.PackageInfoCompat
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import rasel.lunar.launcher.LauncherActivity
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.ActivityBrowserDialogBinding
 import rasel.lunar.launcher.databinding.AppInfoDialogBinding
@@ -65,19 +64,12 @@ import java.util.*
 internal class AppMenu : BottomSheetDialogFragment() {
 
     private lateinit var binding: AppMenuBinding
-    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var packageName: String
     private lateinit var packageManager: PackageManager
     private lateinit var appInfo: ApplicationInfo
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppMenuBinding.inflate(inflater, container, false)
-
-        fragmentActivity = if (isAdded) {
-            requireActivity()
-        } else {
-            LauncherActivity()
-        }
 
         /* get package name from fragment's tag */
         packageName = tag.toString()
@@ -107,7 +99,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
         /* copy package name */
         binding.appPackage.setOnClickListener {
-            copyToClipboard(fragmentActivity, requireContext(), packageName)
+            copyToClipboard(lActivity!!, requireContext(), packageName)
         }
 
         binding.detailedInfo.setOnClickListener { detailedInfo() }
@@ -169,8 +161,8 @@ internal class AppMenu : BottomSheetDialogFragment() {
     /* detailed info dialog */
     @SuppressLint("SetTextI18n")
     private fun detailedInfo() {
-        val dialogBinding = AppInfoDialogBinding.inflate(fragmentActivity.layoutInflater)
-        MaterialAlertDialogBuilder(fragmentActivity)
+        val dialogBinding = AppInfoDialogBinding.inflate(lActivity!!.layoutInflater)
+        MaterialAlertDialogBuilder(lActivity!!)
             .setView(dialogBinding.root)
             .setPositiveButton(android.R.string.cancel, null)
             .show()
@@ -199,8 +191,8 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
     /* activity browser dialog */
     private fun activityBrowser() {
-        val dialogBinding = ActivityBrowserDialogBinding.inflate(fragmentActivity.layoutInflater)
-        val dialogBuilder = MaterialAlertDialogBuilder(fragmentActivity)
+        val dialogBinding = ActivityBrowserDialogBinding.inflate(lActivity!!.layoutInflater)
+        val dialogBuilder = MaterialAlertDialogBuilder(lActivity!!)
             .setView(dialogBinding.root)
             .setPositiveButton(android.R.string.cancel, null)
             .show()
@@ -270,8 +262,8 @@ internal class AppMenu : BottomSheetDialogFragment() {
         freeformIntent!!.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
         val rect = Rect(
-            0, screenHeight(fragmentActivity) / 2,
-            screenWidth(fragmentActivity), screenHeight(fragmentActivity))
+            0, screenHeight(lActivity!!) / 2,
+            screenWidth(lActivity!!), screenHeight(lActivity!!))
         var activityOptions = activityOptions
         activityOptions = activityOptions.setLaunchBounds(rect)
         requireContext().startActivity(freeformIntent, activityOptions.toBundle())
