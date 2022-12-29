@@ -27,9 +27,9 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import rasel.lunar.launcher.LauncherActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.SettingsAdvanceBinding
+import kotlin.system.exitProcess
 
 
 internal class Advance : BottomSheetDialogFragment() {
@@ -53,7 +53,7 @@ internal class Advance : BottomSheetDialogFragment() {
 
         /* reset and restart button click listeners */
         binding.reset.setOnClickListener { reset() }
-        binding.restart.setOnClickListener { restart() }
+        binding.restart.setOnClickListener { exitProcess(0) }
     }
 
     /* reset app data */
@@ -67,14 +67,6 @@ internal class Advance : BottomSheetDialogFragment() {
             }
             .setNeutralButton(android.R.string.cancel) {dialog, _ -> dialog.dismiss() }
             .show()
-    }
-
-    /* restart the app */
-    private fun restart() {
-        val intent = Intent(requireActivity(), LauncherActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        requireActivity().startActivity(intent)
-        requireActivity().finishAffinity()
     }
 
 }
