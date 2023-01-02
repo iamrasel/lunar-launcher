@@ -1,19 +1,17 @@
 /*
- * Lunar Launcher
- * Copyright (C) 2022 Md Rasel Hossain
+ * Copyright (C) 2009 The Android Open Source Project
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package rasel.lunar.launcher.feeds
@@ -21,29 +19,59 @@ package rasel.lunar.launcher.feeds
 import android.appwidget.AppWidgetHostView
 import android.content.Context
 import android.view.MotionEvent
+import android.view.ViewConfiguration
 
 
-internal class WidgetHostView(context: Context?) : AppWidgetHostView(context) {
+internal class WidgetHostView(context: Context) : AppWidgetHostView(context) {
 
-    private var longClick: OnLongClickListener? = null
-    private var down: Long = 0
+    private var hasPerformedLongPress = false
+    private var pendingCheckForLongPress: CheckForLongPress? = null
 
-    override fun setOnLongClickListener(l: OnLongClickListener?) {
-        longClick = l
-    }
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+        // Consume any touch events for ourselves after longpress is triggered
+        if (hasPerformedLongPress) {
+            hasPerformedLongPress = false
+            return true
+        }
 
-    override fun onInterceptTouchEvent(motionEvent: MotionEvent): Boolean {
-        when (motionEvent.actionMasked) {
-            MotionEvent.ACTION_DOWN -> down = System.currentTimeMillis()
-            MotionEvent.ACTION_MOVE -> {
-                val upVal = System.currentTimeMillis() - down
-                if (upVal > 100L) {
-                    longClick!!.onLongClick(this@WidgetHostView)
-                    return true
-                }
+        when (ev.action) {
+            MotionEvent.ACTION_DOWN -> postCheckForLongClick()
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                hasPerformedLongPress = false
+                if (pendingCheckForLongPress != null) removeCallbacks(pendingCheckForLongPress)
             }
         }
+
+        // Otherwise continue letting touch events fall through to children
         return false
     }
+
+    internal inner class CheckForLongPress : Runnable {
+        private var originalWindowAttachCount = 0
+        override fun run() {
+            if (parent != null && hasWindowFocus()
+                && originalWindowAttachCount == windowAttachCount && !hasPerformedLongPress
+            ) {
+                if (performLongClick()) hasPerformedLongPress = true
+            }
+        }
+
+        fun rememberWindowAttachCount() { originalWindowAttachCount = windowAttachCount }
+    }
+
+    private fun postCheckForLongClick() {
+        hasPerformedLongPress = false
+        if (pendingCheckForLongPress == null) pendingCheckForLongPress = CheckForLongPress()
+        pendingCheckForLongPress!!.rememberWindowAttachCount()
+        postDelayed(pendingCheckForLongPress, ViewConfiguration.getLongPressTimeout().toLong())
+    }
+
+    override fun cancelLongPress() {
+        super.cancelLongPress()
+        hasPerformedLongPress = false
+        if (pendingCheckForLongPress != null) removeCallbacks(pendingCheckForLongPress)
+    }
+
+    override fun getDescendantFocusability(): Int = FOCUS_BLOCK_DESCENDANTS
 
 }

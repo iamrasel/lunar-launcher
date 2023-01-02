@@ -67,6 +67,7 @@ internal class LauncherActivity : AppCompatActivity() {
         instance = this
         widgetManager = AppWidgetManager.getInstance(applicationContext)
         widgetHost = WidgetHost(applicationContext, widgetHostId)
+        appWidgetHost?.startListening()
 
         /* vertically edge to edge view */
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -88,13 +89,8 @@ internal class LauncherActivity : AppCompatActivity() {
         handleBackPress()
     }
 
-    override fun onStart() {
-        super.onStart()
-        appWidgetHost?.startListening()
-    }
-
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         appWidgetHost?.stopListening()
     }
 
