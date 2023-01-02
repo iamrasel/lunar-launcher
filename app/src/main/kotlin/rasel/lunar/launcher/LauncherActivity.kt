@@ -19,6 +19,7 @@
 package rasel.lunar.launcher
 
 import android.Manifest
+import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -33,11 +34,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.apps.AppDrawer
 import rasel.lunar.launcher.databinding.LauncherActivityBinding
 import rasel.lunar.launcher.feeds.Feeds
+import rasel.lunar.launcher.feeds.WidgetHost
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BACK_HOME
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_FIRST_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WINDOW_BACKGROUND
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FIRST_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.Constants.Companion.widgetHostId
 import rasel.lunar.launcher.helpers.UniUtils.Companion.getColorResId
 import rasel.lunar.launcher.helpers.ViewPagerAdapter
 import rasel.lunar.launcher.home.LauncherHome
@@ -50,14 +53,20 @@ internal class LauncherActivity : AppCompatActivity() {
 
     companion object {
         private var instance: LauncherActivity? = null
-        @JvmStatic
-        val lActivity : LauncherActivity? get() = instance
+        private var widgetManager: AppWidgetManager? = null
+        private var widgetHost: WidgetHost? = null
+
+        @JvmStatic val lActivity : LauncherActivity? get() = instance
+        @JvmStatic val appWidgetManager: AppWidgetManager? get() = widgetManager
+        @JvmStatic val appWidgetHost: WidgetHost? get() = widgetHost
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         instance = this
+        widgetManager = AppWidgetManager.getInstance(applicationContext)
+        widgetHost = WidgetHost(applicationContext, widgetHostId)
 
         /* vertically edge to edge view */
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -77,6 +86,16 @@ internal class LauncherActivity : AppCompatActivity() {
 
         /* handle navigation back events */
         handleBackPress()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        appWidgetHost?.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        appWidgetHost?.stopListening()
     }
 
     override fun onResume() {

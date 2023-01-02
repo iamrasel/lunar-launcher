@@ -18,14 +18,15 @@
 
 package rasel.lunar.launcher.feeds
 
-import android.app.Activity
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.*
 import android.view.*
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.appcompat.widget.LinearLayoutCompat.LayoutParams
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.JobIntentService.enqueueWork
 import androidx.fragment.app.Fragment
@@ -35,6 +36,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButtonToggleGroup
 import dev.chrisbanes.insetter.applyInsetter
 import kotlinx.coroutines.*
+import rasel.lunar.launcher.LauncherActivity.Companion.appWidgetHost
+import rasel.lunar.launcher.LauncherActivity.Companion.appWidgetManager
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.FeedsBinding
@@ -42,32 +45,31 @@ import rasel.lunar.launcher.feeds.rss.Rss
 import rasel.lunar.launcher.feeds.rss.RssAdapter
 import rasel.lunar.launcher.feeds.rss.RssService
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_RSS_URL
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WIDGET_HEIGHTS
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WIDGET_IDS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_WIDGETS
 import rasel.lunar.launcher.helpers.Constants.Companion.RSS_ITEMS
 import rasel.lunar.launcher.helpers.Constants.Companion.RSS_RECEIVER
+import rasel.lunar.launcher.helpers.Constants.Companion.SEPARATOR
+import rasel.lunar.launcher.helpers.Constants.Companion.requestCreateWidget
+import rasel.lunar.launcher.helpers.Constants.Companion.requestPickWidget
+import rasel.lunar.launcher.helpers.Constants.Companion.rssJobId
 import rasel.lunar.launcher.helpers.UniUtils.Companion.isNetworkAvailable
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 internal class Feeds : Fragment() {
 
     private lateinit var binding: FeedsBinding
-    private lateinit var appWidgetManager: AppWidgetManager
-    private lateinit var appWidgetHost: WidgetHost
-
     private val requestCodeString = "requestCode"
-    private val rssJobId = 101
-    private val widgetHostId = 102
-    private val requestPickWidget = 103
-    private val requestCreateWidget = 104
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FeedsBinding.inflate(inflater, container, false)
 
-        /* set insets */
         setInsets()
-
-        appWidgetManager = AppWidgetManager.getInstance(requireContext())
-        appWidgetHost = WidgetHost(requireContext(), widgetHostId)
+        updateWidgets()
 
         return binding.root
     }
@@ -77,16 +79,14 @@ internal class Feeds : Fragment() {
         expandCollapse()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         registerForContextMenu(binding.widgetContainer)
-        appWidgetHost.startListening()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         unregisterForContextMenu(binding.widgetContainer)
-        appWidgetHost.stopListening()
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -188,7 +188,7 @@ internal class Feeds : Fragment() {
     }
 
     private fun selectWidget() {
-        val appWidgetId = appWidgetHost.allocateAppWidgetId()
+        val appWidgetId = appWidgetHost?.allocateAppWidgetId()
         val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
         pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
         pickIntent.putExtra(requestCodeString, requestPickWidget)
@@ -206,28 +206,24 @@ internal class Feeds : Fragment() {
     private val widgetPicker =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val data = result.data
+            val appWidgetId = data?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
             val requestCode = data?.getIntExtra(requestCodeString, requestPickWidget)
             try {
-                if (result.resultCode == Activity.RESULT_OK) {
+                if (result.resultCode == RESULT_OK) {
                     when (requestCode) {
-                        requestPickWidget -> configureWidget(data)
-                        requestCreateWidget -> createWidget(data)
+                        requestPickWidget -> configureWidget(appWidgetId!!)
+                        requestCreateWidget -> createWidget(appWidgetId!!, null)
                     }
-                } else if (result.resultCode == Activity.RESULT_CANCELED && data != null) {
-                    val appWidgetId = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-                    if (appWidgetId != -1) {
-                        appWidgetHost.deleteAppWidgetId(appWidgetId)
-                    }
+                } else if (result.resultCode == RESULT_CANCELED && data != null) {
+                    if (appWidgetId != -1) appWidgetHost?.deleteAppWidgetId(appWidgetId!!)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
 
-    private fun configureWidget(data: Intent) {
-        val extras = data.extras
-        val appWidgetId = extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-        val appWidgetInfo = appWidgetManager.getAppWidgetInfo(appWidgetId!!)
+    private fun configureWidget(appWidgetId: Int) {
+        val appWidgetInfo = appWidgetManager!!.getAppWidgetInfo(appWidgetId)
         if (appWidgetInfo.configure != null) {
             val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
             intent.component = appWidgetInfo.configure
@@ -235,40 +231,120 @@ internal class Feeds : Fragment() {
             intent.putExtra(requestCodeString, requestCreateWidget)
             widgetPicker.launch(intent)
         } else {
-            createWidget(data)
+            createWidget(appWidgetId, null)
         }
     }
 
-    private fun createWidget(data: Intent) {
-        val extras = data.extras
-        val appWidgetId = extras!!.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-        val appWidgetInfo = appWidgetManager.getAppWidgetInfo(appWidgetId)
-
+    private fun createWidget(appWidgetId: Int, height: Int?) {
+        val appWidgetInfo = appWidgetManager!!.getAppWidgetInfo(appWidgetId)
         val hostView =
-            appWidgetHost.createView(lActivity!!.applicationContext, appWidgetId, appWidgetInfo) as WidgetHostView
+            appWidgetHost?.createView(lActivity!!.applicationContext, appWidgetId, appWidgetInfo) as WidgetHostView
         hostView.setAppWidget(appWidgetId, appWidgetInfo)
-        val params =
-            LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, 200)
-        binding.widgetContainer.addView(hostView, params)
 
+        var params: LayoutParams? = null
+        if (height == null) {
+            params = LayoutParams(LayoutParams.MATCH_PARENT, appWidgetInfo.minHeight)
+            val updatedIds = splitWidgetIds.plus("$appWidgetId")
+            val updatedHeights = splitWidgetHeights.plus("${appWidgetInfo.minHeight}")
+            saveWidgetData(updatedIds, updatedHeights)
+        } else {
+            params = LayoutParams(LayoutParams.MATCH_PARENT, height)
+        }
+
+        binding.widgetContainer.addView(hostView, params)
+        widgetMenu(hostView)
+    }
+
+    private fun updateWidgets() {
+        if (splitWidgetIds.size > 0) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                binding.widgetContainer.removeAllViews()
+                for (i in 0 until splitWidgetIds.size) {
+                    createWidget(splitWidgetIds[i]!!.int(), splitWidgetHeights[i]!!.int())
+                }
+            }
+        }
+    }
+
+    private fun widgetMenu(hostView: WidgetHostView) {
+        val appWidgetId = hostView.appWidgetId
         hostView.setOnLongClickListener {
             val popupMenu = PopupMenu(requireContext(), it, Gravity.END)
-            popupMenu.menuInflater.inflate(R.menu.widget_menu, popupMenu.menu)
-            popupMenu.show()
-            popupMenu.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.delete_widget -> removeWidget(it as WidgetHostView)
-                    else -> Toast.makeText(context, "Clicked on " + menuItem.title, Toast.LENGTH_SHORT).show()
+            popupMenu.apply {
+                menuInflater.inflate(R.menu.widget_menu, this.menu)
+                show()
+                setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.move_up -> moveWidget(appWidgetId, true)
+                        R.id.move_down -> moveWidget(appWidgetId, false)
+                        R.id.increase_height -> resizeWidget(appWidgetId, true)
+                        R.id.decrease_height -> resizeWidget(appWidgetId, false)
+                        R.id.delete_widget -> removeWidget(it as WidgetHostView)
+                    }
+                    true
                 }
-                true
             }
             true
         }
     }
 
+    private fun moveWidget(widgetId: Int, moveUp: Boolean) {
+        val i = splitWidgetIds.indexOf(widgetId.toString())
+        val tempIds = splitWidgetIds
+        val tempHeights = splitWidgetHeights
+        if (moveUp && i > 0) {
+            tempIds.swap(i-1, i)
+            tempHeights.swap(i-1, i)
+        } else if (!moveUp && i < splitWidgetIds.size - 1) {
+            tempIds.swap(i, i+1)
+            tempHeights.swap(i, i+1)
+        } else return
+        saveWidgetData(tempIds, tempHeights)
+        updateWidgets()
+    }
+
+    private fun resizeWidget(widgetId: Int, shouldAdd: Boolean) {
+        val i = splitWidgetIds.indexOf(widgetId.toString())
+        val tempList = splitWidgetHeights
+        tempList[i] = if (shouldAdd) (splitWidgetHeights[i]!!.int().plus(50)).toString()
+        else (splitWidgetHeights[i]!!.int().minus(50)).toString()
+        widgetPref.edit().putString(KEY_WIDGET_HEIGHTS, tempList.joinToString(separator = SEPARATOR)).apply()
+        updateWidgets()
+    }
+
     private fun removeWidget(hostView: WidgetHostView) {
-        appWidgetHost.deleteAppWidgetId(hostView.appWidgetId)
+        appWidgetHost?.deleteAppWidgetId(hostView.appWidgetId)
         binding.widgetContainer.removeView(hostView)
+
+        val i = splitWidgetIds.indexOf(hostView.appWidgetId.toString())
+        saveWidgetData(splitWidgetIds.minus(splitWidgetIds[i]), splitWidgetHeights.minus(splitWidgetHeights[i]))
+    }
+
+    private fun saveWidgetData(idList: List<String?>, heightList: List<String?>) {
+        widgetPref.edit()
+            .putString(KEY_WIDGET_IDS, idList.joinToString(separator = SEPARATOR))
+            .putString(KEY_WIDGET_HEIGHTS, heightList.joinToString(separator = SEPARATOR))
+            .apply()
+    }
+
+    private val widgetPref: SharedPreferences get() = lActivity!!.getSharedPreferences(PREFS_WIDGETS, 0)
+    private val widgetIds: String? get() = widgetPref.getString(KEY_WIDGET_IDS, "")
+    private val widgetHeights: String? get() = widgetPref.getString(KEY_WIDGET_HEIGHTS, "")
+    private val splitWidgetIds: MutableList<String?> get() = widgetIds!!.split(SEPARATOR).toMutableList()
+    private val splitWidgetHeights: MutableList<String?> get() = widgetHeights!!.split(SEPARATOR).toMutableList()
+
+    private fun <T> MutableList<T>.swap(index1: Int, index2: Int){
+        val temp = this[index1]
+        this[index1] = this[index2]
+        this[index2] = temp
+    }
+
+    private fun String.int() : Int {
+        return try {
+            this.toInt()
+        } catch (e: Exception) {
+            0
+        }
     }
 
 }

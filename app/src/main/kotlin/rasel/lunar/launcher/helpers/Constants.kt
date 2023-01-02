@@ -30,6 +30,11 @@ internal class Constants {
         const val PREFS_FIRST_LAUNCH = "rasel.lunar.launcher.FIRST_LAUNCH"
         const val KEY_FIRST_LAUNCH = "first_launch"
 
+        /* widgets */
+        const val PREFS_WIDGETS = "rasel.lunar.launcher.WIDGETS"
+        const val KEY_WIDGET_IDS = "widget_ids"
+        const val KEY_WIDGET_HEIGHTS = "widget_heights"
+
         /* settings */
         const val PREFS_SETTINGS = "rasel.lunar.launcher.SETTINGS"
         const val KEY_TIME_FORMAT = "time_format"
@@ -51,10 +56,16 @@ internal class Constants {
         /* --- */
         const val DEFAULT_DATE_FORMAT = "EEE dx MMM, yyyy"
         const val BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG"
+        const val SEPARATOR = "||"
         const val MAX_SHORTCUTS = 6
         const val MAX_FAVORITE_APPS = 6
         const val ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.LOCK_SCREEN_SERVICE"
         const val AUTHENTICATOR_TYPE = BIOMETRIC_WEAK or DEVICE_CREDENTIAL
+
+        const val rssJobId = 101
+        const val widgetHostId = 102
+        const val requestPickWidget = 103
+        const val requestCreateWidget = 104
 
         /* favorite apps */
         const val PREFS_FAVORITE_APPS = "rasel.lunar.launcher.FAVORITE_APPS"
