@@ -22,7 +22,6 @@ import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_CITY_NAME
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_OWM_API
@@ -41,12 +40,12 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
     private val tempUnit: Int
     private val showCity: Boolean
 
-    fun generateWeatherString(materialTextView: MaterialTextView, fragmentActivity: FragmentActivity) {
+    fun generateWeatherString(materialTextView: MaterialTextView) {
         materialTextView.visibility = View.GONE
 
         /*  run the executor if network is available,
             and city name and owm api values are not empty */
-        if (isNetworkAvailable(fragmentActivity) && cityName.isNotEmpty() && owmApi.isNotEmpty()) {
+        if (isNetworkAvailable() && cityName.isNotEmpty() && owmApi.isNotEmpty()) {
             try {
                 val executor = Executors.newSingleThreadExecutor()
                 val handler = Handler(Looper.getMainLooper())

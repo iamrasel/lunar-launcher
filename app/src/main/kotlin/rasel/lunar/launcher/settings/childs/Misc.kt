@@ -34,12 +34,8 @@ import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_RSS_URL
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_COUNT
 import rasel.lunar.launcher.helpers.Constants.Companion.MAX_SHORTCUTS
-import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.helpers.UniUtils.Companion.isRooted
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.backHome
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveLockMethod
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveRssUrl
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.shortcutCount
+import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
 import java.util.*
 
 
@@ -50,18 +46,16 @@ internal class Misc : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsMiscBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-
         /* initialize views according to the saved values */
-        when (sharedPreferences.getBoolean(KEY_BACK_HOME, false)) {
+        when (settingsPrefs!!.getBoolean(KEY_BACK_HOME, false)) {
             true -> binding.backHomePositive.isChecked = true
             false -> binding.backHomeNegative.isChecked = true
         }
 
-        binding.shortcutCount.value = sharedPreferences.getInt(KEY_SHORTCUT_COUNT, MAX_SHORTCUTS).toFloat()
-        binding.inputFeedUrl.text = SpannableStringBuilder(sharedPreferences.getString(KEY_RSS_URL, ""))
+        binding.shortcutCount.value = settingsPrefs!!.getInt(KEY_SHORTCUT_COUNT, MAX_SHORTCUTS).toFloat()
+        binding.inputFeedUrl.text = SpannableStringBuilder(settingsPrefs!!.getString(KEY_RSS_URL, ""))
 
-        when (sharedPreferences.getInt(KEY_LOCK_METHOD, 0)) {
+        when (settingsPrefs!!.getInt(KEY_LOCK_METHOD, 0)) {
             0 -> binding.selectLockNegative.isChecked = true
             1 -> binding.selectLockAccessibility.isChecked = true
             2 -> binding.selectLockAdmin.isChecked = true
@@ -87,23 +81,23 @@ internal class Misc : BottomSheetDialogFragment() {
 
         binding.backHomeGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.backHomePositive.id -> backHome(requireContext(), true)
-                binding.backHomeNegative.id -> backHome(requireContext(), false)
+                binding.backHomePositive.id -> settingsPrefs!!.edit().putBoolean(KEY_BACK_HOME, true).apply()
+                binding.backHomeNegative.id -> settingsPrefs!!.edit().putBoolean(KEY_BACK_HOME, false).apply()
             }
         }
 
         /* change shortcut count value */
         binding.shortcutCount.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-            shortcutCount(requireContext(), value.toInt())
+            settingsPrefs!!.edit().putInt(KEY_SHORTCUT_COUNT, value.toInt()).apply()
         })
 
         /* change lock method value */
         binding.lockGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.selectLockNegative.id -> saveLockMethod(requireContext(), 0)
-                binding.selectLockAccessibility.id -> saveLockMethod(requireContext(), 1)
-                binding.selectLockAdmin.id -> saveLockMethod(requireContext(), 2)
-                binding.selectLockRoot.id -> saveLockMethod(requireContext(), 3)
+                binding.selectLockNegative.id -> settingsPrefs!!.edit().putInt(KEY_LOCK_METHOD, 0).apply()
+                binding.selectLockAccessibility.id -> settingsPrefs!!.edit().putInt(KEY_LOCK_METHOD, 1).apply()
+                binding.selectLockAdmin.id -> settingsPrefs!!.edit().putInt(KEY_LOCK_METHOD, 2).apply()
+                binding.selectLockRoot.id -> settingsPrefs!!.edit().putInt(KEY_LOCK_METHOD, 3).apply()
             }
         }
     }
@@ -111,7 +105,8 @@ internal class Misc : BottomSheetDialogFragment() {
     /* save input field value while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        saveRssUrl(requireContext(), Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' })
+        settingsPrefs!!.edit().putString(KEY_RSS_URL,
+            Objects.requireNonNull(binding.inputFeedUrl.text).toString().trim { it <= ' ' }).apply()
     }
 
 }

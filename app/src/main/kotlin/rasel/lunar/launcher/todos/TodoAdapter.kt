@@ -73,7 +73,7 @@ internal class TodoAdapter(
             holder.view.itemText.setOnClickListener { updateDialog(position) }
             /* copy texts on long click */
             holder.view.itemText.setOnLongClickListener {
-                copyToClipboard(lActivity!!, context, todo.name)
+                copyToClipboard(context, todo.name)
                 true
             }
         } else {

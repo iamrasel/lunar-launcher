@@ -19,6 +19,7 @@
 package rasel.lunar.launcher.settings
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
@@ -30,6 +31,7 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AboutBinding
 import rasel.lunar.launcher.databinding.SettingsActivityBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.BOTTOM_SHEET_TAG
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.settings.childs.*
 
 
@@ -38,12 +40,19 @@ internal class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsActivityBinding
     private val sourceCode = "https://github.com/iamrasel/lunar-launcher"
 
+    companion object {
+        private var sharedPreferences: SharedPreferences? = null
+        @JvmStatic val settingsPrefs: SharedPreferences? get() = sharedPreferences
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         /* set up view */
         binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = this.getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* launch child settings dialogs on button clicks */
         binding.timeDate.setOnClickListener {

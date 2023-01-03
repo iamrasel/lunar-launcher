@@ -108,7 +108,7 @@ internal class AppDrawer : Fragment() {
                 super.onDoubleClick()
                 lockMethod(
                     requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-                        .getInt(KEY_LOCK_METHOD, 0), requireContext(), lActivity!!)
+                        .getInt(KEY_LOCK_METHOD, 0), requireContext())
             }
         })
     }

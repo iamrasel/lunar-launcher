@@ -58,9 +58,10 @@ import rasel.lunar.launcher.helpers.Constants.Companion.MAX_SHORTCUTS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SHORTCUTS
+import rasel.lunar.launcher.helpers.Constants.Companion.SEPARATOR
 import rasel.lunar.launcher.helpers.Constants.Companion.SHORTCUT_TYPE_PHONE
 import rasel.lunar.launcher.helpers.Constants.Companion.SHORTCUT_TYPE_URL
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.removeFavApps
+import rasel.lunar.launcher.helpers.PrefsUtil.Companion.removeFavApps
 import java.util.*
 
 
@@ -152,7 +153,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
         for (position in 1..shortcutCount) {
             val shortcutValue = sharedPreferences.getString(KEY_SHORTCUT_NO_ + position.toString(), "").toString()
-            val splitShortcutValue = shortcutValue.split("||").toTypedArray()
+            val splitShortcutValue = shortcutValue.split(SEPARATOR).toTypedArray()
 
             var shortcutType = ""
             var intentString = ""
@@ -325,7 +326,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             /* save the values if every field is filled */
             if (shortcutType.isNotEmpty() && intentString.isNotEmpty() && thumbLetter.isNotEmpty() && color.isNotEmpty()) {
                 sharedPreferences.edit().putString(KEY_SHORTCUT_NO_ + position,
-                    "$shortcutType||$intentString||$thumbLetter||$color").apply()
+                    "$shortcutType$SEPARATOR$intentString$SEPARATOR$thumbLetter$SEPARATOR$color").apply()
                 dialogBuilder.dismiss()
                 this.onResume()
             }
@@ -347,12 +348,12 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 }
                 /* on long click - remove from favorite apps */
                 imageView.setOnLongClickListener {
-                    removeFavApps(requireContext(), position)
+                    removeFavApps(position)
                     this.onResume()
                     true
                 }
             } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
-                removeFavApps(requireContext(), position)
+                removeFavApps(position)
                 imageView.visibility = View.GONE
                 nameNotFoundException.printStackTrace()
             }

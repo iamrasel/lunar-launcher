@@ -56,8 +56,8 @@ import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
 import rasel.lunar.launcher.helpers.UniUtils.Companion.copyToClipboard
 import rasel.lunar.launcher.helpers.UniUtils.Companion.screenHeight
 import rasel.lunar.launcher.helpers.UniUtils.Companion.screenWidth
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.removeFavApps
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveFavApps
+import rasel.lunar.launcher.helpers.PrefsUtil.Companion.removeFavApps
+import rasel.lunar.launcher.helpers.PrefsUtil.Companion.saveFavApps
 import java.util.*
 
 
@@ -99,7 +99,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
         /* copy package name */
         binding.appPackage.setOnClickListener {
-            copyToClipboard(lActivity!!, requireContext(), packageName)
+            copyToClipboard(requireContext(), packageName)
         }
 
         binding.detailedInfo.setOnClickListener { detailedInfo() }
@@ -133,7 +133,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
                 else
                     @Suppress("DEPRECATION") packageManager.getPackageInfo(savedPackageName!!, 0)
             } catch (e: PackageManager.NameNotFoundException) {
-                removeFavApps(requireContext(), position)
+                removeFavApps(position)
                 button.strokeColor = disabledStroke
                 e.printStackTrace()
             }
@@ -144,10 +144,10 @@ internal class AppMenu : BottomSheetDialogFragment() {
                 try {
                     if (checkedId == button.id) {
                         if (isChecked) {
-                            saveFavApps(requireContext(), position, packageName)
+                            saveFavApps(position, packageName)
                             button.strokeColor = enabledStroke
                         } else {
-                            removeFavApps(requireContext(), position)
+                            removeFavApps(position)
                             button.strokeColor = disabledStroke
                         }
                     }

@@ -29,9 +29,7 @@ import rasel.lunar.launcher.databinding.SettingsTimeDateBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_DATE_FORMAT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DATE_FORMAT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TIME_FORMAT
-import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveDateFormat
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveTimeFormat
+import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
 import java.util.*
 
 
@@ -42,17 +40,15 @@ internal class TimeDate : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsTimeDateBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-
         /* initialize views according to the saved values */
-        when (sharedPreferences.getInt(KEY_TIME_FORMAT, 0)) {
+        when (settingsPrefs!!.getInt(KEY_TIME_FORMAT, 0)) {
             0 -> binding.followSystemTime.isChecked = true
             1 -> binding.selectTwelve.isChecked = true
             2 -> binding.selectTwentyFour.isChecked = true
         }
 
         binding.dateFormat
-            .setText(sharedPreferences.getString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT).toString())
+            .setText(settingsPrefs!!.getString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT).toString())
 
         return binding.root
     }
@@ -64,9 +60,9 @@ internal class TimeDate : BottomSheetDialogFragment() {
         /* change time format value */
         binding.timeGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.followSystemTime.id -> saveTimeFormat(requireContext(), 0)
-                binding.selectTwelve.id -> saveTimeFormat(requireContext(), 1)
-                binding.selectTwentyFour.id -> saveTimeFormat(requireContext(), 2)
+                binding.followSystemTime.id -> settingsPrefs!!.edit().putInt(KEY_TIME_FORMAT, 0).apply()
+                binding.selectTwelve.id -> settingsPrefs!!.edit().putInt(KEY_TIME_FORMAT, 1).apply()
+                binding.selectTwentyFour.id -> settingsPrefs!!.edit().putInt(KEY_TIME_FORMAT, 2).apply()
             }
         }
     }
@@ -76,8 +72,8 @@ internal class TimeDate : BottomSheetDialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         val dateFormat = Objects.requireNonNull(binding.dateFormat.text).toString().trim { it <= ' ' }
-        if (dateFormat.isEmpty()) saveDateFormat(requireContext(), DEFAULT_DATE_FORMAT)
-        else saveDateFormat(requireContext(), dateFormat)
+        if (dateFormat.isEmpty()) settingsPrefs!!.edit().putString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT).apply()
+        else settingsPrefs!!.edit().putString(KEY_DATE_FORMAT, dateFormat).apply()
     }
 
 }

@@ -30,11 +30,7 @@ import rasel.lunar.launcher.helpers.Constants.Companion.KEY_CITY_NAME
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_OWM_API
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHOW_CITY
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TEMP_UNIT
-import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveCityName
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveOwmApi
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.saveTempUnit
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.showCity
+import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
 import java.util.*
 
 
@@ -45,18 +41,16 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsWeatherBinding.inflate(inflater, container, false)
 
-        val sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-
         /* initialize views according to the saved values */
-        binding.inputCity.setText(sharedPreferences.getString(KEY_CITY_NAME, "").toString())
-        binding.inputOwm.setText(sharedPreferences.getString(KEY_OWM_API, "").toString())
+        binding.inputCity.setText(settingsPrefs!!.getString(KEY_CITY_NAME, "").toString())
+        binding.inputOwm.setText(settingsPrefs!!.getString(KEY_OWM_API, "").toString())
 
-        when (sharedPreferences.getInt(KEY_TEMP_UNIT, 0)) {
+        when (settingsPrefs!!.getInt(KEY_TEMP_UNIT, 0)) {
             0 -> binding.selectCelsius.isChecked = true
             1 -> binding.selectFahrenheit.isChecked = true
         }
 
-        when (sharedPreferences.getBoolean(KEY_SHOW_CITY, false)) {
+        when (settingsPrefs!!.getBoolean(KEY_SHOW_CITY, false)) {
             false -> binding.showCityNegative.isChecked = true
             true -> binding.showCityPositive.isChecked = true
         }
@@ -71,16 +65,16 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
         /* change temperature unit value */
         binding.tempGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.selectCelsius.id -> saveTempUnit(requireContext(), 0)
-                binding.selectFahrenheit.id -> saveTempUnit(requireContext(), 1)
+                binding.selectCelsius.id -> settingsPrefs!!.edit().putInt(KEY_TEMP_UNIT, 0).apply()
+                binding.selectFahrenheit.id -> settingsPrefs!!.edit().putInt(KEY_TEMP_UNIT, 1).apply()
             }
         }
 
         /* change show city value */
         binding.cityGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.showCityNegative.id -> showCity(requireContext(), false)
-                binding.showCityPositive.id -> showCity(requireContext(), true)
+                binding.showCityNegative.id -> settingsPrefs!!.edit().putBoolean(KEY_SHOW_CITY, false).apply()
+                binding.showCityPositive.id -> settingsPrefs!!.edit().putBoolean(KEY_SHOW_CITY, true).apply()
             }
         }
     }
@@ -88,8 +82,10 @@ internal class WeatherSettings : BottomSheetDialogFragment() {
     /* save input field values while closing the dialog */
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        saveCityName(requireContext(), Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' })
-        saveOwmApi(requireContext(), Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' })
+        settingsPrefs!!.edit().putString(KEY_CITY_NAME,
+            Objects.requireNonNull(binding.inputCity.text).toString().trim { it <= ' ' }).apply()
+        settingsPrefs!!.edit().putString(KEY_OWM_API,
+            Objects.requireNonNull(binding.inputOwm.text).toString().trim { it <= ' ' }).apply()
     }
 
 }

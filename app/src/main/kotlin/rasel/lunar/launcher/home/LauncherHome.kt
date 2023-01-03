@@ -112,7 +112,7 @@ internal class LauncherHome : Fragment() {
             }
 
             /* show weather */
-            WeatherExecutor(sharedPreferences).generateWeatherString(binding.temp, lActivity!!)
+            WeatherExecutor(sharedPreferences).generateWeatherString(binding.temp)
             /* show todo list */
             showTodoList()
         }
@@ -150,7 +150,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), lActivity!!)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext())
             }
         })
     }
@@ -172,7 +172,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), lActivity!!)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext())
             }
         })
     }
@@ -191,7 +191,7 @@ internal class LauncherHome : Fragment() {
                         if (canAuthenticate(requireContext())) {
                             val biometricPrompt = BiometricPrompt(lActivity!!, authenticationCallback)
                             try {
-                                biometricPrompt.authenticate(biometricPromptInfo(lActivity!!.getString(R.string.todo_manager), lActivity!!))
+                                biometricPrompt.authenticate(biometricPromptInfo(lActivity!!.getString(R.string.todo_manager)))
                             } catch (exception: Exception) {
                                 exception.printStackTrace()
                             }
@@ -212,7 +212,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext(), lActivity!!)
+                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext())
             }
         })
     }

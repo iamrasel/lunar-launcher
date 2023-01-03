@@ -45,9 +45,8 @@ import rasel.lunar.launcher.databinding.ColorPickerBinding
 import rasel.lunar.launcher.databinding.SettingsAppearancesBinding
 import rasel.lunar.launcher.helpers.ColorPicker
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WINDOW_BACKGROUND
-import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.helpers.UniUtils.Companion.getColorResId
-import rasel.lunar.launcher.settings.PrefsUtil.Companion.windowBackground
+import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
 import java.io.IOException
 import java.util.*
 
@@ -93,8 +92,7 @@ internal class Appearances : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        windowBackground = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-            .getString(KEY_WINDOW_BACKGROUND, defaultColorString()).toString()
+        windowBackground = settingsPrefs!!.getString(KEY_WINDOW_BACKGROUND, defaultColorString()).toString()
         binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#$windowBackground"))
     }
 
@@ -105,8 +103,8 @@ internal class Appearances : BottomSheetDialogFragment() {
             .setNeutralButton(R.string.default_, null)
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                windowBackground(requireContext(),
-                    Objects.requireNonNull(colorPickerBinding.colorInput.text).toString().trim { it <= ' ' })
+                settingsPrefs!!.edit().putString(KEY_WINDOW_BACKGROUND,
+                    Objects.requireNonNull(colorPickerBinding.colorInput.text).toString().trim { it <= ' ' }).apply()
                 this.onResume()
             }
             .show()

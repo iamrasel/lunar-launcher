@@ -33,7 +33,7 @@ import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import androidx.biometric.BiometricPrompt
-import androidx.fragment.app.FragmentActivity
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.helpers.Constants.Companion.ACCESSIBILITY_SERVICE_LOCK_SCREEN
 import rasel.lunar.launcher.helpers.Constants.Companion.AUTHENTICATOR_TYPE
@@ -73,9 +73,9 @@ internal class UniUtils {
         }
 
         /* copy texts to clipboard */
-        fun copyToClipboard(fragmentActivity: FragmentActivity, context: Context, copiedString: String?) {
+        fun copyToClipboard(context: Context, copiedString: String?) {
             val clipBoard =
-                fragmentActivity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                lActivity!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             clipBoard.setPrimaryClip(ClipData.newPlainText("", copiedString))
             Toast.makeText(context, context.getString(R.string.copied_message), Toast.LENGTH_SHORT).show()
         }
@@ -93,11 +93,11 @@ internal class UniUtils {
         }
 
         /* lock using preferred method */
-        fun lockMethod(lockMethodValue: Int, context: Context, fragmentActivity: FragmentActivity) {
+        fun lockMethod(lockMethodValue: Int, context: Context) {
             when (lockMethodValue) {
-                1 -> UniUtils().lockAccessibility(fragmentActivity)
-                2 -> UniUtils().lockDeviceAdmin(context, fragmentActivity)
-                3 -> UniUtils().lockRoot()
+                1 -> lockAccessibility()
+                2 -> lockDeviceAdmin(context)
+                3 -> lockRoot()
             }
         }
 
@@ -122,9 +122,9 @@ internal class UniUtils {
         }
 
         /* check if the device is connected to the internet */
-        fun isNetworkAvailable(fragmentActivity: FragmentActivity): Boolean {
+        fun isNetworkAvailable(): Boolean {
             val connectivityManager =
-                fragmentActivity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                lActivity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             @Suppress("DEPRECATION") val activeNetworkInfo = connectivityManager.activeNetworkInfo
             @Suppress("DEPRECATION") return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
         }
@@ -136,10 +136,10 @@ internal class UniUtils {
         }
 
         /* show device authenticator */
-        fun biometricPromptInfo(title: String, fragmentActivity: FragmentActivity): BiometricPrompt.PromptInfo {
+        fun biometricPromptInfo(title: String): BiometricPrompt.PromptInfo {
             return BiometricPrompt.PromptInfo.Builder()
                 .setTitle(title)
-                .setSubtitle(fragmentActivity.getString(R.string.authentication_subtitle))
+                .setSubtitle(lActivity!!.getString(R.string.authentication_subtitle))
                 .setConfirmationRequired(true)
                 .setAllowedAuthenticators(AUTHENTICATOR_TYPE)
                 .build()
@@ -152,62 +152,62 @@ internal class UniUtils {
             return typedValue.resourceId
         }
 
-    }
-
-    /* lock screen using device admin */
-    private fun lockDeviceAdmin(context: Context, fragmentActivity: FragmentActivity) {
-        val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (powerManager.isInteractive) {
-            val policy =
-                context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
-            try {
-                policy.lockNow()
-            } catch (exception: SecurityException) {
-                /* open device admin manager screen */
-                fragmentActivity.startActivity(
-                    Intent().setComponent(
-                        ComponentName(
-                            "com.android.settings",
-                            "com.android.settings.DeviceAdminSettings"
+        /* lock screen using device admin */
+        private fun lockDeviceAdmin(context: Context) {
+            val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+            if (powerManager.isInteractive) {
+                val policy =
+                    context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+                try {
+                    policy.lockNow()
+                } catch (exception: SecurityException) {
+                    /* open device admin manager screen */
+                    lActivity!!.startActivity(
+                        Intent().setComponent(
+                            ComponentName(
+                                "com.android.settings",
+                                "com.android.settings.DeviceAdminSettings"
+                            )
                         )
                     )
-                )
-                exception.printStackTrace()
+                    exception.printStackTrace()
+                }
             }
         }
-    }
 
-    /* lock screen using accessibility service */
-    private fun lockAccessibility(fragmentActivity: FragmentActivity) {
-        if (LockService().isAccessibilityServiceEnabled(fragmentActivity.applicationContext)) {
+        /* lock screen using accessibility service */
+        private fun lockAccessibility() {
+            if (LockService().isAccessibilityServiceEnabled(lActivity!!.applicationContext)) {
+                try {
+                    lActivity!!.startService(
+                        Intent(lActivity!!.applicationContext, LockService::class.java)
+                            .setAction(ACCESSIBILITY_SERVICE_LOCK_SCREEN)
+                    )
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                }
+            } else {
+                /* open accessibility service screen */
+                lActivity!!.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            }
+        }
+
+        /* lock screen using root */
+        private fun lockRoot() {
             try {
-                fragmentActivity.startService(
-                    Intent(fragmentActivity.applicationContext, LockService::class.java)
-                        .setAction(ACCESSIBILITY_SERVICE_LOCK_SCREEN)
-                )
+                val process = Runtime.getRuntime().exec("su")
+                val dataOutputStream = DataOutputStream(process.outputStream)
+                dataOutputStream.writeBytes("input keyevent \${KeyEvent.KEYCODE_POWER}\n")
+                dataOutputStream.writeBytes("exit\n")
+                dataOutputStream.flush()
+                dataOutputStream.close()
+                process.waitFor()
+                process.destroy()
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }
-        } else {
-            /* open accessibility service screen */
-            fragmentActivity.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
         }
-    }
 
-    /* lock screen using root */
-    private fun lockRoot() {
-        try {
-            val process = Runtime.getRuntime().exec("su")
-            val dataOutputStream = DataOutputStream(process.outputStream)
-            dataOutputStream.writeBytes("input keyevent \${KeyEvent.KEYCODE_POWER}\n")
-            dataOutputStream.writeBytes("exit\n")
-            dataOutputStream.flush()
-            dataOutputStream.close()
-            process.waitFor()
-            process.destroy()
-        } catch (exception: Exception) {
-            exception.printStackTrace()
-        }
     }
 
 }
