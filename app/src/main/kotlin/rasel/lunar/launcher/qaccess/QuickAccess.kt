@@ -229,7 +229,9 @@ internal class QuickAccess : BottomSheetDialogFragment() {
         /* show plus sign for empty positions and set click listener */
         if (intentString.isEmpty()) {
             textView.text = "+"
-            textView.setOnClickListener { shortcutsSaverDialog(position) }
+            textView.setOnClickListener {
+                shortcutsSaverDialog(position, "00000000", "", "", "")
+            }
         } else {
             /* show thumbnail letter */
             textView.text = thumbLetter
@@ -273,60 +275,77 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
             /* reset the shortcut on long click */
             textView.setOnLongClickListener {
-                sharedPreferences.edit().remove(KEY_SHORTCUT_NO_ + position).apply()
-                this.onResume()
+                shortcutsSaverDialog(position, color, thumbLetter, shortcutType, intentString)
                 true
             }
         }
     }
 
     /* dialog for creating shortcuts */
-    private fun shortcutsSaverDialog(position: Int) {
+    private fun shortcutsSaverDialog(
+        position: Int, color: String, thumbLetter: String, shortcutType: String, intentString: String) {
         val dialogBinding = ShortcutMakerBinding.inflate(lActivity!!.layoutInflater)
         val dialogBuilder = MaterialAlertDialogBuilder(lActivity!!)
             .setView(dialogBinding.root)
+            .setNeutralButton(R.string.delete, null)
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok, null)
             .show()
 
+        dialogBinding.thumbField.setText(thumbLetter)
+        dialogBinding.inputField.setText(intentString)
+        when (shortcutType) {
+            SHORTCUT_TYPE_PHONE -> dialogBinding.shortcutType.check(dialogBinding.contact.id)
+            SHORTCUT_TYPE_URL -> dialogBinding.shortcutType.check(dialogBinding.url.id)
+        }
+
         /* set up color picker section */
-        ColorPicker("00000000", dialogBinding.colorPicker.colorInput, dialogBinding.colorPicker.colorA,
+        ColorPicker(color, dialogBinding.colorPicker.colorInput, dialogBinding.colorPicker.colorA,
             dialogBinding.colorPicker.colorR, dialogBinding.colorPicker.colorG,
             dialogBinding.colorPicker.colorB, dialogBinding.root).pickColor()
 
         /* shortcut type chooser - contact/url */
-        var shortcutType = ""
-        dialogBinding.shortcutType.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
+        var updatedShortcutType = shortcutType
+        dialogBinding.shortcutType.addOnButtonCheckedListener {
+                _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
                     dialogBinding.contact.id -> {
-                        shortcutType = SHORTCUT_TYPE_PHONE
+                        updatedShortcutType = SHORTCUT_TYPE_PHONE
                         dialogBinding.inputField.inputType = InputType.TYPE_CLASS_PHONE
                     }
                     dialogBinding.url.id -> {
-                        shortcutType = SHORTCUT_TYPE_URL
+                        updatedShortcutType = SHORTCUT_TYPE_URL
                         dialogBinding.inputField.inputType = InputType.TYPE_TEXT_VARIATION_URI
                     }
                 }
             }
         }
 
+        dialogBuilder.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+            sharedPreferences.edit().remove(KEY_SHORTCUT_NO_ + position).apply()
+            dialogBuilder.dismiss()
+            this.onResume()
+        }
+
         /* save the shortcut values */
         dialogBuilder.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             /* get shortcut value */
-            val intentString =
+            val updatedIntentString =
                 Objects.requireNonNull(dialogBinding.inputField.text).toString().trim { it <= ' ' }
             /* get thumbnail letter */
-            val thumbLetter =
+            val updatedThumbLetter =
                 Objects.requireNonNull(dialogBinding.thumbField.text).toString().trim { it <= ' ' }.uppercase()
             /* get color value */
-            val color =
+            val updatedColor =
                 Objects.requireNonNull(dialogBinding.colorPicker.colorInput.text).toString().trim { it <= ' ' }
 
             /* save the values if every field is filled */
-            if (shortcutType.isNotEmpty() && intentString.isNotEmpty() && thumbLetter.isNotEmpty() && color.isNotEmpty()) {
+            if (updatedShortcutType.isNotEmpty() && updatedIntentString.isNotEmpty() &&
+                updatedThumbLetter.isNotEmpty() && updatedColor.isNotEmpty()) {
                 sharedPreferences.edit().putString(KEY_SHORTCUT_NO_ + position,
-                    "$shortcutType$SEPARATOR$intentString$SEPARATOR$thumbLetter$SEPARATOR$color").apply()
+                    "$updatedShortcutType$SEPARATOR$updatedIntentString$SEPARATOR" +
+                            "$updatedThumbLetter$SEPARATOR$updatedColor").apply()
                 dialogBuilder.dismiss()
                 this.onResume()
             }
