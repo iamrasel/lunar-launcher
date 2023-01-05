@@ -64,11 +64,10 @@
 <details><summary>Feeds</summary>
 
 - [x] Device stats
-  - This section is temporary, will be replaced with more useful feature.
 - [x] News feed
   - [x] RSS
   - [ ] Atom
-- [ ] Widget host
+- [x] Widget host
 
 </details>
 <details><summary>Quick Access</summary>
