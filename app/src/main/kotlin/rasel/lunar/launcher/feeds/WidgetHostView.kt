@@ -20,12 +20,15 @@ import android.appwidget.AppWidgetHostView
 import android.content.Context
 import android.view.MotionEvent
 import android.view.ViewConfiguration
+import kotlin.math.abs
 
 
 internal class WidgetHostView(context: Context) : AppWidgetHostView(context) {
 
     private var hasPerformedLongPress = false
     private var pendingCheckForLongPress: CheckForLongPress? = null
+    private var xPos = 0f
+    private var yPos = 0f
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         // Consume any touch events for ourselves after longpress is triggered
@@ -34,8 +37,20 @@ internal class WidgetHostView(context: Context) : AppWidgetHostView(context) {
             return true
         }
 
+        // Watch for long press events at this level to make sure
+        // users can always pick up this widget
         when (ev.action) {
-            MotionEvent.ACTION_DOWN -> postCheckForLongClick()
+            MotionEvent.ACTION_DOWN -> {
+                postCheckForLongClick()
+                xPos = ev.x
+                yPos = ev.y
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (abs(ev.x - xPos) > 5 || abs(ev.y - yPos) > 5) {
+                    hasPerformedLongPress = false
+                    if (pendingCheckForLongPress != null) removeCallbacks(pendingCheckForLongPress)
+                }
+            }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 hasPerformedLongPress = false
                 if (pendingCheckForLongPress != null) removeCallbacks(pendingCheckForLongPress)

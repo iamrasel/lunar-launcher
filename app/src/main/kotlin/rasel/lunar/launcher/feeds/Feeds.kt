@@ -18,6 +18,7 @@
 
 package rasel.lunar.launcher.feeds
 
+import android.R.attr.*
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.appwidget.AppWidgetManager
@@ -57,7 +58,6 @@ import rasel.lunar.launcher.helpers.Constants.Companion.requestPickWidget
 import rasel.lunar.launcher.helpers.Constants.Companion.rssJobId
 import rasel.lunar.launcher.helpers.UniUtils.Companion.isNetworkAvailable
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 internal class Feeds : Fragment() {
@@ -188,60 +188,55 @@ internal class Feeds : Fragment() {
     }
 
     private fun selectWidget() {
-        val appWidgetId = appWidgetHost?.allocateAppWidgetId()
         val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
-        pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-        pickIntent.putExtra(requestCodeString, requestPickWidget)
-        addEmptyData(pickIntent)
+        pickIntent.apply {
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetHost?.allocateAppWidgetId())
+            putParcelableArrayListExtra(AppWidgetManager.EXTRA_CUSTOM_INFO, ArrayList())
+            putParcelableArrayListExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, ArrayList())
+            putExtra(requestCodeString, requestPickWidget)
+        }
         widgetPicker.launch(pickIntent)
-    }
-
-    private fun addEmptyData(pickIntent: Intent) {
-        val customInfo = ArrayList<Parcelable>()
-        pickIntent.putParcelableArrayListExtra(AppWidgetManager.EXTRA_CUSTOM_INFO, customInfo)
-        val customExtras = ArrayList<Parcelable>()
-        pickIntent.putParcelableArrayListExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, customExtras)
     }
 
     private val widgetPicker =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val data = result.data
             val appWidgetId = data?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-            val requestCode = data?.getIntExtra(requestCodeString, requestPickWidget)
-            try {
-                if (result.resultCode == RESULT_OK) {
-                    when (requestCode) {
-                        requestPickWidget -> configureWidget(appWidgetId!!)
-                        requestCreateWidget -> createWidget(appWidgetId!!, null)
-                    }
-                } else if (result.resultCode == RESULT_CANCELED && data != null) {
-                    if (appWidgetId != -1) appWidgetHost?.deleteAppWidgetId(appWidgetId!!)
+            if (result.resultCode == RESULT_OK) {
+                when (data?.getIntExtra(requestCodeString, requestPickWidget)) {
+                    requestPickWidget -> configureWidget(appWidgetId!!)
+                    requestCreateWidget -> createWidget(appWidgetId!!, null)
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            } else if (result.resultCode == RESULT_CANCELED && data != null) {
+                if (appWidgetId != -1) appWidgetHost?.deleteAppWidgetId(appWidgetId!!)
             }
         }
 
     private fun configureWidget(appWidgetId: Int) {
         val appWidgetInfo = appWidgetManager!!.getAppWidgetInfo(appWidgetId)
         if (appWidgetInfo.configure != null) {
-            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
-            intent.component = appWidgetInfo.configure
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            intent.putExtra(requestCodeString, requestCreateWidget)
-            widgetPicker.launch(intent)
+            val configIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
+            configIntent.apply {
+                component = appWidgetInfo.configure
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                putExtra(requestCodeString, requestCreateWidget)
+            }
+            try { widgetPicker.launch(configIntent) }
+            catch (e: Exception) { e.printStackTrace() }
         } else {
             createWidget(appWidgetId, null)
         }
     }
 
     private fun createWidget(appWidgetId: Int, height: Int?) {
+        if (appWidgetId == -1) return
+
         val appWidgetInfo = appWidgetManager!!.getAppWidgetInfo(appWidgetId)
         val hostView =
             appWidgetHost?.createView(lActivity!!.applicationContext, appWidgetId, appWidgetInfo) as WidgetHostView
         hostView.setAppWidget(appWidgetId, appWidgetInfo)
 
-        var params: LayoutParams? = null
+        val params: LayoutParams?
         if (height == null) {
             params = LayoutParams(LayoutParams.MATCH_PARENT, appWidgetInfo.minHeight)
             val updatedIds = splitWidgetIds.plus("$appWidgetId")
@@ -281,7 +276,7 @@ internal class Feeds : Fragment() {
                         R.id.decrease_height -> resizeWidget(appWidgetId, false)
                         R.id.delete_widget -> removeWidget(it as WidgetHostView)
                     }
-                    true
+                    false
                 }
             }
             true
@@ -343,7 +338,7 @@ internal class Feeds : Fragment() {
         return try {
             this.toInt()
         } catch (e: Exception) {
-            0
+            -1
         }
     }
 
