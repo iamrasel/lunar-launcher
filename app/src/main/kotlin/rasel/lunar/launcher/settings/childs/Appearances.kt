@@ -19,6 +19,7 @@
 package rasel.lunar.launcher.settings.childs
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.WallpaperManager
@@ -121,10 +122,19 @@ internal class Appearances : BottomSheetDialogFragment() {
     }
 
     private fun selectWallpaper() {
-        if (requireActivity().checkSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requireActivity().requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), 1)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            // only for TIRAMISU and newer versions
+            if (requireActivity().checkSelfPermission(READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                requireActivity().requestPermissions(arrayOf(READ_MEDIA_IMAGES), 1)
+            } else {
+                wallpaperChangeLauncher.launch(Intent(Intent.ACTION_PICK).setType("image/*"))
+            }
         } else {
-            wallpaperChangeLauncher.launch(Intent(Intent.ACTION_PICK).setType("image/*"))
+            if (requireActivity().checkSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requireActivity().requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), 1)
+            } else {
+                wallpaperChangeLauncher.launch(Intent(Intent.ACTION_PICK).setType("image/*"))
+            }
         }
     }
 
