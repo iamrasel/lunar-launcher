@@ -19,6 +19,7 @@
 package rasel.lunar.launcher.settings.childs
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.WallpaperManager
