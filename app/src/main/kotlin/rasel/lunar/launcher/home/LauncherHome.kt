@@ -31,7 +31,6 @@ import android.widget.Toast
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import dev.chrisbanes.insetter.applyInsetter
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
@@ -65,9 +64,6 @@ internal class LauncherHome : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = LauncherHomeBinding.inflate(inflater, container, false)
-
-        /* set insets of the root view */
-        setInsets()
 
         fragManager = lActivity!!.supportFragmentManager
         sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
@@ -122,15 +118,6 @@ internal class LauncherHome : Fragment() {
         super.onPause()
         /* unregister battery changes */
         if (shouldResume) requireContext().unregisterReceiver(batteryReceiver)
-    }
-
-    /* insets */
-    private fun setInsets() {
-        binding.root.applyInsetter {
-            type(statusBars = true, navigationBars = true) {
-                padding()
-            }
-        }
     }
 
     /* gestures on root view */

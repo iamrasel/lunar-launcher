@@ -69,5 +69,4 @@ dependencies {
     implementation ("com.google.android.material:material:1.7.0")
     implementation (kotlin("stdlib", version = kotlinVersion))
     implementation ("com.github.cachapa:ExpandableLayout:2.9.2")
-    implementation ("dev.chrisbanes.insetter:insetter:0.6.1")
 }

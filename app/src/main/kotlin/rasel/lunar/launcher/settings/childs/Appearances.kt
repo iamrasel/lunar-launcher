@@ -45,6 +45,7 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.ColorPickerBinding
 import rasel.lunar.launcher.databinding.SettingsAppearancesBinding
 import rasel.lunar.launcher.helpers.ColorPicker
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_STATUS_BAR
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WINDOW_BACKGROUND
 import rasel.lunar.launcher.helpers.UniUtils.Companion.getColorResId
 import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
@@ -68,6 +69,11 @@ internal class Appearances : BottomSheetDialogFragment() {
             else -> binding.followSystemTheme.isChecked = true
         }
 
+        when (settingsPrefs!!.getBoolean(KEY_STATUS_BAR, false)) {
+            false -> binding.hideStatusNegative.isChecked = true
+            true -> binding.hideStatusPositive.isChecked = true
+        }
+
         return binding.root
     }
 
@@ -89,6 +95,13 @@ internal class Appearances : BottomSheetDialogFragment() {
 
         binding.background.setOnClickListener { selectBackground() }
         binding.changeWallpaper.setOnClickListener { selectWallpaper() }
+
+        binding.hideStatusGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.hideStatusNegative.id -> settingsPrefs!!.edit().putBoolean(KEY_STATUS_BAR, false).apply()
+                binding.hideStatusPositive.id -> settingsPrefs!!.edit().putBoolean(KEY_STATUS_BAR, true).apply()
+            }
+        }
     }
 
     override fun onResume() {

@@ -35,7 +35,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButtonToggleGroup
-import dev.chrisbanes.insetter.applyInsetter
 import kotlinx.coroutines.*
 import rasel.lunar.launcher.LauncherActivity.Companion.appWidgetHost
 import rasel.lunar.launcher.LauncherActivity.Companion.appWidgetManager
@@ -68,7 +67,6 @@ internal class Feeds : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FeedsBinding.inflate(inflater, container, false)
 
-        setInsets()
         updateWidgets()
 
         return binding.root
@@ -98,15 +96,6 @@ internal class Feeds : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add_widget) selectWidget()
         return super.onContextItemSelected(item)
-    }
-
-    /* insets */
-    private fun setInsets() {
-        binding.root.applyInsetter {
-            type(statusBars = true, navigationBars = true) {
-                padding()
-            }
-        }
     }
 
     /* control view's expand-collapse actions */

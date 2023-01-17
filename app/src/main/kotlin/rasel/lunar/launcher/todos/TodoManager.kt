@@ -27,8 +27,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.windowInsetTypesOf
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.TodoDialogBinding
@@ -43,9 +41,6 @@ internal class TodoManager : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = TodoManagerBinding.inflate(inflater, container, false)
-
-        /* set window insets */
-        setInsets()
 
         databaseHandler = DatabaseHandler(requireContext())
 
@@ -62,16 +57,6 @@ internal class TodoManager : Fragment() {
     override fun onResume() {
         super.onResume()
         refreshList()
-    }
-
-    private fun setInsets() {
-        Insetter.builder()
-            .paddingTop(windowInsetTypesOf(statusBars = true))
-            .applyToView(binding.todos)
-        Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.addNew)
-            .applyToView(binding.deleteAll)
     }
 
     fun refreshList() {

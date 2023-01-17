@@ -53,9 +53,7 @@
                 android:scrollbars="none"
                 android:overScrollMode="never"
                 android:layout_centerVertical="true"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                app:layoutManager="LinearLayoutManager"/>
+                app:layoutManager="LinearLayoutManager" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/loading"

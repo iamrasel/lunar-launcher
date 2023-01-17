@@ -10,7 +10,6 @@
     <string name="acknowledgements">
         <b>Ringraziamenti</b>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
-        <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>\n
         <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
     </string>
     <string name="add_new">Aggiungi</string>

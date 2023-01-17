@@ -10,7 +10,6 @@
     <string name="acknowledgements">
         <b>Acknowledgements</b>\n
         <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
-        <i><a href="https://github.com/chrisbanes/insetter">https://github.com/chrisbanes/insetter</a></i>\n
         <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
     </string>
     <string name="add_new">Add New</string>
@@ -62,6 +61,7 @@
     <string name="freeform">Freeform</string>
     <string name="frequency">Frequency</string>
     <string name="got_it">Got it</string>
+    <string name="hide_status_bar">Hide Status Bar</string>
     <string name="image_pick_failed">Failed to get image</string>
     <string name="increase_height">Increase Height</string>
     <string name="last_update">Last Update</string>

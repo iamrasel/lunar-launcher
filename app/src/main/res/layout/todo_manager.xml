@@ -18,9 +18,7 @@
         android:scrollbars="none"
         android:overScrollMode="never"
         app:stackFromEnd = "true"
-        app:layoutManager="LinearLayoutManager"
-        android:clipChildren="false"
-        android:clipToPadding="false"/>
+        app:layoutManager="LinearLayoutManager"/>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:layout_width="match_parent"

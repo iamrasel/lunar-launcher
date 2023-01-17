@@ -40,8 +40,6 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import dev.chrisbanes.insetter.Insetter
-import dev.chrisbanes.insetter.windowInsetTypesOf
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
@@ -73,8 +71,7 @@ internal class AppDrawer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
-        /* set up insets and search columns */
-        setInsets()
+        /* set up search columns */
         setupSearchColumns()
 
         packageManager = lActivity!!.packageManager
@@ -117,25 +114,6 @@ internal class AppDrawer : Fragment() {
         super.onResume()
         closeSearch()
         fetchApps()
-    }
-
-    /* insets */
-    private fun setInsets() {
-        Insetter.builder()
-            .paddingTop(windowInsetTypesOf(statusBars = true))
-            .paddingBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.appsList)
-        Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.leftSearchList)
-            .applyToView(binding.leftSearchListII)
-        Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true))
-            .applyToView(binding.rightSearchList)
-            .applyToView(binding.rightSearchListII)
-        Insetter.builder()
-            .marginBottom(windowInsetTypesOf(navigationBars = true, ime = true))
-            .applyToView(binding.searchLayout)
     }
 
     /* search column adapters */

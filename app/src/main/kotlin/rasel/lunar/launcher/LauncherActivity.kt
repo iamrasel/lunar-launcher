@@ -21,14 +21,17 @@ package rasel.lunar.launcher
 import android.Manifest
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
+import android.view.WindowInsets
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.apps.AppDrawer
@@ -37,6 +40,7 @@ import rasel.lunar.launcher.feeds.Feeds
 import rasel.lunar.launcher.feeds.WidgetHost
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BACK_HOME
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_FIRST_LAUNCH
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_STATUS_BAR
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WINDOW_BACKGROUND
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FIRST_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
@@ -69,9 +73,6 @@ internal class LauncherActivity : AppCompatActivity() {
         widgetHost = WidgetHost(applicationContext, widgetHostId)
         appWidgetHost?.startListening()
 
-        /* vertically edge to edge view */
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
         /*  if this is the first launch,
             then remember the event and show the welcome dialog */
         val prefsFirstLaunch = getSharedPreferences(PREFS_FIRST_LAUNCH, 0)
@@ -97,13 +98,9 @@ internal class LauncherActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val settingsPrefs = getSharedPreferences(PREFS_SETTINGS, 0)
-
-        binding.root.setBackgroundColor(Color.parseColor("#${
-            settingsPrefs.getString(KEY_WINDOW_BACKGROUND,
-                getString(getColorResId(this, android.R.attr.colorBackground))
-                    .replace("#", ""))}"))
-
         if (settingsPrefs.getBoolean(KEY_BACK_HOME, false)) viewPager.currentItem = 1
+        statusBarView(settingsPrefs)
+        setBgColor(settingsPrefs)
     }
 
     /* build the welcome dialog */
@@ -140,6 +137,31 @@ internal class LauncherActivity : AppCompatActivity() {
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager, fragments, lifecycle)
         viewPager.offscreenPageLimit = 1
         viewPager.setCurrentItem(1, false)
+    }
+
+    private fun setBgColor(settingsPrefs: SharedPreferences) {
+        binding.root.setBackgroundColor(Color.parseColor("#${
+            settingsPrefs.getString(KEY_WINDOW_BACKGROUND,
+                getString(getColorResId(this, android.R.attr.colorBackground))
+                    .replace("#", ""))}"))
+    }
+
+    private fun statusBarView(settingsPrefs: SharedPreferences) {
+        if (settingsPrefs.getBoolean(KEY_STATUS_BAR, false)) {
+            /* hide status bar */
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+                window.insetsController?.hide(WindowInsets.Type.statusBars())
+            else
+                @Suppress("DEPRECATION")
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        } else {
+            /* show status bar */
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+                window.insetsController?.show(WindowInsets.Type.statusBars())
+            else
+                @Suppress("DEPRECATION")
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        }
     }
 
     /* alternative of deprecated onBackPressed method */
