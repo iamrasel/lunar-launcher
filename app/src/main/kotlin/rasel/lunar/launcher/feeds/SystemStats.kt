@@ -190,7 +190,7 @@ internal class SystemStats {
             "$voltage V\n" +
             "${String.format("%.03f", totalRootStorage)} GB\n" +
             "${getIpAddress(true)}\n" +
-            "${getIpAddress(false)}"
+                    getIpAddress(false)
     }
 
 
@@ -283,7 +283,7 @@ internal class SystemStats {
                         if (getIPv4) {
                             if (isIPv4) return addressStr
                         } else {
-                            if (!isIPv4 && isNetworkAvailable()) {
+                            if (!isIPv4 && isNetworkAvailable) {
                                 val endIndex = addressStr.indexOf('%')
                                 return if (endIndex < 0) addressStr
                                 else addressStr.substring(0, endIndex)

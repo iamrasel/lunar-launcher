@@ -261,9 +261,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
         val freeformIntent = requireContext().packageManager.getLaunchIntentForPackage(packageName)
         freeformIntent!!.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
-        val rect = Rect(
-            0, screenHeight(lActivity!!) / 2,
-            screenWidth(lActivity!!), screenHeight(lActivity!!))
+        val rect = Rect(0, screenHeight / 2, screenWidth, screenHeight)
         var activityOptions = activityOptions
         activityOptions = activityOptions.setLaunchBounds(rect)
         requireContext().startActivity(freeformIntent, activityOptions.toBundle())

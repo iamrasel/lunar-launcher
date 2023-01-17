@@ -26,6 +26,7 @@ package rasel.lunar.launcher.apps
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.Build
@@ -51,7 +52,6 @@ import rasel.lunar.launcher.helpers.SwipeTouchListener
 import rasel.lunar.launcher.helpers.UniUtils.Companion.expandNotificationPanel
 import rasel.lunar.launcher.helpers.UniUtils.Companion.lockMethod
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 internal class AppDrawer : Fragment() {
@@ -61,6 +61,7 @@ internal class AppDrawer : Fragment() {
     private var packagesList: ArrayList<Packages> = ArrayList()
     private lateinit var packageManager: PackageManager
     private lateinit var appsAdapter: AppsAdapter
+    private lateinit var settingsPrefs: SharedPreferences
 
     /* items for search columns */
     private val leftSearchArray = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m")
@@ -76,11 +77,10 @@ internal class AppDrawer : Fragment() {
 
         packageManager = lActivity!!.packageManager
         appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
+        settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* initialize apps list adapter */
-        binding.appsList.adapter = appsAdapter.also { adapter ->
-                adapter.updateData(packagesList)
-        }
+        binding.appsList.adapter = appsAdapter.also { adapter -> adapter.updateData(packagesList) }
 
         return binding.root
     }
@@ -103,9 +103,7 @@ internal class AppDrawer : Fragment() {
             /* lock screen on double tap */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(
-                    requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-                        .getInt(KEY_LOCK_METHOD, 0), requireContext())
+                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext())
             }
         })
     }
@@ -205,8 +203,7 @@ internal class AppDrawer : Fragment() {
         searchStringChangeListener(string)
 
         /* pop up the keyboard */
-        if (requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-                .getBoolean(KEY_KEYBOARD_SEARCH, false)) {
+        if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) {
             binding.searchInput.requestFocus()
             val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
@@ -252,8 +249,7 @@ internal class AppDrawer : Fragment() {
 
         if (packagesList.size == 1) {
             /* if only one app found, then launch it */
-            if (requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-                    .getBoolean(KEY_QUICK_LAUNCH, true)) {
+            if (settingsPrefs.getBoolean(KEY_QUICK_LAUNCH, true)) {
                 startActivity(packageManager.getLaunchIntentForPackage(packagesList[0].packageName))
             } else {
                 appsAdapter.updateData(packagesList)

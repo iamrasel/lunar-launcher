@@ -40,8 +40,8 @@ internal class TodoManager : Fragment() {
     private lateinit var databaseHandler: DatabaseHandler
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = TodoManagerBinding.inflate(inflater, container, false)
 
+        binding = TodoManagerBinding.inflate(inflater, container, false)
         databaseHandler = DatabaseHandler(requireContext())
 
         return binding.root

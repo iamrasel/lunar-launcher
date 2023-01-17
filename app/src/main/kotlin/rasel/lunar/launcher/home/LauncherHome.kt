@@ -58,15 +58,15 @@ internal class LauncherHome : Fragment() {
 
     private lateinit var binding: LauncherHomeBinding
     private lateinit var fragManager: FragmentManager
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var settingsPrefs: SharedPreferences
     private lateinit var batteryReceiver: BatteryReceiver
     private var shouldResume = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = LauncherHomeBinding.inflate(inflater, container, false)
 
+        binding = LauncherHomeBinding.inflate(inflater, container, false)
         fragManager = lActivity!!.supportFragmentManager
-        sharedPreferences = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
+        settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
 
         return binding.root
@@ -108,7 +108,7 @@ internal class LauncherHome : Fragment() {
             }
 
             /* show weather */
-            WeatherExecutor(sharedPreferences).generateWeatherString(binding.temp)
+            WeatherExecutor(settingsPrefs).generateWeatherString(binding.temp)
             /* show todo list */
             showTodoList()
         }
@@ -137,7 +137,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext())
+                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext())
             }
         })
     }
@@ -159,7 +159,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext())
+                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext())
             }
         })
     }
@@ -171,7 +171,7 @@ internal class LauncherHome : Fragment() {
             /* open TodoManager on long click */
             override fun onLongClick() {
                 super.onLongClick()
-                when (sharedPreferences.getBoolean(KEY_TODO_LOCK, false)) {
+                when (settingsPrefs.getBoolean(KEY_TODO_LOCK, false)) {
                     false -> launchTodoManager()
                     /* show authentication screen if lock is on */
                     true -> {
@@ -199,7 +199,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(sharedPreferences.getInt(KEY_LOCK_METHOD, 0), requireContext())
+                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext())
             }
         })
     }
@@ -230,7 +230,7 @@ internal class LauncherHome : Fragment() {
 
     /* get time format string */
     private val timeFormat: String? get() {
-        when (sharedPreferences.getInt(KEY_TIME_FORMAT, 0)) {
+        when (settingsPrefs.getInt(KEY_TIME_FORMAT, 0)) {
             0 -> return if (DateFormat.is24HourFormat(requireContext())) {
                 "kk:mm"
             } else {
@@ -255,7 +255,7 @@ internal class LauncherHome : Fragment() {
 
     /* get date format string */
     private val dateFormat: String get() {
-        val dateFormatValue = sharedPreferences.getString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT)
+        val dateFormatValue = settingsPrefs.getString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT)
         return if (dateFormatValue!!.contains("x")) {
             dateFormatValue.replace("x", dateNumberSuffix)
         } else {

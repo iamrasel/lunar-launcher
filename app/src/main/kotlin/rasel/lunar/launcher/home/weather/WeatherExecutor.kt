@@ -45,7 +45,7 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
 
         /*  run the executor if network is available,
             and city name and owm api values are not empty */
-        if (isNetworkAvailable() && cityName.isNotEmpty() && owmApi.isNotEmpty()) {
+        if (isNetworkAvailable && cityName.isNotEmpty() && owmApi.isNotEmpty()) {
             try {
                 val executor = Executors.newSingleThreadExecutor()
                 val handler = Handler(Looper.getMainLooper())

@@ -29,6 +29,7 @@ import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Matrix
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.SpannableStringBuilder
@@ -106,7 +107,7 @@ internal class Appearances : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        windowBackground = settingsPrefs!!.getString(KEY_WINDOW_BACKGROUND, defaultColorString()).toString()
+        windowBackground = settingsPrefs!!.getString(KEY_WINDOW_BACKGROUND, defaultColorString).toString()
         binding.background.iconTint = ColorStateList.valueOf(Color.parseColor("#$windowBackground"))
     }
 
@@ -130,12 +131,12 @@ internal class Appearances : BottomSheetDialogFragment() {
 
         dialogBuilder.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             colorPickerBinding.colorInput.text =
-                SpannableStringBuilder(defaultColorString())
+                SpannableStringBuilder(defaultColorString)
         }
     }
 
     private fun selectWallpaper() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             // only for TIRAMISU and newer versions
             if (requireActivity().checkSelfPermission(READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
                 requireActivity().requestPermissions(arrayOf(READ_MEDIA_IMAGES), 1)
@@ -151,9 +152,9 @@ internal class Appearances : BottomSheetDialogFragment() {
         }
     }
 
-    private fun defaultColorString() =
-        requireActivity().getString(getColorResId(
-            requireContext(), android.R.attr.colorBackground)).replace("#", "")
+    private val defaultColorString: String get() =
+        requireActivity().getString(getColorResId(requireContext(), android.R.attr.colorBackground))
+            .replace("#", "")
 
     private var wallpaperChangeLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

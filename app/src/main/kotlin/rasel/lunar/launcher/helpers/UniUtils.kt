@@ -19,7 +19,6 @@
 package rasel.lunar.launcher.helpers
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.admin.DevicePolicyManager
 import android.content.*
 import android.net.ConnectivityManager
@@ -45,29 +44,29 @@ internal class UniUtils {
     companion object {
 
         /* get display width */
-        fun screenWidth(activity: Activity): Int {
+        val screenWidth: Int get() {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                val windowMetrics = activity.windowManager.currentWindowMetrics
+                val windowMetrics = lActivity!!.windowManager.currentWindowMetrics
                 val insets = windowMetrics.windowInsets
                     .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
                 windowMetrics.bounds.width() - insets.left - insets.right
             } else {
                 val displayMetrics = DisplayMetrics()
-                @Suppress("DEPRECATION") activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+                @Suppress("DEPRECATION") lActivity!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
                 displayMetrics.widthPixels
             }
         }
 
         /* get display height */
-        fun screenHeight(activity: Activity): Int {
+        val screenHeight: Int get() {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                val windowMetrics = activity.windowManager.currentWindowMetrics
+                val windowMetrics = lActivity!!.windowManager.currentWindowMetrics
                 val insets = windowMetrics.windowInsets
                     .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
                 windowMetrics.bounds.height() - insets.top - insets.bottom
             } else {
                 val displayMetrics = DisplayMetrics()
-                @Suppress("DEPRECATION") activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+                @Suppress("DEPRECATION") lActivity!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
                 displayMetrics.heightPixels
             }
         }
@@ -122,7 +121,7 @@ internal class UniUtils {
         }
 
         /* check if the device is connected to the internet */
-        fun isNetworkAvailable(): Boolean {
+        val isNetworkAvailable: Boolean get() {
             val connectivityManager =
                 lActivity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             @Suppress("DEPRECATION") val activeNetworkInfo = connectivityManager.activeNetworkInfo
