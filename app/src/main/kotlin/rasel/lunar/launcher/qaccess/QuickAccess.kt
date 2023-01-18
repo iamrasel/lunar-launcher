@@ -29,6 +29,7 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import android.text.InputType
 import android.view.Gravity
@@ -177,12 +178,11 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     private fun controlBrightness() {
         val resolver = lActivity!!.contentResolver
         /* set max value */
-        binding.brightness.valueTo = 255f
+        binding.brightness.valueTo = maxBrightness
 
         /* set slider value to current brightness value */
         try {
-            val brightness = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
-            binding.brightness.value = brightness.toFloat()
+            binding.brightness.value = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS).toFloat()
         } catch (settingNotFoundException: Settings.SettingNotFoundException) {
             settingNotFoundException.printStackTrace()
         }
@@ -410,6 +410,23 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             LinearLayoutCompat.LayoutParams.MATCH_PARENT, 1F)
         binding.favAppsGroup.addView(imageView)
         return imageView
+    }
+
+    /* returns maximum brightness value of the device */
+    private val maxBrightness: Float get() {
+        val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
+        var value = 255f
+        for (f in powerManager.javaClass.declaredFields) {
+            if (f.name.equals("BRIGHTNESS_ON")) {
+                f.isAccessible = true
+                value = try {
+                    f.getInt(powerManager).toFloat()
+                } catch (e: IllegalAccessException) {
+                    255f
+                }
+            }
+        }
+        return value
     }
 
 }
