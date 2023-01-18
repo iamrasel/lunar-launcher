@@ -86,7 +86,7 @@ internal class TodoAdapter(
 
     /* update dialog */
     private fun updateDialog(position: Int) {
-        val bottomSheetDialog = BottomSheetDialog(lActivity!!)
+        val bottomSheetDialog = BottomSheetDialog(lActivity!!, R.style.BottomSheetDialog)
         val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(context))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()

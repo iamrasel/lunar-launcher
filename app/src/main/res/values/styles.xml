@@ -6,6 +6,10 @@
         <item name="trackColorInactive">?attr/scrimBackground</item>
     </style>
 
+    <style name="BottomSheetDialog" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
     <style name="SolidNavBar">
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>

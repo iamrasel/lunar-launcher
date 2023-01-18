@@ -65,7 +65,7 @@ internal class TodoManager : Fragment() {
 
     /* add new dialog */
     private fun addNewDialog() {
-        val bottomSheetDialog = BottomSheetDialog(lActivity!!)
+        val bottomSheetDialog = BottomSheetDialog(lActivity!!, R.style.BottomSheetDialog)
         val dialogBinding = TodoDialogBinding.inflate(LayoutInflater.from(requireContext()))
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
