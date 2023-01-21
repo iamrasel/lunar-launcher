@@ -41,6 +41,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
@@ -149,13 +150,16 @@ internal class AppDrawer : Fragment() {
         /* add package and app names to the list */
         packagesList.clear()
         for (resolver in packageInfoList) {
-            val packages = Packages(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())
-            packagesList.add(packages)
+            val element = Packages(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())
+            packagesList.add(element)
         }
 
-        if (packagesList.size < 1) {
-            return
-        } else {
+        /* remove this app from the list */
+        val thisPackage = Packages(BuildConfig.APPLICATION_ID, resources.getString(R.string.app_name))
+        packagesList.removeAt(packagesList.indexOf(thisPackage))
+
+        if (packagesList.size < 1) return
+        else {
             /* update the list */
             binding.loading.visibility = View.GONE
             appsAdapter.updateData(packagesList)
