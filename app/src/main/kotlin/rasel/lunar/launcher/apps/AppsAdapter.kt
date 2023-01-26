@@ -18,7 +18,6 @@
 
 package rasel.lunar.launcher.apps
 
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -34,28 +33,24 @@ internal class AppsAdapter(
     private val fragmentManager: FragmentManager,
     private val appsCount: MaterialTextView) : RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
 
-    private var oldList = ArrayList<Packages>()
+    private var oldList = mutableListOf<Packages>()
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AppsViewHolder {
-        val binding = AppsChildBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return AppsViewHolder(binding)
-    }
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AppsViewHolder =
+        AppsViewHolder(AppsChildBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false))
 
-    override fun onBindViewHolder(holder: AppsViewHolder, @SuppressLint("RecyclerView") i: Int) {
-        val position = oldList[i]
-
+    override fun onBindViewHolder(holder: AppsViewHolder, i: Int) {
         holder.view.childTextview.apply {
             /* show app name */
-            text = position.appName
+            text = oldList[i].appName
 
             /* on click - open app */
             setOnClickListener {
-                context.startActivity(packageManager.getLaunchIntentForPackage(position.packageName))
+                context.startActivity(packageManager.getLaunchIntentForPackage(oldList[i].packageName))
             }
 
             /* on long click - open app menu */
             setOnLongClickListener {
-                AppMenu().show(fragmentManager, position.packageName)
+                AppMenu().show(fragmentManager, oldList[i].packageName)
                 true
             }
         }
@@ -70,7 +65,7 @@ internal class AppsAdapter(
     inner class AppsViewHolder(var view: AppsChildBinding) : RecyclerView.ViewHolder(view.root)
 
     /* update app list */
-    fun updateData(newList: List<Packages>) {
+    fun updateData(newList: MutableList<Packages>) {
         val diffUtil = AppsDiffUtil(oldList, newList)
         val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
 
@@ -80,7 +75,7 @@ internal class AppsAdapter(
     }
 }
 
-internal data class Packages(
+internal data class Packages (
     val packageName: String,
     val appName: String
 )
@@ -92,11 +87,9 @@ internal class AppsDiffUtil(
     override fun getOldListSize(): Int = oldList.size
     override fun getNewListSize(): Int = newList.size
 
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
-    }
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+        oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
 
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
-    }
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+        oldList[oldItemPosition] == newList[newItemPosition]
 }

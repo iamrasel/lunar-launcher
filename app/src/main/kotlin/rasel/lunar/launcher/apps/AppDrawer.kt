@@ -58,11 +58,12 @@ import java.util.*
 internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
-    private lateinit var packageInfoList: List<ResolveInfo>
-    private var packagesList: ArrayList<Packages> = ArrayList()
     private lateinit var packageManager: PackageManager
     private lateinit var appsAdapter: AppsAdapter
     private lateinit var settingsPrefs: SharedPreferences
+
+    private var packageList = mutableListOf<Packages>()
+    private var packageInfoList = mutableListOf<ResolveInfo>()
 
     /* items for search columns */
     private val leftSearchArray = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m")
@@ -81,7 +82,8 @@ internal class AppDrawer : Fragment() {
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* initialize apps list adapter */
-        binding.appsList.adapter = appsAdapter.also { adapter -> adapter.updateData(packagesList) }
+        binding.appsList.adapter = appsAdapter
+        fetchApps()
 
         return binding.root
     }
@@ -111,8 +113,20 @@ internal class AppDrawer : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        closeSearch()
         fetchApps()
+
+        /* pop up the keyboard */
+        if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) {
+            binding.searchLayout.visibility = View.VISIBLE
+            binding.searchInput.requestFocus()
+            val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        closeSearch()
     }
 
     /* search column adapters */
@@ -127,8 +141,8 @@ internal class AppDrawer : Fragment() {
             ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, rightSearchArrayII)
     }
 
-    /* get all the installed apps and sort them */
-    private val getAppsList: Unit get() {
+    /* update app list with app and package name */
+    private fun fetchApps() {
         packageInfoList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.queryIntentActivities(
                 Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER),
@@ -138,31 +152,23 @@ internal class AppDrawer : Fragment() {
             @Suppress("DEPRECATION")
             packageManager.queryIntentActivities(
                 Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0)
-        }
+        }.apply { sortWith(ResolveInfo.DisplayNameComparator(packageManager)) }
 
-        /* sort the list */
-        (packageInfoList as MutableList<ResolveInfo>).sortWith(ResolveInfo.DisplayNameComparator(packageManager))
-    }
-
-    /* update app list with app and package name */
-    private fun fetchApps() {
-        getAppsList
         /* add package and app names to the list */
-        packagesList.clear()
+        packageList.clear()
         for (resolver in packageInfoList) {
-            val element = Packages(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())
-            packagesList.add(element)
+            packageList.add(Packages(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString()))
         }
 
         /* remove this app from the list */
-        val thisPackage = Packages(BuildConfig.APPLICATION_ID, resources.getString(R.string.app_name))
-        packagesList.removeAt(packagesList.indexOf(thisPackage))
+        packageList.removeAt(packageList.indexOf(Packages(
+            BuildConfig.APPLICATION_ID, lActivity!!.resources.getString(R.string.app_name))))
 
-        if (packagesList.size < 1) return
+        if (packageList.size < 1) return
         else {
             /* update the list */
             binding.loading.visibility = View.GONE
-            appsAdapter.updateData(packagesList)
+            appsAdapter.updateData(packageList)
         }
     }
 
@@ -178,7 +184,7 @@ internal class AppDrawer : Fragment() {
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
                 when (i) {
                     /* go bottom */
-                    leftSearchArrayII.size - 1 -> binding.appsList.smoothScrollToPosition(packagesList.size - 1)
+                    leftSearchArrayII.size - 1 -> binding.appsList.smoothScrollToPosition(packageList.size - 1)
                     else -> searchClickHelper(adapterView, i)
                 }
             }
@@ -199,32 +205,22 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun searchClickHelper(adapterView: AdapterView<*>, i: Int) {
-        if (packagesList.size < 2) return
+        if (packageList.size < 2) return
 
         /* show search box and build search string */
-        binding.searchLayout.visibility = View.VISIBLE
-        val string = binding.searchInput.text.toString() + adapterView.getItemAtPosition(i).toString()
-        searchStringChangeListener(string)
-
-        /* pop up the keyboard */
-        if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) {
-            binding.searchInput.requestFocus()
-            val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
-        }
+        if (binding.searchLayout.visibility != View.VISIBLE) binding.searchLayout.visibility = View.VISIBLE
+        searchStringChangeListener("${binding.searchInput.text}${adapterView.getItemAtPosition(i)}")
     }
 
     private fun searchStringRemover() {
         binding.backspace.setOnClickListener {
             if (binding.searchInput.text.toString().isNotEmpty()) {
                 /* remove search string one by one */
-                val string = binding.searchInput.text.toString().substring(0, binding.searchInput.text.toString().length - 1)
-                searchStringChangeListener(string)
+                searchStringChangeListener(
+                    "${binding.searchInput.text?.substring(0, binding.searchInput.text!!.length - 1)}")
 
                 /* hide search box when there's nothing left */
-                if (binding.searchInput.text.toString().isEmpty()) {
-                    binding.searchLayout.visibility = View.GONE
-                }
+                if (binding.searchInput.text.toString().isEmpty()) binding.searchLayout.visibility = View.GONE
             }
         }
 
@@ -242,26 +238,19 @@ internal class AppDrawer : Fragment() {
 
     private fun filterAppsList(searchString: String) {
         /* check each app name and add if it matches the search string */
-        packagesList.clear()
+        packageList.clear()
         for (resolver in packageInfoList) {
             val appName = resolver.loadLabel(packageManager).toString()
             if (appName.replace("\\W".toRegex(), "").lowercase(Locale.getDefault())
                     .contains(searchString)) {
-                packagesList.add(Packages(resolver.activityInfo.packageName, appName))
+                packageList.add(Packages(resolver.activityInfo.packageName, appName))
             }
         }
 
-        if (packagesList.size == 1) {
-            /* if only one app found, then launch it */
-            if (settingsPrefs.getBoolean(KEY_QUICK_LAUNCH, true)) {
-                startActivity(packageManager.getLaunchIntentForPackage(packagesList[0].packageName))
-            } else {
-                appsAdapter.updateData(packagesList)
-            }
-        } else {
-            /* update the app list with filtered result */
-            appsAdapter.updateData(packagesList)
-        }
+        if (packageList.size == 1 && settingsPrefs.getBoolean(KEY_QUICK_LAUNCH, true))
+            startActivity(packageManager.getLaunchIntentForPackage(packageList[0].packageName))
+        else
+            appsAdapter.updateData(packageList)
     }
 
     /* clear search string, hide keyboard and search box */
