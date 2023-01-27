@@ -95,6 +95,10 @@ internal class AppDrawer : Fragment() {
         /* listen search item and string remover clicks */
         controlOnSearchActions()
         searchStringRemover()
+        binding.searchInput.doOnTextChanged { inputText, _, _, _ ->
+            binding.searchInput.text?.let { binding.searchInput.setSelection(it.length) }
+            filterAppsList(inputText.toString())
+        }
 
         /* gestures */
         binding.root.setOnTouchListener(object : SwipeTouchListener(context) {
@@ -177,7 +181,7 @@ internal class AppDrawer : Fragment() {
         /* left column 1 */
         binding.leftSearchList.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
-                searchClickHelper(adapterView, i)
+                searchClickHelper(adapterView.getItemAtPosition(i))
             }
         /* left column 2 */
         binding.leftSearchListII.onItemClickListener =
@@ -185,7 +189,7 @@ internal class AppDrawer : Fragment() {
                 when (i) {
                     /* go bottom */
                     leftSearchArrayII.size - 1 -> binding.appsList.smoothScrollToPosition(packageList.size - 1)
-                    else -> searchClickHelper(adapterView, i)
+                    else -> searchClickHelper(adapterView.getItemAtPosition(i))
                 }
             }
         /* right column 1 */
@@ -194,30 +198,30 @@ internal class AppDrawer : Fragment() {
                 when (i) {
                     /* go top */
                     rightSearchArray.size - 1 -> binding.appsList.smoothScrollToPosition(0)
-                    else -> searchClickHelper(adapterView, i)
+                    else -> searchClickHelper(adapterView.getItemAtPosition(i))
                 }
             }
         /* right column 2 */
         binding.rightSearchListII.onItemClickListener =
             OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
-                searchClickHelper(adapterView, i)
+                searchClickHelper(adapterView.getItemAtPosition(i))
             }
     }
 
-    private fun searchClickHelper(adapterView: AdapterView<*>, i: Int) {
+    private fun searchClickHelper(clickedItem: Any) {
         if (packageList.size < 2) return
 
         /* show search box and build search string */
         if (binding.searchLayout.visibility != View.VISIBLE) binding.searchLayout.visibility = View.VISIBLE
-        searchStringChangeListener("${binding.searchInput.text}${adapterView.getItemAtPosition(i)}")
+        binding.searchInput.text = SpannableStringBuilder(binding.searchInput.text.toString() + clickedItem)
     }
 
     private fun searchStringRemover() {
         binding.backspace.setOnClickListener {
             if (binding.searchInput.text.toString().isNotEmpty()) {
                 /* remove search string one by one */
-                searchStringChangeListener(
-                    "${binding.searchInput.text?.substring(0, binding.searchInput.text!!.length - 1)}")
+                binding.searchInput.text = SpannableStringBuilder(
+                    binding.searchInput.text.toString().substring(0, binding.searchInput.text!!.length - 1))
 
                 /* hide search box when there's nothing left */
                 if (binding.searchInput.text.toString().isEmpty()) binding.searchLayout.visibility = View.GONE
@@ -225,15 +229,6 @@ internal class AppDrawer : Fragment() {
         }
 
         binding.close.setOnClickListener { closeSearch() }
-    }
-
-    /* add search string to the search box and filter list accordingly */
-    private fun searchStringChangeListener(string: String) {
-        binding.searchInput.text = SpannableStringBuilder(string)
-        binding.searchInput.doOnTextChanged { inputText, _, _, _ ->
-            binding.searchInput.setSelection(binding.searchInput.text.toString().length)
-            filterAppsList(inputText.toString())
-        }
     }
 
     private fun filterAppsList(searchString: String) {
@@ -257,8 +252,8 @@ internal class AppDrawer : Fragment() {
     private fun closeSearch() {
         binding.searchInput.text?.clear()
         binding.searchInput.let { view ->
-            val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            (lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .hideSoftInputFromWindow(view.windowToken, 0)
         }
         binding.searchLayout.visibility = View.GONE
     }
