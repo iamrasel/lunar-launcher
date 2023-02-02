@@ -39,18 +39,19 @@ internal class AppsAdapter(
         AppsViewHolder(AppsChildBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false))
 
     override fun onBindViewHolder(holder: AppsViewHolder, i: Int) {
+        val item = oldList[i]
         holder.view.childTextview.apply {
             /* show app name */
-            text = oldList[i].appName
+            text = item.appName
 
             /* on click - open app */
             setOnClickListener {
-                context.startActivity(packageManager.getLaunchIntentForPackage(oldList[i].packageName))
+                context.startActivity(packageManager.getLaunchIntentForPackage(item.packageName))
             }
 
             /* on long click - open app menu */
             setOnLongClickListener {
-                AppMenu().show(fragmentManager, oldList[i].packageName)
+                AppMenu().show(fragmentManager, item.packageName)
                 true
             }
         }
@@ -65,7 +66,7 @@ internal class AppsAdapter(
     inner class AppsViewHolder(var view: AppsChildBinding) : RecyclerView.ViewHolder(view.root)
 
     /* update app list */
-    fun updateData(newList: MutableList<Packages>) {
+    fun updateData(newList: List<Packages>) {
         val diffUtil = AppsDiffUtil(oldList, newList)
         val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
 

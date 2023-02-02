@@ -61,9 +61,8 @@ internal class AppDrawer : Fragment() {
     private lateinit var packageManager: PackageManager
     private lateinit var appsAdapter: AppsAdapter
     private lateinit var settingsPrefs: SharedPreferences
-
+    private lateinit var packageInfoList: MutableList<ResolveInfo>
     private var packageList = mutableListOf<Packages>()
-    private var packageInfoList = mutableListOf<ResolveInfo>()
 
     /* items for search columns */
     private val leftSearchArray = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m")
@@ -156,17 +155,16 @@ internal class AppDrawer : Fragment() {
             @Suppress("DEPRECATION")
             packageManager.queryIntentActivities(
                 Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0)
-        }.apply { sortWith(ResolveInfo.DisplayNameComparator(packageManager)) }
+        }.apply {
+            removeIf { it.activityInfo.packageName.equals(BuildConfig.APPLICATION_ID) }
+            sortWith(ResolveInfo.DisplayNameComparator(packageManager))
+        }
 
         /* add package and app names to the list */
         packageList.clear()
         for (resolver in packageInfoList) {
             packageList.add(Packages(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString()))
         }
-
-        /* remove this app from the list */
-        packageList.removeAt(packageList.indexOf(Packages(
-            BuildConfig.APPLICATION_ID, lActivity!!.resources.getString(R.string.app_name))))
 
         if (packageList.size < 1) return
         else {
