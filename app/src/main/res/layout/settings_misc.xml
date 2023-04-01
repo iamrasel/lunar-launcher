@@ -1,103 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/surrounding">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/twelve">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/backHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back_home"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/back_home_group"
+        android:id="@+id/backHomeGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backHome"
         app:selectionRequired="true"
         app:singleSelection="true">
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/back_home_positive"
+            android:id="@+id/backHomePositive"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/positive"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/positive" />
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/back_home_negative"
+            android:id="@+id/backHomeNegative"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/negative"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/negative" />
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/shortcutCountTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
         android:text="@string/shortcut_count"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/surrounding"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backHomeGroup" />
+
     <com.google.android.material.slider.Slider
-        android:id="@+id/shortcut_count"
-        android:layout_width="match_parent"
+        android:id="@+id/shortcutCount"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
+        android:stepSize="1"
         android:valueFrom="0"
-        android:valueTo="6"
-        android:stepSize="1"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shortcutCountTitle" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="324dp"
+        android:id="@+id/feedInputLayout"
+        android:layout_width="@dimen/threeTwentyFour"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
         android:hint="@string/feed_url"
         app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/surrounding">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shortcutCount">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_feed_url"
+            android:id="@+id/inputFeedUrl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:imeOptions="actionDone"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/doubleTapLock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
         android:text="@string/double_tap_lock"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/surrounding"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedInputLayout" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/lock_group"
+        android:id="@+id/lockGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/doubleTapLock"
         app:selectionRequired="true"
         app:singleSelection="true">
-        <com.google.android.material.chip.Chip
-            android:id="@+id/select_lock_negative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/negative"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-        <com.google.android.material.chip.Chip
-            android:id="@+id/select_lock_accessibility"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/accessibility"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-        <com.google.android.material.chip.Chip
-            android:id="@+id/select_lock_admin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/device_admin"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-        <com.google.android.material.chip.Chip
-            android:id="@+id/select_lock_root"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/root"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-    </com.google.android.material.chip.ChipGroup>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/selectLockNegative"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/negative" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/selectLockAccessibility"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accessibility" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/selectLockAdmin"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/device_admin" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/selectLockRoot"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/root" />
+    </com.google.android.material.chip.ChipGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

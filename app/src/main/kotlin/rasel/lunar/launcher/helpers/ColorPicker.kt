@@ -22,14 +22,14 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
 
 
 internal class ColorPicker(private val initialColor: String,
     private val editText: TextInputEditText, private val sliderA: Slider, private val sliderR: Slider,
-    private val sliderG: Slider, private val sliderB: Slider, private val colorPreview: LinearLayoutCompat) {
+    private val sliderG: Slider, private val sliderB: Slider, private val colorPreview: ConstraintLayout) {
 
     @SuppressLint("SetTextI18n")
     fun pickColor() {

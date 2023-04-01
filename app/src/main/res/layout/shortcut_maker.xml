@@ -1,81 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:layout_height="wrap_content">
 
     <include
-        android:id="@+id/color_picker"
-        android:layout_width="match_parent"
+        android:id="@+id/colorPicker"
+        layout="@layout/color_picker"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        layout="@layout/color_picker"/>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="@dimen/surrounding">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:boxBackgroundColor="?attr/colorSurface"
-            app:endIconMode="clear_text"
-            app:hintEnabled="false">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/thumb_field"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:imeOptions="actionDone"
-                android:singleLine="true"
-                android:maxLength="1"
-                android:gravity="center"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/shortcut_type"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            app:selectionRequired="true"
-            app:singleSelection="true"
-            android:layout_marginStart="@dimen/surrounding">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/contact"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/contact"
-                style="@style/Widget.Material3.Button.OutlinedButton"/>
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/url"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/url"
-                style="@style/Widget.Material3.Button.OutlinedButton"/>
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
+        android:id="@+id/thumbInputLayout"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/twelve"
         app:boxBackgroundColor="?attr/colorSurface"
         app:endIconMode="clear_text"
         app:hintEnabled="false"
-        android:layout_marginHorizontal="@dimen/surrounding"
-        android:layout_marginTop="@dimen/surrounding">
+        app:layout_constraintEnd_toStartOf="@+id/shortcutType"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorPicker">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_field"
+            android:id="@+id/thumbField"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:maxLength="1"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/shortcutType"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
+        android:layout_marginHorizontal="@dimen/twelve"
+        app:layout_constraintBottom_toBottomOf="@+id/thumbInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@+id/thumbInputLayout"
+        app:layout_constraintTop_toTopOf="@+id/thumbInputLayout"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/contact"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/contact" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/url"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/url" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/twelve"
+        android:layout_marginTop="@dimen/twelve"
+        app:boxBackgroundColor="?attr/colorSurface"
+        app:endIconMode="clear_text"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thumbInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

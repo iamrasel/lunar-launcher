@@ -2,23 +2,23 @@
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/surrounding">
+    android:paddingHorizontal="@dimen/twelve">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/app_name"
+        android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="@dimen/surrounding"
-        style="@style/TextAppearance.Material3.TitleMedium"/>
+        android:layout_marginVertical="@dimen/twelve"
+        style="@style/TextAppearance.Material3.TitleMedium" />
 
     <ListView
-        android:id="@+id/activity_list"
+        android:id="@+id/activityList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@null"
-        android:scrollbars="none"/>
+        android:scrollbars="none" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

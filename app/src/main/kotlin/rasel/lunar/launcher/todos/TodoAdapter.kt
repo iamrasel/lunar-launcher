@@ -40,7 +40,7 @@ internal class TodoAdapter(
     private val todoManager: TodoManager?,
     private val context: Context) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    private val currentFragment = lActivity!!.supportFragmentManager.findFragmentById(R.id.main_fragments_container)
+    private val currentFragment = lActivity!!.supportFragmentManager.findFragmentById(R.id.mainFragmentsContainer)
     private val todoList = DatabaseHandler(context).todos
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TodoViewHolder {

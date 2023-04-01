@@ -10,20 +10,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/rounded_bg"
-        android:padding="@dimen/surrounding"
-        android:layout_marginTop="@dimen/distance">
+        android:padding="@dimen/twelve"
+        android:layout_marginTop="@dimen/eight">
+
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:trackThickness="@dimen/surrounding"
+            app:trackThickness="@dimen/twelve"
             app:trackColor="?attr/scrimBackground"/>
+
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_view"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/four"
             android:gravity="center_horizontal"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
-
 </FrameLayout>

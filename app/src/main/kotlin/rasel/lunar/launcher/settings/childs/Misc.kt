@@ -52,6 +52,7 @@ internal class Misc : BottomSheetDialogFragment() {
             false -> binding.backHomeNegative.isChecked = true
         }
 
+        binding.shortcutCount.valueTo = MAX_SHORTCUTS.toFloat()
         binding.shortcutCount.value = settingsPrefs!!.getInt(KEY_SHORTCUT_COUNT, MAX_SHORTCUTS).toFloat()
         binding.inputFeedUrl.text = SpannableStringBuilder(settingsPrefs!!.getString(KEY_RSS_URL, ""))
 

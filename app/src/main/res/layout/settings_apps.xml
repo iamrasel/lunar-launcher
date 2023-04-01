@@ -1,62 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/surrounding">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/twelve">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/searchWithKeyboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/search_with_keyboard"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/keyboard_auto_group"
+        android:id="@+id/keyboardAutoGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchWithKeyboard"
         app:selectionRequired="true"
         app:singleSelection="true">
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/keyboard_auto_positive"
+            android:id="@+id/keyboardAutoPositive"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/positive"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/positive" />
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/keyboard_auto_negative"
+            android:id="@+id/keyboardAutoNegative"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/negative"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/negative" />
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/quickLaunch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
         android:text="@string/quick_launch"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/surrounding"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/keyboardAutoGroup" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/quick_launch_group"
+        android:id="@+id/quickLaunchGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quickLaunch"
         app:selectionRequired="true"
         app:singleSelection="true">
-        <com.google.android.material.chip.Chip
-            android:id="@+id/quick_launch_positive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/positive"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-        <com.google.android.material.chip.Chip
-            android:id="@+id/quick_launch_negative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/negative"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-    </com.google.android.material.chip.ChipGroup>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/quickLaunchPositive"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/positive" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/quickLaunchNegative"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/negative" />
+    </com.google.android.material.chip.ChipGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

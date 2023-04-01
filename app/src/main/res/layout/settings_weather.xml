@@ -1,92 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/surrounding">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/twelve">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="196dp"
+        android:id="@+id/cityInputLayout"
+        android:layout_width="@dimen/oneNinetySix"
         android:layout_height="wrap_content"
         android:hint="@string/city_name"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_city"
+            android:id="@+id/inputCity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:imeOptions="actionDone"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="324dp"
+        android:id="@+id/owmInputLayout"
+        android:layout_width="@dimen/threeTwentyFour"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
         android:hint="@string/owm_key"
         app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/surrounding">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cityInputLayout">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_owm"
+            android:id="@+id/inputOwm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:imeOptions="actionDone"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textview.MaterialTextView
+    <TextView
+        android:id="@+id/tempUnit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
         android:text="@string/temp_unit"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/surrounding"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/owmInputLayout" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/temp_group"
+        android:id="@+id/tempGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:selectionRequired="true"
-        app:singleSelection="true">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempUnit">
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/select_celsius"
+            android:id="@+id/selectCelsius"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/celsius"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/celsius" />
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/select_fahrenheit"
+            android:id="@+id/selectFahrenheit"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fahrenheit"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/fahrenheit" />
     </com.google.android.material.chip.ChipGroup>
 
-    <com.google.android.material.textview.MaterialTextView
+    <TextView
+        android:id="@+id/showCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/eight"
         android:text="@string/show_city"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/surrounding"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempGroup" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/city_group"
+        android:id="@+id/cityGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:selectionRequired="true"
-        app:singleSelection="true">
-        <com.google.android.material.chip.Chip
-            android:id="@+id/show_city_positive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/positive"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-        <com.google.android.material.chip.Chip
-            android:id="@+id/show_city_negative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/negative"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-    </com.google.android.material.chip.ChipGroup>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showCity">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/showCityPositive"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/positive" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/showCityNegative"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/negative" />
+    </com.google.android.material.chip.ChipGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

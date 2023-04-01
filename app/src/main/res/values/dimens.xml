@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="distance">8dp</dimen>
-    <dimen name="surrounding">12dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="two">2dp</dimen>
+    <dimen name="four">4dp</dimen>
+    <dimen name="eight">8dp</dimen>
+    <dimen name="twelve">12dp</dimen>
+    <dimen name="sixteen">16dp</dimen>
+    <dimen name="twenty">20dp</dimen>
+    <dimen name="twentyTwo">22dp</dimen>
+    <dimen name="thirtySix">36dp</dimen>
+    <dimen name="fortyTwo">42dp</dimen>
+    <dimen name="fortyEight">48dp</dimen>
+    <dimen name="oneThirtySix">136dp</dimen>
+    <dimen name="oneNinetySix">196dp</dimen>
+    <dimen name="twoEightyEight">288dp</dimen>
+    <dimen name="threeTwentyFour">324dp</dimen>
+
+    <dimen name="lineSpace">6sp</dimen>
+    <dimen name="normalText">16sp</dimen>
+    <dimen name="appsText">22sp</dimen>
+    <dimen name="clockText">48sp</dimen>
+    <dimen name="appsCountText">216sp</dimen>
 </resources>

@@ -1,138 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/apps_count"
+        android:id="@+id/appsCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="216sp"
         android:textColor="?attr/colorControlHighlight"
-        android:layout_centerInParent="true"/>
+        android:textSize="@dimen/appsCountText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+    <ListView
+        android:id="@+id/leftSearchList"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/leftSearchListII"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ListView
-            android:id="@+id/left_search_list"
-            android:layout_width="0dp"
+    <ListView
+        android:id="@+id/leftSearchListII"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/leftSearchList"
+        app:layout_constraintEnd_toStartOf="@+id/appsList"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/appsList"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rightSearchList"
+        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintStart_toEndOf="@+id/leftSearchListII"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/rightSearchList"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/appsList"
+        app:layout_constraintEnd_toStartOf="@+id/rightSearchListII"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <ListView
+        android:id="@+id/rightSearchListII"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rightSearchList"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/loading"
+        android:layout_width="@dimen/oneThirtySix"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="?attr/scrimBackground" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/appsList"
+        app:layout_constraintStart_toStartOf="@+id/appsList">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/zero"
+            android:background="@drawable/rounded_bg"
+            android:contentDescription="@null"
+            android:paddingHorizontal="@dimen/twelve"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/searchInput"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchInput"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:listSelector="@android:color/transparent"
-            android:transcriptMode="alwaysScroll"
-            android:layout_gravity="bottom"/>
+            android:gravity="center"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/backspace"
+            app:layout_constraintStart_toEndOf="@+id/close"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ListView
-            android:id="@+id/left_search_listII"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:listSelector="@android:color/transparent"
-            android:transcriptMode="alwaysScroll"
-            android:layout_gravity="bottom"/>
-
-        <RelativeLayout
-            android:id="@+id/main_apps_layout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="6">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/apps_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:overScrollMode="never"
-                android:layout_centerVertical="true"
-                app:layoutManager="LinearLayoutManager" />
-
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/loading"
-                android:layout_width="136dp"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:indeterminate="true"
-                app:trackColor="?attr/scrimBackground"/>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/search_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:visibility="gone">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/rounded_bg"
-                    android:paddingHorizontal="@dimen/surrounding"
-                    android:src="@drawable/ic_close"
-                    android:contentDescription="@null"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/search_box"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:boxBackgroundColor="?attr/colorSurface"
-                    app:endIconMode="clear_text"
-                    app:hintEnabled="false">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/search_input"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionSearch"
-                        android:maxLength="5"
-                        android:singleLine="true"
-                        android:gravity="center" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/backspace"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/rounded_bg"
-                    android:paddingHorizontal="@dimen/surrounding"
-                    android:src="@drawable/ic_back"
-                    android:contentDescription="@null"/>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/right_search_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:listSelector="@android:color/transparent"
-            android:transcriptMode="alwaysScroll"
-            android:layout_gravity="bottom"/>
-
-        <ListView
-            android:id="@+id/right_search_listII"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:listSelector="@android:color/transparent"
-            android:transcriptMode="alwaysScroll"
-            android:layout_gravity="bottom"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-</RelativeLayout>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/backspace"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/zero"
+            android:background="@drawable/rounded_bg"
+            android:contentDescription="@null"
+            android:paddingHorizontal="@dimen/twelve"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchInput"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

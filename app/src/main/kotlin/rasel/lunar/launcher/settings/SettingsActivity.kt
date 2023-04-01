@@ -71,7 +71,7 @@ internal class SettingsActivity : AppCompatActivity() {
             Apps().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 
-        binding.look.setOnClickListener {
+        binding.appearances.setOnClickListener {
             Appearances().show(supportFragmentManager, BOTTOM_SHEET_TAG)
         }
 

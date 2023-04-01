@@ -7,21 +7,21 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/expandable_group"
+        android:id="@+id/expandableButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:singleSelection="true"
-        android:layout_margin="@dimen/distance">
+        android:layout_margin="@dimen/eight">
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/expand_rss"
-            android:layout_width="0dp"
+            android:id="@+id/expandRss"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/rss_feed"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/expand_system_info"
-            android:layout_width="0dp"
+            android:id="@+id/expandSystemInfo"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/system_stats"
@@ -31,15 +31,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/distance"
-        android:layout_marginBottom="@dimen/distance">
+        android:layout_marginHorizontal="@dimen/eight"
+        android:layout_marginBottom="@dimen/eight">
         <include
-            android:id="@+id/feeds_rss"
+            android:id="@+id/feedsRss"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/feeds_rss"/>
         <include
-            android:id="@+id/feeds_sys_infos"
+            android:id="@+id/feedsSysInfos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/feeds_sys_infos"/>
@@ -51,7 +51,7 @@
         android:fillViewport="true"
         android:scrollbars="none">
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/widget_container"
+            android:id="@+id/widgetContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>

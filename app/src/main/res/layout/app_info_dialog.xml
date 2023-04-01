@@ -2,31 +2,34 @@
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/surrounding">
+    android:paddingHorizontal="@dimen/twelve">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/app_name"
+        android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="@dimen/surrounding"
-        style="@style/TextAppearance.Material3.TitleMedium"/>
+        android:layout_marginVertical="@dimen/twelve"
+        style="@style/TextAppearance.Material3.TitleMedium" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mixed"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="@dimen/twentyTwo"
+        android:scrollbars="none">
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/permissions"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
     </ScrollView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -135,13 +135,13 @@ internal class AppDrawer : Fragment() {
     /* search column adapters */
     private fun setupSearchColumns() {
         binding.leftSearchList.adapter =
-            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, leftSearchArray)
+            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.childTextview, leftSearchArray)
         binding.leftSearchListII.adapter =
-            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, leftSearchArrayII)
+            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.childTextview, leftSearchArrayII)
         binding.rightSearchList.adapter =
-            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, rightSearchArray)
+            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.childTextview, rightSearchArray)
         binding.rightSearchListII.adapter =
-            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.child_textview, rightSearchArrayII)
+            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.childTextview, rightSearchArrayII)
     }
 
     /* update app list with app and package name */

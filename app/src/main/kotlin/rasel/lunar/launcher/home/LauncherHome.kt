@@ -108,7 +108,7 @@ internal class LauncherHome : Fragment() {
             }
 
             /* show weather */
-            WeatherExecutor(settingsPrefs).generateWeatherString(binding.temp)
+            WeatherExecutor(settingsPrefs).generateWeatherString(binding.weather)
             /* show todo list */
             showTodoList()
         }
@@ -167,7 +167,7 @@ internal class LauncherHome : Fragment() {
     /* gestures on todo area */
     @SuppressLint("ClickableViewAccessibility")
     private fun todosGestures() {
-        binding.todos.setOnTouchListener(object : SwipeTouchListener(requireContext()) {
+        binding.notes.setOnTouchListener(object : SwipeTouchListener(requireContext()) {
             /* open TodoManager on long click */
             override fun onLongClick() {
                 super.onLongClick()
@@ -219,13 +219,13 @@ internal class LauncherHome : Fragment() {
 
     /* launch TodoManager fragment */
     private fun launchTodoManager() {
-        fragManager.beginTransaction().replace(R.id.main_fragments_container, TodoManager())
+        fragManager.beginTransaction().replace(R.id.mainFragmentsContainer, TodoManager())
             .addToBackStack("").commit()
     }
 
     /* todo list */
     private fun showTodoList() {
-        binding.todos.adapter = TodoAdapter(null, requireContext())
+        binding.notes.adapter = TodoAdapter(null, requireContext())
     }
 
     /* get time format string */

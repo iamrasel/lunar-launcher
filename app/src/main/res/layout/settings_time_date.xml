@@ -1,57 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/surrounding">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/twelve">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/timeFormat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_format"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/time_group"
+        android:id="@+id/timeGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeFormat"
         app:selectionRequired="true"
         app:singleSelection="true">
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/select_twelve"
+            android:id="@+id/selectTwelve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/twelve"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            style="@style/Widget.Material3.Chip.Filter.Elevated" />
         <com.google.android.material.chip.Chip
-            android:id="@+id/follow_system_time"
+            android:id="@+id/followSystemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/follow_system"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            style="@style/Widget.Material3.Chip.Filter.Elevated" />
         <com.google.android.material.chip.Chip
-            android:id="@+id/select_twenty_four"
+            android:id="@+id/selectTwentyFour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/twenty_four"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            style="@style/Widget.Material3.Chip.Filter.Elevated" />
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="248dp"
+        android:layout_width="@dimen/twoEightyEight"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
         android:hint="@string/date_format"
         app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/surrounding">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeGroup">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/date_format"
+            android:id="@+id/dateFormat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:imeOptions="actionDone"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

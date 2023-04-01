@@ -100,7 +100,7 @@ internal class Feeds : Fragment() {
 
     /* control view's expand-collapse actions */
     private fun expandCollapse() {
-        binding.expandableGroup.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
+        binding.expandableButtons.addOnButtonCheckedListener { _: MaterialButtonToggleGroup?, checkedId: Int, isChecked: Boolean ->
             if (isChecked) {
                 when (checkedId) {
                     binding.expandRss.id -> {

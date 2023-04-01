@@ -1,61 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<net.cachapa.expandablelayout.ExpandableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<net.cachapa.expandablelayout.ExpandableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/expandable_system_info"
+    android:id="@+id/expandableSystemInfo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:el_duration="1000"
     app:el_expanded="false"
     app:el_parallax="0.5">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ram_parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/cpu_parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/int_parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ext_parent"
-            android:layout_width="match_parent"
+            android:id="@+id/ramParent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+            android:id="@+id/cpuParent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ramParent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/intParent"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cpuParent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/extParent"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/intParent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
             android:background="@drawable/rounded_bg"
-            android:padding="@dimen/surrounding"
-            android:layout_marginTop="@dimen/distance">
+            android:padding="@dimen/twelve"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/extParent">
+
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="0dp"
+                android:id="@+id/miscTitles"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lineSpacingExtra="@dimen/distance"
-                android:text="@string/misc_info_titles"/>
+                android:lineSpacingExtra="@dimen/eight"
+                android:text="@string/misc_info_titles"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/misc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/misc"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lineSpacingExtra="@dimen/distance"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+                android:lineSpacingExtra="@dimen/eight"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/miscTitles"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </net.cachapa.expandablelayout.ExpandableLayout>

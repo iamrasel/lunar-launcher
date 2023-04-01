@@ -1,59 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/surrounding">
+    android:padding="@dimen/twelve">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="196dp"
+        android:id="@+id/colorInputLayout"
+        android:layout_width="@dimen/oneNinetySix"
         android:layout_height="wrap_content"
+        android:hint="@string/argb"
         app:boxBackgroundColor="?attr/colorSurface"
         app:endIconMode="clear_text"
-        android:hint="@string/argb">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/color_input"
+            android:id="@+id/colorInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:gravity="center"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.slider.Slider
-        android:id="@+id/color_a"
-        android:layout_width="match_parent"
+        android:id="@+id/colorA"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:valueFrom="0"
         android:valueTo="255"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorInputLayout"
         app:thumbColor="@android:color/white"
-        app:trackColorActive="@android:color/white"/>
-    <com.google.android.material.slider.Slider
-        android:id="@+id/color_r"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:valueFrom="0"
-        android:valueTo="255"
-        app:thumbColor="@color/red"
-        app:trackColorActive="@color/red"/>
-    <com.google.android.material.slider.Slider
-        android:id="@+id/color_g"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:valueFrom="0"
-        android:valueTo="255"
-        app:thumbColor="@color/green"
-        app:trackColorActive="@color/green"/>
-    <com.google.android.material.slider.Slider
-        android:id="@+id/color_b"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:valueFrom="0"
-        android:valueTo="255"
-        app:thumbColor="@color/blue"
-        app:trackColorActive="@color/blue"/>
+        app:trackColorActive="@android:color/white" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    <com.google.android.material.slider.Slider
+        android:id="@+id/colorR"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="255"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorA"
+        app:thumbColor="@color/red"
+        app:trackColorActive="@color/red" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/colorG"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="255"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorR"
+        app:thumbColor="@color/green"
+        app:trackColorActive="@color/green" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/colorB"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="255"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorG"
+        app:thumbColor="@color/blue"
+        app:trackColorActive="@color/blue" />
+</androidx.constraintlayout.widget.ConstraintLayout>

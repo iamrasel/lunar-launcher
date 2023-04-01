@@ -1,127 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="196dp"
+        android:id="@+id/appBar"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/oneNinetySix"
+        android:background="@android:color/transparent"
         android:gravity="center"
-        android:background="@android:color/transparent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
         <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.Material3.HeadlineLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lunar_settings"
-            android:textColor="?attr/colorControlNormal"
-            style="@style/TextAppearance.Material3.HeadlineLarge"/>
+            android:textColor="?attr/colorControlNormal" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ScrollView
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
         android:background="@drawable/rounded_bg_top"
         android:backgroundTint="?attr/colorSurface"
-        android:layout_marginTop="-24dp">
+        android:paddingHorizontal="@dimen/thirtySix"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
-        <ScrollView
+        <com.google.android.material.button.MaterialButtonToggleGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginHorizontal="36dp">
+            android:orientation="vertical"
+            app:singleSelection="true"
+            android:layout_gravity="center">
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/timeDate"
+                style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:singleSelection="true">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/time_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/time_date"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/weather"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/weather"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/todo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/todo"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/apps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_drawer"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/look"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/appearances"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/misc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/misc"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/advance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/advance"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/about"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/about"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/support"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/support"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    style="@style/Widget.Material3.Button.ElevatedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+                android:text="@string/time_date"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
 
-        </ScrollView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/weather"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/weather"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/surrounding"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/todo"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/todo"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
 
-    </RelativeLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/apps"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_drawer"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/appearances"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/appearances"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/misc"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/misc"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/advance"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/advance"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/about"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/support"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/support"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+    </ScrollView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/twelve"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

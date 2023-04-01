@@ -211,7 +211,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
         /* show activity list */
         val activityAdapter: ArrayAdapter<String> =
-            ArrayAdapter(requireContext(), R.layout.list_item, R.id.item_text, ArrayList())
+            ArrayAdapter(requireContext(), R.layout.list_item, R.id.itemText, ArrayList())
         if (activityInfo.activities.isNotEmpty()) {
             for (i in 0 until activityInfo.activities.size) {
                 val activity = activityInfo.activities[i].toString().split(" ").toTypedArray()

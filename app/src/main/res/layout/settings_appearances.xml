@@ -1,90 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/surrounding"
-    android:clipChildren="false"
-    android:clipToPadding="false">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/twelve">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/applicationTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/application_theme"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/theme_group"
+        android:id="@+id/themeGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/applicationTheme"
         app:selectionRequired="true"
         app:singleSelection="true">
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/select_dark_theme"
+            android:id="@+id/selectDarkTheme"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dark_theme"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/dark_theme" />
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/follow_system_theme"
+            android:id="@+id/followSystemTheme"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/follow_system"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/follow_system" />
+
         <com.google.android.material.chip.Chip
-            android:id="@+id/select_light_theme"
+            android:id="@+id/selectLightTheme"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/light_theme"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
+            android:text="@string/light_theme" />
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/appearancesButtonGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/surrounding">
+        android:layout_marginTop="@dimen/twelve"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/themeGroup">
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/background"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/background"
             app:icon="@drawable/rounded_bg"
-            app:iconTintMode="add"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"/>
+            app:iconTintMode="add" />
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/change_wallpaper"
+            android:id="@+id/changeWallpaper"
+            style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/change_wallpaper"
-            style="@style/Widget.Material3.Button.ElevatedButton"/>
+            android:text="@string/change_wallpaper" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/hideStatusBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
         android:text="@string/hide_status_bar"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/surrounding"/>
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appearancesButtonGroup" />
+
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/hide_status_group"
+        android:id="@+id/hideStatusGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hideStatusBar"
         app:selectionRequired="true"
         app:singleSelection="true">
-        <com.google.android.material.chip.Chip
-            android:id="@+id/hide_status_positive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/positive"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-        <com.google.android.material.chip.Chip
-            android:id="@+id/hide_status_negative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/negative"
-            style="@style/Widget.Material3.Chip.Filter.Elevated"/>
-    </com.google.android.material.chip.ChipGroup>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/hideStatusPositive"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/positive" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/hideStatusNegative"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/negative" />
+    </com.google.android.material.chip.ChipGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,113 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/surrounding">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/twelve">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/notificationLayout"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconNotification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_notification"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_notification" />
+
         <com.google.android.material.slider.Slider
             android:id="@+id/notification"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:stepSize="1"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:stepSize="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconNotification"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/alarmLayout"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationLayout">
+
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconAlarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_alarm"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_alarm" />
+
         <com.google.android.material.slider.Slider
             android:id="@+id/alarm"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:stepSize="1"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:stepSize="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconAlarm"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mediaLayout"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarmLayout">
+
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconMedia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_media"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_media" />
+
         <com.google.android.material.slider.Slider
             android:id="@+id/media"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:stepSize="1"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:stepSize="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconMedia"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/voiceLayout"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mediaLayout">
+
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconVoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_voice"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_voice" />
+
         <com.google.android.material.slider.Slider
             android:id="@+id/voice"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:stepSize="1"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:stepSize="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconVoice"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ringLayout"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/voiceLayout">
+
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconRing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_ring"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_ring" />
+
         <com.google.android.material.slider.Slider
             android:id="@+id/ring"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:stepSize="1"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:stepSize="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconRing"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/shortcuts_group"
-        android:layout_width="match_parent"
+        android:id="@+id/shortcutsGroup"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/twentyTwo"
         android:orientation="horizontal"
-        android:layout_marginVertical="22dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/brightnessLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ringLayout" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/brightnessLayout"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        app:layout_constraintBottom_toTopOf="@+id/favAppsGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shortcutsGroup">
+
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconBrightness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_brightness"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_brightness" />
+
         <com.google.android.material.slider.Slider
             android:id="@+id/brightness"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconBrightness"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fav_apps_group"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:id="@+id/favAppsGroup"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/fortyTwo"
+        android:layout_marginTop="@dimen/twentyTwo"
         android:orientation="horizontal"
-        android:layout_marginTop="22dp"/>
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brightnessLayout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
