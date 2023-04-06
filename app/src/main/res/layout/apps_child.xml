@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/childTextview"
-        android:layout_width="@dimen/zero"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/apps_bg"
         android:gravity="center"
         android:paddingVertical="@dimen/four"
-        android:textSize="@dimen/appsText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="@dimen/appsText" />
+</androidx.appcompat.widget.LinearLayoutCompat>
