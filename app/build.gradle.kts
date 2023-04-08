@@ -3,6 +3,7 @@ plugins {
     id ("kotlin-android")
 }
 
+@Suppress("UnstableApiUsage")
 android {
 	namespace = "rasel.lunar.launcher"
     compileSdk = 33
@@ -61,11 +62,11 @@ android {
 dependencies {
     val kotlinVersion: String? by extra
 
-    implementation ("androidx.appcompat:appcompat:1.6.0")
+    implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.biometric:biometric-ktx:1.2.0-alpha05")
-    implementation ("androidx.browser:browser:1.4.0")
-    implementation ("androidx.core:core-ktx:1.9.0")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation ("androidx.browser:browser:1.5.0")
+    implementation ("androidx.core:core-ktx:1.10.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation ("com.google.android.material:material:1.8.0")
     implementation (kotlin("stdlib", version = kotlinVersion))
     implementation ("com.github.cachapa:ExpandableLayout:2.9.2")
