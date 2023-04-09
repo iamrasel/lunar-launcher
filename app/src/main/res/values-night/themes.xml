@@ -7,7 +7,7 @@
         <!-- System bars -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/navigation_bar</item>
         <!-- Widgets -->
         <item name="sliderStyle">@style/Slider</item>
         <item name="scrimBackground">@color/almost_transparent</item>

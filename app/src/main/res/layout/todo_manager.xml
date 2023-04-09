@@ -8,12 +8,13 @@
     android:paddingVertical="@dimen/four">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/aboutButtonGroup"
+        android:id="@+id/todoButtonGroup"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todos">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/deleteAll"
@@ -45,7 +46,7 @@
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/aboutButtonGroup"
+        app:layout_constraintBottom_toTopOf="@+id/todoButtonGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

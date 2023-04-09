@@ -3,6 +3,7 @@
     <color name="ic_launcher_primary">#FFFFFBFE</color>
     <color name="ic_launcher_secondary">#FF1C1B1F</color>
     <color name="almost_transparent">#11000000</color>
+    <color name="navigation_bar">#01ffffff</color>
     <color name="red">#FFFF0000</color>
     <color name="green">#FF00FF00</color>
     <color name="blue">#FF0000FF</color>

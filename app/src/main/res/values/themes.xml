@@ -6,11 +6,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <!-- System bars -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/navigation_bar</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
         <!-- Widgets -->
         <item name="sliderStyle">@style/Slider</item>
         <item name="scrimBackground">@color/almost_transparent</item>

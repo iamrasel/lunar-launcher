@@ -29,9 +29,14 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.apps.AppDrawer
@@ -54,6 +59,7 @@ internal class LauncherActivity : AppCompatActivity() {
 
     private lateinit var binding: LauncherActivityBinding
     private lateinit var viewPager: ViewPager2
+    private lateinit var settingsPrefs: SharedPreferences
 
     companion object {
         private var instance: LauncherActivity? = null
@@ -75,14 +81,13 @@ internal class LauncherActivity : AppCompatActivity() {
 
         /*  if this is the first launch,
             then remember the event and show the welcome dialog */
-        val prefsFirstLaunch = getSharedPreferences(PREFS_FIRST_LAUNCH, 0)
-        if (prefsFirstLaunch.getBoolean(KEY_FIRST_LAUNCH, true)) {
-            prefsFirstLaunch.edit().putBoolean(KEY_FIRST_LAUNCH, false).apply()
-            welcomeDialog()
-        }
+        welcomeDialog()
+
+        binding = LauncherActivityBinding.inflate(layoutInflater)
+        settingsPrefs = getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* set up activity's view */
-        binding = LauncherActivityBinding.inflate(layoutInflater)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(binding.root)
         setupView()
 
@@ -97,21 +102,24 @@ internal class LauncherActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val settingsPrefs = getSharedPreferences(PREFS_SETTINGS, 0)
         if (settingsPrefs.getBoolean(KEY_BACK_HOME, false)) viewPager.currentItem = 1
-        statusBarView(settingsPrefs)
-        setBgColor(settingsPrefs)
+        statusBarView()
+        setBgColor()
     }
 
-    /* build the welcome dialog */
     private fun welcomeDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.welcome)
-            .setMessage(R.string.welcome_description)
-            .setPositiveButton(R.string.got_it) { dialog, _ ->
-                dialog.dismiss()
-                askPermissions()
-            }.show()
+        val prefsFirstLaunch = getSharedPreferences(PREFS_FIRST_LAUNCH, 0)
+        if (prefsFirstLaunch.getBoolean(KEY_FIRST_LAUNCH, true)) {
+            prefsFirstLaunch.edit().putBoolean(KEY_FIRST_LAUNCH, false).apply()
+
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.welcome)
+                .setMessage(R.string.welcome_description)
+                .setPositiveButton(R.string.got_it) { dialog, _ ->
+                    dialog.dismiss()
+                    askPermissions()
+                }.show()
+        }
     }
 
     /* ask for the permissions */
@@ -139,28 +147,31 @@ internal class LauncherActivity : AppCompatActivity() {
         viewPager.setCurrentItem(1, false)
     }
 
-    private fun setBgColor(settingsPrefs: SharedPreferences) {
+    private fun setBgColor() {
         binding.root.setBackgroundColor(Color.parseColor("#${
-            settingsPrefs.getString(KEY_WINDOW_BACKGROUND,
-                getString(getColorResId(this, android.R.attr.colorBackground))
-                    .replace("#", ""))}"))
+            settingsPrefs.getString(KEY_WINDOW_BACKGROUND, getString(getColorResId(this, android.R.attr.colorBackground))
+                .replace("#", ""))}"))
     }
 
-    private fun statusBarView(settingsPrefs: SharedPreferences) {
+    private fun statusBarView() {
         if (settingsPrefs.getBoolean(KEY_STATUS_BAR, false)) {
             /* hide status bar */
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 window.insetsController?.hide(WindowInsets.Type.statusBars())
-            else
+            } else {
                 @Suppress("DEPRECATION")
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+                window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            }
+            topMargin(false)
         } else {
             /* show status bar */
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 window.insetsController?.show(WindowInsets.Type.statusBars())
-            else
+            } else {
                 @Suppress("DEPRECATION")
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            }
+            topMargin(true)
         }
     }
 
@@ -175,6 +186,19 @@ internal class LauncherActivity : AppCompatActivity() {
                 if (viewPager.currentItem != 1) viewPager.currentItem = 1
             }
         })
+    }
+
+    private fun topMargin(topMargin: Boolean) {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v: View, windowInsets: WindowInsetsCompat ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val mlp = v.layoutParams as ViewGroup.MarginLayoutParams
+            mlp.leftMargin = insets.left
+            mlp.rightMargin = insets.right
+            mlp.bottomMargin = insets.bottom
+            mlp.topMargin = if (topMargin) insets.top else 0
+            v.layoutParams = mlp
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
 }

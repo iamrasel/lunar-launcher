@@ -93,7 +93,7 @@ internal class SettingsActivity : AppCompatActivity() {
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
-        theme.applyStyle(R.style.SolidNavBar, true)
+        theme.applyStyle(R.style.SettingsNavBar, true)
         return theme
     }
 

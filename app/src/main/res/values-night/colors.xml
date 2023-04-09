@@ -3,4 +3,5 @@
     <color name="ic_launcher_primary">#FF1C1B1F</color>
     <color name="ic_launcher_secondary">#FFFFFBFE</color>
     <color name="almost_transparent">#11FFFFFF</color>
+    <color name="navigation_bar">#01000000</color>
 </resources>

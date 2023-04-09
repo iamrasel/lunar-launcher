@@ -10,8 +10,7 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
-    <style name="SolidNavBar">
-        <item name="android:windowTranslucentNavigation">false</item>
+    <style name="SettingsNavBar">
         <item name="android:navigationBarColor">?attr/colorSurface</item>
     </style>
 </resources>
