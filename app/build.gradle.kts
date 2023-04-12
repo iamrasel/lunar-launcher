@@ -12,8 +12,8 @@ android {
         applicationId = "rasel.lunar.launcher"
         minSdk = 26
         targetSdk = 33
-        versionCode = 27
-        versionName = "2.3"
+        versionCode = 28
+        versionName = "2.4"
     }
 
     buildTypes {
