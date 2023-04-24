@@ -28,8 +28,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
-import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
@@ -37,6 +35,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.apps.AppDrawer
@@ -162,7 +161,7 @@ internal class LauncherActivity : AppCompatActivity() {
                 @Suppress("DEPRECATION")
                 window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
             }
-            topMargin(false)
+            topPadding(false)
         } else {
             /* show status bar */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -171,7 +170,7 @@ internal class LauncherActivity : AppCompatActivity() {
                 @Suppress("DEPRECATION")
                 window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
             }
-            topMargin(true)
+            topPadding(true)
         }
     }
 
@@ -188,15 +187,10 @@ internal class LauncherActivity : AppCompatActivity() {
         })
     }
 
-    private fun topMargin(topMargin: Boolean) {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v: View, windowInsets: WindowInsetsCompat ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val mlp = v.layoutParams as ViewGroup.MarginLayoutParams
-            mlp.leftMargin = insets.left
-            mlp.rightMargin = insets.right
-            mlp.bottomMargin = insets.bottom
-            mlp.topMargin = if (topMargin) insets.top else 0
-            v.layoutParams = mlp
+    private fun topPadding(topPadding: Boolean) {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
+            view.updatePadding(insets.left, if (topPadding) insets.top else 0, insets.right, insets.bottom)
             WindowInsetsCompat.CONSUMED
         }
     }
