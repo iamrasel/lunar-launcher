@@ -27,8 +27,10 @@ import android.os.*
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
@@ -55,16 +57,17 @@ internal class SystemStats {
 
     /* ram info */
     fun ram(ramParent: LinearLayoutCompat) {
-        ramParent.removeAllViews()
-        val binding = ChildSysInfoBinding.inflate(inflater)
-        ramParent.addView(binding.root)
+        val child  = ramParent.findViewById<View>(R.id.childsysinfo)
+        val indicator = child.findViewById<LinearProgressIndicator>(R.id.indicator)
+        val textView = child.findViewById<TextView>(R.id.textView)
+
 
         val totalMem = memoryInfo.totalMem / toGb
         val availMem = memoryInfo.availMem / toGb
         val usedMem = totalMem - availMem
 
-        binding.indicator.progress = (usedMem * 100 / totalMem).toInt()
-        binding.textView.text = Html.fromHtml(
+        indicator.progress = (usedMem * 100 / totalMem).toInt()
+        textView.text = Html.fromHtml(
             "<b>${string(R.string.ram)}</b><br>" +
                     "${string(R.string.total)}: ${String.format("%.03f", totalMem)} GB | " +
                     "${string(R.string.used)}: ${String.format("%.03f", usedMem)} GB | " +
@@ -75,9 +78,9 @@ internal class SystemStats {
 
     /* cpu and battery info */
     fun cpu(cpuParent: LinearLayoutCompat) {
-        cpuParent.removeAllViews()
-        val binding = ChildSysInfoBinding.inflate(inflater)
-        cpuParent.addView(binding.root)
+        val child  = cpuParent.findViewById<View>(R.id.childsysinfo)
+        val indicator = child.findViewById<LinearProgressIndicator>(R.id.indicator)
+        val textView = child.findViewById<TextView>(R.id.textView)
 
         var cpuTemp = 0.0f
         try {
@@ -98,11 +101,11 @@ internal class SystemStats {
         val cpuFreq = "${String.format("%.02f", minCpuFrequency.toFloat() / 1000)} - " +
                 "${String.format("%.02f", maxCpuFrequency.toFloat() / 1000)} GHz"
 
-        binding.indicator.progress = when (maxCpuFrequency) {
+        indicator.progress = when (maxCpuFrequency) {
             0 -> 30
             else -> frequencyOfCore * 100 / maxCpuFrequency
         }
-        binding.textView.text = Html.fromHtml(
+        textView.text = Html.fromHtml(
             "<b>${string(R.string.cpu)}</b><br>" +
                     "${string(R.string.temperature)}: $finalCpuTemp | " +
                     "${string(R.string.frequency)}: $cpuFreq",
@@ -112,9 +115,9 @@ internal class SystemStats {
 
     /* internal storage */
     fun intStorage(intParent: LinearLayoutCompat) {
-        intParent.removeAllViews()
-        val binding = ChildSysInfoBinding.inflate(inflater)
-        intParent.addView(binding.root)
+        val child  = intParent.findViewById<View>(R.id.childsysinfo)
+        val indicator = child.findViewById<LinearProgressIndicator>(R.id.indicator)
+        val textView = child.findViewById<TextView>(R.id.textView)
 
         val intPath = Environment.getExternalStorageDirectory().absolutePath
         val statFs = StatFs(intPath)
@@ -122,8 +125,8 @@ internal class SystemStats {
         val availStorage = statFs.availableBlocksLong * statFs.blockSizeLong / toGb
         val usedStorage = totalStorage - availStorage
 
-        binding.indicator.progress = (usedStorage * 100 / totalStorage).toInt()
-        binding.textView.text = Html.fromHtml(
+        indicator.progress = (usedStorage * 100 / totalStorage).toInt()
+        textView.text = Html.fromHtml(
             "<b>${intPath + File.separator}</b><br>" +
                     "${string(R.string.total)}: ${String.format("%.03f", totalStorage)} GB | " +
                     "${string(R.string.used)}: ${String.format("%.03f", usedStorage)} GB | " +

@@ -75,6 +75,7 @@ internal class Feeds : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         expandCollapse()
+        systemInfo()
     }
 
     override fun onResume() {
@@ -105,13 +106,14 @@ internal class Feeds : Fragment() {
                 when (checkedId) {
                     binding.expandRss.id -> {
                         binding.feedsSysInfos.expandableSystemInfo.collapse()
+
                         binding.feedsRss.expandableRss.expand()
                         startService()
                     }
                     binding.expandSystemInfo.id -> {
                         binding.feedsRss.expandableRss.collapse()
                         binding.feedsSysInfos.expandableSystemInfo.expand()
-                        systemInfo()
+
                     }
                 }
             } else {
