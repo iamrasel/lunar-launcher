@@ -37,7 +37,9 @@
         <activity
             android:name=".LauncherActivity"
 			android:launchMode="singleTask"
-            android:exported="true">
+            android:exported="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -50,7 +52,9 @@
             android:name=".settings.SettingsActivity"
             android:label="@string/lunar_settings"
             android:launchMode="singleTask"
-            android:exported="true">
+            android:exported="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
             </intent-filter>
