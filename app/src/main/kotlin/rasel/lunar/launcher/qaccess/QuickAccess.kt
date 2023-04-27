@@ -395,7 +395,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             (48 * resources.displayMetrics.density).toInt(),
             (48 * resources.displayMetrics.density).toInt())
         textView.gravity = Gravity.CENTER
-        textView.textSize = 20 * resources.displayMetrics.density
+        textView.textSize = 10 * resources.displayMetrics.density
         textView.setTypeface(null, Typeface.BOLD)
         textView.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_bg)
         relativeLayout.addView(textView)
