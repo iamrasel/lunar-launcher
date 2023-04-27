@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/childsysinfo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="@dimen/eight"
         android:background="@drawable/rounded_bg"
-        android:padding="@dimen/twelve"
-        android:layout_marginTop="@dimen/eight">
+        android:orientation="vertical"
+        android:padding="@dimen/twelve">
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:trackThickness="@dimen/twelve"
-            app:trackColor="?attr/scrimBackground"/>
+            app:trackColor="?attr/scrimBackground"
+            app:trackThickness="@dimen/twelve" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/four"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </FrameLayout>
