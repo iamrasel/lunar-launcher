@@ -51,19 +51,23 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/contact"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/contact" />
+            android:tooltipText="@string/contact"
+            app:icon="@drawable/ic_contact"
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/url"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/url" />
+            android:tooltipText="@string/url"
+            app:icon="@drawable/ic_link"
+            app:iconGravity="textStart" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.textfield.TextInputLayout
