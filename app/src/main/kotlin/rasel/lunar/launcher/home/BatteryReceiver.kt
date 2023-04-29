@@ -49,9 +49,9 @@ internal class BatteryReceiver(private val progressBar: CircularProgressIndicato
         /* progress bar animation */
         if (chargingStatus(intent) == BatteryManager.BATTERY_STATUS_CHARGING ||
             chargingStatus(intent) == BatteryManager.BATTERY_STATUS_FULL) {
-            if(progressBar.animation == null){
+            if (progressBar.animation == null) {
                 progressBar.startAnimation(
-                    AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise),
+                    AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise)
                 )
             }
 
