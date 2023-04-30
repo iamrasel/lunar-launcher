@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.BatteryManager
+import android.provider.Settings
 import android.view.animation.AnimationUtils
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import rasel.lunar.launcher.R
@@ -43,18 +44,23 @@ internal class BatteryReceiver(private val progressBar: CircularProgressIndicato
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        val animationDuration = try {
+            Settings.Global.getFloat(context?.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE)
+        } catch (e: Settings.SettingNotFoundException) {
+            e.printStackTrace()
+        }
+
         /* set battery percentage value to the circular progress bar */
         progressBar.progress = batteryPercentage(intent!!)
 
         /* progress bar animation */
         if (chargingStatus(intent) == BatteryManager.BATTERY_STATUS_CHARGING ||
             chargingStatus(intent) == BatteryManager.BATTERY_STATUS_FULL) {
-            if (progressBar.animation == null) {
+            if (progressBar.animation == null && animationDuration != 0f) {
                 progressBar.startAnimation(
                     AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise)
                 )
             }
-
         } else if (chargingStatus(intent) == BatteryManager.BATTERY_STATUS_DISCHARGING ||
                 chargingStatus(intent) == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
             progressBar.clearAnimation()
