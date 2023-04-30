@@ -1,7 +1,8 @@
+<resources>
 <string name="about">Hakkında</string>
 <string name="accessibility">Erişilebilirlik</string>
 <string name="accessibility_service_description">
-    Lunar Launcher'ın cihazı uyku moduna almasına izin veren erişilebilirlik servisi,
+    Lunar Launcher\'ın cihazı uyku moduna almasına izin veren erişilebilirlik servisi,
     Android Pie (API 28) ve üstü için.
 </string>
 <string name="accessibility_service_label">Kilit Servisi</string>
@@ -99,8 +100,8 @@ Bu işlem, bu uygulama için depolanan tüm verileri temizleyecek ve geri alına
 <string name="support">Destek</string>
 <string name="support_message">Geliştiricinin uygulamayı ücretsiz ve canlı tutmak için desteğini destekleyin.\n
 \n<li><b>Bağış:</b> Mümkünse, geliştiriciyi desteklemek ve teşvik etmek için doğrudan bağış yapın.</li>
-\n<li><b>Amazon:</b> Amazon'da alışveriş yaparken ortaklık bağlantısını kullanarak geliştiriciyi ödüllendirebilirsiniz.</li>
-\n<li><b>Yıldız:</b> Destek göstermek için Github'da yıldız verin.</li>
+\n<li><b>Amazon:</b> Amazon\'da alışveriş yaparken ortaklık bağlantısını kullanarak geliştiriciyi ödüllendirebilirsiniz.</li>
+\n<li><b>Yıldız:</b> Destek göstermek için Github\'da yıldız verin.</li>
 </string>
 <string name="system_stats">Sistem İstatistikleri</string>
 <string name="telegram_group">Telegram Grubu</string>
@@ -109,7 +110,7 @@ Bu işlem, bu uygulama için depolanan tüm verileri temizleyecek ve geri alına
 <string name="time_date">Zaman - Tarih</string>
 <string name="time_format">Zaman Biçimi</string>
 <string name="todo">Yapılacaklar</string>
-<string name="todo_count">Ana Ekran'daki Yapılacak Sayısı</string>
+<string name="todo_count">Ana Ekran\'daki Yapılacak Sayısı</string>
 <string name="todo_manager">Yapılacaklar Yöneticisi</string>
 <string name="todo_manager_lock">Yapılacaklar Yöneticisi Kilidi</string>
 <string name="total">Toplam</string>
@@ -125,7 +126,7 @@ Bu işlem, bu uygulama için depolanan tüm verileri temizleyecek ve geri alına
 <string name="wallpaper_change_success">Arkaplan başarıyla değiştirildi</string>
 <string name="weather">Hava Durumu</string>
 <string name="welcome">Hoş Geldiniz</string>
-<string name="welcome_description">Lunar Launcher'a hoş geldiniz. İlk açılışınız; eğer yeni bir kullanıcısınız,
+<string name="welcome_description">Lunar Launcher\'a hoş geldiniz. İlk açılışınız; eğer yeni bir kullanıcısınız,
 <b>devam etmeden önce bu metinleri okuyun</b>.
 \n\nİlk olarak, bu iletişim kutusunu kapattıktan sonra aşağıdaki izinleri vermeniz istenecektir. Eğer izinleri vermezseniz,
 uygulama beklenildiği gibi çalışmaz.
@@ -139,9 +140,9 @@ uygulama beklenildiği gibi çalışmaz.
 \n<li>Sola kaydır - uygulama çekmecesi</li>
 \n<li>Pil göstergesi içinde basılı tutun - launcher ayarları</li>
 \n<li>Ekrandaki alt kısımda basılı tutun - yapılacaklar yöneticisi</li>
-\n<li>Çift tıklayın - cihaz kilidi/uyku (ayarlar'dan etkinleştirin)</li>
+\n<li>Çift tıklayın - cihaz kilidi/uyku (Ayarlar\'dan etkinleştirin)</li>
 \n<li>Favori öğeyi basılı tutun - favoriyi kaldırın</li>
-\n\nDaha fazla bilgi için Github'daki wiki sayfasını ziyaret edin.
+\n\nDaha fazla bilgi için Github\'daki wiki sayfasını ziyaret edin.
 </string>
 <string name="wiki">Wiki</string>
 
