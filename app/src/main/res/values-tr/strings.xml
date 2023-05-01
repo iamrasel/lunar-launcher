@@ -1,0 +1,149 @@
+<resources>
+<string name="about">Hakkında</string>
+<string name="accessibility">Erişilebilirlik</string>
+<string name="accessibility_service_description">
+    Lunar Launcher\'ın cihazı uyku moduna almasına izin veren erişilebilirlik servisi,
+    Android Pie (API 28) ve üstü için.
+</string>
+<string name="accessibility_service_label">Kilit Servisi</string>
+<string name="acknowledgements">
+    <b>Teşekkürler</b>\n
+    <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
+    <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
+</string>
+<string name="add_new">Yeni Ekle</string>
+<string name="add_widget">Widget Ekle</string>
+<string name="advance">Gelişmiş</string>
+<string name="amazon">Amazon</string>
+<string name="appearances">Görünüm</string>
+<string name="application_theme">Uygulama Teması</string>
+<string name="app_drawer">Uygulama Çekmecesi</string>
+<string name="app_info">Uygulama Bilgisi</string>
+<string name="app_store">Uygulama Mağazası</string>
+<string name="argb" translatable="false">AARRGGBB</string>
+<string name="authentication_error">Kimlik doğrulama hatası</string>
+<string name="authentication_failed">Kimlik doğrulama başarısız oldu</string>
+<string name="authentication_subtitle">
+    Devam etmek için cihaz kimlik bilgilerinizle doğrulama yapın
+</string>
+<string name="background">Arka Plan</string>
+<string name="back_home">Her zaman Ana Ekrana Geri Dön</string>
+<string name="celsius">Celsius</string>
+<string name="change_wallpaper">Duvar Kağıdı Değiştir</string>
+<string name="choose_launcher">Varsayılan Başlatıcıyı Seçin</string>
+<string name="city_name">Şehir Adı</string>
+<string name="contact">İletişim</string>
+<string name="copied_message">Panoya kopyalandı</string>
+<string name="cpu">CPU</string>
+<string name="dark_theme">Karanlık</string>
+<string name="date_format">Tarih Formatı</string>
+<string name="decrease_height">Yüksekliği Azalt</string>
+<string name="default_">Varsayılan</string>
+<string name="delete">Sil</string>
+<string name="delete_all">Tümünü Sil</string>
+<string name="delete_all_confirmation">
+    Mevcut tüm görevleri silmek istediğinizden emin misiniz?
+</string>
+<string name="developer_name">Geliştirici: Md Rasel Hossain</string>
+<string name="device_admin">Cihaz Yöneticisi</string>
+ <string name="device_admin_description">
+        Çift dokunarak kilitleme özelliğini kullanmaya izin ver
+    </string>
+    <string name="donate">Bağış Yap</string>
+    <string name="double_tap_lock">Çift Dokunma Kilitleme Yöntemi</string>
+    <string name="empty_text_field">Metin alanı boş</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="feed_url">RSS Besleme URL\'si</string>
+    <string name="first_install">İlk Yükleme</string>
+    <string name="follow_system">Sistemi Takip Et</string>
+    <string name="free">Ücretsiz</string>
+    <string name="freeform">Serbest form</string>
+    <string name="frequency">Frekans</string>
+    <string name="got_it">Anladım</string>
+    <string name="hide_status_bar">Durum Çubuğunu Gizle</string>
+    <string name="image_pick_failed">Resim alınamadı</string>
+    <string name="increase_height">Yüksekliği Arttır</string>
+    <string name="last_update">Son Güncelleme</string>
+    <string name="light_theme">Aydınlık</string>
+    <string name="lunar_settings">Ay Ayarları</string>
+    <string name="misc">Çeşitli</string>
+    <string name="misc_info_titles">
+        Cihaz Çalışma Süresi\nSistem Aktif\nBellek Eşiği\nBatarya Sıcaklığı\nBatarya Gerilimi
+        \nKök Depolama\nIPv4\nIPv6
+    </string>
+    <string name="move_up">Yukarı Taşı</string>
+    <string name="move_down">Aşağı Taşı</string>
+    <string name="na">N/A</string>
+    <string name="negative">Negatif</string>
+    <string name="null_app_store_message">
+        Bu cihazda yüklü hiçbir uygulama mağazası yok.
+    </string>
+<string name="owm_key">OWM API Anahtarı</string>
+<string name="positive">Pozitif</string>
+<string name="proceed">Devam et</string>
+<string name="quick_launch">Hızlı Başlat</string>
+<string name="ram">RAM</string>
+<string name="reset">Sıfırla</string>
+<string name="reset_message">
+Bu işlem, bu uygulama için depolanan tüm verileri temizleyecek ve geri alınamaz.
+</string>
+<string name="restart">Yeniden Başlat</string>
+<string name="root">Kök</string>
+<string name="rss_feed">RSS Beslemesi</string>
+<string name="sdk" translatable="false">SDK</string>
+<string name="search_with_keyboard">Klavyeyle Ara</string>
+<string name="shortcut_count">Kısayol Sayısı (URL/Kişi)</string>
+<string name="show_city">Hava Durumu ile Şehir Adını Göster</string>
+<string name="something_went_wrong">Bir şeyler yanlış gitti</string>
+<string name="source_code">Kaynak Kodu</string>
+<string name="star">Yıldız</string>
+<string name="support">Destek</string>
+<string name="support_message">Geliştiricinin uygulamayı ücretsiz ve canlı tutmak için desteğini destekleyin.\n
+\n<li><b>Bağış:</b> Mümkünse, geliştiriciyi desteklemek ve teşvik etmek için doğrudan bağış yapın.</li>
+\n<li><b>Amazon:</b> Amazon\'da alışveriş yaparken ortaklık bağlantısını kullanarak geliştiriciyi ödüllendirebilirsiniz.</li>
+\n<li><b>Yıldız:</b> Destek göstermek için Github\'da yıldız verin.</li>
+</string>
+<string name="system_stats">Sistem İstatistikleri</string>
+<string name="telegram_group">Telegram Grubu</string>
+<string name="temperature">Sıcaklık</string>
+<string name="temp_unit">Sıcaklık Birimi</string>
+<string name="time_date">Zaman - Tarih</string>
+<string name="time_format">Zaman Biçimi</string>
+<string name="todo">Yapılacaklar</string>
+<string name="todo_count">Ana Ekran\'daki Yapılacak Sayısı</string>
+<string name="todo_manager">Yapılacaklar Yöneticisi</string>
+<string name="todo_manager_lock">Yapılacaklar Yöneticisi Kilidi</string>
+<string name="total">Toplam</string>
+<string name="twelve">12 Saat</string>
+<string name="twenty_four">24 Saat</string>
+<string name="uid" translatable="false">UID</string>
+<string name="unable_to_launch">Başlatılamadı</string>
+<string name="uninstall">Kaldır</string>
+<string name="update">Güncelle</string>
+       <string name="url">URL</string>
+<string name="used">Kullanılmış</string>
+<string name="version">Versiyon</string>
+<string name="wallpaper_change_success">Arkaplan başarıyla değiştirildi</string>
+<string name="weather">Hava Durumu</string>
+<string name="welcome">Hoş Geldiniz</string>
+<string name="welcome_description">Lunar Launcher\'a hoş geldiniz. İlk açılışınız; eğer yeni bir kullanıcısınız,
+<b>devam etmeden önce bu metinleri okuyun</b>.
+\n\nİlk olarak, bu iletişim kutusunu kapattıktan sonra aşağıdaki izinleri vermeniz istenecektir. Eğer izinleri vermezseniz,
+uygulama beklenildiği gibi çalışmaz.
+\n\n<li><b>Sistem ayarlarını değiştirin -</b> Bir kaydırıcı kullanarak parlaklığı kontrol etmek için</li>
+\n<li><b>Telefon -</b> Kısayollardan arama yapmak için</li>
+\n\nHala herhangi bir şüpheniz varsa, kaynak kodunu her zaman kontrol edebilirsiniz, tamamen açık kaynaklıdır.
+\n\n<b><u>Jestler:</u></b>
+\n<li>Yukarı kaydır - hızlı erişim</li>
+\n<li>Aşağı kaydır - bildirim paneli</li>
+\n<li>Sağa kaydır - beslemeler</li>
+\n<li>Sola kaydır - uygulama çekmecesi</li>
+\n<li>Pil göstergesi içinde basılı tutun - launcher ayarları</li>
+\n<li>Ekrandaki alt kısımda basılı tutun - yapılacaklar yöneticisi</li>
+\n<li>Çift tıklayın - cihaz kilidi/uyku (Ayarlar\'dan etkinleştirin)</li>
+\n<li>Favori öğeyi basılı tutun - favoriyi kaldırın</li>
+\n\nDaha fazla bilgi için Github\'daki wiki sayfasını ziyaret edin.
+</string>
+<string name="wiki">Wiki</string>
+
+</resources>
