@@ -31,9 +31,7 @@ import androidx.appcompat.widget.LinearLayoutCompat.LayoutParams
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.JobIntentService.enqueueWork
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kotlinx.coroutines.*
 import rasel.lunar.launcher.LauncherActivity.Companion.appWidgetHost
@@ -62,6 +60,9 @@ import java.util.*
 internal class Feeds : Fragment() {
 
     private lateinit var binding: FeedsBinding
+    private lateinit var runnable: Runnable
+    private val handler = Handler(Looper.getMainLooper())
+    private var handlerIsRunning = false
     private val requestCodeString = "requestCode"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -74,17 +75,26 @@ internal class Feeds : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        systemInfo()
         expandCollapse()
     }
 
     override fun onResume() {
         super.onResume()
         registerForContextMenu(binding.widgetContainer)
+        if (binding.feedsSysInfos.expandableSystemInfo.isExpanded && !handlerIsRunning) {
+            handler.post(runnable)
+            handlerIsRunning = true
+        }
     }
 
     override fun onPause() {
         super.onPause()
         unregisterForContextMenu(binding.widgetContainer)
+        if (handlerIsRunning) {
+            handler.removeCallbacks(runnable)
+            handlerIsRunning = false
+        }
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -111,13 +121,22 @@ internal class Feeds : Fragment() {
                     binding.expandSystemInfo.id -> {
                         binding.feedsRss.expandableRss.collapse()
                         binding.feedsSysInfos.expandableSystemInfo.expand()
-                        systemInfo()
+                        if (!handlerIsRunning) {
+                            handler.post(runnable)
+                            handlerIsRunning = true
+                        }
                     }
                 }
             } else {
                 when (checkedId) {
                     binding.expandRss.id -> binding.feedsRss.expandableRss.collapse()
-                    binding.expandSystemInfo.id -> binding.feedsSysInfos.expandableSystemInfo.collapse()
+                    binding.expandSystemInfo.id -> {
+                        binding.feedsSysInfos.expandableSystemInfo.collapse()
+                        if (handlerIsRunning) {
+                            handler.removeCallbacks(runnable)
+                            handlerIsRunning = false
+                        }
+                    }
                 }
             }
         }
@@ -161,18 +180,14 @@ internal class Feeds : Fragment() {
     }
 
     private fun systemInfo() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                val systemStats = SystemStats()
-                systemStats.intStorage(binding.feedsSysInfos.intParent)
-                systemStats.extStorage(binding.feedsSysInfos.extParent)
-                while (isActive) {
-                    systemStats.ram(binding.feedsSysInfos.ramParent)
-                    systemStats.cpu(binding.feedsSysInfos.cpuParent)
-                    systemStats.misc(binding.feedsSysInfos.misc)
-                    delay(1000)
-                }
-            }
+        val systemStats = SystemStats()
+        systemStats.intStorage(binding.feedsSysInfos.intParent)
+        systemStats.extStorage(binding.feedsSysInfos.extParent)
+        runnable = Runnable {
+            systemStats.ram(binding.feedsSysInfos.ramParent)
+            systemStats.cpu(binding.feedsSysInfos.cpuParent)
+            systemStats.misc(binding.feedsSysInfos.misc)
+            handler.postDelayed(runnable, 1000)
         }
     }
 
