@@ -27,7 +27,6 @@ import android.os.*
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -57,10 +56,9 @@ internal class SystemStats {
 
     /* ram info */
     fun ram(ramParent: LinearLayoutCompat) {
-        val child  = ramParent.findViewById<View>(R.id.childsysinfo)
-        val indicator = child.findViewById<LinearProgressIndicator>(R.id.indicator)
-        val textView = child.findViewById<TextView>(R.id.textView)
-
+        val parent = ramParent.findViewById<View>(R.id.childSysInfo)
+        val indicator = parent.findViewById<LinearProgressIndicator>(R.id.indicator)
+        val textView = parent.findViewById<MaterialTextView>(R.id.textView)
 
         val totalMem = memoryInfo.totalMem / toGb
         val availMem = memoryInfo.availMem / toGb
@@ -78,9 +76,9 @@ internal class SystemStats {
 
     /* cpu and battery info */
     fun cpu(cpuParent: LinearLayoutCompat) {
-        val child  = cpuParent.findViewById<View>(R.id.childsysinfo)
-        val indicator = child.findViewById<LinearProgressIndicator>(R.id.indicator)
-        val textView = child.findViewById<TextView>(R.id.textView)
+        val parent = cpuParent.findViewById<View>(R.id.childSysInfo)
+        val indicator = parent.findViewById<LinearProgressIndicator>(R.id.indicator)
+        val textView = parent.findViewById<MaterialTextView>(R.id.textView)
 
         var cpuTemp = 0.0f
         try {
@@ -115,9 +113,9 @@ internal class SystemStats {
 
     /* internal storage */
     fun intStorage(intParent: LinearLayoutCompat) {
-        val child  = intParent.findViewById<View>(R.id.childsysinfo)
-        val indicator = child.findViewById<LinearProgressIndicator>(R.id.indicator)
-        val textView = child.findViewById<TextView>(R.id.textView)
+        val parent = intParent.findViewById<View>(R.id.childSysInfo)
+        val indicator = parent.findViewById<LinearProgressIndicator>(R.id.indicator)
+        val textView = parent.findViewById<MaterialTextView>(R.id.textView)
 
         val intPath = Environment.getExternalStorageDirectory().absolutePath
         val statFs = StatFs(intPath)
