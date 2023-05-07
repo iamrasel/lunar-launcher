@@ -18,6 +18,7 @@
 
 package rasel.lunar.launcher.settings
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
@@ -45,6 +46,7 @@ internal class SettingsActivity : AppCompatActivity() {
         @JvmStatic val settingsPrefs: SharedPreferences? get() = sharedPreferences
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -88,7 +90,7 @@ internal class SettingsActivity : AppCompatActivity() {
         binding.support.setOnClickListener { supportDialog() }
 
         /* show app version name */
-        binding.version.text = BuildConfig.VERSION_NAME
+        binding.version.text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     }
 
     override fun getTheme(): Resources.Theme {

@@ -384,20 +384,24 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     /* create text view for shortcut thumbnails */
     private val textView: MaterialTextView get() {
         val relativeLayout = RelativeLayout(lActivity!!)
-        relativeLayout.layoutParams = LinearLayoutCompat.LayoutParams(
-            LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
-            LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1F)
-        relativeLayout.gravity = Gravity.CENTER
+        relativeLayout.apply {
+            layoutParams = LinearLayoutCompat.LayoutParams(
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1F)
+            gravity = Gravity.CENTER
+        }
         binding.shortcutsGroup.addView(relativeLayout)
 
         val textView = MaterialTextView(lActivity!!)
-        textView.layoutParams = LinearLayoutCompat.LayoutParams(
-            (48 * resources.displayMetrics.density).toInt(),
-            (48 * resources.displayMetrics.density).toInt())
-        textView.gravity = Gravity.CENTER
-        textView.textSize = 20 * resources.displayMetrics.density
-        textView.setTypeface(null, Typeface.BOLD)
-        textView.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_bg)
+        textView.apply {
+            layoutParams = LinearLayoutCompat.LayoutParams(
+                (48 * resources.displayMetrics.density).toInt(),
+                (48 * resources.displayMetrics.density).toInt())
+            gravity = Gravity.CENTER
+            textSize = 10 * resources.displayMetrics.density
+            setTypeface(null, Typeface.BOLD)
+            background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_bg)
+        }
         relativeLayout.addView(textView)
         return textView
     }
