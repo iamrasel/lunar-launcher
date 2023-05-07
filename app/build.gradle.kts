@@ -12,8 +12,8 @@ android {
         applicationId = "rasel.lunar.launcher"
         minSdk = 26
         targetSdk = 33
-        versionCode = 29
-        versionName = "2.4.1"
+        versionCode = 30
+        versionName = "2.5"
     }
 
     buildTypes {
@@ -67,7 +67,7 @@ dependencies {
     implementation ("androidx.browser:browser:1.5.0")
     implementation ("androidx.core:core-ktx:1.10.0")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation ("com.google.android.material:material:1.8.0")
+    implementation ("com.google.android.material:material:1.9.0")
     implementation (kotlin("stdlib", version = kotlinVersion))
     implementation ("com.github.cachapa:ExpandableLayout:2.9.2")
 }

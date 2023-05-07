@@ -1,0 +1,2 @@
+- Several visual and performance fixes, helped by @michelevantaggi02
+- Turkish translation by @slorixsh

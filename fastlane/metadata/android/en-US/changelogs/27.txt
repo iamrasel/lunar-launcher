@@ -1,2 +1,0 @@
-- widgets host
-- edit shortcuts
