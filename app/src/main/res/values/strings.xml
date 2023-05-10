@@ -146,5 +146,8 @@
         \n\nFor more information, visit the wiki page at Github.
     </string>
     <string name="wiki">Wiki</string>
-
+    <string name="left">Left</string>
+    <string name="center">Center</string>
+    <string name="right">Right</string>
+    <string name="appAlignment">App Alignment</string>
 </resources>

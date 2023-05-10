@@ -138,5 +138,8 @@
         \n\nPer maggiori informazioni, visitare la wiki su Github.
     </string>
     <string name="wiki">Wiki</string>
-
+    <string name="left">Sinistra</string>
+    <string name="center">Centro</string>
+    <string name="right">Destra</string>
+    <string name="appAlignment">Allineamento applicazioni</string>
 </resources>

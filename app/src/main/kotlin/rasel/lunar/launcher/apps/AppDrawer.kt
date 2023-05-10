@@ -32,6 +32,7 @@ import android.content.pm.ResolveInfo
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
@@ -77,9 +79,9 @@ internal class AppDrawer : Fragment() {
         setupSearchColumns()
 
         packageManager = lActivity!!.packageManager
-        appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-
+        appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
+        appsAdapter.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
         /* initialize apps list adapter */
         binding.appsList.adapter = appsAdapter
         fetchApps()
@@ -117,7 +119,7 @@ internal class AppDrawer : Fragment() {
     override fun onResume() {
         super.onResume()
         fetchApps()
-
+        appsAdapter.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
         /* pop up the keyboard */
         if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) {
             binding.searchLayout.visibility = View.VISIBLE
