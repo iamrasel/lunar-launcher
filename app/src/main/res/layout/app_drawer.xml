@@ -12,35 +12,9 @@
         android:textColor="?attr/colorControlHighlight"
         android:textSize="@dimen/appsCountText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/appsList"
+        app:layout_constraintStart_toStartOf="@id/appsList"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ListView
-        android:id="@+id/leftSearchList"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
-        android:transcriptMode="alwaysScroll"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/leftSearchListII"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ListView
-        android:id="@+id/leftSearchListII"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
-        android:transcriptMode="alwaysScroll"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/leftSearchList"
-        app:layout_constraintEnd_toStartOf="@+id/appsList"
-        app:layout_constraintHorizontal_weight="1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/appsList"
@@ -50,55 +24,72 @@
         android:scrollbars="none"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/searchLayout"
-        app:layout_constraintEnd_toStartOf="@+id/rightSearchList"
-        app:layout_constraintHorizontal_weight="6"
-        app:layout_constraintStart_toEndOf="@+id/leftSearchListII" />
+        app:layout_constraintEnd_toStartOf="@+id/moveDown"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ListView
-        android:id="@+id/rightSearchList"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/alphabets"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
-        android:transcriptMode="alwaysScroll"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/twelve"
+        app:layout_constraintBottom_toTopOf="@+id/reset"
+        app:layout_constraintStart_toEndOf="@id/appsList"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bg"
+        android:padding="@dimen/eight"
+        android:layout_marginBottom="@dimen/four"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/search"
+        app:srcCompat="@drawable/ic_refresh" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bg"
+        android:padding="@dimen/eight"
+        android:layout_marginBottom="@dimen/four"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/moveUp"
+        app:srcCompat="@drawable/ic_search" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/moveUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bg"
+        android:padding="@dimen/eight"
+        android:layout_marginBottom="@dimen/four"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/moveDown"
+        app:srcCompat="@drawable/ic_up" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/moveDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bg"
+        android:padding="@dimen/eight"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/appsList"
-        app:layout_constraintEnd_toStartOf="@+id/rightSearchListII"
-        app:layout_constraintHorizontal_weight="1" />
-
-    <ListView
-        android:id="@+id/rightSearchListII"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
-        android:transcriptMode="alwaysScroll"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rightSearchList"
-        app:layout_constraintHorizontal_weight="1" />
-
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/loading"
-        android:layout_width="@dimen/oneThirtySix"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:trackColor="?attr/scrimBackground" />
+        app:srcCompat="@drawable/ic_down" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLayout"
-        android:layout_width="@dimen/zero"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rightSearchList"
-        app:layout_constraintStart_toEndOf="@+id/leftSearchListII">
+        app:layout_constraintEnd_toEndOf="@+id/appsList"
+        app:layout_constraintStart_toStartOf="@+id/appsList">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/close"
@@ -115,11 +106,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchInput"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/oneThirtySix"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:imeOptions="actionSearch"
             android:singleLine="true"
+            android:layout_marginHorizontal="@dimen/four"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/backspace"
             app:layout_constraintStart_toEndOf="@+id/close"
