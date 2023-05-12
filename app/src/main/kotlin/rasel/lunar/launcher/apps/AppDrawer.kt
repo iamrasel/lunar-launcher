@@ -37,14 +37,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.ArrayAdapter
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
-import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
@@ -55,6 +53,7 @@ import rasel.lunar.launcher.helpers.SwipeTouchListener
 import rasel.lunar.launcher.helpers.UniUtils.Companion.expandNotificationPanel
 import rasel.lunar.launcher.helpers.UniUtils.Companion.lockMethod
 import java.util.*
+import java.util.regex.Pattern
 
 
 internal class AppDrawer : Fragment() {
@@ -66,17 +65,8 @@ internal class AppDrawer : Fragment() {
     private lateinit var packageInfoList: MutableList<ResolveInfo>
     private var packageList = mutableListOf<Packages>()
 
-    /* items for search columns */
-    private val leftSearchArray = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m")
-    private val leftSearchArrayII = arrayOf("0", "1", "2", "3", "4", "\u290B")
-    private val rightSearchArray = arrayOf("9", "8", "7", "6", "5", "\u290A")
-    private val rightSearchArrayII = arrayOf("z", "y", "x", "w", "v", "u", "t", "s", "r", "q", "p", "o", "n")
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
-
-        /* set up search columns */
-        setupSearchColumns()
 
         packageManager = lActivity!!.packageManager
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
@@ -93,8 +83,22 @@ internal class AppDrawer : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.reset.setOnClickListener { onResume() }
+
+        binding.moveDown.setOnClickListener {
+            binding.appsList.smoothScrollToPosition(packageList.size - 1)
+        }
+
+        binding.moveUp.setOnClickListener {
+            binding.appsList.smoothScrollToPosition(0)
+        }
+
+        binding.search.setOnClickListener {
+            binding.searchLayout.visibility = View.VISIBLE
+            it.visibility = View.GONE
+        }
+
         /* listen search item and string remover clicks */
-        controlOnSearchActions()
         searchStringRemover()
         binding.searchInput.doOnTextChanged { inputText, _, _, _ ->
             binding.searchInput.text?.let { binding.searchInput.setSelection(it.length) }
@@ -120,6 +124,9 @@ internal class AppDrawer : Fragment() {
         super.onResume()
         fetchApps()
         appsAdapter.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        
+        alphabetItems()
+
         /* pop up the keyboard */
         if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) {
             binding.searchLayout.visibility = View.VISIBLE
@@ -132,18 +139,6 @@ internal class AppDrawer : Fragment() {
     override fun onPause() {
         super.onPause()
         closeSearch()
-    }
-
-    /* search column adapters */
-    private fun setupSearchColumns() {
-        binding.leftSearchList.adapter =
-            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.childTextview, leftSearchArray)
-        binding.leftSearchListII.adapter =
-            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.childTextview, leftSearchArrayII)
-        binding.rightSearchList.adapter =
-            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.childTextview, rightSearchArray)
-        binding.rightSearchListII.adapter =
-            ArrayAdapter(requireContext(), R.layout.apps_child, R.id.childTextview, rightSearchArrayII)
     }
 
     /* update app list with app and package name */
@@ -171,49 +166,60 @@ internal class AppDrawer : Fragment() {
         if (packageList.size < 1) return
         else {
             /* update the list */
-            binding.loading.visibility = View.GONE
             appsAdapter.updateData(packageList)
         }
     }
 
-    /* listen search button clicks */
-    private fun controlOnSearchActions() {
-        /* left column 1 */
-        binding.leftSearchList.onItemClickListener =
-            OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
-                searchClickHelper(adapterView.getItemAtPosition(i))
+    private fun alphabetItems() {
+        val alphabets = mutableListOf<String>()
+        val numberPattern = Pattern.compile("[0-9]")
+        val alphabetPattern = Pattern.compile("[A-Z]")
+
+        for (i in 0 until packageList.size) {
+            val firstLetter = packageList[i].appName.first().uppercase()
+            if (numberPattern.matcher(firstLetter).matches()) {
+                alphabets.add("#")
+            } else if (alphabetPattern.matcher(firstLetter).matches()) {
+                alphabets.add(firstLetter)
+            } else if (!numberPattern.matcher(firstLetter).matches() &&
+                !alphabetPattern.matcher(firstLetter).matches()) {
+                alphabets.add("⠶")
             }
-        /* left column 2 */
-        binding.leftSearchListII.onItemClickListener =
-            OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
-                when (i) {
-                    /* go bottom */
-                    leftSearchArrayII.size - 1 -> binding.appsList.smoothScrollToPosition(packageList.size - 1)
-                    else -> searchClickHelper(adapterView.getItemAtPosition(i))
+        }
+
+        binding.alphabets.removeAllViews()
+        for (a in alphabets.distinct()) {
+            val textView = MaterialTextView(requireContext())
+            textView.apply {
+                layoutParams = LinearLayoutCompat.LayoutParams(
+                    LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+                    LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1F)
+                textSize = 14.5F
+                text = a
+                setOnClickListener {
+                    packageList.clear()
+                    for (resolver in packageInfoList) {
+                        val appName = resolver.loadLabel(packageManager).toString()
+                        if (a == "#") {
+                            if (numberPattern.matcher(appName.first().uppercase()).matches()) {
+                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                            }
+                        } else if (alphabetPattern.matcher(a).matches()) {
+                            if (appName.first().uppercase() == a) {
+                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                            }
+                        } else if (a == "⠶") {
+                            if (!numberPattern.matcher(appName.first().uppercase()).matches() &&
+                                !alphabetPattern.matcher(appName.first().uppercase()).matches()) {
+                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                            }
+                        }
+                    }
+                    appsAdapter.updateData(packageList)
                 }
             }
-        /* right column 1 */
-        binding.rightSearchList.onItemClickListener =
-            OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
-                when (i) {
-                    /* go top */
-                    rightSearchArray.size - 1 -> binding.appsList.smoothScrollToPosition(0)
-                    else -> searchClickHelper(adapterView.getItemAtPosition(i))
-                }
-            }
-        /* right column 2 */
-        binding.rightSearchListII.onItemClickListener =
-            OnItemClickListener { adapterView: AdapterView<*>, _: View?, i: Int, _: Long ->
-                searchClickHelper(adapterView.getItemAtPosition(i))
-            }
-    }
-
-    private fun searchClickHelper(clickedItem: Any) {
-        if (packageList.size < 2) return
-
-        /* show search box and build search string */
-        if (binding.searchLayout.visibility != View.VISIBLE) binding.searchLayout.visibility = View.VISIBLE
-        binding.searchInput.text = SpannableStringBuilder(binding.searchInput.text.toString() + clickedItem)
+            binding.alphabets.addView(textView)
+        }
     }
 
     private fun searchStringRemover() {
@@ -256,6 +262,7 @@ internal class AppDrawer : Fragment() {
                 .hideSoftInputFromWindow(view.windowToken, 0)
         }
         binding.searchLayout.visibility = View.GONE
+        binding.search.visibility = View.VISIBLE
     }
 
 }
