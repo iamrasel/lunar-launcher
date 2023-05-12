@@ -51,6 +51,7 @@ import rasel.lunar.launcher.helpers.SwipeTouchListener
 import rasel.lunar.launcher.helpers.UniUtils.Companion.expandNotificationPanel
 import rasel.lunar.launcher.helpers.UniUtils.Companion.lockMethod
 import java.util.*
+import java.util.regex.Pattern
 
 
 internal class AppDrawer : Fragment() {
@@ -80,7 +81,7 @@ internal class AppDrawer : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.reset.setOnClickListener { fetchApps() }
+        binding.reset.setOnClickListener { onResume() }
 
         binding.moveDown.setOnClickListener {
             binding.appsList.smoothScrollToPosition(packageList.size - 1)
@@ -167,8 +168,19 @@ internal class AppDrawer : Fragment() {
 
     private fun alphabetItems() {
         val alphabets = mutableListOf<String>()
+        val numberPattern = Pattern.compile("[0-9]")
+        val alphabetPattern = Pattern.compile("[A-Z]")
+
         for (i in 0 until packageList.size) {
-            alphabets.add(packageList[i].appName.first().uppercase())
+            val firstLetter = packageList[i].appName.first().uppercase()
+            if (numberPattern.matcher(firstLetter).matches()) {
+                alphabets.add("#")
+            } else if (alphabetPattern.matcher(firstLetter).matches()) {
+                alphabets.add(firstLetter)
+            } else if (!numberPattern.matcher(firstLetter).matches() &&
+                !alphabetPattern.matcher(firstLetter).matches()) {
+                alphabets.add("⠶")
+            }
         }
 
         binding.alphabets.removeAllViews()
@@ -178,13 +190,25 @@ internal class AppDrawer : Fragment() {
                 layoutParams = LinearLayoutCompat.LayoutParams(
                     LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
                     LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1F)
+                textSize = 14.5F
                 text = a
                 setOnClickListener {
                     packageList.clear()
                     for (resolver in packageInfoList) {
                         val appName = resolver.loadLabel(packageManager).toString()
-                        if (appName.first().uppercase() == a) {
-                            packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                        if (a == "#") {
+                            if (numberPattern.matcher(appName.first().uppercase()).matches()) {
+                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                            }
+                        } else if (alphabetPattern.matcher(a).matches()) {
+                            if (appName.first().uppercase() == a) {
+                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                            }
+                        } else if (a == "⠶") {
+                            if (!numberPattern.matcher(appName.first().uppercase()).matches() &&
+                                !alphabetPattern.matcher(appName.first().uppercase()).matches()) {
+                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                            }
                         }
                     }
                     appsAdapter.updateData(packageList)
