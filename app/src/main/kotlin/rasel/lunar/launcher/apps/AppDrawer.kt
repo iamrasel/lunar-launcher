@@ -16,11 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * This file is based on this project <https://gitlab.com/biotstoiq/launch/>,
- * which is licensed under MIT.
- */
-
 package rasel.lunar.launcher.apps
 
 import android.annotation.SuppressLint
@@ -36,10 +31,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.databinding.AppDrawerBinding
@@ -57,22 +50,51 @@ import java.util.regex.Pattern
 internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
-    private lateinit var packageManager: PackageManager
-    private lateinit var appsAdapter: AppsAdapter
     private lateinit var settingsPrefs: SharedPreferences
-    private lateinit var packageInfoList: MutableList<ResolveInfo>
-    private var packageList = mutableListOf<Packages>()
+
+    companion object {
+        private val packageManager = lActivity!!.packageManager
+        private var appsAdapter: AppsAdapter? = null
+        private var packageInfoList: MutableList<ResolveInfo> = mutableListOf()
+        private var packageList = mutableListOf<Packages>()
+        private val numberPattern = Pattern.compile("[0-9]")
+        private val alphabetPattern = Pattern.compile("[A-Z]")
+        private var alphabetList = mutableListOf<String>()
+        @JvmStatic val alphabet: MutableList<String> get() = alphabetList.distinct() as MutableList<String>
+
+        fun listenScroll(letter: String) {
+            packageList.clear()
+            for (resolver in packageInfoList) {
+                val appName = resolver.loadLabel(packageManager).toString()
+                if (letter == "#") {
+                    if (numberPattern.matcher(appName.first().uppercase()).matches()) {
+                        packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                    }
+                } else if (alphabetPattern.matcher(letter).matches()) {
+                    if (appName.first().uppercase() == letter) {
+                        packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                    }
+                } else if (letter == "⠶") {
+                    if (!numberPattern.matcher(appName.first().uppercase()).matches() &&
+                        !alphabetPattern.matcher(appName.first().uppercase()).matches()) {
+                        packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                    }
+                }
+            }
+            appsAdapter?.updateData(packageList)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
-        packageManager = lActivity!!.packageManager
         appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* initialize apps list adapter */
         binding.appsList.adapter = appsAdapter
         fetchApps()
+        getAlphabetItems()
 
         return binding.root
     }
@@ -121,7 +143,7 @@ internal class AppDrawer : Fragment() {
     override fun onResume() {
         super.onResume()
         fetchApps()
-        alphabetItems()
+        getAlphabetItems()
 
         /* pop up the keyboard */
         if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) {
@@ -162,59 +184,21 @@ internal class AppDrawer : Fragment() {
         if (packageList.size < 1) return
         else {
             /* update the list */
-            appsAdapter.updateData(packageList)
+            appsAdapter?.updateData(packageList)
         }
     }
 
-    private fun alphabetItems() {
-        val alphabets = mutableListOf<String>()
-        val numberPattern = Pattern.compile("[0-9]")
-        val alphabetPattern = Pattern.compile("[A-Z]")
-
+    private fun getAlphabetItems() {
         for (i in 0 until packageList.size) {
             val firstLetter = packageList[i].appName.first().uppercase()
             if (numberPattern.matcher(firstLetter).matches()) {
-                alphabets.add("#")
+                alphabetList.add("#")
             } else if (alphabetPattern.matcher(firstLetter).matches()) {
-                alphabets.add(firstLetter)
+                alphabetList.add(firstLetter)
             } else if (!numberPattern.matcher(firstLetter).matches() &&
                 !alphabetPattern.matcher(firstLetter).matches()) {
-                alphabets.add("⠶")
+                alphabetList.add("⠶")
             }
-        }
-
-        binding.alphabets.removeAllViews()
-        for (a in alphabets.distinct()) {
-            val textView = MaterialTextView(requireContext())
-            textView.apply {
-                layoutParams = LinearLayoutCompat.LayoutParams(
-                    LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
-                    LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1F)
-                textSize = 14.5F
-                text = a
-                setOnClickListener {
-                    packageList.clear()
-                    for (resolver in packageInfoList) {
-                        val appName = resolver.loadLabel(packageManager).toString()
-                        if (a == "#") {
-                            if (numberPattern.matcher(appName.first().uppercase()).matches()) {
-                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
-                            }
-                        } else if (alphabetPattern.matcher(a).matches()) {
-                            if (appName.first().uppercase() == a) {
-                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
-                            }
-                        } else if (a == "⠶") {
-                            if (!numberPattern.matcher(appName.first().uppercase()).matches() &&
-                                !alphabetPattern.matcher(appName.first().uppercase()).matches()) {
-                                packageList.add(Packages(resolver.activityInfo.packageName, appName))
-                            }
-                        }
-                    }
-                    appsAdapter.updateData(packageList)
-                }
-            }
-            binding.alphabets.addView(textView)
         }
     }
 
@@ -247,7 +231,7 @@ internal class AppDrawer : Fragment() {
         if (packageList.size == 1 && settingsPrefs.getBoolean(KEY_QUICK_LAUNCH, true))
             startActivity(packageManager.getLaunchIntentForPackage(packageList[0].packageName))
         else
-            appsAdapter.updateData(packageList)
+            appsAdapter?.updateData(packageList)
     }
 
     /* clear search string, hide keyboard and search box */

@@ -27,13 +27,11 @@
         app:layout_constraintEnd_toStartOf="@+id/moveDown"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <rasel.lunar.launcher.apps.AlphabetScrollbar
         android:id="@+id/alphabets"
         android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/twelve"
+        android:layout_height="@dimen/threeTwentyFour"
+        android:layout_marginBottom="@dimen/four"
         app:layout_constraintBottom_toTopOf="@+id/reset"
         app:layout_constraintStart_toEndOf="@id/appsList"
         app:layout_constraintEnd_toEndOf="parent" />
