@@ -59,8 +59,7 @@ internal class AppDrawer : Fragment() {
         private var packageList = mutableListOf<Packages>()
         private val numberPattern = Pattern.compile("[0-9]")
         private val alphabetPattern = Pattern.compile("[A-Z]")
-        private var alphabetList = mutableListOf<String>()
-        @JvmStatic val alphabet: MutableList<String> get() = alphabetList.distinct() as MutableList<String>
+        @JvmStatic var alphabetList = mutableListOf<String>()
 
         fun listenScroll(letter: String) {
             packageList.clear()
@@ -189,6 +188,7 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun getAlphabetItems() {
+        alphabetList.clear()
         for (i in 0 until packageList.size) {
             val firstLetter = packageList[i].appName.first().uppercase()
             if (numberPattern.matcher(firstLetter).matches()) {
@@ -200,6 +200,7 @@ internal class AppDrawer : Fragment() {
                 alphabetList.add("⠶")
             }
         }
+        binding.alphabets.invalidate()
     }
 
     private fun searchStringRemover() {

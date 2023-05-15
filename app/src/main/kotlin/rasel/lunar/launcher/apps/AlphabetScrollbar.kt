@@ -27,7 +27,7 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
-import rasel.lunar.launcher.apps.AppDrawer.Companion.alphabet
+import rasel.lunar.launcher.apps.AppDrawer.Companion.alphabetList
 import rasel.lunar.launcher.apps.AppDrawer.Companion.listenScroll
 
 
@@ -35,6 +35,7 @@ internal class AlphabetScrollbar : View {
 
     private var paint: Paint? = null
     private var selectedIndex = -1
+    private val alphabet get() = alphabetList.distinct()
 
     constructor(context: Context?) : super(context) {
         init()
