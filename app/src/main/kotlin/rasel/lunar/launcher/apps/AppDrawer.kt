@@ -65,18 +65,22 @@ internal class AppDrawer : Fragment() {
             packageList.clear()
             for (resolver in packageInfoList) {
                 val appName = resolver.loadLabel(packageManager).toString()
-                if (letter == "#") {
-                    if (numberPattern.matcher(appName.first().uppercase()).matches()) {
-                        packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                when {
+                    letter == "#" -> {
+                        if (numberPattern.matcher(appName.first().uppercase()).matches()) {
+                            packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                        }
                     }
-                } else if (alphabetPattern.matcher(letter).matches()) {
-                    if (appName.first().uppercase() == letter) {
-                        packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                    alphabetPattern.matcher(letter).matches() -> {
+                        if (appName.first().uppercase() == letter) {
+                            packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                        }
                     }
-                } else if (letter == "⠶") {
-                    if (!numberPattern.matcher(appName.first().uppercase()).matches() &&
-                        !alphabetPattern.matcher(appName.first().uppercase()).matches()) {
-                        packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                    letter == "⠶" -> {
+                        if (!numberPattern.matcher(appName.first().uppercase()).matches() &&
+                            !alphabetPattern.matcher(appName.first().uppercase()).matches()) {
+                            packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                        }
                     }
                 }
             }
@@ -180,10 +184,9 @@ internal class AppDrawer : Fragment() {
             packageList.add(Packages(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString()))
         }
 
-        if (packageList.size < 1) return
-        else {
-            /* update the list */
-            appsAdapter?.updateData(packageList)
+        when {
+            packageList.size < 1 -> return
+            else -> appsAdapter?.updateData(packageList)
         }
     }
 
@@ -191,13 +194,11 @@ internal class AppDrawer : Fragment() {
         alphabetList.clear()
         for (i in 0 until packageList.size) {
             val firstLetter = packageList[i].appName.first().uppercase()
-            if (numberPattern.matcher(firstLetter).matches()) {
-                alphabetList.add("#")
-            } else if (alphabetPattern.matcher(firstLetter).matches()) {
-                alphabetList.add(firstLetter)
-            } else if (!numberPattern.matcher(firstLetter).matches() &&
-                !alphabetPattern.matcher(firstLetter).matches()) {
-                alphabetList.add("⠶")
+            when {
+                numberPattern.matcher(firstLetter).matches() -> alphabetList.add(0, "#")
+                alphabetPattern.matcher(firstLetter).matches() -> alphabetList.add(firstLetter)
+                !numberPattern.matcher(firstLetter).matches() &&
+                !alphabetPattern.matcher(firstLetter).matches() -> alphabetList.add(alphabetList.size,"⠶")
             }
         }
         binding.alphabets.invalidate()

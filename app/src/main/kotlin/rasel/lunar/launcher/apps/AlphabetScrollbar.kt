@@ -64,10 +64,9 @@ internal class AlphabetScrollbar : View {
         for (i in 0 until alphabet.count()) {
             val x = width / 2f - paint!!.measureText(alphabet[i]) / 2f
             val y = i * letterHeight + letterHeight / 2f
-            if (i == selectedIndex) {
-                paint!!.textSize = 28f
-            } else {
-                paint!!.textSize = 16f
+            when (i) {
+                selectedIndex -> paint!!.textSize = 28f
+                else -> paint!!.textSize = 16f
             }
             canvas.drawText(alphabet[i], x, y, paint!!)
         }
@@ -86,8 +85,11 @@ internal class AlphabetScrollbar : View {
             }
 
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                try { listenScroll(alphabet[selectedIndex]) }
-                catch (e: Exception) { e.printStackTrace() }
+                when {
+                    selectedIndex < 0 -> listenScroll(alphabet[0])
+                    selectedIndex > alphabet.count() - 1 -> listenScroll(alphabet[alphabet.count() - 1])
+                    else -> listenScroll(alphabet[selectedIndex])
+                }
                 selectedIndex = -1
                 invalidate()
             }
