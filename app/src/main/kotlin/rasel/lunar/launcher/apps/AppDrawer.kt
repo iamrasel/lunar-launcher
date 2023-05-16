@@ -112,10 +112,7 @@ internal class AppDrawer : Fragment() {
             binding.appsList.smoothScrollToPosition(0)
         }
 
-        binding.search.setOnClickListener {
-            binding.searchLayout.visibility = View.VISIBLE
-            it.visibility = View.GONE
-        }
+        binding.search.setOnClickListener { openSearch() }
 
         /* listen search item and string remover clicks */
         searchStringRemover()
@@ -131,12 +128,7 @@ internal class AppDrawer : Fragment() {
         getAlphabetItems()
 
         /* pop up the keyboard */
-        if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) {
-            binding.searchLayout.visibility = View.VISIBLE
-            binding.searchInput.requestFocus()
-            val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
-        }
+        if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) openSearch()
     }
 
     override fun onPause() {
