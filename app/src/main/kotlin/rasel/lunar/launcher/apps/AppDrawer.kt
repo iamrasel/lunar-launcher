@@ -37,12 +37,8 @@ import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.databinding.AppDrawerBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
-import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
-import rasel.lunar.launcher.helpers.SwipeTouchListener
-import rasel.lunar.launcher.helpers.UniUtils.Companion.expandNotificationPanel
-import rasel.lunar.launcher.helpers.UniUtils.Companion.lockMethod
 import java.util.*
 import java.util.regex.Pattern
 
@@ -127,20 +123,6 @@ internal class AppDrawer : Fragment() {
             binding.searchInput.text?.let { binding.searchInput.setSelection(it.length) }
             filterAppsList(inputText.toString())
         }
-
-        /* gestures */
-        binding.root.setOnTouchListener(object : SwipeTouchListener(context) {
-            /* expand notification panel on swipe down */
-            override fun onSwipeDown() {
-                super.onSwipeDown()
-                expandNotificationPanel(requireContext())
-            }
-            /* lock screen on double tap */
-            override fun onDoubleClick() {
-                super.onDoubleClick()
-                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext())
-            }
-        })
     }
 
     override fun onResume() {
@@ -234,6 +216,14 @@ internal class AppDrawer : Fragment() {
             startActivity(packageManager.getLaunchIntentForPackage(packageList[0].packageName))
         else
             appsAdapter?.updateData(packageList)
+    }
+
+    private fun openSearch() {
+        binding.searchLayout.visibility = View.VISIBLE
+        binding.search.visibility = View.GONE
+        binding.searchInput.requestFocus()
+        val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
     }
 
     /* clear search string, hide keyboard and search box */
