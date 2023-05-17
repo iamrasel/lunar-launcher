@@ -38,6 +38,10 @@ internal class AppsAdapter(
     private var oldList = mutableListOf<Packages>()
     private var appGravity: Int = Gravity.CENTER
 
+    companion object {
+        @JvmStatic var appsSize: Int? = null
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AppsViewHolder =
         AppsViewHolder(AppsChildBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false))
 
@@ -64,11 +68,7 @@ internal class AppsAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        /* show app count */
-        appsCount.text = oldList.size.toString()
-        return oldList.size
-    }
+    override fun getItemCount(): Int = oldList.size
 
     inner class AppsViewHolder(var view: AppsChildBinding) : RecyclerView.ViewHolder(view.root)
 
@@ -80,6 +80,11 @@ internal class AppsAdapter(
         oldList.clear()
         oldList.addAll(newList)
         diffUtilResult.dispatchUpdatesTo(this)
+
+        newList.size.let {
+            appsCount.text = it.toString()
+            appsSize = it
+        }
     }
 
     /* update text gravity (alignment) */

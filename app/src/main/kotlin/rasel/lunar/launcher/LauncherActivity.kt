@@ -61,21 +61,17 @@ internal class LauncherActivity : AppCompatActivity() {
     private lateinit var settingsPrefs: SharedPreferences
 
     companion object {
-        private var instance: LauncherActivity? = null
-        private var widgetManager: AppWidgetManager? = null
-        private var widgetHost: WidgetHost? = null
-
-        @JvmStatic val lActivity : LauncherActivity? get() = instance
-        @JvmStatic val appWidgetManager: AppWidgetManager? get() = widgetManager
-        @JvmStatic val appWidgetHost: WidgetHost? get() = widgetHost
+        @JvmStatic var lActivity : LauncherActivity? = null
+        @JvmStatic var appWidgetManager: AppWidgetManager? = null
+        @JvmStatic var appWidgetHost: WidgetHost? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        instance = this
-        widgetManager = AppWidgetManager.getInstance(applicationContext)
-        widgetHost = WidgetHost(applicationContext, widgetHostId)
+        lActivity = this
+        appWidgetManager = AppWidgetManager.getInstance(applicationContext)
+        appWidgetHost = WidgetHost(applicationContext, widgetHostId)
         appWidgetHost?.startListening()
 
         /*  if this is the first launch,

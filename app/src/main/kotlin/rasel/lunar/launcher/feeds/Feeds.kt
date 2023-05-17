@@ -146,7 +146,7 @@ internal class Feeds : Fragment() {
     private fun startService() {
         val rssUrl = lActivity!!.getSharedPreferences(PREFS_SETTINGS, 0)
             .getString(KEY_RSS_URL, "")
-        if (isNetworkAvailable && rssUrl != null && rssUrl.isNotEmpty()) {
+        if (isNetworkAvailable && !rssUrl.isNullOrEmpty()) {
             val intent = Intent(lActivity!!, RssService::class.java)
             intent.putExtra(RSS_RECEIVER, resultReceiver)
             enqueueWork(lActivity!!, RssService::class.java, rssJobId, intent)
