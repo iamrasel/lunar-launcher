@@ -53,9 +53,10 @@ internal class AlphabetScrollbar : View {
 
     @SuppressLint("ResourceType")
     private fun init() {
-        paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint!!.color = defaultTextColor
-        paint!!.textSize = 16f
+        paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = defaultTextColor
+            textSize = 16f
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -84,7 +85,8 @@ internal class AlphabetScrollbar : View {
                     selectedIndex = index
                     invalidate()
                 }
-                letterPreview?.text = alphabet[selectedIndex]
+                try { letterPreview?.text = alphabet[selectedIndex] }
+                catch (exception: Exception) { exception.printStackTrace() }
             }
 
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {

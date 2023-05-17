@@ -42,8 +42,7 @@ internal class SettingsActivity : AppCompatActivity() {
     private val sourceCode = "https://github.com/iamrasel/lunar-launcher"
 
     companion object {
-        private var sharedPreferences: SharedPreferences? = null
-        @JvmStatic val settingsPrefs: SharedPreferences? get() = sharedPreferences
+        @JvmStatic var settingsPrefs: SharedPreferences? = null
     }
 
     @SuppressLint("SetTextI18n")
@@ -54,7 +53,7 @@ internal class SettingsActivity : AppCompatActivity() {
         binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = this.getSharedPreferences(PREFS_SETTINGS, 0)
+        settingsPrefs = this.getSharedPreferences(PREFS_SETTINGS, 0)
 
         /* launch child settings dialogs on button clicks */
         binding.timeDate.setOnClickListener {

@@ -74,8 +74,10 @@ internal class AppsAdapter(
         oldList.addAll(newList)
         diffUtilResult.dispatchUpdatesTo(this)
 
-        appsCount.text = newList.size.toString()
-        appsSize = newList.size
+        newList.size.let {
+            appsCount.text = it.toString()
+            appsSize = it
+        }
     }
 }
 
