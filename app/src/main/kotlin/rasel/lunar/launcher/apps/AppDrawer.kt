@@ -33,6 +33,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.databinding.AppDrawerBinding
@@ -56,6 +57,7 @@ internal class AppDrawer : Fragment() {
         private val numberPattern = Pattern.compile("[0-9]")
         private val alphabetPattern = Pattern.compile("[A-Z]")
         @JvmStatic var alphabetList = mutableListOf<String>()
+        @JvmStatic var letterPreview: MaterialTextView? = null
 
         fun listenScroll(letter: String) {
             packageList.clear()
@@ -94,6 +96,7 @@ internal class AppDrawer : Fragment() {
         binding.appsList.adapter = appsAdapter
         fetchApps()
         getAlphabetItems()
+        letterPreview = binding.appsCount
 
         return binding.root
     }

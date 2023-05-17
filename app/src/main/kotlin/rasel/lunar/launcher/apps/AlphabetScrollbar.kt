@@ -28,7 +28,9 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import rasel.lunar.launcher.apps.AppDrawer.Companion.alphabetList
+import rasel.lunar.launcher.apps.AppDrawer.Companion.letterPreview
 import rasel.lunar.launcher.apps.AppDrawer.Companion.listenScroll
+import rasel.lunar.launcher.apps.AppsAdapter.Companion.appsSize
 
 
 internal class AlphabetScrollbar : View {
@@ -65,7 +67,7 @@ internal class AlphabetScrollbar : View {
             val x = width / 2f - paint!!.measureText(alphabet[i]) / 2f
             val y = i * letterHeight + letterHeight / 2f
             when (i) {
-                selectedIndex -> paint!!.textSize = 28f
+                selectedIndex -> paint!!.textSize = 20f
                 else -> paint!!.textSize = 16f
             }
             canvas.drawText(alphabet[i], x, y, paint!!)
@@ -82,6 +84,7 @@ internal class AlphabetScrollbar : View {
                     selectedIndex = index
                     invalidate()
                 }
+                letterPreview?.text = alphabet[selectedIndex]
             }
 
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
@@ -91,6 +94,7 @@ internal class AlphabetScrollbar : View {
                     else -> listenScroll(alphabet[selectedIndex])
                 }
                 selectedIndex = -1
+                letterPreview?.text = appsSize.toString()
                 invalidate()
             }
         }
