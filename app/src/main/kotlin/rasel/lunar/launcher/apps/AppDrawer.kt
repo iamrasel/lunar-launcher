@@ -24,6 +24,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
@@ -37,6 +38,7 @@ import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.databinding.AppDrawerBinding
+import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
@@ -48,6 +50,7 @@ internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
     private lateinit var settingsPrefs: SharedPreferences
+    private var isKeyboardShowing: Boolean = false
 
     companion object {
         private val packageManager = lActivity!!.packageManager
@@ -91,12 +94,13 @@ internal class AppDrawer : Fragment() {
 
         appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
+        letterPreview = binding.appsCount
 
         /* initialize apps list adapter */
         binding.appsList.adapter = appsAdapter
         fetchApps()
         getAlphabetItems()
-        letterPreview = binding.appsCount
+        setKeyboardPadding()
 
         return binding.root
     }
@@ -230,6 +234,31 @@ internal class AppDrawer : Fragment() {
         }
         binding.searchLayout.visibility = View.GONE
         binding.search.visibility = View.VISIBLE
+    }
+
+    private fun setKeyboardPadding() {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = Rect()
+            binding.root.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = binding.root.height
+            val keyboardHeight = screenHeight - (rect.bottom - rect.top)
+
+            when {
+                keyboardHeight > screenHeight * 0.15 -> {
+                    if (!isKeyboardShowing &&
+                        !settingsPrefs.getBoolean(Constants.KEY_STATUS_BAR, false)) {
+                        isKeyboardShowing = true
+                        binding.root.setPadding(0, 0, 0, keyboardHeight)
+                    }
+                }
+                else -> {
+                    if (isKeyboardShowing) {
+                        isKeyboardShowing = false
+                        binding.root.setPadding(0, 0, 0, 0)
+                    }
+                }
+            }
+        }
     }
 
 }
