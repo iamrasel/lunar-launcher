@@ -18,6 +18,7 @@
 
 package rasel.lunar.launcher.settings.childs
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -36,6 +37,7 @@ internal class Apps : BottomSheetDialogFragment() {
 
     private lateinit var binding : SettingsAppsBinding
 
+    @SuppressLint("RtlHardcoded")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppsBinding.inflate(inflater, container, false)
 
@@ -49,6 +51,7 @@ internal class Apps : BottomSheetDialogFragment() {
             true -> binding.quickLaunchPositive.isChecked = true
             false -> binding.quickLaunchNegative.isChecked = true
         }
+
         when (settingsPrefs!!.getInt(KEY_DRAW_ALIGN, Gravity.CENTER)) {
             Gravity.CENTER -> binding.appAlignmentCenter.isChecked = true
             Gravity.LEFT -> binding.appAlignmentLeft.isChecked = true
@@ -58,6 +61,7 @@ internal class Apps : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    @SuppressLint("RtlHardcoded")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true

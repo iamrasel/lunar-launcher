@@ -20,6 +20,7 @@
         android:id="@+id/appsList"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/sixteen"
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layoutManager="LinearLayoutManager"
@@ -33,7 +34,7 @@
         android:layout_height="@dimen/threeTwentyFour"
         android:layout_marginBottom="@dimen/four"
         app:layout_constraintBottom_toTopOf="@+id/reset"
-        app:layout_constraintStart_toEndOf="@id/appsList"
+        app:layout_constraintStart_toStartOf="@id/reset"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton

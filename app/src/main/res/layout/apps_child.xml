@@ -11,5 +11,6 @@
         android:background="@drawable/apps_bg"
         android:gravity="center"
         android:paddingVertical="@dimen/four"
+        android:paddingHorizontal="@dimen/eight"
         android:textSize="@dimen/appsText" />
 </androidx.appcompat.widget.LinearLayoutCompat>

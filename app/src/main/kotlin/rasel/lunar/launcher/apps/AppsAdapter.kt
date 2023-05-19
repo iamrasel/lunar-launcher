@@ -45,7 +45,6 @@ internal class AppsAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AppsViewHolder =
         AppsViewHolder(AppsChildBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false))
 
-    @SuppressLint("RtlHardcoded")
     override fun onBindViewHolder(holder: AppsViewHolder, i: Int) {
         val item = oldList[i]
         holder.view.childTextview.apply {
@@ -91,9 +90,9 @@ internal class AppsAdapter(
     @SuppressLint("RtlHardcoded", "NotifyDataSetChanged")
     fun updateGravity(gravity: Int){
         /* the first check is to avoid calling notifyDataSetChanged() everytime */
-        if (gravity != appGravity && (gravity == Gravity.LEFT || gravity == Gravity.CENTER || gravity == Gravity.RIGHT) ){
+        if (gravity != appGravity &&
+            (gravity == Gravity.LEFT || gravity == Gravity.CENTER || gravity == Gravity.RIGHT)) {
             appGravity = gravity
-
             notifyDataSetChanged()
         }
     }

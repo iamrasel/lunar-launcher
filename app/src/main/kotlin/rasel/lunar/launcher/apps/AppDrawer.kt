@@ -40,6 +40,7 @@ import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.databinding.AppDrawerBinding
 import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
@@ -93,17 +94,11 @@ internal class AppDrawer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
-
-        packageManager = lActivity!!.packageManager
-
         appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
-
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         letterPreview = binding.appsCount
 
-        settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-        appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
-        appsAdapter.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        appsAdapter!!.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
         /* initialize apps list adapter */
         binding.appsList.adapter = appsAdapter
         fetchApps()
@@ -140,12 +135,9 @@ internal class AppDrawer : Fragment() {
     override fun onResume() {
         super.onResume()
         fetchApps()
-
-        appsAdapter.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
-        
-        alphabetItems()
         getAlphabetItems()
 
+        appsAdapter?.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
         /* pop up the keyboard */
         if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) openSearch()
     }

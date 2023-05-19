@@ -18,6 +18,7 @@
     <string name="amazon">Amazon</string>
     <string name="appearances">Stile</string>
     <string name="application_theme">Tema applicazione</string>
+    <string name="app_alignment">Allineamento applicazioni</string>
     <string name="app_drawer">Pannello applicazioni</string>
     <string name="app_info">Informazioni app</string>
     <string name="app_store">Negozio app</string>
@@ -29,6 +30,7 @@
     <string name="background">Colore di fondo</string>
     <string name="back_home">Torna sempre alla schermata principale</string>
     <string name="celsius">Celsius</string>
+    <string name="center">Centro</string>
     <string name="change_wallpaper">Cambia sfondo</string>
     <string name="choose_launcher">Scegli il launcher predefinito</string>
     <string name="city_name">Nome della città</string>
@@ -61,6 +63,7 @@
     <string name="got_it">Capito</string>
     <string name="image_pick_failed">Immagine non ottenuta</string>
     <string name="last_update">Ultimo aggiornamento</string>
+    <string name="left">Sinistra</string>
     <string name="light_theme">Chiaro</string>
     <string name="lunar_settings">Impostazioni di Lunar</string>
     <string name="misc">Varie</string>
@@ -83,6 +86,7 @@
 		Questa operazione cancellerà tutti i dati salvati per questa applicazione. I dati non saranno ripristinabili.
     </string>
     <string name="restart">Riavvia</string>
+    <string name="right">Destra</string>
     <string name="root">Root</string>
     <string name="rss_feed">Flusso RSS</string>
     <string name="search_with_keyboard">Cerca con tastiera</string>
@@ -138,8 +142,5 @@
         \n\nPer maggiori informazioni, visitare la wiki su Github.
     </string>
     <string name="wiki">Wiki</string>
-    <string name="left">Sinistra</string>
-    <string name="center">Centro</string>
-    <string name="right">Destra</string>
-    <string name="appAlignment">Allineamento applicazioni</string>
+
 </resources>

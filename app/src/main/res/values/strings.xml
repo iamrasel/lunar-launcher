@@ -18,6 +18,7 @@
     <string name="amazon">Amazon</string>
     <string name="appearances">Appearances</string>
     <string name="application_theme">Application Theme</string>
+    <string name="app_alignment">App Alignment</string>
     <string name="app_drawer">App Drawer</string>
     <string name="app_info">App Info</string>
     <string name="app_store">App Store</string>
@@ -30,6 +31,7 @@
     <string name="background">Background</string>
     <string name="back_home">Always Go Back to Home Screen</string>
     <string name="celsius">Celsius</string>
+    <string name="center">Center</string>
     <string name="change_wallpaper">Change Wallpaper</string>
     <string name="choose_launcher">Choose Default Launcher</string>
     <string name="city_name">City Name</string>
@@ -65,6 +67,7 @@
     <string name="image_pick_failed">Failed to get image</string>
     <string name="increase_height">Increase Height</string>
     <string name="last_update">Last Update</string>
+    <string name="left">Left</string>
     <string name="light_theme">Light</string>
     <string name="lunar_settings">Lunar Settings</string>
     <string name="misc">Misc</string>
@@ -89,6 +92,7 @@
         This operation will clear all the data stored for this application, and can\'t be undone.
     </string>
     <string name="restart">Restart</string>
+    <string name="right">Right</string>
     <string name="root">Root</string>
     <string name="rss_feed">RSS Feed</string>
     <string name="sdk" translatable="false">SDK</string>
@@ -146,8 +150,5 @@
         \n\nFor more information, visit the wiki page at Github.
     </string>
     <string name="wiki">Wiki</string>
-    <string name="left">Left</string>
-    <string name="center">Center</string>
-    <string name="right">Right</string>
-    <string name="appAlignment">App Alignment</string>
+
 </resources>
