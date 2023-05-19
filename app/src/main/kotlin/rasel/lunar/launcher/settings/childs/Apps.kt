@@ -19,12 +19,14 @@
 package rasel.lunar.launcher.settings.childs
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import rasel.lunar.launcher.databinding.SettingsAppsBinding
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
@@ -47,6 +49,11 @@ internal class Apps : BottomSheetDialogFragment() {
             true -> binding.quickLaunchPositive.isChecked = true
             false -> binding.quickLaunchNegative.isChecked = true
         }
+        when (settingsPrefs!!.getInt(KEY_DRAW_ALIGN, Gravity.CENTER)) {
+            Gravity.CENTER -> binding.appAlignmentCenter.isChecked = true
+            Gravity.LEFT -> binding.appAlignmentLeft.isChecked = true
+            Gravity.RIGHT -> binding.appAlignmentRight.isChecked = true
+        }
 
         return binding.root
     }
@@ -68,6 +75,14 @@ internal class Apps : BottomSheetDialogFragment() {
             when (group.checkedChipId) {
                 binding.quickLaunchPositive.id -> settingsPrefs!!.edit().putBoolean(KEY_QUICK_LAUNCH, true).apply()
                 binding.quickLaunchNegative.id -> settingsPrefs!!.edit().putBoolean(KEY_QUICK_LAUNCH, false).apply()
+            }
+        }
+
+        binding.appAlignmentGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.appAlignmentLeft.id -> settingsPrefs!!.edit().putInt(KEY_DRAW_ALIGN, Gravity.LEFT).apply()
+                binding.appAlignmentCenter.id -> settingsPrefs!!.edit().putInt(KEY_DRAW_ALIGN, Gravity.CENTER).apply()
+                binding.appAlignmentRight.id -> settingsPrefs!!.edit().putInt(KEY_DRAW_ALIGN, Gravity.RIGHT).apply()
             }
         }
     }

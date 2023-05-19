@@ -28,6 +28,7 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,10 +93,17 @@ internal class AppDrawer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
+
+        packageManager = lActivity!!.packageManager
+
         appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
+
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         letterPreview = binding.appsCount
 
+        settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
+        appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
+        appsAdapter.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
         /* initialize apps list adapter */
         binding.appsList.adapter = appsAdapter
         fetchApps()
@@ -132,6 +140,10 @@ internal class AppDrawer : Fragment() {
     override fun onResume() {
         super.onResume()
         fetchApps()
+
+        appsAdapter.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        
+        alphabetItems()
         getAlphabetItems()
 
         /* pop up the keyboard */

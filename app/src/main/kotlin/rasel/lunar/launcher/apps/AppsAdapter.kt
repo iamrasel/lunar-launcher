@@ -18,7 +18,9 @@
 
 package rasel.lunar.launcher.apps
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
@@ -34,6 +36,7 @@ internal class AppsAdapter(
     private val appsCount: MaterialTextView) : RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
 
     private var oldList = mutableListOf<Packages>()
+    private var appGravity: Int = Gravity.CENTER
 
     companion object {
         @JvmStatic var appsSize: Int? = null
@@ -42,11 +45,15 @@ internal class AppsAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AppsViewHolder =
         AppsViewHolder(AppsChildBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false))
 
+    @SuppressLint("RtlHardcoded")
     override fun onBindViewHolder(holder: AppsViewHolder, i: Int) {
         val item = oldList[i]
         holder.view.childTextview.apply {
             /* show app name */
             text = item.appName
+
+            /* selects text alignment */
+            gravity = appGravity
 
             /* on click - open app */
             setOnClickListener {
@@ -77,6 +84,17 @@ internal class AppsAdapter(
         newList.size.let {
             appsCount.text = it.toString()
             appsSize = it
+        }
+    }
+
+    /* update text gravity (alignment) */
+    @SuppressLint("RtlHardcoded", "NotifyDataSetChanged")
+    fun updateGravity(gravity: Int){
+        /* the first check is to avoid calling notifyDataSetChanged() everytime */
+        if (gravity != appGravity && (gravity == Gravity.LEFT || gravity == Gravity.CENTER || gravity == Gravity.RIGHT) ){
+            appGravity = gravity
+
+            notifyDataSetChanged()
         }
     }
 }

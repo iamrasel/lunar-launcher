@@ -47,6 +47,7 @@ internal class Constants {
         const val KEY_TODO_LOCK = "todo_lock"
         const val KEY_KEYBOARD_SEARCH = "keyboard_search"
         const val KEY_QUICK_LAUNCH = "quick_launch"
+        const val KEY_DRAW_ALIGN = "drawer_alignment"
         const val KEY_WINDOW_BACKGROUND = "window_background"
         const val KEY_STATUS_BAR = "status_bar"
         const val KEY_BACK_HOME = "back_home"
