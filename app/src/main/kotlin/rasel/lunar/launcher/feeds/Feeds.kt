@@ -31,7 +31,9 @@ import androidx.appcompat.widget.LinearLayoutCompat.LayoutParams
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.JobIntentService.enqueueWork
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kotlinx.coroutines.*
 import rasel.lunar.launcher.LauncherActivity.Companion.appWidgetHost
@@ -60,9 +62,6 @@ import java.util.*
 internal class Feeds : Fragment() {
 
     private lateinit var binding: FeedsBinding
-    private lateinit var runnable: Runnable
-    private val handler = Handler(Looper.getMainLooper())
-    private var handlerIsRunning = false
     private val requestCodeString = "requestCode"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -75,26 +74,18 @@ internal class Feeds : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        systemInfo()
         expandCollapse()
+        systemInfo()
     }
 
     override fun onResume() {
         super.onResume()
         registerForContextMenu(binding.widgetContainer)
-        if (binding.feedsSysInfos.expandableSystemInfo.isExpanded && !handlerIsRunning) {
-            handler.post(runnable)
-            handlerIsRunning = true
-        }
     }
 
     override fun onPause() {
         super.onPause()
         unregisterForContextMenu(binding.widgetContainer)
-        if (handlerIsRunning) {
-            handler.removeCallbacks(runnable)
-            handlerIsRunning = false
-        }
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -121,22 +112,12 @@ internal class Feeds : Fragment() {
                     binding.expandSystemInfo.id -> {
                         binding.feedsRss.expandableRss.collapse()
                         binding.feedsSysInfos.expandableSystemInfo.expand()
-                        if (!handlerIsRunning) {
-                            handler.post(runnable)
-                            handlerIsRunning = true
-                        }
                     }
                 }
             } else {
                 when (checkedId) {
                     binding.expandRss.id -> binding.feedsRss.expandableRss.collapse()
-                    binding.expandSystemInfo.id -> {
-                        binding.feedsSysInfos.expandableSystemInfo.collapse()
-                        if (handlerIsRunning) {
-                            handler.removeCallbacks(runnable)
-                            handlerIsRunning = false
-                        }
-                    }
+                    binding.expandSystemInfo.id -> binding.feedsSysInfos.expandableSystemInfo.collapse()
                 }
             }
         }
@@ -146,60 +127,69 @@ internal class Feeds : Fragment() {
     private fun startService() {
         val rssUrl = lActivity!!.getSharedPreferences(PREFS_SETTINGS, 0)
             .getString(KEY_RSS_URL, "")
-        if (isNetworkAvailable && !rssUrl.isNullOrEmpty()) {
-            val intent = Intent(lActivity!!, RssService::class.java)
-            intent.putExtra(RSS_RECEIVER, resultReceiver)
-            enqueueWork(lActivity!!, RssService::class.java, rssJobId, intent)
-        } else {
-            resumeService()
+        when {
+            isNetworkAvailable && !rssUrl.isNullOrEmpty() -> {
+                Intent(lActivity!!, RssService::class.java)
+                    .putExtra(RSS_RECEIVER, resultReceiver).let {
+                        enqueueWork(lActivity!!, RssService::class.java, rssJobId, it)
+                    }
+            }
+            else -> resumeService()
         }
     }
 
 	/* retry to start rss service */
     private fun resumeService() {
-        binding.feedsRss.rss.visibility = View.GONE
-        binding.feedsRss.loading.visibility = View.GONE
-        binding.feedsRss.refresh.visibility = View.VISIBLE
-        binding.feedsRss.refresh.setOnClickListener { startService() }
+        binding.feedsRss.apply {
+            rss.visibility = View.GONE
+            loading.visibility = View.GONE
+            refresh.visibility = View.VISIBLE
+            refresh.setOnClickListener { startService() }
+        }
     }
 
 	/* rss service's result receiver */
     @Suppress("UNCHECKED_CAST")
     private val resultReceiver: ResultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
-            val items = resultData.getSerializable(RSS_ITEMS) as List<Rss>?
-            if (items != null) {
-                binding.feedsRss.rss.adapter = RssAdapter(items, requireContext())
-                binding.feedsRss.refresh.visibility = View.GONE
-                binding.feedsRss.loading.visibility = View.GONE
-                binding.feedsRss.rss.visibility = View.VISIBLE
-            } else {
-                resumeService()
+            when (val items = resultData.getSerializable(RSS_ITEMS) as List<Rss>?) {
+                null -> resumeService()
+                else -> {
+                    binding.feedsRss.apply {
+                        rss.adapter = RssAdapter(items, requireContext())
+                        refresh.visibility = View.GONE
+                        loading.visibility = View.GONE
+                        rss.visibility = View.VISIBLE
+                    }
+                }
             }
         }
     }
 
     private fun systemInfo() {
-        val systemStats = SystemStats()
-        systemStats.intStorage(binding.feedsSysInfos.intParent)
-        systemStats.extStorage(binding.feedsSysInfos.extParent)
-        runnable = Runnable {
-            systemStats.ram(binding.feedsSysInfos.ramParent)
-            systemStats.cpu(binding.feedsSysInfos.cpuParent)
-            systemStats.misc(binding.feedsSysInfos.misc)
-            handler.postDelayed(runnable, 1000)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                SystemStats().apply {
+                    intStorage(binding.feedsSysInfos.intParent)
+                    extStorage(binding.feedsSysInfos.extParent)
+                    while (isActive) {
+                        ram(binding.feedsSysInfos.ramParent)
+                        cpu(binding.feedsSysInfos.cpuParent)
+                        misc(binding.feedsSysInfos.misc)
+                        delay(1000)
+                    }
+                }
+            }
         }
     }
 
     private fun selectWidget() {
-        val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
-        pickIntent.apply {
+        Intent(AppWidgetManager.ACTION_APPWIDGET_PICK).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetHost?.allocateAppWidgetId())
             putParcelableArrayListExtra(AppWidgetManager.EXTRA_CUSTOM_INFO, ArrayList())
             putParcelableArrayListExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, ArrayList())
             putExtra(requestCodeString, requestPickWidget)
-        }
-        widgetPicker.launch(pickIntent)
+        }.let { widgetPicker.launch(it) }
     }
 
     private val widgetPicker =
@@ -217,18 +207,18 @@ internal class Feeds : Fragment() {
         }
 
     private fun configureWidget(appWidgetId: Int) {
-        val appWidgetInfo = appWidgetManager!!.getAppWidgetInfo(appWidgetId)
-        if (appWidgetInfo.configure != null) {
-            val configIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
-            configIntent.apply {
-                component = appWidgetInfo.configure
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                putExtra(requestCodeString, requestCreateWidget)
+        when (val appWidgetConfig = appWidgetManager!!.getAppWidgetInfo(appWidgetId).configure) {
+            null -> createWidget(appWidgetId, null)
+            else -> {
+                Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE).apply {
+                    component = appWidgetConfig
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    putExtra(requestCodeString, requestCreateWidget)
+                }.let {
+                    try { widgetPicker.launch(it) }
+                    catch (e: Exception) { e.printStackTrace() }
+                }
             }
-            try { widgetPicker.launch(configIntent) }
-            catch (e: Exception) { e.printStackTrace() }
-        } else {
-            createWidget(appWidgetId, null)
         }
     }
 
@@ -236,22 +226,25 @@ internal class Feeds : Fragment() {
         if (appWidgetId == -1) return
 
         val appWidgetInfo = appWidgetManager!!.getAppWidgetInfo(appWidgetId)
-        val hostView =
-            appWidgetHost?.createView(lActivity!!.applicationContext, appWidgetId, appWidgetInfo) as WidgetHostView
-        hostView.setAppWidget(appWidgetId, appWidgetInfo)
-
         val params: LayoutParams?
-        if (height == null) {
-            params = LayoutParams(LayoutParams.MATCH_PARENT, appWidgetInfo.minHeight)
-            val updatedIds = splitWidgetIds.plus("$appWidgetId")
-            val updatedHeights = splitWidgetHeights.plus("${appWidgetInfo.minHeight}")
-            saveWidgetData(updatedIds, updatedHeights)
-        } else {
-            params = LayoutParams(LayoutParams.MATCH_PARENT, height)
+
+        when (height) {
+            null -> {
+                params = LayoutParams(LayoutParams.MATCH_PARENT, appWidgetInfo.minHeight)
+                val updatedIds = splitWidgetIds.plus("$appWidgetId")
+                val updatedHeights = splitWidgetHeights.plus("${appWidgetInfo.minHeight}")
+                saveWidgetData(updatedIds, updatedHeights)
+            }
+            else -> params = LayoutParams(LayoutParams.MATCH_PARENT, height)
         }
 
-        binding.widgetContainer.addView(hostView, params)
-        widgetMenu(hostView)
+        (appWidgetHost?.createView(lActivity!!.applicationContext, appWidgetId, appWidgetInfo) as WidgetHostView)
+            .apply {
+                setAppWidget(appWidgetId, appWidgetInfo)
+            }.let {
+                binding.widgetContainer.addView(it, params)
+                widgetMenu(it)
+            }
     }
 
     private fun updateWidgets() {
@@ -268,8 +261,7 @@ internal class Feeds : Fragment() {
     private fun widgetMenu(hostView: WidgetHostView) {
         val appWidgetId = hostView.appWidgetId
         hostView.setOnLongClickListener {
-            val popupMenu = PopupMenu(requireContext(), it, Gravity.END)
-            popupMenu.apply {
+            PopupMenu(requireContext(), it, Gravity.END).apply {
                 menuInflater.inflate(R.menu.widget_menu, this.menu)
                 show()
                 setOnMenuItemClickListener { menuItem ->
@@ -288,35 +280,50 @@ internal class Feeds : Fragment() {
     }
 
     private fun moveWidget(widgetId: Int, moveUp: Boolean) {
-        val i = splitWidgetIds.indexOf(widgetId.toString())
         val tempIds = splitWidgetIds
         val tempHeights = splitWidgetHeights
-        if (moveUp && i > 0) {
-            tempIds.swap(i-1, i)
-            tempHeights.swap(i-1, i)
-        } else if (!moveUp && i < splitWidgetIds.size - 1) {
-            tempIds.swap(i, i+1)
-            tempHeights.swap(i, i+1)
-        } else return
+
+        splitWidgetIds.indexOf(widgetId.toString()).let { i ->
+            when {
+                moveUp && i > 0 -> {
+                    tempIds.swap(i-1, i)
+                    tempHeights.swap(i-1, i)
+                }
+                !moveUp && i < splitWidgetIds.size - 1 -> {
+                    tempIds.swap(i, i+1)
+                    tempHeights.swap(i, i+1)
+                }
+                else -> return
+            }
+        }
+
         saveWidgetData(tempIds, tempHeights)
         updateWidgets()
     }
 
     private fun resizeWidget(widgetId: Int, shouldAdd: Boolean) {
-        val i = splitWidgetIds.indexOf(widgetId.toString())
         val tempList = splitWidgetHeights
-        tempList[i] = if (shouldAdd) (splitWidgetHeights[i]!!.int().plus(50)).toString()
-        else (splitWidgetHeights[i]!!.int().minus(50)).toString()
+
+        splitWidgetIds.indexOf(widgetId.toString()).let { i ->
+            tempList[i] = when (shouldAdd) {
+                true -> (splitWidgetHeights[i]!!.int().plus(50)).toString()
+                false -> (splitWidgetHeights[i]!!.int().minus(50)).toString()
+            }
+        }
+
         widgetPref.edit().putString(KEY_WIDGET_HEIGHTS, tempList.joinToString(separator = SEPARATOR)).apply()
         updateWidgets()
     }
 
     private fun removeWidget(hostView: WidgetHostView) {
-        appWidgetHost?.deleteAppWidgetId(hostView.appWidgetId)
-        binding.widgetContainer.removeView(hostView)
+        hostView.let { v ->
+            appWidgetHost?.deleteAppWidgetId(v.appWidgetId)
+            binding.widgetContainer.removeView(v)
 
-        val i = splitWidgetIds.indexOf(hostView.appWidgetId.toString())
-        saveWidgetData(splitWidgetIds.minus(splitWidgetIds[i]), splitWidgetHeights.minus(splitWidgetHeights[i]))
+            splitWidgetIds.indexOf(v.appWidgetId.toString()).let { i ->
+                saveWidgetData(splitWidgetIds.minus(splitWidgetIds[i]), splitWidgetHeights.minus(splitWidgetHeights[i]))
+            }
+        }
     }
 
     private fun saveWidgetData(idList: List<String?>, heightList: List<String?>) {
