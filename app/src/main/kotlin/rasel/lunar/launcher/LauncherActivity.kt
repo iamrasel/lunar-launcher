@@ -61,7 +61,7 @@ internal class LauncherActivity : AppCompatActivity() {
     private lateinit var settingsPrefs: SharedPreferences
 
     companion object {
-        @JvmStatic var lActivity : LauncherActivity? = null
+        @JvmStatic var lActivity: LauncherActivity? = null
         @JvmStatic var appWidgetManager: AppWidgetManager? = null
         @JvmStatic var appWidgetHost: WidgetHost? = null
     }
@@ -103,17 +103,18 @@ internal class LauncherActivity : AppCompatActivity() {
     }
 
     private fun welcomeDialog() {
-        val prefsFirstLaunch = getSharedPreferences(PREFS_FIRST_LAUNCH, 0)
-        if (prefsFirstLaunch.getBoolean(KEY_FIRST_LAUNCH, true)) {
-            prefsFirstLaunch.edit().putBoolean(KEY_FIRST_LAUNCH, false).apply()
+        getSharedPreferences(PREFS_FIRST_LAUNCH, 0).let {
+            if (it.getBoolean(KEY_FIRST_LAUNCH, true)) {
+                it.edit().putBoolean(KEY_FIRST_LAUNCH, false).apply()
 
-            MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.welcome)
-                .setMessage(R.string.welcome_description)
-                .setPositiveButton(R.string.got_it) { dialog, _ ->
-                    dialog.dismiss()
-                    askPermissions()
-                }.show()
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.welcome)
+                    .setMessage(R.string.welcome_description)
+                    .setPositiveButton(R.string.got_it) { dialog, _ ->
+                        dialog.dismiss()
+                        askPermissions()
+                    }.show()
+            }
         }
     }
 
@@ -135,11 +136,12 @@ internal class LauncherActivity : AppCompatActivity() {
 
     /* set up viewpager2 */
     private fun setupView() {
-        viewPager = binding.viewPager
-        val fragments = mutableListOf(Feeds(), LauncherHome(), AppDrawer())
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, fragments, lifecycle)
-        viewPager.offscreenPageLimit = 1
-        viewPager.setCurrentItem(1, false)
+        viewPager = binding.viewPager.apply {
+            adapter = ViewPagerAdapter(
+                supportFragmentManager, mutableListOf(Feeds(), LauncherHome(), AppDrawer()), lifecycle)
+            offscreenPageLimit = 1
+            setCurrentItem(1, false)
+        }
     }
 
     private fun setBgColor() {
@@ -185,8 +187,11 @@ internal class LauncherActivity : AppCompatActivity() {
 
     private fun topPadding(topPadding: Boolean) {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
-            view.updatePadding(insets.left, if (topPadding) insets.top else 0, insets.right, insets.bottom)
+            view.updatePadding(0,
+                if (topPadding) windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top else 0,
+                0,
+                windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            )
             WindowInsetsCompat.CONSUMED
         }
     }
