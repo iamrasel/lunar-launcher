@@ -9,7 +9,6 @@
     <string name="accessibility_service_label">Lock Service</string>
     <string name="acknowledgements">
         <b>Acknowledgements</b>\n
-        <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
         <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
     </string>
     <string name="add_new">Add New</string>
@@ -47,7 +46,7 @@
     <string name="delete_all_confirmation">
         Are you sure to delete all the existing todos?
     </string>
-    <string name="developer_name">Developed by: Md Rasel Hossain</string>
+    <string name="developer_name">Developed by Md Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
     <string name="device_admin_description">
         Allow to use double tap to lock feature

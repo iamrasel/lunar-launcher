@@ -9,7 +9,6 @@
     <string name="accessibility_service_label">Servizio di blocco</string>
     <string name="acknowledgements">
         <b>Ringraziamenti</b>\n
-        <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
         <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
     </string>
     <string name="add_new">Aggiungi</string>
@@ -45,7 +44,7 @@
     <string name="delete_all_confirmation">
 		È sicuro/a di cancellare tutte le note?
 	</string>
-    <string name="developer_name">Sviluppato da: Md Rasel Hossain</string>
+    <string name="developer_name">Sviluppato da Md Rasel Hossain</string>
     <string name="device_admin">Amministratore del dispositivo</string>
     <string name="device_admin_description">
         Permetti il blocco dello schermo con due tocchi

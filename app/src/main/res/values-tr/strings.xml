@@ -9,7 +9,6 @@
     <string name="accessibility_service_label">Kilit Servisi</string>
     <string name="acknowledgements">
         <b>Teşekkürler</b>\n
-        <i><a href="https://gitlab.com/biotstoiq/launch">https://gitlab.com/biotstoiq/launch</a></i>\n
         <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
     </string>
     <string name="add_new">Yeni Ekle</string>
@@ -45,7 +44,7 @@
     <string name="delete_all_confirmation">
         Mevcut tüm görevleri silmek istediğinizden emin misiniz?
     </string>
-    <string name="developer_name">Geliştirici: Md Rasel Hossain</string>
+    <string name="developer_name">Geliştirici Md Rasel Hossain</string>
     <string name="device_admin">Cihaz Yöneticisi</string>
     <string name="device_admin_description">
         Çift dokunarak kilitleme özelliğini kullanmaya izin ver

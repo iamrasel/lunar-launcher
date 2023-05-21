@@ -133,7 +133,6 @@ If you want to share your thoughts with me or other users, join the Lunar Launch
 </div>
 
 ## Credits
-- [https://gitlab.com/biotstoiq/launch](https://gitlab.com/biotstoiq/launch)
 - [https://github.com/cachapa/ExpandableLayout](https://github.com/cachapa/ExpandableLayout)
 
 ## Donation
