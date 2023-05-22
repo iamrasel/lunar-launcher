@@ -30,7 +30,7 @@ import kotlin.math.abs
 
 internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
 
-    private val gestureDetector: GestureDetector
+    private val gestureDetector: GestureDetector = GestureDetector(c, GestureListener())
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
@@ -62,22 +62,20 @@ internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
             try {
                 val diffY = e2.y - e1.y
                 val diffX = e2.x - e1.x
-                val swipeThreshold = 20
+                val swipeThreshold = 15
                 val swipeVelocityThreshold = 90
                 if (abs(diffX) > abs(diffY)) {
                     if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {
-                        if (diffX > 0) {
-                            onSwipeRight()
-                        } else {
-                            onSwipeLeft()
+                        when {
+                            diffX > 0 -> onSwipeRight()
+                            else -> onSwipeLeft()
                         }
                     }
                 } else {
                     if (abs(diffY) > swipeThreshold && abs(velocityY) > swipeVelocityThreshold) {
-                        if (diffY > 0) {
-                            onSwipeDown()
-                        } else {
-                            onSwipeUp()
+                        when {
+                            diffY > 0 -> onSwipeDown()
+                            else -> onSwipeUp()
                         }
                     }
                 }
@@ -95,9 +93,5 @@ internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
     fun onClick() {}
     open fun onDoubleClick() {}
     open fun onLongClick() {}
-
-    init {
-        gestureDetector = GestureDetector(c, GestureListener())
-    }
 
 }
