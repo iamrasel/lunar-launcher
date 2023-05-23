@@ -197,7 +197,7 @@ internal class AppDrawer : Fragment() {
                     binding.searchInput.text.toString().substring(0, binding.searchInput.text!!.length - 1))
 
                 /* hide search box when there's nothing left */
-                if (binding.searchInput.text.toString().isEmpty()) binding.searchLayout.visibility = View.GONE
+                if (binding.searchInput.text.toString().isEmpty()) closeSearch()
             }
         }
 
