@@ -186,12 +186,15 @@ internal class LauncherActivity : AppCompatActivity() {
     }
 
     private fun topPadding(topPadding: Boolean) {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
-            view.updatePadding(0,
-                if (topPadding) windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top else 0,
-                0,
-                windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-            )
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
+            windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures()).let {
+                val topInset = if (topPadding) {
+                    if (it.top == 0) windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()).top
+                    else it.top
+                } else 0
+
+                view.updatePadding(0, topInset, 0, it.bottom)
+            }
             WindowInsetsCompat.CONSUMED
         }
     }
