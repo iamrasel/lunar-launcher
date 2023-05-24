@@ -24,8 +24,8 @@
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/searchLayout"
-        app:layout_constraintEnd_toStartOf="@+id/moveDown"
+        app:layout_constraintBottom_toTopOf="@+id/searchInput"
+        app:layout_constraintEnd_toStartOf="@+id/search"
         app:layout_constraintStart_toStartOf="parent" />
 
     <rasel.lunar.launcher.apps.AlphabetScrollbar
@@ -45,19 +45,8 @@
         android:padding="@dimen/eight"
         android:layout_marginBottom="@dimen/four"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/search"
-        app:srcCompat="@drawable/ic_refresh" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_bg"
-        android:padding="@dimen/eight"
-        android:layout_marginBottom="@dimen/four"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/moveUp"
-        app:srcCompat="@drawable/ic_search" />
+        app:srcCompat="@drawable/ic_refresh" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/moveUp"
@@ -76,57 +65,30 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_bg"
         android:padding="@dimen/eight"
+        android:layout_marginBottom="@dimen/four"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/appsList"
+        app:layout_constraintBottom_toTopOf="@+id/search"
         app:srcCompat="@drawable/ic_down" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/searchLayout"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bg"
+        android:padding="@dimen/eight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/ic_search" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/searchInput"
+        android:layout_width="@dimen/oneThirtySix"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/appsList"
-        app:layout_constraintStart_toStartOf="@+id/appsList">
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/zero"
-            android:background="@drawable/rounded_bg"
-            android:contentDescription="@null"
-            android:paddingHorizontal="@dimen/twelve"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/searchInput"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchInput"
-            android:layout_width="@dimen/oneThirtySix"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:imeOptions="actionSearch"
-            android:singleLine="true"
-            android:layout_marginHorizontal="@dimen/four"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/backspace"
-            app:layout_constraintStart_toEndOf="@+id/close"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/backspace"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/zero"
-            android:background="@drawable/rounded_bg"
-            android:contentDescription="@null"
-            android:paddingHorizontal="@dimen/twelve"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/searchInput"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="@+id/appsList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

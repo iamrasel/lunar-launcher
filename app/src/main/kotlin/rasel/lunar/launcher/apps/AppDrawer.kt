@@ -27,7 +27,6 @@ import android.content.pm.ResolveInfo
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +37,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
+import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
 import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
@@ -52,6 +52,7 @@ internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
     private lateinit var settingsPrefs: SharedPreferences
+    private var isSearchShown: Boolean = false
     private var isKeyboardShowing: Boolean = false
 
     companion object {
@@ -122,10 +123,13 @@ internal class AppDrawer : Fragment() {
             binding.appsList.smoothScrollToPosition(0)
         }
 
-        binding.search.setOnClickListener { openSearch() }
+        binding.search.setOnClickListener {
+            when (isSearchShown) {
+                true -> closeSearch()
+                false -> openSearch()
+            }
+        }
 
-        /* listen search item and string remover clicks */
-        searchStringRemover()
         binding.searchInput.doOnTextChanged { inputText, _, _, _ ->
             binding.searchInput.text?.let { binding.searchInput.setSelection(it.length) }
             filterAppsList(inputText.toString())
@@ -189,21 +193,6 @@ internal class AppDrawer : Fragment() {
         binding.alphabets.invalidate()
     }
 
-    private fun searchStringRemover() {
-        binding.backspace.setOnClickListener {
-            if (binding.searchInput.text.toString().isNotEmpty()) {
-                /* remove search string one by one */
-                binding.searchInput.text = SpannableStringBuilder(
-                    binding.searchInput.text.toString().substring(0, binding.searchInput.text!!.length - 1))
-
-                /* hide search box when there's nothing left */
-                if (binding.searchInput.text.toString().isEmpty()) closeSearch()
-            }
-        }
-
-        binding.close.setOnClickListener { closeSearch() }
-    }
-
     private fun filterAppsList(searchString: String) {
         /* check each app name and add if it matches the search string */
         packageList.clear()
@@ -222,22 +211,30 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun openSearch() {
-        binding.searchLayout.visibility = View.VISIBLE
-        binding.search.visibility = View.GONE
-        binding.searchInput.requestFocus()
-        val inputMethodManager = lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
+        isSearchShown = true
+        binding.search.setImageResource(R.drawable.ic_close)
+        binding.searchInput.apply {
+            visibility = View.VISIBLE
+            requestFocus()
+            let {
+                (lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                    .showSoftInput(it, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
     }
 
     /* clear search string, hide keyboard and search box */
     private fun closeSearch() {
-        binding.searchInput.text?.clear()
-        binding.searchInput.let { view ->
-            (lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-                .hideSoftInputFromWindow(view.windowToken, 0)
+        isSearchShown = false
+        binding.search.setImageResource(R.drawable.ic_search)
+        binding.searchInput.apply {
+            text?.clear()
+            visibility = View.GONE
+            let {
+                (lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                    .hideSoftInputFromWindow(it.windowToken, 0)
+            }
         }
-        binding.searchLayout.visibility = View.GONE
-        binding.search.visibility = View.VISIBLE
     }
 
     private fun setKeyboardPadding() {
