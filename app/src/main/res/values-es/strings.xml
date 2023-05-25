@@ -103,7 +103,7 @@
      <string name="support_message">Apoya al desarrollador para mantener esta aplicacion viva y gratuita de por vida.\n 
          \n<li><b>Donar:</b> Si es posible, haz donaciones directas para ayudar y motivar al desarrollador.</li> 
          \n<li><b>Amazon:</b> Usa el link de afiliado al comprar en Amazon para que el desarrollador sea recompensado</li> 
-         \n<li><b>Estrella:</b> Marca el repositorio con una estrella para mostrar tu apoyo a la aplicación./li> 
+         \n<li><b>Estrella:</b> Marca el repositorio con una estrella para mostrar tu apoyo a la aplicación.</li> 
      </string> 
      <string name="system_stats">Información del sistema</string> 
      <string name="telegram_group">Grupo de Telegram</string> 
@@ -128,7 +128,7 @@
      <string name="wallpaper_change_success">Fondo de pantalla cambiado con éxito</string> 
      <string name="weather">Tiempo</string> 
      <string name="welcome">Bienvenide</string> 
-     <string name="welcome_description">Bienvenide a Lunar Launcher. Esta es la primera vez que abres la aplicación; si es la primera vez que la usas, <b>lee estos textos antes de proceder<\b>.
+     <string name="welcome_description">Bienvenide a Lunar Launcher. Esta es la primera vez que abres la aplicación; si es la primera vez que la usas, <b>lee estos textos antes de proceder</b>.
          \n\nPrimero, tras cerrar este mensaje, se te pedirá conceder los siguientes permisos. Si decides no hacerlo, esta aplicación no funcionará como se espera. 
          \n\n<li><b>Modificar ajustes del sistema -</b> Para controlar el brillo usando una barra deslizable</li> 
          \n<li><b>Teléfono -</b> Para poder hacer llamadas desde los accesos directos a contactos</li> 
