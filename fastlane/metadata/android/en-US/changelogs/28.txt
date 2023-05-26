@@ -1,7 +1,0 @@
-- Wallpaper change support for android 12+ by @The-Repo-Club
-- Show/hide status bar #17
-- Crash fix for some specific smartphone brands #44
-- Adjusts dialog when keyboard appears #43
-- Open app drawer with the soft-keyboard #37
-- Fixes apps search not working on first attempt
-- Some visual fixes
