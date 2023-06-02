@@ -94,6 +94,7 @@
     <string name="right">Right</string>
     <string name="root">Root</string>
     <string name="rss_feed">RSS Feed</string>
+    <string name="scrollbar_height">Height of Alphabetical Scrollbar</string>
     <string name="sdk" translatable="false">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
     <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>

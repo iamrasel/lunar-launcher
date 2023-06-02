@@ -31,7 +31,7 @@
     <rasel.lunar.launcher.apps.AlphabetScrollbar
         android:id="@+id/alphabets"
         android:layout_width="@dimen/zero"
-        android:layout_height="@dimen/threeTwentyFour"
+        android:layout_height="@dimen/zero"
         android:layout_marginBottom="@dimen/four"
         app:layout_constraintBottom_toTopOf="@+id/reset"
         app:layout_constraintStart_toStartOf="@id/reset"

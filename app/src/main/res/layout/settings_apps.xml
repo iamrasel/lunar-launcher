@@ -76,7 +76,7 @@
             android:text="@string/negative" />
     </com.google.android.material.chip.ChipGroup>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/appsAlignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -118,4 +118,26 @@
             android:layout_height="wrap_content"
             android:text="@string/right" />
     </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/scrollbarHeightTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
+        android:text="@string/scrollbar_height"
+        android:textSize="@dimen/normalText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appAlignmentGroup" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/scrollbarHeight"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:stepSize="100"
+        android:valueFrom="0"
+        android:valueTo="700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollbarHeightTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

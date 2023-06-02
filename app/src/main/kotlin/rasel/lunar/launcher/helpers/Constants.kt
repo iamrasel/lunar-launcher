@@ -48,6 +48,7 @@ internal class Constants {
         const val KEY_KEYBOARD_SEARCH = "keyboard_search"
         const val KEY_QUICK_LAUNCH = "quick_launch"
         const val KEY_DRAW_ALIGN = "drawer_alignment"
+        const val KEY_SCROLLBAR_HEIGHT = "scrollbar_height"
         const val KEY_WINDOW_BACKGROUND = "window_background"
         const val KEY_STATUS_BAR = "status_bar"
         const val KEY_BACK_HOME = "back_home"
@@ -57,6 +58,7 @@ internal class Constants {
 
         /* --- */
         const val DEFAULT_DATE_FORMAT = "EEE dx MMM, yyyy"
+        const val DEFAULT_SCROLLBAR_HEIGHT = 400
         const val BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG"
         const val SEPARATOR = "||"
         const val MAX_SHORTCUTS = 6

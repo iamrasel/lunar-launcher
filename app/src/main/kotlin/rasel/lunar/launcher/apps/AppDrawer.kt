@@ -30,8 +30,11 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.google.android.material.textview.MaterialTextView
@@ -40,9 +43,11 @@ import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
 import rasel.lunar.launcher.helpers.Constants
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_SCROLLBAR_HEIGHT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SCROLLBAR_HEIGHT
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import java.util.*
 import java.util.regex.Pattern
@@ -180,17 +185,28 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun getAlphabetItems() {
-        alphabetList.clear()
-        for (i in 0 until packageList.size) {
-            val firstLetter = packageList[i].appName.first().uppercase()
-            when {
-                numberPattern.matcher(firstLetter).matches() -> alphabetList.add(0, "#")
-                alphabetPattern.matcher(firstLetter).matches() -> alphabetList.add(firstLetter)
-                !numberPattern.matcher(firstLetter).matches() &&
-                !alphabetPattern.matcher(firstLetter).matches() -> alphabetList.add(alphabetList.size,"⠶")
+        settingsPrefs.getInt(KEY_SCROLLBAR_HEIGHT, DEFAULT_SCROLLBAR_HEIGHT).let { height: Int ->
+            if (height == 0) { binding.alphabets.visibility = GONE }
+            else {
+                binding.alphabets.apply {
+                    if (visibility == GONE) visibility = VISIBLE
+                    updateLayoutParams { this.height = height }
+                }
+                alphabetList.clear()
+                for (i in 0 until packageList.size) {
+                    packageList[i].appName.first().uppercase().let { firstLetter: String ->
+                        when {
+                            numberPattern.matcher(firstLetter).matches() -> alphabetList.add(0, "#")
+                            alphabetPattern.matcher(firstLetter).matches() -> alphabetList.add(firstLetter)
+                            !numberPattern.matcher(firstLetter).matches() &&
+                                    !alphabetPattern.matcher(firstLetter).matches() -> alphabetList.add(alphabetList.size,"⠶")
+                            else -> {}
+                        }
+                    }
+                }
+                binding.alphabets.invalidate()
             }
         }
-        binding.alphabets.invalidate()
     }
 
     private fun filterAppsList(searchString: String) {
@@ -214,7 +230,7 @@ internal class AppDrawer : Fragment() {
         isSearchShown = true
         binding.search.setImageResource(R.drawable.ic_close)
         binding.searchInput.apply {
-            visibility = View.VISIBLE
+            visibility = VISIBLE
             requestFocus()
             let {
                 (lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
@@ -229,7 +245,7 @@ internal class AppDrawer : Fragment() {
         binding.search.setImageResource(R.drawable.ic_search)
         binding.searchInput.apply {
             text?.clear()
-            visibility = View.GONE
+            visibility = GONE
             let {
                 (lActivity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
                     .hideSoftInputFromWindow(it.windowToken, 0)

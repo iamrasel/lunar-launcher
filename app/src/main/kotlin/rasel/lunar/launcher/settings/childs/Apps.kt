@@ -26,10 +26,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsAppsBinding
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_SCROLLBAR_HEIGHT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SCROLLBAR_HEIGHT
 import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
 
 
@@ -57,6 +60,8 @@ internal class Apps : BottomSheetDialogFragment() {
             Gravity.LEFT -> binding.appAlignmentLeft.isChecked = true
             Gravity.RIGHT -> binding.appAlignmentRight.isChecked = true
         }
+
+        binding.scrollbarHeight.value = settingsPrefs!!.getInt(KEY_SCROLLBAR_HEIGHT, DEFAULT_SCROLLBAR_HEIGHT).toFloat()
 
         return binding.root
     }
@@ -89,6 +94,10 @@ internal class Apps : BottomSheetDialogFragment() {
                 binding.appAlignmentRight.id -> settingsPrefs!!.edit().putInt(KEY_DRAW_ALIGN, Gravity.RIGHT).apply()
             }
         }
+
+        binding.scrollbarHeight.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+            settingsPrefs!!.edit().putInt(KEY_SCROLLBAR_HEIGHT, value.toInt()).apply()
+        })
     }
 
 }
