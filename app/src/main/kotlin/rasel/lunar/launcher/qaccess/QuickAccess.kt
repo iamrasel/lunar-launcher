@@ -51,7 +51,9 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.QuickAccessBinding
 import rasel.lunar.launcher.databinding.ShortcutMakerBinding
 import rasel.lunar.launcher.helpers.ColorPicker
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_ICON_SIZE
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APP_NO_
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_ICON_SIZE
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_COUNT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_NO_
 import rasel.lunar.launcher.helpers.Constants.Companion.MAX_FAVORITE_APPS
@@ -64,17 +66,21 @@ import rasel.lunar.launcher.helpers.Constants.Companion.SHORTCUT_TYPE_PHONE
 import rasel.lunar.launcher.helpers.Constants.Companion.SHORTCUT_TYPE_URL
 import rasel.lunar.launcher.helpers.PrefsUtil.Companion.removeFavApps
 import java.util.*
+import kotlin.properties.Delegates
 
 
 internal class QuickAccess : BottomSheetDialogFragment() {
 
     private lateinit var binding: QuickAccessBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private var iconSize by Delegates.notNull<Int>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = QuickAccessBinding.inflate(inflater, container, false)
 
         sharedPreferences = requireContext().getSharedPreferences(PREFS_SHORTCUTS, 0)
+        iconSize = requireContext().getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_ICON_SIZE, DEFAULT_ICON_SIZE)
+
         /* set up volume sliders, brightness slider and favorite apps */
         volumeControllers()
         controlBrightness()
@@ -91,9 +97,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     override fun onResume() {
         super.onResume()
         /* repopulate shortcuts and apps */
-        binding.shortcutsGroup.removeAllViews()
         shortcuts()
-        binding.favAppsGroup.removeAllViews()
         favApps()
     }
 
@@ -148,6 +152,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* set up contact and url shortcuts */
     private fun shortcuts() {
+        binding.shortcutsGroup.removeAllViews()
         val shortcutCount =
             requireContext().getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_SHORTCUT_COUNT, MAX_SHORTCUTS)
         if (shortcutCount == 0) binding.shortcutsGroup.visibility = View.GONE
@@ -211,6 +216,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
 
     /* set up favorite apps */
     private fun favApps() {
+        binding.favAppsGroup.removeAllViews()
         val prefsFavApps = requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
         if (prefsFavApps.all.toString().length < 3) {
             binding.favAppsGroup.visibility = View.GONE
@@ -374,7 +380,6 @@ internal class QuickAccess : BottomSheetDialogFragment() {
             } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
                 removeFavApps(position)
                 imageView.visibility = View.GONE
-                nameNotFoundException.printStackTrace()
             }
         } else {
             imageView.visibility = View.GONE
@@ -392,28 +397,30 @@ internal class QuickAccess : BottomSheetDialogFragment() {
         }
         binding.shortcutsGroup.addView(relativeLayout)
 
-        val textView = MaterialTextView(lActivity!!)
-        textView.apply {
+        MaterialTextView(requireContext()).apply {
             layoutParams = LinearLayoutCompat.LayoutParams(
-                (48 * resources.displayMetrics.density).toInt(),
-                (48 * resources.displayMetrics.density).toInt())
+                (iconSize * resources.displayMetrics.density).toInt(),
+                (iconSize * resources.displayMetrics.density).toInt())
             gravity = Gravity.CENTER
             textSize = 10 * resources.displayMetrics.density
             setTypeface(null, Typeface.BOLD)
             background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_bg)
+        }.let {
+            relativeLayout.addView(it)
+            return it
         }
-        relativeLayout.addView(textView)
-        return textView
     }
 
     /* create image view for favorite app icons */
     private val imageView: AppCompatImageView get() {
-        val imageView = AppCompatImageView(lActivity!!)
-        imageView.layoutParams = LinearLayoutCompat.LayoutParams(
-            LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
-            LinearLayoutCompat.LayoutParams.MATCH_PARENT, 1F)
-        binding.favAppsGroup.addView(imageView)
-        return imageView
+        AppCompatImageView(requireContext()).apply {
+            layoutParams = LinearLayoutCompat.LayoutParams(
+                (iconSize * resources.displayMetrics.density).toInt(),
+                (iconSize * resources.displayMetrics.density).toInt(), 1F)
+        }.let {
+            binding.favAppsGroup.addView(it)
+            return it
+        }
     }
 
     /* returns maximum brightness value of the device */

@@ -187,7 +187,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/favAppsGroup"
         android:layout_width="@dimen/zero"
-        android:layout_height="@dimen/fortyTwo"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/twentyTwo"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"

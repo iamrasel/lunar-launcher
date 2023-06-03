@@ -29,7 +29,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.Slider
 import rasel.lunar.launcher.databinding.SettingsMiscBinding
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_ICON_SIZE
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BACK_HOME
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_ICON_SIZE
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_RSS_URL
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHORTCUT_COUNT
@@ -54,6 +56,7 @@ internal class Misc : BottomSheetDialogFragment() {
 
         binding.shortcutCount.valueTo = MAX_SHORTCUTS.toFloat()
         binding.shortcutCount.value = settingsPrefs!!.getInt(KEY_SHORTCUT_COUNT, MAX_SHORTCUTS).toFloat()
+        binding.iconSize.value = settingsPrefs!!.getInt(KEY_ICON_SIZE, DEFAULT_ICON_SIZE).toFloat()
         binding.inputFeedUrl.text = SpannableStringBuilder(settingsPrefs!!.getString(KEY_RSS_URL, ""))
 
         when (settingsPrefs!!.getInt(KEY_LOCK_METHOD, 0)) {
@@ -90,6 +93,10 @@ internal class Misc : BottomSheetDialogFragment() {
         /* change shortcut count value */
         binding.shortcutCount.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             settingsPrefs!!.edit().putInt(KEY_SHORTCUT_COUNT, value.toInt()).apply()
+        })
+
+        binding.iconSize.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+            settingsPrefs!!.edit().putInt(KEY_ICON_SIZE, value.toInt()).apply()
         })
 
         /* change lock method value */

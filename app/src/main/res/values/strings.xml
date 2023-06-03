@@ -63,6 +63,7 @@
     <string name="frequency">Frequency</string>
     <string name="got_it">Got it</string>
     <string name="hide_status_bar">Hide Status Bar</string>
+    <string name="icon_size">Shortcut &amp; App Icon Size</string>
     <string name="image_pick_failed">Failed to get image</string>
     <string name="increase_height">Increase Height</string>
     <string name="last_update">Last Update</string>

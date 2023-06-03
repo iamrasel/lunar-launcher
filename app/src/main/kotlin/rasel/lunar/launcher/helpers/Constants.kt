@@ -53,16 +53,19 @@ internal class Constants {
         const val KEY_STATUS_BAR = "status_bar"
         const val KEY_BACK_HOME = "back_home"
         const val KEY_SHORTCUT_COUNT = "shortcut_count"
+        const val KEY_ICON_SIZE = "icon_size"
         const val KEY_RSS_URL = "rss_url"
         const val KEY_LOCK_METHOD = "lock_method"
 
         /* --- */
         const val DEFAULT_DATE_FORMAT = "EEE dx MMM, yyyy"
+        const val DEFAULT_ICON_SIZE = 44
         const val DEFAULT_SCROLLBAR_HEIGHT = 400
-        const val BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG"
-        const val SEPARATOR = "||"
         const val MAX_SHORTCUTS = 6
         const val MAX_FAVORITE_APPS = 6
+
+        const val BOTTOM_SHEET_TAG = "rasel.lunar.launcher.TAG"
+        const val SEPARATOR = "||"
         const val ACCESSIBILITY_SERVICE_LOCK_SCREEN = "rasel.lunar.launcher.LOCK_SCREEN_SERVICE"
         const val AUTHENTICATOR_TYPE = BIOMETRIC_WEAK or DEVICE_CREDENTIAL
 
