@@ -402,7 +402,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 (iconSize * resources.displayMetrics.density).toInt(),
                 (iconSize * resources.displayMetrics.density).toInt())
             gravity = Gravity.CENTER
-            textSize = 10 * resources.displayMetrics.density
+            textSize = (iconSize / 4) * resources.displayMetrics.density
             setTypeface(null, Typeface.BOLD)
             background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_bg)
         }.let {

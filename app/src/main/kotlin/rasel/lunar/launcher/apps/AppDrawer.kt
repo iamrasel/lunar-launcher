@@ -49,6 +49,7 @@ import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SCROLLBAR_HEIGHT
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
+import java.text.Normalizer
 import java.util.*
 import java.util.regex.Pattern
 
@@ -213,17 +214,23 @@ internal class AppDrawer : Fragment() {
         /* check each app name and add if it matches the search string */
         packageList.clear()
         for (resolver in packageInfoList) {
-            val appName = resolver.loadLabel(packageManager).toString()
-            if (appName.replace("\\W".toRegex(), "").lowercase(Locale.getDefault())
-                    .contains(searchString)) {
-                packageList.add(Packages(resolver.activityInfo.packageName, appName))
+            resolver.loadLabel(packageManager).toString().let {
+                if (normalize(it).contains(searchString)) {
+                    packageList.add(Packages(resolver.activityInfo.packageName, it))
+                }
             }
         }
 
         if (packageList.size == 1 && settingsPrefs.getBoolean(KEY_QUICK_LAUNCH, true))
             startActivity(packageManager.getLaunchIntentForPackage(packageList[0].packageName))
-        else
-            appsAdapter?.updateData(packageList)
+        else appsAdapter?.updateData(packageList)
+    }
+
+    private fun normalize(str: String): String {
+        val normalizedString =
+            Normalizer.normalize(str.replace("\\W".toRegex(), ""), Normalizer.Form.NFD)
+        val pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
+        return pattern.matcher(normalizedString).replaceAll("").lowercase()
     }
 
     private fun openSearch() {
