@@ -14,13 +14,11 @@
     <string name="add_new">Yeni Ekle</string>
     <string name="add_widget">Widget Ekle</string>
     <string name="advance">Gelişmiş</string>
-    <string name="amazon">Amazon</string>
     <string name="appearances">Görünüm</string>
     <string name="application_theme">Uygulama Teması</string>
     <string name="app_drawer">Uygulama Çekmecesi</string>
     <string name="app_info">Uygulama Bilgisi</string>
     <string name="app_store">Uygulama Mağazası</string>
-    <string name="argb" translatable="false">AARRGGBB</string>
     <string name="authentication_error">Kimlik doğrulama hatası</string>
     <string name="authentication_failed">Kimlik doğrulama başarısız oldu</string>
     <string name="authentication_subtitle">
@@ -28,13 +26,11 @@
     </string>
     <string name="background">Arka Plan</string>
     <string name="back_home">Her zaman Ana Ekrana Geri Dön</string>
-    <string name="celsius">Celsius</string>
     <string name="change_wallpaper">Duvar Kağıdı Değiştir</string>
     <string name="choose_launcher">Varsayılan Başlatıcıyı Seçin</string>
     <string name="city_name">Şehir Adı</string>
     <string name="contact">İletişim</string>
     <string name="copied_message">Panoya kopyalandı</string>
-    <string name="cpu">CPU</string>
     <string name="dark_theme">Karanlık</string>
     <string name="date_format">Tarih Formatı</string>
     <string name="decrease_height">Yüksekliği Azalt</string>
@@ -52,7 +48,6 @@
     <string name="donate">Bağış Yap</string>
     <string name="double_tap_lock">Çift Dokunma Kilitleme Yöntemi</string>
     <string name="empty_text_field">Metin alanı boş</string>
-    <string name="fahrenheit">Fahrenheit</string>
     <string name="feed_url">RSS Besleme URL\'si</string>
     <string name="first_install">İlk Yükleme</string>
     <string name="follow_system">Sistemi Takip Et</string>
@@ -73,14 +68,12 @@
     </string>
     <string name="move_up">Yukarı Taşı</string>
     <string name="move_down">Aşağı Taşı</string>
-    <string name="na">N/A</string>
     <string name="negative">Negatif</string>
     <string name="null_app_store_message">Bu cihazda yüklü hiçbir uygulama mağazası yok.</string>
     <string name="owm_key">OWM API Anahtarı</string>
     <string name="positive">Pozitif</string>
     <string name="proceed">Devam et</string>
     <string name="quick_launch">Hızlı Başlat</string>
-    <string name="ram">RAM</string>
     <string name="reset">Sıfırla</string>
     <string name="reset_message">
         Bu işlem, bu uygulama için depolanan tüm verileri temizleyecek ve geri alınamaz.
@@ -88,7 +81,6 @@
     <string name="restart">Yeniden Başlat</string>
     <string name="root">Kök</string>
     <string name="rss_feed">RSS Beslemesi</string>
-    <string name="sdk" translatable="false">SDK</string>
     <string name="search_with_keyboard">Klavyeyle Ara</string>
     <string name="shortcut_count">Kısayol Sayısı (URL/Kişi)</string>
     <string name="show_city">Hava Durumu ile Şehir Adını Göster</string>
@@ -114,7 +106,6 @@
     <string name="total">Toplam</string>
     <string name="twelve">12 Saat</string>
     <string name="twenty_four">24 Saat</string>
-    <string name="uid" translatable="false">UID</string>
     <string name="unable_to_launch">Başlatılamadı</string>
     <string name="uninstall">Kaldır</string>
     <string name="update">Güncelle</string>
@@ -142,6 +133,5 @@
         \n<li>Favori öğeyi basılı tutun - favoriyi kaldırın</li>
         \n\nDaha fazla bilgi için Github\'daki wiki sayfasını ziyaret edin.
     </string>
-    <string name="wiki">Wiki</string>
 
 </resources>

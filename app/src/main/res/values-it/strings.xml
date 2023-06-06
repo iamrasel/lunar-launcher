@@ -14,7 +14,6 @@
     <string name="add_new">Aggiungi</string>
     <string name="add_widget">Aggiungi widget</string>
     <string name="advance">Avanzate</string>
-    <string name="amazon">Amazon</string>
     <string name="appearances">Stile</string>
     <string name="application_theme">Tema applicazione</string>
     <string name="app_alignment">Allineamento applicazioni</string>
@@ -28,14 +27,12 @@
     </string>
     <string name="background">Colore di fondo</string>
     <string name="back_home">Torna sempre alla schermata principale</string>
-    <string name="celsius">Celsius</string>
     <string name="center">Centro</string>
     <string name="change_wallpaper">Cambia sfondo</string>
     <string name="choose_launcher">Scegli il launcher predefinito</string>
     <string name="city_name">Nome della città</string>
     <string name="contact">Contatti</string>
     <string name="copied_message">Copiato negli appunti</string>
-    <string name="cpu">CPU</string>
     <string name="dark_theme">Scuro</string>
     <string name="date_format">Formato Data</string>
     <string name="default_">Predefinito</string>
@@ -52,7 +49,6 @@
     <string name="donate">Donazioni</string>
     <string name="double_tap_lock">Blocco schermo con due tocchi</string>
     <string name="empty_text_field">Il campo è vuoto</string>
-    <string name="fahrenheit">Fahrenheit</string>
     <string name="feed_url">Indirizzo del flusso RSS</string>
     <string name="first_install">Prima installazione</string>
     <string name="follow_system">Come da sistema</string>
@@ -70,7 +66,6 @@
         Tempo di uptime\nSistema attivo da\nSoglia della Memoria\nTemperatura della Batteria\nTensione della Batteria
         \nArchiviazione di Root\nIPv4\nIPv6
     </string>
-    <string name="na">N/A</string>
     <string name="negative">Negativo</string>
     <string name="null_app_store_message">
         Non ci sono Negozi installati in questo dispositivo.
@@ -79,7 +74,6 @@
     <string name="positive">Affermativo</string>
     <string name="proceed">Procedere</string>
     <string name="quick_launch">Avvio Rapido</string>
-    <string name="ram">RAM</string>
     <string name="reset">Reset</string>
     <string name="reset_message">
 		Questa operazione cancellerà tutti i dati salvati per questa applicazione. I dati non saranno ripristinabili.
@@ -140,6 +134,5 @@
         \n<li>Premere e mantenere l\'elemento dei preferiti - rimuove l\'elemento</li>
         \n\nPer maggiori informazioni, visitare la wiki su Github.
     </string>
-    <string name="wiki">Wiki</string>
 
 </resources>
