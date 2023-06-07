@@ -39,6 +39,7 @@ internal class Constants {
         const val PREFS_SETTINGS = "rasel.lunar.launcher.SETTINGS"
         const val KEY_TIME_FORMAT = "time_format"
         const val KEY_DATE_FORMAT = "date_format"
+        const val KEY_BATTERY_DIAMETER = "battery_diameter"
         const val KEY_CITY_NAME = "city_name"
         const val KEY_OWM_API = "owm_api"
         const val KEY_TEMP_UNIT = "temp_unit"
@@ -58,6 +59,7 @@ internal class Constants {
         const val KEY_LOCK_METHOD = "lock_method"
 
         /* --- */
+        const val DEFAULT_BATTERY_DIAMETER = 50
         const val DEFAULT_DATE_FORMAT = "EEE dx MMM, yyyy"
         const val DEFAULT_ICON_SIZE = 44
         const val DEFAULT_SCROLLBAR_HEIGHT = 400

@@ -29,6 +29,7 @@
     </string>
     <string name="background">Background</string>
     <string name="back_home">Always Go Back to Home Screen</string>
+    <string name="battery_indicator_diameter">Diameter of Battery Indicator</string>
     <string name="celsius" translatable="false">Celsius</string>
     <string name="center">Center</string>
     <string name="change_wallpaper">Change Wallpaper</string>

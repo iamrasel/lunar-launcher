@@ -35,7 +35,9 @@ import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.BOTTOM_SHEET_TAG
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_BATTERY_DIAMETER
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_DATE_FORMAT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BATTERY_DIAMETER
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DATE_FORMAT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TIME_FORMAT
@@ -46,6 +48,7 @@ import rasel.lunar.launcher.helpers.UniUtils.Companion.biometricPromptInfo
 import rasel.lunar.launcher.helpers.UniUtils.Companion.canAuthenticate
 import rasel.lunar.launcher.helpers.UniUtils.Companion.expandNotificationPanel
 import rasel.lunar.launcher.helpers.UniUtils.Companion.lockMethod
+import rasel.lunar.launcher.helpers.UniUtils.Companion.screenWidth
 import rasel.lunar.launcher.home.weather.WeatherExecutor
 import rasel.lunar.launcher.qaccess.QuickAccess
 import rasel.lunar.launcher.settings.SettingsActivity
@@ -95,6 +98,12 @@ internal class LauncherHome : Fragment() {
     override fun onResume() {
         super.onResume()
         if (shouldResume) {
+            binding.batteryProgress.apply {
+                indicatorSize = (settingsPrefs.getInt(KEY_BATTERY_DIAMETER, DEFAULT_BATTERY_DIAMETER) * screenWidth) / 100
+                invalidate()
+                requestLayout()
+            }
+
             /* register battery changes */
             requireContext().registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
