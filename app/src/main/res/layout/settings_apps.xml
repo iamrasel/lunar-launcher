@@ -134,9 +134,8 @@
         android:id="@+id/scrollbarHeight"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:stepSize="100"
         android:valueFrom="0"
-        android:valueTo="700"
+        android:valueTo="800"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollbarHeightTitle" />

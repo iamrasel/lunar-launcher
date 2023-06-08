@@ -18,6 +18,5 @@
     <dimen name="lineSpace">6sp</dimen>
     <dimen name="normalText">16sp</dimen>
     <dimen name="appsText">22sp</dimen>
-    <dimen name="clockText">48sp</dimen>
     <dimen name="appsCountText">216sp</dimen>
 </resources>

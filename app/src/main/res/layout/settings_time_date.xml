@@ -80,7 +80,6 @@
         android:id="@+id/batteryDiameter"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:stepSize="5"
         android:valueFrom="20"
         android:valueTo="80"
         app:layout_constraintEnd_toEndOf="parent"

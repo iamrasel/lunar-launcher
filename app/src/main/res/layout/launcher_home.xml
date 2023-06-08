@@ -13,7 +13,6 @@
         android:indeterminate="false"
         android:max="100"
         app:indicatorColor="?android:attr/textColorPrimary"
-        app:indicatorSize="@dimen/twoEightyEight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +23,6 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textIsSelectable="false"
-        android:textSize="@dimen/clockText"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/batteryProgress"
         app:layout_constraintEnd_toEndOf="@+id/batteryProgress"
