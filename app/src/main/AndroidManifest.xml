@@ -30,7 +30,6 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.LunarLauncher"
         android:excludeFromRecents="true"
 		android:clearTaskOnLaunch="true"
         android:stateNotNeeded="true"
@@ -40,6 +39,7 @@
 
         <activity
             android:name=".LauncherActivity"
+            android:theme="@style/SplashTheme"
 			android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
@@ -53,6 +53,7 @@
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/lunar_settings"
+            android:theme="@style/Theme.LunarLauncher"
             android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
