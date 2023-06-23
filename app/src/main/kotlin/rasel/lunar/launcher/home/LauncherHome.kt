@@ -98,15 +98,10 @@ internal class LauncherHome : Fragment() {
     override fun onResume() {
         super.onResume()
         if (shouldResume) {
-            ((settingsPrefs.getInt(KEY_BATTERY_DIAMETER, DEFAULT_BATTERY_DIAMETER) * screenWidth) / 100).let { diameterSize: Int ->
-                binding.batteryProgress.apply {
-                    indicatorSize = diameterSize
-                    invalidate()
-                    requestLayout()
-                }
-                binding.time.textSize = (diameterSize / 8).toFloat()
-                binding.date.textSize = (diameterSize / 26).toFloat()
-                binding.weather.textSize = (diameterSize / 26).toFloat()
+            binding.batteryProgress.apply {
+                indicatorSize = (settingsPrefs.getInt(KEY_BATTERY_DIAMETER, DEFAULT_BATTERY_DIAMETER) * screenWidth) / 100
+                invalidate()
+                requestLayout()
             }
 
             /* register battery changes */
