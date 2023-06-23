@@ -65,7 +65,7 @@ internal class Advance : BottomSheetDialogFragment() {
                 dialog.dismiss()
                 Runtime.getRuntime().exec("pm clear " + requireContext().packageName)
             }
-            .setNeutralButton(android.R.string.cancel) {dialog, _ -> dialog.dismiss() }
+            .setNeutralButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
             .show()
     }
 
