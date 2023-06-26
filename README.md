@@ -5,10 +5,12 @@
         <img src='https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white'>
         <img src='https://img.shields.io/badge/SDK-26-vibrant?style=flat-square'>
         <a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=flat-square'></a>
+	<a href="https://hosted.weblate.org/engage/lunar-launcher/">
+	<img src="https://hosted.weblate.org/widgets/lunar-launcher/-/svg-badge.svg" alt="Oversettelsesstatus" /></a>
         <br>
 		<img src='https://img.shields.io/badge/Maintained-yes-green?style=flat-square'>
         <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/actions/workflow/status/iamrasel/lunar-launcher/ci_push.yml?branch=main&style=flat-square'></a>
-		<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=flat-square'></a>
+	<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=flat-square'></a>
     </p>
 	<a href="https://www.buymeacoffee.com/iamrasel"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=iamrasel&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 </div>
@@ -43,7 +45,7 @@
 - [x] Todo
   - [x] Add, delete, edit, copy
   - [ ] Auto destructive todo with notify
-  - [x] 0-7 items in home screen
+  - [x] 0–7 items in home screen
   - [x] Access lock
 
 </details>
@@ -56,7 +58,7 @@
 - [ ] Gesture search
 - [ ] App grid with icon (alternative)
 - [ ] App appearance
-- [ ] App rename
+- [ ] App renaming
 - [ ] App vault
 - [x] Detailed app info
 
@@ -73,7 +75,7 @@
 <details><summary>Quick Access</summary>
 
 - [x] Favourite apps (<=6)
-- [x] Favourite contacts and urls (<=6)
+- [x] Favourite contacts and URLs (<=6)
 - [x] Control system value
   - [x] Brightness
   - [x] Sound
@@ -81,7 +83,8 @@
 </details>
 
 ## Screenshots
-As per version 14. Click on any image to enlarge it. To know more, explore and see for yourself.
+As per version 14, click on any image to enlarge it. \
+To know more, explore and see for yourself.
 
 <table>
 	<tr>
@@ -96,7 +99,7 @@ As per version 14. Click on any image to enlarge it. To know more, explore and s
 	</tr>
 </table>
 
-## Download
+## Downloads
 To get updated with the latest build, head over to the [Actions](https://github.com/iamrasel/lunar-launcher/actions) tab and choose the latest workflow build from there.
 <div align='center'>
 
@@ -105,7 +108,8 @@ To get updated with the latest build, head over to the [Actions](https://github.
 
 </div>
 
-This app is also available on Google's Play Store, which is forked and published by [Vedansh Nigam](https://github.com/vednig). If you don't have any issue with installing apps from Play Store, you can go ahead.
+This app is also available on Google's Play Store, which is forked and published by [Vedansh Nigam](https://github.com/vednig). \
+If you don't have any issue with installing apps from Play Store, you can go ahead.
 <div align='center'>
 
 <a href='https://play.google.com/store/apps/details?id=rasel.lunar.launcher'><img src='https://img.shields.io/badge/Play_Store-34A853?style=for-the-badge&logo=google-play&logoColor=white'></a>
@@ -113,15 +117,15 @@ This app is also available on Google's Play Store, which is forked and published
 </div>
 
 ## Permissions
-- `android.permission.ACCESS_NETWORK_STATE` - To check for active network connection
-- `android.permission.CALL_PHONE` - To make call
-- `android.permission.EXPAND_STATUS_BAR` - To expand notification panel
-- `android.permission.INTERNET` - To fetch weather and feed data
-- `android.permission.READ_EXTERNAL_STORAGE` - To get images to set as wallpaper (sdk < 33)
-  - `android.permission.READ_MEDIA_IMAGES` - To get images to set as wallpaper (sdk 33+)
-- `android.permission.REQUEST_DELETE_PACKAGES` - To uninstall apks
-- `android.permission.SET_WALLPAPER` - To set wallpaper
-- `android.permission.WRITE_SETTINGS` - To change system values like brightness
+- `android.permission.ACCESS_NETWORK_STATE` — Check for active network connections
+- `android.permission.CALL_PHONE` — Place calls
+- `android.permission.EXPAND_STATUS_BAR` — Expand the notification panel
+- `android.permission.INTERNET` — Fetch weather and feed data
+- `android.permission.READ_EXTERNAL_STORAGE` — Fetch images to set as wallpaper (SDK < 33)
+  - `android.permission.READ_MEDIA_IMAGES` — Fetch images to set as wallpaper (SDK 33+)
+- `android.permission.REQUEST_DELETE_PACKAGES` — Uninstall APKs
+- `android.permission.SET_WALLPAPER` — Set the wallpaper
+- `android.permission.WRITE_SETTINGS` — Change system values like brightness
 
 ## Community
 If you want to share your thoughts with me or other users, join the Lunar Launcher's users community.
@@ -132,11 +136,19 @@ If you want to share your thoughts with me or other users, join the Lunar Launch
 
 </div>
 
+## Translations
+Help [translate the app on Hosted Weblate](https://hosted.weblate.org/engage/lunar-launcher). \
+<a href="https://hosted.weblate.org/engage/lunar-launcher/">
+<img src="https://hosted.weblate.org/widgets/lunar-launcher/-/multi-blue.svg" alt="Translation status" />
+</a>
+
 ## Credits
 - [https://github.com/cachapa/ExpandableLayout](https://github.com/cachapa/ExpandableLayout)
 
 ## Donation
-Please support the development by donating. As Lunar Launcher is a free application, it needs support to keep it free and alive. Purchasing is not a requirement, donation is. 😊
+Please support the development by donating. Lunar Launcher is gratis, copylefted libre app, \
+it needs your support to keep it gratis and alive. \
+Purchasing is not a requirement, donations are. 😊
 
 <div align='center'>
 
@@ -147,4 +159,5 @@ Please support the development by donating. As Lunar Launcher is a free applicat
 
 </div>
 
-There is also another way to support, just go through this [Amazon affiliate link](https://amzn.to/3gWFktS) while shopping there. It won't cost you any extra bucks, win-win for both of us. 😉
+There is also another way to support, just go through this [Amazon affiliate link](https://amzn.to/3gWFktS) while shopping there. \
+It doesn't cost you anything extra, which is a win-win for the both of us. 😉
