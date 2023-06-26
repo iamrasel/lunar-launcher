@@ -32,6 +32,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -68,6 +69,7 @@ internal class LauncherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
 
         lActivity = this
         appWidgetManager = AppWidgetManager.getInstance(applicationContext)
@@ -186,7 +188,7 @@ internal class LauncherActivity : AppCompatActivity() {
     }
 
     private fun topPadding(topPadding: Boolean) {
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
             windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures()).let {
                 val topInset = if (topPadding) {
                     if (it.top == 0) windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()).top

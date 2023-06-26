@@ -40,6 +40,7 @@
 
         <activity
             android:name=".LauncherActivity"
+            android:theme="@style/SplashTheme"
 			android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
