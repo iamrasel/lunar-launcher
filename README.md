@@ -5,12 +5,10 @@
         <img src='https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white'>
         <img src='https://img.shields.io/badge/SDK-26-vibrant?style=flat-square'>
         <a href='https://github.com/iamrasel/lunar-launcher/blob/main/LICENSE'><img src='https://img.shields.io/badge/License-GPL%20v3-blue?style=flat-square'></a>
-	<a href="https://hosted.weblate.org/engage/lunar-launcher/">
-	<img src="https://hosted.weblate.org/widgets/lunar-launcher/-/svg-badge.svg" alt="Oversettelsesstatus" /></a>
         <br>
-		<img src='https://img.shields.io/badge/Maintained-yes-green?style=flat-square'>
-        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/actions/workflow/status/iamrasel/lunar-launcher/ci_push.yml?branch=main&style=flat-square'></a>
-	<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=flat-square'></a>
+		<a href='https://hosted.weblate.org/engage/lunar-launcher/'><img src='https://img.shields.io/weblate/progress/lunar-launcher?style=flat-square&label=Translated&color=4DCCAA' alt='Oversettelsesstatus' /></a>
+        <a href='https://github.com/iamrasel/lunar-launcher/actions'><img src='https://img.shields.io/github/actions/workflow/status/iamrasel/lunar-launcher/ci_push.yml?branch=main&style=flat-square&label=Build'></a>
+	<a href='https://github.com/iamrasel/lunar-launcher/releases/latest'><img src='https://img.shields.io/github/downloads/iamrasel/lunar-launcher/total?style=flat-square&label=Downloads'></a>
     </p>
 	<a href="https://www.buymeacoffee.com/iamrasel"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=iamrasel&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 </div>
@@ -138,8 +136,8 @@ If you want to share your thoughts with me or other users, join the Lunar Launch
 
 ## Translations
 Help [translate the app on Hosted Weblate](https://hosted.weblate.org/engage/lunar-launcher). \
-<a href="https://hosted.weblate.org/engage/lunar-launcher/">
-<img src="https://hosted.weblate.org/widgets/lunar-launcher/-/multi-blue.svg" alt="Translation status" />
+<a href='https://hosted.weblate.org/engage/lunar-launcher/'>
+	<img src='https://hosted.weblate.org/widgets/lunar-launcher/-/multi-blue.svg' alt='Translation status' />
 </a>
 
 ## Credits
