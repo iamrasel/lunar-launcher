@@ -3,8 +3,8 @@
     <string name="about">About</string>
     <string name="accessibility">Accessibility</string>
     <string name="accessibility_service_description">
-        Accessibility service to allow Lunar Launcher to put the device to sleep,
-        on Android Pie (API 28) and up.
+        Let Lunar Launcher put the device to sleep
+        (on Android Pie (API 28+).
     </string>
     <string name="accessibility_service_label">Lock Service</string>
     <string name="acknowledgements">
@@ -16,7 +16,7 @@
     <string name="advance">Advance</string>
     <string name="amazon" translatable="false">Amazon</string>
     <string name="appearances">Appearances</string>
-    <string name="application_theme">Application Theme</string>
+    <string name="application_theme">App Theme</string>
     <string name="app_alignment">App Alignment</string>
     <string name="app_drawer">App Drawer</string>
     <string name="app_info">App Info</string>
@@ -25,7 +25,7 @@
     <string name="authentication_error">Authentication error</string>
     <string name="authentication_failed">Authentication failed</string>
     <string name="authentication_subtitle">
-        Authenticate with your device credential to proceed
+        Authenticate with your device credential to proceed.
     </string>
     <string name="background">Background</string>
     <string name="back_home">Always Go Back to Home Screen</string>
@@ -45,18 +45,18 @@
     <string name="delete">Delete</string>
     <string name="delete_all">Delete All</string>
     <string name="delete_all_confirmation">
-        Are you sure to delete all the existing todos?
+        Delete all to-do entries?
     </string>
-    <string name="developer_name">Developed by Md Rasel Hossain</string>
+    <string name="developer_name">Developed by Md. Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
     <string name="device_admin_description">
-        Allow to use double tap to lock feature
+        Double tap to lock
     </string>
     <string name="donate">Donate</string>
     <string name="double_tap_lock">Double Tap Lock Method</string>
-    <string name="empty_text_field">Text field is empty</string>
+    <string name="empty_text_field">The text field is empty</string>
     <string name="fahrenheit" translatable="false">Fahrenheit</string>
-    <string name="feed_url">RSS Feed Url</string>
+    <string name="feed_url">RSS Feed URL</string>
     <string name="first_install">First Install</string>
     <string name="follow_system">Follow System</string>
     <string name="free">Free</string>
@@ -65,7 +65,7 @@
     <string name="got_it">Got it</string>
     <string name="hide_status_bar">Hide Status Bar</string>
     <string name="icon_size">Shortcut &amp; App Icon Size</string>
-    <string name="image_pick_failed">Failed to get image</string>
+    <string name="image_pick_failed">Could not fetch image</string>
     <string name="increase_height">Increase Height</string>
     <string name="last_update">Last Update</string>
     <string name="left">Left</string>
@@ -81,7 +81,7 @@
     <string name="na" translatable="false">N/A</string>
     <string name="negative">Negative</string>
     <string name="null_app_store_message">
-        There\'s no app store is installed\non this device.
+        No app store installed on this device.
     </string>
     <string name="owm_key">OWM API Key</string>
     <string name="positive">Positive</string>
@@ -90,36 +90,36 @@
     <string name="ram" translatable="false">RAM</string>
     <string name="reset">Reset</string>
     <string name="reset_message">
-        This operation will clear all the data stored for this application, and can\'t be undone.
+        This clears all data stored for this app, and can\'t be undone.
     </string>
     <string name="restart">Restart</string>
     <string name="right">Right</string>
     <string name="root">Root</string>
     <string name="rss_feed">RSS Feed</string>
-    <string name="scrollbar_height">Height of Alphabetical Scrollbar</string>
+    <string name="scrollbar_height">Height of A-Z Scrollbar</string>
     <string name="sdk" translatable="false">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
-    <string name="shortcut_count">Number Of Shortcuts (Url/Contact)</string>
+    <string name="shortcut_count">Number Of Shortcuts (URL/Contact)</string>
     <string name="show_city">Show City Name With Weather</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="source_code">Source Code</string>
     <string name="star">Star</string>
     <string name="support">Support</string>
-    <string name="support_message">Support the developer to keep this application free and alive.\n
+    <string name="support_message">Support the developer to keep this app gratis and alive.\n
         \n<li><b>Donate:</b> If possible, make direct donations to help and encourage the developer.</li>
-        \n<li><b>Amazon:</b> Use the affiliate link while shopping on Amazon to get the developer rewarded.</li>
-        \n<li><b>Star:</b> Be a stargazer at Github to show your support.</li>
+        \n<li><b>Amazon:</b> Use the affiliate link while shopping on Amazon to reward the developer.</li>
+        \n<li><b>Star:</b> Star on GitHub to show your support.</li>
     </string>
     <string name="system_stats">System Stats</string>
     <string name="telegram_group">Telegram Group</string>
     <string name="temperature">Temperature</string>
     <string name="temp_unit">Temperature Unit</string>
-    <string name="time_date">Time - Date</string>
+    <string name="time_date">Time — Date</string>
     <string name="time_format">Time Format</string>
     <string name="todo">Todo</string>
-    <string name="todo_count">Number Of Todo On Home Screen</string>
-    <string name="todo_manager">Todo Manager</string>
-    <string name="todo_manager_lock">Todo Manager Lock</string>
+    <string name="todo_count">Number Of To-Do Entries On Home Screen</string>
+    <string name="todo_manager">To-Do Manager</string>
+    <string name="todo_manager_lock">To-Do Manager Lock</string>
     <string name="total">Total</string>
     <string name="twelve">12 Hour</string>
     <string name="twenty_four">24 Hour</string>
@@ -127,29 +127,27 @@
     <string name="unable_to_launch">Unable to launch</string>
     <string name="uninstall">Uninstall</string>
     <string name="update">Update</string>
-    <string name="url">Url</string>
+    <string name="url">URL</string>
     <string name="used">Used</string>
     <string name="version">Version</string>
-    <string name="wallpaper_change_success">Wallpaper changed successfully</string>
+    <string name="wallpaper_change_success">Wallpaper changed</string>
     <string name="weather">Weather</string>
     <string name="welcome">Welcome</string>
-    <string name="welcome_description">Welcome to Lunar Launcher. This is your first launch; if you are a first time user,
-		<b>read these texts before you proceed</b>.
-        \n\nAt first, after you close this dialog, you will be asked to grant following permissions. If you refuse to allow
-        them, this app won\'t work as expected.
-        \n\n<li><b>Modify system settings -</b> To control brightness using a slider</li>
-        \n<li><b>Phone -</b> To make call from shortcuts</li>
-        \n\nIf you still have any doubt, you can check the source code anytime, it is fully open-source.
+    <string name="welcome_description">Welcome to Lunar Launcher.
+        \n\nAfter closing this dialog, you will be asked to grant permissions needed for the app to work as expected.
+        \n\n<li><b>Modify system settings —</b> To control brightness using a slider</li>
+        \n<li><b>Phone —</b> To make call from shortcuts</li>
+        \n\nIt\'s a copylefted libre software; check, change and share with all.
         \n\n<b><u>Gestures:</u></b>
-        \n<li>Swipe up - quick access</li>
-        \n<li>Swipe down - notification panel</li>
-        \n<li>Swipe right - feeds</li>
-        \n<li>Swipe left - app drawer</li>
-        \n<li>Tap and hold inside battery indicator - launcher settings</li>
-        \n<li>Tap and hold in the lower part of the screen - todo manager</li>
-        \n<li>Double tap - device lock/sleep (enable from settings)</li>
-        \n<li>Tap and hold the favourite item - remove favourite</li>
-        \n\nFor more information, visit the wiki page at Github.
+        \n<li>Swipe up — Quick access</li>
+        \n<li>Swipe down — Notification panel</li>
+        \n<li>Swipe right — Feeds</li>
+        \n<li>Swipe left — App drawer</li>
+        \n<li>Tap and hold inside battery indicator — Launcher settings</li>
+        \n<li>Tap and hold in the lower part of the screen — To-Do manager</li>
+        \n<li>Double tap — Device lock/sleep (enable from settings)</li>
+        \n<li>Tap and hold the favourite item — Remove favourite</li>
+        \n\nMore info on the wiki page at GitHub.
     </string>
     <string name="wiki" translatable="false">Wiki</string>
 
