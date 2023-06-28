@@ -3,7 +3,7 @@
     <string name="about">About</string>
     <string name="accessibility">Accessibility</string>
     <string name="accessibility_service_description">
-        Lets Lunar Launcher put the device to sleep
+        Let Lunar Launcher put the device to sleep
         (on Android Pie (API 28+).
     </string>
     <string name="accessibility_service_label">Lock Service</string>
@@ -47,7 +47,7 @@
     <string name="delete_all_confirmation">
         Delete all to-do entries?
     </string>
-    <string name="developer_name">Developed by M.D. Rasel Hossain</string>
+    <string name="developer_name">Developed by Md. Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
     <string name="device_admin_description">
         Double tap to lock
@@ -134,12 +134,10 @@
     <string name="weather">Weather</string>
     <string name="welcome">Welcome</string>
     <string name="welcome_description">Welcome to Lunar Launcher.
-        \n\nAfter closing this dialog, you will be asked to grant permissions needed for the app
-	to work as expected.
+        \n\nAfter closing this dialog, you will be asked to grant permissions needed for the app to work as expected.
         \n\n<li><b>Modify system settings —</b> To control brightness using a slider</li>
         \n<li><b>Phone —</b> To make call from shortcuts</li>
-        \n\nCheck, change and share the source code anytime; with all,
-	it copylefted libre software.
+        \n\nIt\'s a copylefted libre software; check, change and share with all.
         \n\n<b><u>Gestures:</u></b>
         \n<li>Swipe up — Quick access</li>
         \n<li>Swipe down — Notification panel</li>
