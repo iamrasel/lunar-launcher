@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility">Tilgjengelighet</string>
+    <string name="background">Bakgrunn</string>
+    <string name="add_new">Legg til ny</string>
+    <string name="device_admin">Enhetsadministrator</string>
+    <string name="application_theme">Programdrakt</string>
+    <string name="copied_message">Kopiert til utklippstavlen</string>
+    <string name="back_home">Alltid gå tilbake til hjemmeskjermen</string>
+    <string name="default_">Forvalg</string>
+    <string name="change_wallpaper">Endre bakgrunnsbilde</string>
+    <string name="date_format">Datoformat</string>
+    <string name="delete">Slett</string>
+    <string name="delete_all">Slett alle</string>
+    <string name="donate">Doner</string>
+    <string name="empty_text_field">Tekstfeltet er tomt</string>
+    <string name="app_alignment">Programjustering</string>
+    <string name="about">Om</string>
+    <string name="add_widget">Legg til miniprogram</string>
+    <string name="appearances">Utseeender</string>
+    <string name="app_drawer">Programskuff</string>
+    <string name="app_info">Programinfo</string>
+    <string name="app_store">Programbutikk</string>
+    <string name="city_name">Bynavn</string>
+    <string name="contact">Kontakt</string>
+    <string name="dark_theme">Mørk</string>
+</resources>
