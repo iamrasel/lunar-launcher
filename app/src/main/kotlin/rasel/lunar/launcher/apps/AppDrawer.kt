@@ -42,12 +42,12 @@ import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
-import rasel.lunar.launcher.helpers.Constants
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_SCROLLBAR_HEIGHT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SCROLLBAR_HEIGHT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_STATUS_BAR
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import java.text.Normalizer
 import java.util.*
@@ -270,7 +270,7 @@ internal class AppDrawer : Fragment() {
             when {
                 keyboardHeight > screenHeight * 0.15 -> {
                     if (!isKeyboardShowing &&
-                        !settingsPrefs.getBoolean(Constants.KEY_STATUS_BAR, false)) {
+                        !settingsPrefs.getBoolean(KEY_STATUS_BAR, false)) {
                         isKeyboardShowing = true
                         binding.root.setPadding(0, 0, 0, keyboardHeight)
                     }
