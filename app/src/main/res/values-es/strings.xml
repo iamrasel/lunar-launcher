@@ -2,7 +2,7 @@
 <resources>
     <string name="about">Acerca de</string>
     <string name="accessibility">Accesibilidad</string>
-    <string name="accessibility_service_description">Servicio de accesibilidad para permitir que Lunar Launcher ponga el dispositivo en reposo, en Android Pie (API 28) y superior.</string>
+    <string name="accessibility_service_description">Dejar que Lunar Launcher coloque el dispositivo en reposo (en Android Pie (API 28+)).</string>
     <string name="accessibility_service_label">Bloquear servicio</string>
     <string name="acknowledgements">
          <b>Agradecimientos</b>\n
@@ -36,17 +36,13 @@
     <string name="default_">Predeterminado</string>
     <string name="delete">Borrar</string>
     <string name="delete_all">Borrar todo</string>
-    <string name="delete_all_confirmation">
-         ¿Seguro que quieres borrar todas las tareas existentes?
-     </string>
+    <string name="delete_all_confirmation">¿Borrar todas las tareas existentes\?</string>
     <string name="developer_name">Desarrollado por Md Rasel Hossain</string>
     <string name="device_admin">Administrador del dispositivo</string>
-    <string name="device_admin_description">
-         Permite usar la función de doble toque para bloquear el dispositivo
-     </string>
+    <string name="device_admin_description">Doble toque para bloquear</string>
     <string name="donate">Donar</string>
     <string name="double_tap_lock">Método de bloqueo de doble toque</string>
-    <string name="empty_text_field">El Campo de texto está vacío</string>
+    <string name="empty_text_field">El campo de texto está vacío</string>
     <string name="feed_url">URL del Feed RSS</string>
     <string name="first_install">Primera instalación</string>
     <string name="follow_system">Seguir al sistema</string>
@@ -55,7 +51,7 @@
     <string name="frequency">Frecuencias</string>
     <string name="got_it">Entendido</string>
     <string name="hide_status_bar">Ocultar barra de estado</string>
-    <string name="image_pick_failed">Error al seleccionar imagen</string>
+    <string name="image_pick_failed">Error al buscar imagen</string>
     <string name="increase_height">Aumentar altura</string>
     <string name="last_update">Última actualización</string>
     <string name="left">Izquierda</string>
@@ -68,16 +64,13 @@
     <string name="move_up">Mover hacia arriba</string>
     <string name="move_down">Mover hacia abajo</string>
     <string name="negative">Negativo</string>
-    <string name="null_app_store_message">No hay ninguna tienda de aplicaciones instalada.
-\nen este dispositivo.</string>
+    <string name="null_app_store_message">No hay ninguna tienda de aplicaciones instalada en este dispositivo.</string>
     <string name="owm_key">Clave de la API de OWM</string>
     <string name="positive">Positivo</string>
     <string name="proceed">Proceder</string>
     <string name="quick_launch">Lanzado rápido</string>
     <string name="reset">Resetear</string>
-    <string name="reset_message">
-         Esta operación borrará todos los datos almacenados de la aplicación eneste dispositivo, y no puede deshacerse.
-     </string>
+    <string name="reset_message">Esta operación borrará todos los datos almacenados de la aplicación, y no puede deshacerse.</string>
     <string name="restart">Reiniciar</string>
     <string name="right">Derecha</string>
     <string name="root">Raíz</string>
@@ -113,25 +106,29 @@
     <string name="url">Url</string>
     <string name="used">Usado</string>
     <string name="version">Versión</string>
-    <string name="wallpaper_change_success">Fondo de pantalla cambiado con éxito</string>
+    <string name="wallpaper_change_success">Fondo de pantalla cambiado</string>
     <string name="weather">Tiempo</string>
     <string name="welcome">Bienvenide</string>
-    <string name="welcome_description">Bienvenide a Lunar Launcher. Esta es la primera vez que abres la aplicación; si es la primera vez que la usas, <b>lee estos textos antes de proceder</b>.
-         \n\nPrimero, tras cerrar este mensaje, se te pedirá conceder los siguientes permisos. Si decides no hacerlo, esta aplicación no funcionará como se espera.
-         \n\n<li><b>Modificar ajustes del sistema -</b> Para controlar el brillo usando una barra deslizable</li>
-         \n<li><b>Teléfono -</b> Para poder hacer llamadas desde los accesos directos a contactos</li>
-         \n\n Si sigues teniendo cualquier duda, puedes comprobar el código fuente de la aplicación, este es una aplicación completamente de código abierto.
-         \n\n<b><u>Gestos:</u></b>
-         \n<li>Deslizar hacia arriba - acceso rápido</li>
-         \n<li>Deslizar hacia abajo - panel de notificaciones</li>
-         \n<li>Deslizar a la derecha - Feed </li>
-         \n<li>Deslizar a la izquierda - Cajón de aplicaciones</li>
-         \n<li>Mantener pulsado en el reloj circular - Ajustes de Lunar launcher</li>
-         \n<li>Mantener pulsado en la parte inferior de la pantalla - Administrador de tareas</li>
-         \n<li>Doble toque - Bloquear dispositivo (activar en ajustes)</li>
-         \n<li>Mantener pulsado un elemento favorito - Eliminar favorito</li>
-         \n\nPara más información, visite la página de Wiki en Github.
-     </string>
+    <string name="welcome_description">Bienvenido a Lunar Launcher.
+\n
+\nTras cerrar este mensaje, se pedirán los permisos necesarios para que aplicación funcione como se espera.
+\n
+\n<li><b>Modifica ajustes del sistema —</b> Controla el brillo usando una barra deslizadora</li>
+\n<li><b>Teléfono —</b> Haz llamadas desde un atajo</li>
+\n
+\nEste un software libre copylefteado; revisa, cambia y compártelo con todos.
+\n
+\n<b><u>Gestos:</u></b>
+\n<li>Deslizar hacia arriba — Acceso rápido</li>
+\n<li>Deslizar hacia abajo — Panel de notificaciones</li>
+\n<li>Deslizar hacia la derecha — Feeds</li>
+\n<li>Deslizar hacia la izquierda — Lista de aplicaciones</li>
+\n<li>Toca y mantén presionado en el indicador de batería — Configuración del launcher</li>
+\n<li>Toca y manten presionado en la parte inferior de la pantalla — Gestor de tareas</li>
+\n<li>Doble toque — Bloquear/reposar el dispositivo (activar desde configuraciones)</li>
+\n<li>Toca y mantén presionado el elemento favorito — Remover favorito </li>
+\n
+\nMas información en la página wiki en GitHub. </string>
     <string name="battery_indicator_diameter">Diámetro del indicador de batería</string>
     <string name="scrollbar_height">Altura de la barra alfabética</string>
     <string name="icon_size">Tamaño de los accesos directos e iconos de las aplicaciones</string>
