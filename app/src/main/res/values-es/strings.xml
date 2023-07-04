@@ -19,9 +19,7 @@
     <string name="app_store">Tienda de aplicaciones</string>
     <string name="authentication_error">Error de autenticación</string>
     <string name="authentication_failed">Autenticación fallida</string>
-    <string name="authentication_subtitle">
-        Identifícate con las credenciales del dispositivo para proceder
-     </string>
+    <string name="authentication_subtitle">Identifícate con las credenciales del dispositivo para proceder.</string>
     <string name="background">Fondo</string>
     <string name="back_home">Siempre volver a la pantalla de inicio</string>
     <string name="center">Centro</string>
@@ -37,13 +35,13 @@
     <string name="delete">Borrar</string>
     <string name="delete_all">Borrar todo</string>
     <string name="delete_all_confirmation">¿Borrar todas las tareas existentes\?</string>
-    <string name="developer_name">Desarrollado por Md Rasel Hossain</string>
+    <string name="developer_name">Desarrollado por Md. Rasel Hossain</string>
     <string name="device_admin">Administrador del dispositivo</string>
     <string name="device_admin_description">Doble toque para bloquear</string>
     <string name="donate">Donar</string>
     <string name="double_tap_lock">Método de bloqueo de doble toque</string>
     <string name="empty_text_field">El campo de texto está vacío</string>
-    <string name="feed_url">URL del Feed RSS</string>
+    <string name="feed_url">URL de la fuente RSS</string>
     <string name="first_install">Primera instalación</string>
     <string name="follow_system">Seguir al sistema</string>
     <string name="free">Libre</string>
@@ -76,34 +74,34 @@
     <string name="root">Raíz</string>
     <string name="rss_feed">Feed RSS</string>
     <string name="search_with_keyboard">Buscar con teclado</string>
-    <string name="shortcut_count">Número de accesos directos (Url/Contacto)</string>
+    <string name="shortcut_count">Número de accesos directos (URL/Contacto)</string>
     <string name="show_city">Mostrar nombre de la ciudad en los datos meteorológicos</string>
     <string name="something_went_wrong">Algo ha ido mal</string>
     <string name="source_code">Código fuente</string>
     <string name="star">Estrella</string>
     <string name="support">Soporte</string>
-    <string name="support_message">Apoya al desarrollador para mantener esta aplicacion viva y gratuita de por vida.\n
-         \n<li><b>Donar:</b> Si es posible, haz donaciones directas para ayudar y motivar al desarrollador.</li>
-         \n<li><b>Amazon:</b> Usa el link de afiliado al comprar en Amazon para que el desarrollador sea recompensado</li>
-         \n<li><b>Estrella:</b> Marca el repositorio con una estrella para mostrar tu apoyo a la aplicación.</li>
-     </string>
+    <string name="support_message">Apoya al desarrollador para mantener esta aplicación gratis y viva.
+\n
+\n<li><b>Donar:</b> si es posible, haga donaciones directas para ayudar y alentar al desarrollador.</li>
+\n<li><b>Amazon:</b> use el enlace de afiliado mientras compra en Amazon para recompensar al desarrollador.</li>
+\n<li><b>Estrella:</b> Destaca en GitHub para mostrar tu apoyo.</li> </string>
     <string name="system_stats">Información del sistema</string>
     <string name="telegram_group">Grupo de Telegram</string>
     <string name="temperature">Temperatura</string>
     <string name="temp_unit">Unidad de temperatura</string>
-    <string name="time_date">Hora - Fecha</string>
+    <string name="time_date">Hora — Fecha</string>
     <string name="time_format">Formato de hora</string>
     <string name="todo">Tareas</string>
-    <string name="todo_count">Número de tareas en la pantalla de inicio</string>
-    <string name="todo_manager">Gestor de tareas</string>
-    <string name="todo_manager_lock">Bloquear gestor de tareas</string>
+    <string name="todo_count">Número de entradas de tareas pendientes en la pantalla de inicio</string>
+    <string name="todo_manager">Administrador de tareas pendientes</string>
+    <string name="todo_manager_lock">Bloqueo del administrador de tareas pendientes</string>
     <string name="total">Total</string>
     <string name="twelve">12 Horas</string>
     <string name="twenty_four">24 Horas</string>
     <string name="unable_to_launch">Fallo al abrir</string>
     <string name="uninstall">Desinstalar</string>
     <string name="update">Actualizar</string>
-    <string name="url">Url</string>
+    <string name="url">URL</string>
     <string name="used">Usado</string>
     <string name="version">Versión</string>
     <string name="wallpaper_change_success">Fondo de pantalla cambiado</string>
@@ -130,6 +128,6 @@
 \n
 \nMas información en la página wiki en GitHub. </string>
     <string name="battery_indicator_diameter">Diámetro del indicador de batería</string>
-    <string name="scrollbar_height">Altura de la barra alfabética</string>
+    <string name="scrollbar_height">Altura de la barra de desplazamiento A-Z</string>
     <string name="icon_size">Tamaño de los accesos directos e iconos de las aplicaciones</string>
 </resources>
