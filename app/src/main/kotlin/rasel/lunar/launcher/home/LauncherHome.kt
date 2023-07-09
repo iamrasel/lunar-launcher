@@ -27,8 +27,10 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Toast
 import androidx.biometric.BiometricPrompt
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
@@ -82,7 +84,7 @@ internal class LauncherHome : Fragment() {
         batteryProgressGestures()
         todosGestures()
 
-        /* refresh the todo list after getting back from TodoManager */
+        /* refresh the to-do list after getting back from TodoManager */
         fragManager.addOnBackStackChangedListener {
             shouldResume = if (fragManager.backStackEntryCount == 0) {
                 binding.root.visibility = View.VISIBLE
@@ -104,6 +106,8 @@ internal class LauncherHome : Fragment() {
                 requestLayout()
             }
 
+            changeChildSizes()
+
             /* register battery changes */
             requireContext().registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
@@ -118,7 +122,7 @@ internal class LauncherHome : Fragment() {
 
             /* show weather */
             WeatherExecutor(settingsPrefs).generateWeatherString(binding.weather)
-            /* show todo list */
+            /* show to-do list */
             showTodoList()
         }
     }
@@ -173,7 +177,7 @@ internal class LauncherHome : Fragment() {
         })
     }
 
-    /* gestures on todo area */
+    /* gestures on to-do area */
     @SuppressLint("ClickableViewAccessibility")
     private fun todosGestures() {
         binding.notes.setOnTouchListener(object : SwipeTouchListener(requireContext()) {
@@ -232,7 +236,7 @@ internal class LauncherHome : Fragment() {
             .addToBackStack("").commit()
     }
 
-    /* todo list */
+    /* to-do list */
     private fun showTodoList() {
         binding.notes.adapter = TodoAdapter(null, requireContext())
     }
@@ -264,12 +268,38 @@ internal class LauncherHome : Fragment() {
 
     /* get date format string */
     private val dateFormat: String get() {
-        val dateFormatValue = settingsPrefs.getString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT)
-        return if (dateFormatValue!!.contains("x")) {
-            dateFormatValue.replace("x", dateNumberSuffix)
-        } else {
-            dateFormatValue
+        settingsPrefs.getString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT).let {
+            return if (it!!.contains("x")) {
+                it.replace("x", dateNumberSuffix)
+            } else {
+                it
+            }
         }
+    }
+
+    private fun changeChildSizes() {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                binding.batteryProgress.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                val height = binding.batteryProgress.height
+                val width = binding.batteryProgress.width
+
+                binding.time.updateLayoutParams {
+                    this@updateLayoutParams.height = (height * 0.22).toInt()
+                    this@updateLayoutParams.width = width
+                }
+
+                binding.date.updateLayoutParams {
+                    this@updateLayoutParams.height = (height * 0.06).toInt()
+                    this@updateLayoutParams.width = width
+                }
+
+                binding.weather.updateLayoutParams {
+                    this@updateLayoutParams.height = (height * 0.06).toInt()
+                    this@updateLayoutParams.width = width
+                }
+            }
+        })
     }
 
 }

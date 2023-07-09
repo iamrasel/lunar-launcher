@@ -40,7 +40,7 @@
 
         <activity
             android:name=".LauncherActivity"
-            android:theme="@style/SplashTheme"
+            android:theme="@style/Theme.LunarLauncher.Starting"
 			android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>

@@ -38,6 +38,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.apps.AppDrawer
 import rasel.lunar.launcher.databinding.LauncherActivityBinding
@@ -68,8 +69,9 @@ internal class LauncherActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         installSplashScreen()
+        DynamicColors.applyToActivityIfAvailable(this)
+        super.onCreate(savedInstanceState)
 
         lActivity = this
         appWidgetManager = AppWidgetManager.getInstance(applicationContext)
@@ -178,7 +180,7 @@ internal class LauncherActivity : AppCompatActivity() {
     private fun handleBackPress() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                /* while in todo manager, go back to home screen */
+                /* while in to-do manager, go back to home screen */
                 if (supportFragmentManager.backStackEntryCount != 0) supportFragmentManager.popBackStack()
 
                 /* while in feeds or app drawer, go back to home screen */
