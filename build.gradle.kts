@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    val kotlinVersion = "1.8.20"
+    val kotlinVersion = "1.9.0"
     extra ["kotlinVersion"] = kotlinVersion
 
     dependencies {
@@ -9,8 +9,8 @@ buildscript {
 }
 
 plugins {
-    id ("com.android.application") version "8.0.2" apply false
-    id ("com.android.library") version "8.0.2" apply false
+    id ("com.android.application") version "8.1.0" apply false
+    id ("com.android.library") version "8.1.0" apply false
 }
 
 tasks.register<Delete>("clean") {

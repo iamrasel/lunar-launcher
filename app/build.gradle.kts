@@ -3,7 +3,6 @@ plugins {
     id ("kotlin-android")
 }
 
-@Suppress("UnstableApiUsage")
 android {
 	namespace = "rasel.lunar.launcher"
     compileSdk = 33
@@ -11,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "rasel.lunar.launcher"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 33
         versionName = "2.7.1"
     }
