@@ -132,7 +132,6 @@
          \n<li>Mantener pulsado un elemento favorito - Eliminar favorito</li>
          \n\nPara más información, visite la página de Wiki en Github.
      </string>
-    <string name="battery_indicator_diameter">Diámetro del indicador de batería</string>
     <string name="scrollbar_height">Altura de la barra alfabética</string>
     <string name="icon_size">Tamaño de los accesos directos e iconos de las aplicaciones</string>
 </resources>

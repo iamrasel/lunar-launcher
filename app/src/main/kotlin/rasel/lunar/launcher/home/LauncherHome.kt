@@ -27,19 +27,15 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Toast
 import androidx.biometric.BiometricPrompt
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.BOTTOM_SHEET_TAG
-import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_BATTERY_DIAMETER
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_DATE_FORMAT
-import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BATTERY_DIAMETER
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DATE_FORMAT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TIME_FORMAT
@@ -50,7 +46,6 @@ import rasel.lunar.launcher.helpers.UniUtils.Companion.biometricPromptInfo
 import rasel.lunar.launcher.helpers.UniUtils.Companion.canAuthenticate
 import rasel.lunar.launcher.helpers.UniUtils.Companion.expandNotificationPanel
 import rasel.lunar.launcher.helpers.UniUtils.Companion.lockMethod
-import rasel.lunar.launcher.helpers.UniUtils.Companion.screenWidth
 import rasel.lunar.launcher.home.weather.WeatherExecutor
 import rasel.lunar.launcher.qaccess.QuickAccess
 import rasel.lunar.launcher.settings.SettingsActivity
@@ -100,14 +95,6 @@ internal class LauncherHome : Fragment() {
     override fun onResume() {
         super.onResume()
         if (shouldResume) {
-            binding.batteryProgress.apply {
-                indicatorSize = (settingsPrefs.getInt(KEY_BATTERY_DIAMETER, DEFAULT_BATTERY_DIAMETER) * screenWidth) / 100
-                invalidate()
-                requestLayout()
-            }
-
-            changeChildSizes()
-
             /* register battery changes */
             requireContext().registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
@@ -257,8 +244,7 @@ internal class LauncherHome : Fragment() {
 
     /* get date number suffix */
     private val dateNumberSuffix: String get() {
-        val calendar = Calendar.getInstance()
-        return when (calendar[Calendar.DAY_OF_MONTH]) {
+        return when (Calendar.getInstance()[Calendar.DAY_OF_MONTH]) {
             1, 21, 31 -> "ˢᵗ"
             2, 22 -> "ⁿᵈ"
             3, 23 -> "ʳᵈ"
@@ -275,31 +261,6 @@ internal class LauncherHome : Fragment() {
                 it
             }
         }
-    }
-
-    private fun changeChildSizes() {
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                binding.batteryProgress.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val height = binding.batteryProgress.height
-                val width = binding.batteryProgress.width
-
-                binding.time.updateLayoutParams {
-                    this@updateLayoutParams.height = (height * 0.22).toInt()
-                    this@updateLayoutParams.width = width
-                }
-
-                binding.date.updateLayoutParams {
-                    this@updateLayoutParams.height = (height * 0.06).toInt()
-                    this@updateLayoutParams.width = width
-                }
-
-                binding.weather.updateLayoutParams {
-                    this@updateLayoutParams.height = (height * 0.06).toInt()
-                    this@updateLayoutParams.width = width
-                }
-            }
-        })
     }
 
 }

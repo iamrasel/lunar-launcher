@@ -32,16 +32,13 @@ internal class BatteryReceiver(private val progressBar: CircularProgressIndicato
 
     /* get current battery percentage */
     private fun batteryPercentage(intent: Intent): Int {
-        val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-        val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-        val percentage = level / scale.toFloat()
+        val percentage = (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)) /
+                         (intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)).toFloat()
         return (percentage * 100).toInt()
     }
 
     /* get current charging status */
-    private fun chargingStatus(intent: Intent): Int {
-        return intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
-    }
+    private fun chargingStatus(intent: Intent): Int = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val animationDuration = try {
