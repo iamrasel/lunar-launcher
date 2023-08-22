@@ -62,7 +62,7 @@ internal class AppDrawer : Fragment() {
     private var isKeyboardShowing: Boolean = false
 
     companion object {
-        private val packageManager = lActivity!!.packageManager
+        private val packageManager: PackageManager? = lActivity!!.packageManager
         private var appsAdapter: AppsAdapter? = null
         private var packageInfoList: MutableList<ResolveInfo> = mutableListOf()
         private var packageList = mutableListOf<Packages>()
@@ -101,7 +101,7 @@ internal class AppDrawer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
-        appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
+        appsAdapter = packageManager?.let { AppsAdapter(it, childFragmentManager, binding.appsCount) }
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         letterPreview = binding.appsCount
 
@@ -159,19 +159,19 @@ internal class AppDrawer : Fragment() {
 
     /* update app list with app and package name */
     private fun fetchApps() {
-        packageInfoList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.queryIntentActivities(
+        packageInfoList = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager?.queryIntentActivities(
                 Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER),
                 PackageManager.ResolveInfoFlags.of(0)
             )
         } else {
             @Suppress("DEPRECATION")
-            packageManager.queryIntentActivities(
-                Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0)
-        }.apply {
+            (packageManager?.queryIntentActivities(
+                Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0))
+        })?.apply {
             removeIf { it.activityInfo.packageName.equals(BuildConfig.APPLICATION_ID) }
             sortWith(ResolveInfo.DisplayNameComparator(packageManager))
-        }
+        }!!
 
         /* add package and app names to the list */
         packageList.clear()
@@ -222,7 +222,7 @@ internal class AppDrawer : Fragment() {
         }
 
         if (packageList.size == 1 && settingsPrefs.getBoolean(KEY_QUICK_LAUNCH, true))
-            startActivity(packageManager.getLaunchIntentForPackage(packageList[0].packageName))
+            startActivity(packageManager?.getLaunchIntentForPackage(packageList[0].packageName))
         else appsAdapter?.updateData(packageList)
     }
 
