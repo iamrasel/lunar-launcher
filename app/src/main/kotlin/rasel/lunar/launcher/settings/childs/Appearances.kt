@@ -39,6 +39,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -46,6 +49,7 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.ColorPickerBinding
 import rasel.lunar.launcher.databinding.SettingsAppearancesBinding
 import rasel.lunar.launcher.helpers.ColorPicker
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPLICATION_THEME
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_STATUS_BAR
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_WINDOW_BACKGROUND
 import rasel.lunar.launcher.helpers.UniUtils.Companion.getColorResId
@@ -63,11 +67,10 @@ internal class Appearances : BottomSheetDialogFragment() {
         binding = SettingsAppearancesBinding.inflate(inflater, container, false)
 
         /* initialize views according to the saved values */
-        when (AppCompatDelegate.getDefaultNightMode()) {
-            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> binding.followSystemTheme.isChecked = true
-            AppCompatDelegate.MODE_NIGHT_YES -> binding.selectDarkTheme.isChecked = true
-            AppCompatDelegate.MODE_NIGHT_NO -> binding.selectLightTheme.isChecked = true
-            else -> binding.followSystemTheme.isChecked = true
+        when (settingsPrefs!!.getInt(KEY_APPLICATION_THEME, MODE_NIGHT_FOLLOW_SYSTEM)) {
+            MODE_NIGHT_FOLLOW_SYSTEM -> binding.followSystemTheme.isChecked = true
+            MODE_NIGHT_YES -> binding.selectDarkTheme.isChecked = true
+            MODE_NIGHT_NO -> binding.selectLightTheme.isChecked = true
         }
 
         when (settingsPrefs!!.getBoolean(KEY_STATUS_BAR, false)) {
@@ -85,12 +88,18 @@ internal class Appearances : BottomSheetDialogFragment() {
         /* change theme */
         binding.themeGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
-                binding.followSystemTheme.id ->
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                binding.selectDarkTheme.id ->
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                binding.selectLightTheme.id ->
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                binding.followSystemTheme.id -> {
+                    settingsPrefs!!.edit().putInt(KEY_APPLICATION_THEME, MODE_NIGHT_FOLLOW_SYSTEM).apply()
+                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+                }
+                binding.selectDarkTheme.id -> {
+                    settingsPrefs!!.edit().putInt(KEY_APPLICATION_THEME, MODE_NIGHT_YES).apply()
+                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+                }
+                binding.selectLightTheme.id -> {
+                    settingsPrefs!!.edit().putInt(KEY_APPLICATION_THEME, MODE_NIGHT_NO).apply()
+                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+                }
             }
         }
 

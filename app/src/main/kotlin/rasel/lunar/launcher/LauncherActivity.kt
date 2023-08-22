@@ -32,6 +32,8 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -44,6 +46,7 @@ import rasel.lunar.launcher.apps.AppDrawer
 import rasel.lunar.launcher.databinding.LauncherActivityBinding
 import rasel.lunar.launcher.feeds.Feeds
 import rasel.lunar.launcher.feeds.WidgetHost
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPLICATION_THEME
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BACK_HOME
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_FIRST_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_STATUS_BAR
@@ -71,7 +74,14 @@ internal class LauncherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         DynamicColors.applyToActivityIfAvailable(this)
+
+        settingsPrefs = getSharedPreferences(PREFS_SETTINGS, 0)
+        AppCompatDelegate.setDefaultNightMode(settingsPrefs.getInt(KEY_APPLICATION_THEME, MODE_NIGHT_FOLLOW_SYSTEM))
+
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        binding = LauncherActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         lActivity = this
         appWidgetManager = AppWidgetManager.getInstance(applicationContext)
@@ -81,13 +91,6 @@ internal class LauncherActivity : AppCompatActivity() {
         /*  if this is the first launch,
             then remember the event and show the welcome dialog */
         welcomeDialog()
-
-        binding = LauncherActivityBinding.inflate(layoutInflater)
-        settingsPrefs = getSharedPreferences(PREFS_SETTINGS, 0)
-
-        /* set up activity's view */
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        setContentView(binding.root)
         setupView()
 
         /* handle navigation back events */

@@ -50,6 +50,7 @@ internal class Constants {
         const val KEY_DRAW_ALIGN = "drawer_alignment"
         const val KEY_SCROLLBAR_HEIGHT = "scrollbar_height"
         const val KEY_WINDOW_BACKGROUND = "window_background"
+        const val KEY_APPLICATION_THEME = "application_theme"
         const val KEY_STATUS_BAR = "status_bar"
         const val KEY_BACK_HOME = "back_home"
         const val KEY_SHORTCUT_COUNT = "shortcut_count"
