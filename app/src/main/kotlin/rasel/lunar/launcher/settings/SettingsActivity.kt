@@ -136,7 +136,7 @@ internal class SettingsActivity : AppCompatActivity() {
             }
             /* affiliate button */
             .setNegativeButton(R.string.amazon) { _, _ ->
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://amzn.to/3gWFktS")))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://amzn.to/44krAw9")))
             }
             /* donate button */
             .setPositiveButton(R.string.donate) { _, _ ->

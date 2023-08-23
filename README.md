@@ -152,10 +152,10 @@ Purchasing is not a requirement, donations are. 😊
 
 | ![](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black) | [iamrasel](https://www.buymeacoffee.com/iamrasel) |
 |:---------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
-|         ![](https://img.shields.io/badge/Bitcoin-000000?style=flat-square&logo=bitcoin&logoColor=white)         |       `38mRQy6oDJjZNR3xxiNRVS5obqLMnwonFD`        |
-|        ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=flat-square&logo=Ethereum&logoColor=white)        |   `0x9b2f72a19C78a73dDE4478a6d51BACf198671480`    |
+|         ![](https://img.shields.io/badge/Bitcoin-000000?style=flat-square&logo=bitcoin&logoColor=white)         |   `bc1qaps45fcd9uhqgr5w2k8cxphs07ht5a7ne9af7z`    |
+|        ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=flat-square&logo=Ethereum&logoColor=white)        |   `0x651Fc30Ad9293593aC571A0594Fb53417F76f896`    |
 
 </div>
 
-There is also another way to support, just go through this [Amazon affiliate link](https://amzn.to/3gWFktS) while shopping there. \
+There is also another way to support, just go through this [Amazon affiliate link](https://amzn.to/44krAw9) while shopping there. \
 It doesn't cost you anything extra, which is a win-win for the both of us. 😉
