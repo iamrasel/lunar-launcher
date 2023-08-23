@@ -62,7 +62,7 @@ internal class AppDrawer : Fragment() {
     private var isKeyboardShowing: Boolean = false
 
     companion object {
-        private val packageManager: PackageManager? = lActivity!!.packageManager
+        private var packageManager: PackageManager? = null
         private var appsAdapter: AppsAdapter? = null
         private var packageInfoList: MutableList<ResolveInfo> = mutableListOf()
         private var packageList = mutableListOf<Packages>()
@@ -101,7 +101,8 @@ internal class AppDrawer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
-        appsAdapter = packageManager?.let { AppsAdapter(it, childFragmentManager, binding.appsCount) }
+        packageManager = lActivity?.packageManager
+        appsAdapter = AppsAdapter(packageManager!!, childFragmentManager, binding.appsCount)
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         letterPreview = binding.appsCount
 
