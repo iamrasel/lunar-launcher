@@ -98,6 +98,8 @@
     <string name="scrollbar_height">Height of A-Z Scrollbar</string>
     <string name="sdk" translatable="false">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
+    <string name="share">Share</string>
+    <string name="share_apk_message">Share APK via</string>
     <string name="shortcut_count">Number Of Shortcuts (URL/Contact)</string>
     <string name="show_city">Show City Name With Weather</string>
     <string name="something_went_wrong">Something went wrong</string>

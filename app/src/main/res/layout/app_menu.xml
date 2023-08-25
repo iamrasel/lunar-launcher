@@ -90,8 +90,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/sixteen"
         android:text="@string/app_info"
-        app:layout_constraintEnd_toStartOf="@id/appUninstall"
+        app:layout_constraintEnd_toStartOf="@id/appShare"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appStore" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/appShare"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:text="@string/share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/appInfo"
         app:layout_constraintTop_toBottomOf="@+id/appStore" />
 
     <com.google.android.material.button.MaterialButton
@@ -102,7 +112,7 @@
         android:text="@string/uninstall"
         android:textColor="@android:color/holo_red_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/appInfo"
-        app:layout_constraintTop_toBottomOf="@+id/appStore" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appShare" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

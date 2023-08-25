@@ -39,6 +39,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.content.FileProvider
 import androidx.core.content.pm.PackageInfoCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -53,11 +54,15 @@ import rasel.lunar.launcher.databinding.AppMenuBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APP_NO_
 import rasel.lunar.launcher.helpers.Constants.Companion.MAX_FAVORITE_APPS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
+import rasel.lunar.launcher.helpers.PrefsUtil.Companion.removeFavApps
+import rasel.lunar.launcher.helpers.PrefsUtil.Companion.saveFavApps
 import rasel.lunar.launcher.helpers.UniUtils.Companion.copyToClipboard
 import rasel.lunar.launcher.helpers.UniUtils.Companion.screenHeight
 import rasel.lunar.launcher.helpers.UniUtils.Companion.screenWidth
-import rasel.lunar.launcher.helpers.PrefsUtil.Companion.removeFavApps
-import rasel.lunar.launcher.helpers.PrefsUtil.Companion.saveFavApps
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
 import java.util.*
 
 
@@ -107,6 +112,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
         binding.appStore.setOnClickListener { appStore() }
         binding.appFreeform.setOnClickListener { freeform() }
         binding.appInfo.setOnClickListener { appInfo() }
+        binding.appShare.setOnClickListener { share() }
         binding.appUninstall.setOnClickListener { uninstall() }
     }
 
@@ -274,6 +280,44 @@ internal class AppMenu : BottomSheetDialogFragment() {
         infoIntent.data = Uri.parse("package:$packageName")
         infoIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         requireContext().startActivity(infoIntent)
+        this.dismiss()
+    }
+
+    private fun share() {
+        try {
+            // Create a temporary file to copy the APK
+            val apkLabel = packageManager.getApplicationLabel(appInfo).toString().lowercase().replace(" ", "_")
+            val tempApkFile = File(requireContext().externalCacheDir, "$apkLabel.apk")
+
+            // Copy the APK file
+            FileInputStream(File(appInfo.sourceDir)).use { `in` ->
+                FileOutputStream(tempApkFile).use { out ->
+                    val buffer = ByteArray(1024)
+                    var length: Int
+                    while (`in`.read(buffer).also { length = it } > 0) {
+                        out.write(buffer, 0, length)
+                    }
+                }
+            }
+
+            // Generate a content URI using FileProvider
+            val contentUri =
+                FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.fileprovider", tempApkFile)
+
+            //requireContext().grantUriPermission(receivers.package.name, contentUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            // Create a Share Intent
+            Intent(Intent.ACTION_SEND).apply {
+                type = "application/vnd.android.package-archive"
+                putExtra(Intent.EXTRA_STREAM, contentUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }.let {
+                // Start the chooser activity
+                startActivity(Intent.createChooser(it, resources.getString(R.string.share_apk_message)))
+            }
+        }
+        catch (e: PackageManager.NameNotFoundException) { e.printStackTrace() }
+        catch (e: IOException) { e.printStackTrace() }
         this.dismiss()
     }
 
