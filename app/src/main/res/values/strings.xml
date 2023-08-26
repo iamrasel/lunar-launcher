@@ -11,6 +11,7 @@
         <b>Acknowledgements</b>\n
         <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
     </string>
+    <string name="activity_browser">Browse activities</string>
     <string name="add_new">Add New</string>
     <string name="add_widget">Add Widget</string>
     <string name="advance">Advance</string>
@@ -20,8 +21,8 @@
     <string name="app_alignment">App Alignment</string>
     <string name="app_drawer">App Drawer</string>
     <string name="app_drawer_layout">App Drawer Layout</string>
-    <string name="app_info">App Info</string>
-    <string name="app_store">App Store</string>
+    <string name="app_info">Open App Info window</string>
+    <string name="app_store">Visit on app market</string>
     <string name="argb" translatable="false">AARRGGBB</string>
     <string name="authentication_error">Authentication error</string>
     <string name="authentication_failed">Authentication failed</string>
@@ -47,6 +48,7 @@
     <string name="delete_all_confirmation">
         Delete all to-do entries?
     </string>
+    <string name="detailed_info">See detail information</string>
     <string name="developer_name">Developed by Md. Rasel Hossain</string>
     <string name="device_admin">Device Admin</string>
     <string name="device_admin_description">
@@ -60,7 +62,7 @@
     <string name="first_install">First Install</string>
     <string name="follow_system">Follow System</string>
     <string name="free">Free</string>
-    <string name="freeform">Freeform</string>
+    <string name="freeform">Open in pip mode</string>
     <string name="frequency">Frequency</string>
     <string name="got_it">Got it</string>
     <string name="grid">Grid</string>
@@ -107,7 +109,7 @@
     <string name="scrollbar_height">Height of A-Z Scrollbar</string>
     <string name="sdk" translatable="false">SDK</string>
     <string name="search_with_keyboard">Search With Keyboard</string>
-    <string name="share">Share</string>
+    <string name="share">Share the apk file</string>
     <string name="share_apk_message">Share APK via</string>
     <string name="shortcut_count">Number Of Shortcuts (URL/Contact)</string>
     <string name="show_city">Show City Name With Weather</string>
@@ -135,7 +137,7 @@
     <string name="twenty_four">24 Hour</string>
     <string name="uid" translatable="false">UID</string>
     <string name="unable_to_launch">Unable to launch</string>
-    <string name="uninstall">Uninstall</string>
+    <string name="uninstall">Uninstall the application</string>
     <string name="update">Update</string>
     <string name="url">URL</string>
     <string name="used">Used</string>

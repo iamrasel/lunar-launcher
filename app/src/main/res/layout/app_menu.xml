@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clipToPadding="false"
     android:padding="@dimen/twelve">
 
     <com.google.android.material.textview.MaterialTextView
@@ -32,6 +33,7 @@
         android:layout_marginTop="@dimen/eight"
         android:contentDescription="@null"
         android:src="@drawable/ic_activity"
+        android:tooltipText="@string/activity_browser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/detailedInfo"
         app:layout_constraintTop_toBottomOf="@+id/appPackage" />
@@ -42,9 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/eight"
-        android:layout_marginEnd="@dimen/four"
+        android:layout_marginEnd="@dimen/eight"
         android:contentDescription="@null"
         android:src="@drawable/ic_info"
+        android:tooltipText="@string/detailed_info"
         app:layout_constraintEnd_toStartOf="@id/activityBrowser"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,59 +63,75 @@
         app:layout_constraintTop_toBottomOf="@+id/detailedInfo"
         app:singleSelection="true" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/appStore"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="@dimen/zero"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/appInfo"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Surface"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/eight"
-        android:layout_marginEnd="@dimen/sixteen"
-        android:text="@string/app_store"
+        android:layout_marginEnd="@dimen/eight"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_info2"
+        android:tooltipText="@string/app_info"
         app:layout_constraintEnd_toStartOf="@id/appFreeform"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/favGroup" />
 
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/appFreeform"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="@dimen/zero"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Surface"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/eight"
-        android:text="@string/freeform"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/eight"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_pip"
+        android:tooltipText="@string/freeform"
+        app:layout_constraintEnd_toStartOf="@id/appStore"
+        app:layout_constraintStart_toEndOf="@id/appInfo"
+        app:layout_constraintTop_toBottomOf="@+id/favGroup" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/appStore"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Surface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/eight"
+        android:layout_marginEnd="@dimen/eight"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_store"
+        android:tooltipText="@string/app_store"
+        app:layout_constraintEnd_toStartOf="@id/appShare"
+        app:layout_constraintStart_toEndOf="@id/appFreeform"
+        app:layout_constraintTop_toBottomOf="@+id/favGroup" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/appShare"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Surface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/eight"
+        android:layout_marginEnd="@dimen/eight"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_share"
+        android:tooltipText="@string/share"
+        app:layout_constraintEnd_toStartOf="@id/appUninstall"
         app:layout_constraintStart_toEndOf="@id/appStore"
         app:layout_constraintTop_toBottomOf="@+id/favGroup" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/appInfo"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/sixteen"
-        android:text="@string/app_info"
-        app:layout_constraintEnd_toStartOf="@id/appShare"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appStore" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/appShare"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:text="@string/share"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/appInfo"
-        app:layout_constraintTop_toBottomOf="@+id/appStore" />
-
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/appUninstall"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="@dimen/zero"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Surface"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/uninstall"
-        android:textColor="@android:color/holo_red_light"
+        android:layout_marginTop="@dimen/eight"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_delete"
+        android:tooltipText="@string/uninstall"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appShare" />
+        app:layout_constraintStart_toEndOf="@id/appShare"
+        app:layout_constraintTop_toBottomOf="@+id/favGroup"
+        app:tint="@android:color/holo_red_light" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
