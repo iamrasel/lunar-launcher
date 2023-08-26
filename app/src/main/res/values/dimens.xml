@@ -9,6 +9,7 @@
     <dimen name="twenty">20dp</dimen>
     <dimen name="twentyTwo">22dp</dimen>
     <dimen name="thirtySix">36dp</dimen>
+    <dimen name="forty">40dp</dimen>
     <dimen name="fortyEight">48dp</dimen>
     <dimen name="oneThirtySix">136dp</dimen>
     <dimen name="oneNinetySix">196dp</dimen>
@@ -17,7 +18,6 @@
 
     <dimen name="lineSpace">6sp</dimen>
     <dimen name="normalText">16sp</dimen>
-    <dimen name="appsText">22sp</dimen>
     <dimen name="clockText">48sp</dimen>
     <dimen name="appsCountText">216sp</dimen>
 </resources>

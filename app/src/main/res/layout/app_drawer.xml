@@ -26,7 +26,6 @@
         android:overScrollMode="never"
         android:requiresFadingEdge="vertical"
         android:scrollbars="none"
-        app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/searchInput"
         app:layout_constraintEnd_toStartOf="@+id/search"
         app:layout_constraintStart_toStartOf="parent" />

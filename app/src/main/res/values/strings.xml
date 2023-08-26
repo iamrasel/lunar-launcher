@@ -19,6 +19,7 @@
     <string name="application_theme">App Theme</string>
     <string name="app_alignment">App Alignment</string>
     <string name="app_drawer">App Drawer</string>
+    <string name="app_drawer_layout">App Drawer Layout</string>
     <string name="app_info">App Info</string>
     <string name="app_store">App Store</string>
     <string name="argb" translatable="false">AARRGGBB</string>
@@ -62,13 +63,17 @@
     <string name="freeform">Freeform</string>
     <string name="frequency">Frequency</string>
     <string name="got_it">Got it</string>
+    <string name="grid">Grid</string>
+    <string name="grid_columns_count">No of Grid Columns</string>
     <string name="hide_status_bar">Hide Status Bar</string>
     <string name="icon_size">Shortcut &amp; App Icon Size</string>
     <string name="image_pick_failed">Could not fetch image</string>
     <string name="increase_height">Increase Height</string>
     <string name="last_update">Last Update</string>
+    <string name="later">Later</string>
     <string name="left">Left</string>
     <string name="light_theme">Light</string>
+    <string name="list">List</string>
     <string name="lunar_settings">Lunar Settings</string>
     <string name="misc">Misc</string>
     <string name="misc_info_titles">
@@ -92,6 +97,10 @@
         This clears all data stored for this app, and can\'t be undone.
     </string>
     <string name="restart">Restart</string>
+    <string name="restart_message">
+        The changes you have just made require app restart to take effect. Do you want to restart now?
+    </string>
+    <string name="restart_now">Restart now?</string>
     <string name="right">Right</string>
     <string name="root">Root</string>
     <string name="rss_feed">RSS Feed</string>

@@ -47,7 +47,9 @@ internal class Constants {
         const val KEY_TODO_LOCK = "todo_lock"
         const val KEY_KEYBOARD_SEARCH = "keyboard_search"
         const val KEY_QUICK_LAUNCH = "quick_launch"
+        const val KEY_APPS_LAYOUT = "apps_layout"
         const val KEY_DRAW_ALIGN = "drawer_alignment"
+        const val KEY_GRID_COLUMNS = "grid_columns"
         const val KEY_SCROLLBAR_HEIGHT = "scrollbar_height"
         const val KEY_WINDOW_BACKGROUND = "window_background"
         const val KEY_APPLICATION_THEME = "application_theme"
@@ -61,6 +63,7 @@ internal class Constants {
         /* --- */
         const val DEFAULT_DATE_FORMAT = "EEE dx MMM, yyyy"
         const val DEFAULT_ICON_SIZE = 44
+        const val DEFAULT_GRID_COLUMNS = 4
         const val DEFAULT_SCROLLBAR_HEIGHT = 400
         const val MAX_SHORTCUTS = 6
         const val MAX_FAVORITE_APPS = 6

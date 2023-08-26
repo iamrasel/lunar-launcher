@@ -20,17 +20,22 @@ package rasel.lunar.launcher.apps
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
+import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppsChildBinding
 
 
 internal class AppsAdapter(
+    private val useListLayout: Boolean,
     private val packageManager: PackageManager,
     private val fragmentManager: FragmentManager,
     private val appsCount: MaterialTextView) : RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
@@ -47,13 +52,27 @@ internal class AppsAdapter(
 
     override fun onBindViewHolder(holder: AppsViewHolder, i: Int) {
         val item = oldList[i]
-        holder.view.childTextview.apply {
-            /* show app name */
-            text = item.appName
+        val fourDp = dpToPx(R.dimen.four)
+        val eightDp = dpToPx(R.dimen.eight)
 
-            /* selects text alignment */
-            gravity = appGravity
+        holder.view.apply {
+            childTextview.text = item.appName
 
+            if (useListLayout) {
+                appIcon.visibility = View.GONE
+                childTextview.apply {
+                    gravity = appGravity
+                    setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twentyTwo))
+                    setPadding(eightDp, fourDp, eightDp, fourDp)
+                }
+            } else {
+                appIcon.setImageDrawable(packageManager.getApplicationIcon(item.packageName))
+                childTextview.setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twelve))
+                root.setPadding(eightDp, eightDp, eightDp, eightDp)
+            }
+        }
+
+        holder.view.root.apply {
             /* on click - open app */
             setOnClickListener {
                 context.startActivity(packageManager.getLaunchIntentForPackage(item.packageName))
@@ -95,6 +114,11 @@ internal class AppsAdapter(
             appGravity = gravity
             notifyDataSetChanged()
         }
+    }
+
+    private fun dpToPx(id: Int) : Int {
+        val valueInDP = lActivity!!.resources.getDimension(id)
+        return (valueInDP * lActivity!!.resources.displayMetrics.density).toInt()
     }
 }
 

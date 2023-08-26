@@ -37,13 +37,18 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.view.updateLayoutParams
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_GRID_COLUMNS
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_SCROLLBAR_HEIGHT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPS_LAYOUT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_GRID_COLUMNS
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SCROLLBAR_HEIGHT
@@ -58,6 +63,7 @@ internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
     private lateinit var settingsPrefs: SharedPreferences
+    private var useListLayout: Boolean = true
     private var isSearchShown: Boolean = false
     private var isKeyboardShowing: Boolean = false
 
@@ -101,14 +107,13 @@ internal class AppDrawer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
-        packageManager = lActivity?.packageManager
-        appsAdapter = AppsAdapter(packageManager!!, childFragmentManager, binding.appsCount)
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
+        useListLayout = settingsPrefs.getBoolean(KEY_APPS_LAYOUT, true)
+        packageManager = lActivity?.packageManager
+        appsAdapter = AppsAdapter(useListLayout, packageManager!!, childFragmentManager, binding.appsCount)
         letterPreview = binding.appsCount
 
-        appsAdapter!!.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
-        /* initialize apps list adapter */
-        binding.appsList.adapter = appsAdapter
+        setLayout()
         fetchApps()
         getAlphabetItems()
         setKeyboardPadding()
@@ -148,7 +153,10 @@ internal class AppDrawer : Fragment() {
         fetchApps()
         getAlphabetItems()
 
-        appsAdapter?.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        if (settingsPrefs.getBoolean(KEY_APPS_LAYOUT, true)) {
+            appsAdapter?.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        }
+
         /* pop up the keyboard */
         if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) openSearch()
     }
@@ -156,6 +164,18 @@ internal class AppDrawer : Fragment() {
     override fun onPause() {
         super.onPause()
         closeSearch()
+    }
+
+    private fun setLayout() {
+        if (useListLayout) {
+            binding.appsList.layoutManager = LinearLayoutManager(requireContext())
+            appsAdapter!!.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        } else {
+            binding.appsList.layoutManager = GridLayoutManager(requireContext(), settingsPrefs.getInt(KEY_GRID_COLUMNS, DEFAULT_GRID_COLUMNS))
+        }
+
+        /* initialize apps list adapter */
+        binding.appsList.adapter = appsAdapter
     }
 
     /* update app list with app and package name */
