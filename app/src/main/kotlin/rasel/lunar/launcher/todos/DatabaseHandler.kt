@@ -47,7 +47,7 @@ internal class DatabaseHandler(context: Context?) :
 
     override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {}
 
-    /* add new todo entry */
+    /* add new to-do entry */
     fun addTodo(todo: Todo) {
         val database = writableDatabase
         val contentValues = ContentValues()
@@ -55,7 +55,7 @@ internal class DatabaseHandler(context: Context?) :
         database.insert(TODO_TABLE_NAME, null, contentValues)
     }
 
-    /* update or edit existing todo */
+    /* update or edit existing to-do */
     fun updateTodo(todo: Todo) {
         val database = writableDatabase
         val contentValues = ContentValues()
@@ -68,7 +68,7 @@ internal class DatabaseHandler(context: Context?) :
         )
     }
 
-    /* delete a single todo */
+    /* delete a single to-do */
     fun deleteTodo(todoId: Long) {
         writableDatabase.delete(TODO_TABLE_NAME,
             "$TODO_COLUMN_ID=?", arrayOf(todoId.toString()))

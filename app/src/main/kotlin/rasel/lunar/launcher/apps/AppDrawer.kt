@@ -215,8 +215,8 @@ internal class AppDrawer : Fragment() {
                     updateLayoutParams { this.height = height }
                 }
                 alphabetList.clear()
-                for (i in 0 until packageList.size) {
-                    packageList[i].appName.first().uppercase().let { firstLetter: String ->
+                for (mPackage in packageList) {
+                    mPackage.appName.first().uppercase().let { firstLetter: String ->
                         when {
                             numberPattern.matcher(firstLetter).matches() -> alphabetList.add(0, "#")
                             alphabetPattern.matcher(firstLetter).matches() -> alphabetList.add(firstLetter)

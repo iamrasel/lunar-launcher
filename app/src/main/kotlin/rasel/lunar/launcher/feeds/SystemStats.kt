@@ -139,18 +139,18 @@ internal class SystemStats {
         /* sd card is available */
         if (extStorages.size > 1) {
             extParent.removeAllViews()
-            for (i in 1 until extStorages.size) {
-                if (extStorages[i] != null) {
+            for (extStorage in extStorages) {
+                if (extStorage != null) {
                     val binding = ChildSysInfoBinding.inflate(inflater)
                     extParent.addView(binding.root)
 
-                    val statFs = StatFs(extStorages[i]!!.path)
+                    val statFs = StatFs(extStorage.path)
                     val blockSize = statFs.blockSizeLong
                     val totalStorage = statFs.blockCountLong * blockSize / toGb
                     val availStorage = statFs.availableBlocksLong * blockSize / toGb
                     val usedStorage = totalStorage - availStorage
 
-                    val sdcardPaths = extStorages[i]!!.path.split(File.separator).toTypedArray()
+                    val sdcardPaths = extStorage.path.split(File.separator).toTypedArray()
                     val sdPath = File.separator + sdcardPaths[1] + File.separator + sdcardPaths[2] + File.separator
 
                     binding.indicator.progress = (usedStorage * 100 / totalStorage).toInt()

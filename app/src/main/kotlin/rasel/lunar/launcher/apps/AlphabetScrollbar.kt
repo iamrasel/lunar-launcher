@@ -64,7 +64,7 @@ internal class AlphabetScrollbar : View {
         val width = width
         val height = height
         val letterHeight: Int = height / alphabet.count()
-        for (i in 0 until alphabet.count()) {
+        alphabet.indices.forEach { i: Int ->
             val x = width / 2f - paint!!.measureText(alphabet[i]) / 2f
             val y = i * letterHeight + letterHeight / 2f
             when (i) {

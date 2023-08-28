@@ -88,7 +88,7 @@ internal class Constants {
         const val SHORTCUT_TYPE_URL = "shortcut_type_url"
         const val SHORTCUT_TYPE_PHONE = "shortcut_type_phone"
 
-        /* todo database */
+        /* to-do database */
         const val TODO_DATABASE_NAME = "rasel.lunar.launcher.TODOS"
         const val TODO_DATABASE_VERSION = 1
         const val TODO_TABLE_NAME = "todo_table"

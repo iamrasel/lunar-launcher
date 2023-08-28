@@ -53,12 +53,12 @@ internal class TodoSettings : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireDialog() as BottomSheetDialog).dismissWithAnimation = true
 
-        /* change todo count value */
+        /* change to-do count value */
         binding.showTodos.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             settingsPrefs!!.edit().putInt(KEY_TODO_COUNTS, value.toInt()).apply()
         })
 
-        /* change todo lock state value */
+        /* change to-do lock state value */
         binding.todoLockGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
                 binding.todoLockPositive.id -> settingsPrefs!!.edit().putBoolean(KEY_TODO_LOCK, true).apply()
