@@ -33,6 +33,7 @@
     <string name="celsius" translatable="false">Celsius</string>
     <string name="center">Center</string>
     <string name="change_wallpaper">Change Wallpaper</string>
+    <string name="choose_icon_pack">Choose Icon Pack</string>
     <string name="choose_launcher">Choose Default Launcher</string>
     <string name="city_name">City Name</string>
     <string name="contact">Contact</string>
@@ -67,6 +68,7 @@
     <string name="grid">Grid</string>
     <string name="grid_columns_count">No of Grid Columns</string>
     <string name="hide_status_bar">Hide Status Bar</string>
+    <string name="icon_pack_not_found">Sorry, you don\'t have any icon pack installed.</string>
     <string name="icon_size">Shortcut &amp; App Icon Size</string>
     <string name="image_pick_failed">Could not fetch image</string>
     <string name="increase_height">Increase Height</string>

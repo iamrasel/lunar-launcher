@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
+import rasel.lunar.launcher.apps.IconPackManager.Companion.getDrawableIconForPackage
 import rasel.lunar.launcher.databinding.AppsChildBinding
 
 
@@ -66,7 +67,7 @@ internal class AppsAdapter(
                     setPadding(eightDp, fourDp, eightDp, fourDp)
                 }
             } else {
-                appIcon.setImageDrawable(packageManager.getApplicationIcon(item.packageName))
+                appIcon.setImageDrawable(getDrawableIconForPackage(item.packageName, packageManager.getApplicationIcon(item.packageName)))
                 childTextview.setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twelve))
                 root.setPadding(eightDp, eightDp, eightDp, eightDp)
             }

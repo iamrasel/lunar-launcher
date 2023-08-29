@@ -155,6 +155,23 @@
             android:text="@string/right" />
     </com.google.android.material.chip.ChipGroup>
 
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/iconPackGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appAlignmentGroup">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/iconPackChooser"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_icon_pack" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/columnsCountTitle"
         android:layout_width="wrap_content"
@@ -164,7 +181,7 @@
         android:textSize="@dimen/normalText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appAlignmentGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/iconPackGroup" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/columnsCount"
