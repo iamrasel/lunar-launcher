@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/apps_bg">
+    android:background="@drawable/apps_bg"
+    android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/appIcon"
@@ -13,9 +12,19 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/four" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/childTextview"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" />
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/appIconTwo"
+            android:layout_width="@dimen/forty"
+            android:layout_height="@dimen/forty" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/childTextview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

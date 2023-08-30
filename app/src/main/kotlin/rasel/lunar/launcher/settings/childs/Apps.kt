@@ -78,14 +78,20 @@ internal class Apps : BottomSheetDialogFragment() {
             false -> binding.quickLaunchNegative.isChecked = true
         }
 
-        when (settingsPrefs!!.getBoolean(KEY_APPS_LAYOUT, true)) {
-            true -> {
+        when (settingsPrefs!!.getInt(KEY_APPS_LAYOUT, 0)) {
+            0 -> {
                 binding.drawerLayoutList.isChecked = true
                 binding.appAlignmentGroup.children.forEach { it.isEnabled = true }
                 binding.iconPackChooser.isEnabled = false
                 binding.columnsCount.isEnabled = false
             }
-            false -> {
+            1 -> {
+                binding.drawerLayoutListIcon.isChecked = true
+                binding.appAlignmentGroup.children.forEach { it.isEnabled = true }
+                binding.iconPackChooser.isEnabled = true
+                binding.columnsCount.isEnabled = false
+            }
+            2 -> {
                 binding.drawerLayoutGrid.isChecked = true
                 binding.appAlignmentGroup.children.forEach { it.isEnabled = false }
                 binding.iconPackChooser.isEnabled = true
@@ -130,13 +136,19 @@ internal class Apps : BottomSheetDialogFragment() {
             settingsChanged = true
             when (group.checkedChipId) {
                 binding.drawerLayoutList.id -> {
-                    settingsPrefs!!.edit().putBoolean(KEY_APPS_LAYOUT, true).apply()
+                    settingsPrefs!!.edit().putInt(KEY_APPS_LAYOUT, 0).apply()
                     binding.appAlignmentGroup.children.forEach { if (!it.isEnabled) it.isEnabled = true }
                     binding.iconPackChooser.let { if (it.isEnabled) it.isEnabled = false }
                     binding.columnsCount.let { if (it.isEnabled) it.isEnabled = false }
                 }
+                binding.drawerLayoutListIcon.id -> {
+                    settingsPrefs!!.edit().putInt(KEY_APPS_LAYOUT, 1).apply()
+                    binding.appAlignmentGroup.children.forEach { if (!it.isEnabled) it.isEnabled = true }
+                    binding.iconPackChooser.let { if (!it.isEnabled) it.isEnabled = true }
+                    binding.columnsCount.let { if (it.isEnabled) it.isEnabled = false }
+                }
                 binding.drawerLayoutGrid.id -> {
-                    settingsPrefs!!.edit().putBoolean(KEY_APPS_LAYOUT, false).apply()
+                    settingsPrefs!!.edit().putInt(KEY_APPS_LAYOUT, 2).apply()
                     binding.appAlignmentGroup.children.forEach { if (it.isEnabled) it.isEnabled = false }
                     binding.iconPackChooser.let { if (!it.isEnabled) it.isEnabled = true }
                     binding.columnsCount.let { if (!it.isEnabled) it.isEnabled = true }

@@ -25,6 +25,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,7 @@ import rasel.lunar.launcher.databinding.AppsChildBinding
 
 
 internal class AppsAdapter(
-    private val useListLayout: Boolean,
+    private val layoutType: Int,
     private val packageManager: PackageManager,
     private val fragmentManager: FragmentManager,
     private val appsCount: MaterialTextView) : RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
@@ -53,23 +54,43 @@ internal class AppsAdapter(
 
     override fun onBindViewHolder(holder: AppsViewHolder, i: Int) {
         val item = oldList[i]
-        val fourDp = dpToPx(R.dimen.four)
-        val eightDp = dpToPx(R.dimen.eight)
+        val fourDp = dpToPx(lActivity!!, R.dimen.four)
+        val eightDp = dpToPx(lActivity!!, R.dimen.eight)
+        val twelveDp = dpToPx(lActivity!!, R.dimen.twelve)
+        val sixteenDp = dpToPx(lActivity!!, R.dimen.sixteen)
 
         holder.view.apply {
             childTextview.text = item.appName
 
-            if (useListLayout) {
-                appIcon.visibility = View.GONE
-                childTextview.apply {
-                    gravity = appGravity
-                    setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twentyTwo))
-                    setPadding(eightDp, fourDp, eightDp, fourDp)
+            when (layoutType) {
+                0 -> {
+                    appIcon.visibility = View.GONE
+                    appIconTwo.visibility = View.GONE
+                    childTextview.apply {
+                        gravity = appGravity
+                        setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twentyTwo))
+                    }
+                    root.setPadding(sixteenDp, fourDp, sixteenDp, fourDp)
                 }
-            } else {
-                appIcon.setImageDrawable(getDrawableIconForPackage(item.packageName, packageManager.getApplicationIcon(item.packageName)))
-                childTextview.setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twelve))
-                root.setPadding(eightDp, eightDp, eightDp, eightDp)
+                1 -> {
+                    appIcon.visibility = View.GONE
+                    appIconTwo.setImageDrawable(getDrawableIconForPackage(item.packageName, packageManager.getApplicationIcon(item.packageName)))
+                    childTextview.apply {
+                        gravity = appGravity or Gravity.CENTER_VERTICAL
+                        setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twenty))
+                        updatePadding(left = twelveDp)
+                    }
+                    root.setPadding(sixteenDp, eightDp, sixteenDp, eightDp)
+                }
+                2 -> {
+                    appIconTwo.visibility = View.GONE
+                    appIcon.setImageDrawable(getDrawableIconForPackage(item.packageName, packageManager.getApplicationIcon(item.packageName)))
+                    childTextview.apply {
+                        gravity = Gravity.CENTER
+                        setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twelve))
+                    }
+                    root.setPadding(eightDp, eightDp, eightDp, eightDp)
+                }
             }
         }
 

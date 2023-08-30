@@ -63,7 +63,7 @@ internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
     private lateinit var settingsPrefs: SharedPreferences
-    private var useListLayout: Boolean = true
+    private var layoutType: Int = 0
     private var isSearchShown: Boolean = false
     private var isKeyboardShowing: Boolean = false
 
@@ -108,9 +108,9 @@ internal class AppDrawer : Fragment() {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-        useListLayout = settingsPrefs.getBoolean(KEY_APPS_LAYOUT, true)
+        layoutType = settingsPrefs.getInt(KEY_APPS_LAYOUT, 0)
         packageManager = lActivity?.packageManager
-        appsAdapter = AppsAdapter(useListLayout, packageManager!!, childFragmentManager, binding.appsCount)
+        appsAdapter = AppsAdapter(layoutType, packageManager!!, childFragmentManager, binding.appsCount)
         letterPreview = binding.appsCount
 
         setLayout()
@@ -153,7 +153,7 @@ internal class AppDrawer : Fragment() {
         fetchApps()
         getAlphabetItems()
 
-        if (settingsPrefs.getBoolean(KEY_APPS_LAYOUT, true)) {
+        if (settingsPrefs.getInt(KEY_APPS_LAYOUT, 0) in 0..1) {
             appsAdapter?.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
         }
 
@@ -167,11 +167,12 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun setLayout() {
-        if (useListLayout) {
-            binding.appsList.layoutManager = LinearLayoutManager(requireContext())
-            appsAdapter!!.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
-        } else {
-            binding.appsList.layoutManager = GridLayoutManager(requireContext(), settingsPrefs.getInt(KEY_GRID_COLUMNS, DEFAULT_GRID_COLUMNS))
+        when (layoutType) {
+            0, 1 -> {
+                binding.appsList.layoutManager = LinearLayoutManager(requireContext())
+                appsAdapter!!.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+            }
+            2 -> binding.appsList.layoutManager = GridLayoutManager(requireContext(), settingsPrefs.getInt(KEY_GRID_COLUMNS, DEFAULT_GRID_COLUMNS))
         }
 
         /* initialize apps list adapter */
