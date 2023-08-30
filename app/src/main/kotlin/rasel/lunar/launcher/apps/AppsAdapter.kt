@@ -34,6 +34,7 @@ import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.apps.IconPackManager.Companion.getDrawableIconForPackage
 import rasel.lunar.launcher.databinding.AppsChildBinding
+import rasel.lunar.launcher.helpers.UniUtils.Companion.dpToPx
 
 
 internal class AppsAdapter(
@@ -136,11 +137,6 @@ internal class AppsAdapter(
             appGravity = gravity
             notifyDataSetChanged()
         }
-    }
-
-    private fun dpToPx(id: Int) : Int {
-        val valueInDP = lActivity!!.resources.getDimension(id)
-        return (valueInDP * lActivity!!.resources.displayMetrics.density).toInt()
     }
 }
 

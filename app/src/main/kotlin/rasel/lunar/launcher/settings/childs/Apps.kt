@@ -52,6 +52,7 @@ import rasel.lunar.launcher.helpers.Constants.Companion.KEY_ICON_PACK
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SCROLLBAR_HEIGHT
+import rasel.lunar.launcher.helpers.UniUtils.Companion.dpToPx
 import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
 import kotlin.system.exitProcess
 
@@ -218,15 +219,16 @@ internal class Apps : BottomSheetDialogFragment() {
                 }.let { chipGroup.addView(it) }
             }
 
+            val eightDp = dpToPx(requireContext(), R.dimen.eight)
             val linearLayoutCompat = LinearLayoutCompat(requireContext()).apply {
                 layoutParams = LinearLayoutCompat.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
                 gravity = Gravity.CENTER
-                setPadding(8, 8, 8, 8)
+                setPadding(eightDp, eightDp, eightDp, eightDp)
                 addView(chipGroup)
             }
 
             MaterialAlertDialogBuilder(requireActivity()).apply {
-                setTitle("Choose Icon Pack")
+                setTitle(R.string.choose_icon_pack)
                 setView(linearLayoutCompat)
                 setPositiveButton(android.R.string.ok) { dialog, _ ->
                     when (selectedIconPack) {

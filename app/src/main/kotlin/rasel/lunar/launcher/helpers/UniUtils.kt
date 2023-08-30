@@ -151,6 +151,9 @@ internal class UniUtils {
             return typedValue.resourceId
         }
 
+        /* convert dp value to px */
+        fun dpToPx(context: Context, id: Int) : Int = (context.resources.getDimension(id) * context.resources.displayMetrics.density).toInt()
+
         /* lock screen using device admin */
         private fun lockDeviceAdmin(context: Context) {
             val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager

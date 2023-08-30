@@ -110,7 +110,7 @@
     <string name="rss_feed">RSS Feed</string>
     <string name="scrollbar_height">Height of A-Z Scrollbar</string>
     <string name="sdk" translatable="false">SDK</string>
-    <string name="search_with_keyboard">Start With Keyboard</string>
+    <string name="search_with_keyboard">Start with Keyboard</string>
     <string name="share">Share the apk file</string>
     <string name="share_apk_message">Share APK via</string>
     <string name="shortcut_count">Number Of Shortcuts (URL/Contact)</string>
