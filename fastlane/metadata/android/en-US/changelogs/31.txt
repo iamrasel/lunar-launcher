@@ -1,3 +1,0 @@
-- Redesigned app drawer; alignment option by @michelevantaggi02
-- Spanish translation by @BonifacioCalindoro
-- !intentionally added more bugs to fix later

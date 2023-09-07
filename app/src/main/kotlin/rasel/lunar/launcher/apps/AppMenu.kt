@@ -39,6 +39,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.content.FileProvider
 import androidx.core.content.pm.PackageInfoCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -56,8 +57,10 @@ import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
 import rasel.lunar.launcher.helpers.UniUtils.Companion.copyToClipboard
 import rasel.lunar.launcher.helpers.UniUtils.Companion.screenHeight
 import rasel.lunar.launcher.helpers.UniUtils.Companion.screenWidth
-import rasel.lunar.launcher.helpers.PrefsUtil.Companion.removeFavApps
-import rasel.lunar.launcher.helpers.PrefsUtil.Companion.saveFavApps
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
 import java.util.*
 
 
@@ -107,6 +110,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
         binding.appStore.setOnClickListener { appStore() }
         binding.appFreeform.setOnClickListener { freeform() }
         binding.appInfo.setOnClickListener { appInfo() }
+        binding.appShare.setOnClickListener { share() }
         binding.appUninstall.setOnClickListener { uninstall() }
     }
 
@@ -133,7 +137,8 @@ internal class AppMenu : BottomSheetDialogFragment() {
                 else
                     @Suppress("DEPRECATION") packageManager.getPackageInfo(savedPackageName!!, 0)
             } catch (e: PackageManager.NameNotFoundException) {
-                removeFavApps(position)
+                requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
+                    .edit().remove(KEY_APP_NO_ + position).apply()
                 button.strokeColor = disabledStroke
                 e.printStackTrace()
             }
@@ -144,10 +149,12 @@ internal class AppMenu : BottomSheetDialogFragment() {
                 try {
                     if (checkedId == button.id) {
                         if (isChecked) {
-                            saveFavApps(position, packageName)
+                            requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
+                                .edit().putString(KEY_APP_NO_ + position, packageName).apply()
                             button.strokeColor = enabledStroke
                         } else {
-                            removeFavApps(position)
+                            requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
+                                .edit().remove(KEY_APP_NO_ + position).apply()
                             button.strokeColor = disabledStroke
                         }
                     }
@@ -213,9 +220,10 @@ internal class AppMenu : BottomSheetDialogFragment() {
         val activityAdapter: ArrayAdapter<String> =
             ArrayAdapter(requireContext(), R.layout.list_item, R.id.itemText, ArrayList())
         if (activityInfo.activities.isNotEmpty()) {
-            for (i in 0 until activityInfo.activities.size) {
-                val activity = activityInfo.activities[i].toString().split(" ").toTypedArray()
-                activityAdapter.add(activity[1].replace("}", ""))
+            for (activity in activityInfo.activities) {
+                activityAdapter.add(
+                    activity.toString().split(" ").toTypedArray()[1].replace("}", "")
+                )
             }
             dialogBinding.activityList.adapter = activityAdapter
         }
@@ -277,6 +285,44 @@ internal class AppMenu : BottomSheetDialogFragment() {
         this.dismiss()
     }
 
+    private fun share() {
+        try {
+            // Create a temporary file to copy the APK
+            val apkLabel = packageManager.getApplicationLabel(appInfo).toString().lowercase().replace(" ", "_")
+            val tempApkFile = File(requireContext().externalCacheDir, "$apkLabel.apk")
+
+            // Copy the APK file
+            FileInputStream(File(appInfo.sourceDir)).use { `in` ->
+                FileOutputStream(tempApkFile).use { out ->
+                    val buffer = ByteArray(1024)
+                    var length: Int
+                    while (`in`.read(buffer).also { length = it } > 0) {
+                        out.write(buffer, 0, length)
+                    }
+                }
+            }
+
+            // Generate a content URI using FileProvider
+            val contentUri =
+                FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.fileprovider", tempApkFile)
+
+            //requireContext().grantUriPermission(receivers.package.name, contentUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            // Create a Share Intent
+            Intent(Intent.ACTION_SEND).apply {
+                type = "application/vnd.android.package-archive"
+                putExtra(Intent.EXTRA_STREAM, contentUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }.let {
+                // Start the chooser activity
+                startActivity(Intent.createChooser(it, getString(R.string.share_apk_message)))
+            }
+        }
+        catch (e: PackageManager.NameNotFoundException) { e.printStackTrace() }
+        catch (e: IOException) { e.printStackTrace() }
+        this.dismiss()
+    }
+
     /* uninstall the app */
     private fun uninstall() {
         val uninstallIntent = Intent(Intent.ACTION_DELETE)
@@ -311,7 +357,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
 
         return if (packageInfo.requestedPermissions.isNotEmpty()) {
             val stringBuilder = StringBuilder()
-            for (i in 0 until packageInfo.requestedPermissions.size) {
+            packageInfo.requestedPermissions.indices.forEach {  i: Int ->
                 if (i != packageInfo.requestedPermissions.size - 1)
                     stringBuilder.append("${packageInfo.requestedPermissions[i]}\n\n")
                 /* don't add any new line after the last entry */

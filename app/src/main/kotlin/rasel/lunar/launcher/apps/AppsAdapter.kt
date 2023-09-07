@@ -20,17 +20,25 @@ package rasel.lunar.launcher.apps
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
+import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
+import rasel.lunar.launcher.R
+import rasel.lunar.launcher.apps.IconPackManager.Companion.getDrawableIconForPackage
 import rasel.lunar.launcher.databinding.AppsChildBinding
+import rasel.lunar.launcher.helpers.UniUtils.Companion.dpToPx
 
 
 internal class AppsAdapter(
+    private val layoutType: Int,
     private val packageManager: PackageManager,
     private val fragmentManager: FragmentManager,
     private val appsCount: MaterialTextView) : RecyclerView.Adapter<AppsAdapter.AppsViewHolder>() {
@@ -47,13 +55,47 @@ internal class AppsAdapter(
 
     override fun onBindViewHolder(holder: AppsViewHolder, i: Int) {
         val item = oldList[i]
-        holder.view.childTextview.apply {
-            /* show app name */
-            text = item.appName
+        val fourDp = dpToPx(lActivity!!, R.dimen.four)
+        val eightDp = dpToPx(lActivity!!, R.dimen.eight)
+        val twelveDp = dpToPx(lActivity!!, R.dimen.twelve)
+        val sixteenDp = dpToPx(lActivity!!, R.dimen.sixteen)
 
-            /* selects text alignment */
-            gravity = appGravity
+        holder.view.apply {
+            childTextview.text = item.appName
 
+            when (layoutType) {
+                0 -> {
+                    appIcon.visibility = View.GONE
+                    appIconTwo.visibility = View.GONE
+                    childTextview.apply {
+                        gravity = appGravity
+                        setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twentyTwo))
+                    }
+                    root.setPadding(sixteenDp, fourDp, sixteenDp, fourDp)
+                }
+                1 -> {
+                    appIcon.visibility = View.GONE
+                    appIconTwo.setImageDrawable(getDrawableIconForPackage(item.packageName, packageManager.getApplicationIcon(item.packageName)))
+                    childTextview.apply {
+                        gravity = appGravity or Gravity.CENTER_VERTICAL
+                        setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twenty))
+                        updatePadding(left = twelveDp)
+                    }
+                    root.setPadding(sixteenDp, eightDp, sixteenDp, eightDp)
+                }
+                2 -> {
+                    appIconTwo.visibility = View.GONE
+                    appIcon.setImageDrawable(getDrawableIconForPackage(item.packageName, packageManager.getApplicationIcon(item.packageName)))
+                    childTextview.apply {
+                        gravity = Gravity.CENTER
+                        setTextSize(TypedValue.COMPLEX_UNIT_PX, lActivity!!.resources.getDimension(R.dimen.twelve))
+                    }
+                    root.setPadding(eightDp, eightDp, eightDp, eightDp)
+                }
+            }
+        }
+
+        holder.view.root.apply {
             /* on click - open app */
             setOnClickListener {
                 context.startActivity(packageManager.getLaunchIntentForPackage(item.packageName))

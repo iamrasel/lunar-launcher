@@ -26,9 +26,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import rasel.lunar.launcher.databinding.SettingsTimeDateBinding
-import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_BATTERY_DIAMETER
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_DATE_FORMAT
-import rasel.lunar.launcher.helpers.Constants.Companion.KEY_BATTERY_DIAMETER
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DATE_FORMAT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TIME_FORMAT
 import rasel.lunar.launcher.settings.SettingsActivity.Companion.settingsPrefs
@@ -52,8 +50,6 @@ internal class TimeDate : BottomSheetDialogFragment() {
         binding.dateFormat
             .setText(settingsPrefs!!.getString(KEY_DATE_FORMAT, DEFAULT_DATE_FORMAT).toString())
 
-        binding.batteryDiameter.value = settingsPrefs!!.getInt(KEY_BATTERY_DIAMETER, DEFAULT_BATTERY_DIAMETER).toFloat()
-
         return binding.root
     }
 
@@ -68,10 +64,6 @@ internal class TimeDate : BottomSheetDialogFragment() {
                 binding.selectTwelve.id -> settingsPrefs!!.edit().putInt(KEY_TIME_FORMAT, 1).apply()
                 binding.selectTwentyFour.id -> settingsPrefs!!.edit().putInt(KEY_TIME_FORMAT, 2).apply()
             }
-        }
-
-        binding.batteryDiameter.addOnChangeListener { _, value, _ ->
-            settingsPrefs!!.edit().putInt(KEY_BATTERY_DIAMETER, value.toInt()).apply()
         }
     }
 

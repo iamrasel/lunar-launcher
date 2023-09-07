@@ -20,10 +20,11 @@
         android:id="@+id/appsList"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/sixteen"
+        android:background="@android:color/transparent"
+        android:fadingEdgeLength="@dimen/sixteen"
         android:overScrollMode="never"
+        android:requiresFadingEdge="vertical"
         android:scrollbars="none"
-        app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/searchInput"
         app:layout_constraintEnd_toStartOf="@+id/search"
         app:layout_constraintStart_toStartOf="parent" />

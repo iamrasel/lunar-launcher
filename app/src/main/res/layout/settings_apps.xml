@@ -77,6 +77,49 @@
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/appDrawerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
+        android:text="@string/app_drawer_layout"
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quickLaunchGroup" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/drawerLayoutGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appDrawerLayout"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/drawerLayoutList"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/list" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/drawerLayoutListIcon"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/list_with_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/drawerLayoutGrid"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/grid" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/appsAlignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,7 +128,7 @@
         android:textSize="@dimen/normalText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quickLaunchGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/drawerLayoutGroup" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/appAlignmentGroup"
@@ -119,6 +162,45 @@
             android:text="@string/right" />
     </com.google.android.material.chip.ChipGroup>
 
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/iconPackGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appAlignmentGroup">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/iconPackChooser"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_icon_pack" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/columnsCountTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
+        android:text="@string/grid_columns_count"
+        android:textSize="@dimen/normalText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iconPackGroup" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/columnsCount"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:valueFrom="3"
+        android:valueTo="7"
+        android:stepSize="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/columnsCountTitle" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/scrollbarHeightTitle"
         android:layout_width="wrap_content"
@@ -128,7 +210,7 @@
         android:textSize="@dimen/normalText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appAlignmentGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/columnsCount" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/scrollbarHeight"

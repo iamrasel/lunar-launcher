@@ -251,7 +251,7 @@ internal class Feeds : Fragment() {
         if (splitWidgetIds.size > 0) {
             viewLifecycleOwner.lifecycleScope.launch {
                 binding.widgetContainer.removeAllViews()
-                for (i in 0 until splitWidgetIds.size) {
+                splitWidgetIds.indices.forEach { i: Int ->
                     createWidget(splitWidgetIds[i]!!.int(), splitWidgetHeights[i]!!.int())
                 }
             }

@@ -53,7 +53,7 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
                 executor.execute {
                     var weather: Weather? = null
                     val jsonStr = WeatherClient().fetchWeather(weatherUrl)
-                    if (jsonStr != null && jsonStr.isNotEmpty()) {
+                    if (!jsonStr.isNullOrEmpty()) {
                         weather = JsonParser().getMyWeather(jsonStr)
                     }
                     val finalWeather = weather

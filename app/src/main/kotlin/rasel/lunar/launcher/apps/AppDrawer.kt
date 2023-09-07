@@ -37,13 +37,18 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.view.updateLayoutParams
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.BuildConfig
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_GRID_COLUMNS
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_SCROLLBAR_HEIGHT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPS_LAYOUT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_GRID_COLUMNS
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SCROLLBAR_HEIGHT
@@ -58,11 +63,12 @@ internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
     private lateinit var settingsPrefs: SharedPreferences
+    private var layoutType: Int = 0
     private var isSearchShown: Boolean = false
     private var isKeyboardShowing: Boolean = false
 
     companion object {
-        private val packageManager = lActivity!!.packageManager
+        private var packageManager: PackageManager? = null
         private var appsAdapter: AppsAdapter? = null
         private var packageInfoList: MutableList<ResolveInfo> = mutableListOf()
         private var packageList = mutableListOf<Packages>()
@@ -101,13 +107,13 @@ internal class AppDrawer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
-        appsAdapter = AppsAdapter(packageManager, childFragmentManager, binding.appsCount)
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
+        layoutType = settingsPrefs.getInt(KEY_APPS_LAYOUT, 0)
+        packageManager = lActivity?.packageManager
+        appsAdapter = AppsAdapter(layoutType, packageManager!!, childFragmentManager, binding.appsCount)
         letterPreview = binding.appsCount
 
-        appsAdapter!!.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
-        /* initialize apps list adapter */
-        binding.appsList.adapter = appsAdapter
+        setLayout()
         fetchApps()
         getAlphabetItems()
         setKeyboardPadding()
@@ -147,7 +153,10 @@ internal class AppDrawer : Fragment() {
         fetchApps()
         getAlphabetItems()
 
-        appsAdapter?.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        if (settingsPrefs.getInt(KEY_APPS_LAYOUT, 0) in 0..1) {
+            appsAdapter?.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        }
+
         /* pop up the keyboard */
         if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) openSearch()
     }
@@ -157,21 +166,34 @@ internal class AppDrawer : Fragment() {
         closeSearch()
     }
 
+    private fun setLayout() {
+        when (layoutType) {
+            0, 1 -> {
+                binding.appsList.layoutManager = LinearLayoutManager(requireContext())
+                appsAdapter!!.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+            }
+            2 -> binding.appsList.layoutManager = GridLayoutManager(requireContext(), settingsPrefs.getInt(KEY_GRID_COLUMNS, DEFAULT_GRID_COLUMNS))
+        }
+
+        /* initialize apps list adapter */
+        binding.appsList.adapter = appsAdapter
+    }
+
     /* update app list with app and package name */
     private fun fetchApps() {
-        packageInfoList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.queryIntentActivities(
+        packageInfoList = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager?.queryIntentActivities(
                 Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER),
                 PackageManager.ResolveInfoFlags.of(0)
             )
         } else {
             @Suppress("DEPRECATION")
-            packageManager.queryIntentActivities(
-                Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0)
-        }.apply {
+            (packageManager?.queryIntentActivities(
+                Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0))
+        })?.apply {
             removeIf { it.activityInfo.packageName.equals(BuildConfig.APPLICATION_ID) }
             sortWith(ResolveInfo.DisplayNameComparator(packageManager))
-        }
+        }!!
 
         /* add package and app names to the list */
         packageList.clear()
@@ -194,8 +216,8 @@ internal class AppDrawer : Fragment() {
                     updateLayoutParams { this.height = height }
                 }
                 alphabetList.clear()
-                for (i in 0 until packageList.size) {
-                    packageList[i].appName.first().uppercase().let { firstLetter: String ->
+                for (mPackage in packageList) {
+                    mPackage.appName.first().uppercase().let { firstLetter: String ->
                         when {
                             numberPattern.matcher(firstLetter).matches() -> alphabetList.add(0, "#")
                             alphabetPattern.matcher(firstLetter).matches() -> alphabetList.add(firstLetter)
@@ -222,7 +244,7 @@ internal class AppDrawer : Fragment() {
         }
 
         if (packageList.size == 1 && settingsPrefs.getBoolean(KEY_QUICK_LAUNCH, true))
-            startActivity(packageManager.getLaunchIntentForPackage(packageList[0].packageName))
+            startActivity(packageManager?.getLaunchIntentForPackage(packageList[0].packageName))
         else appsAdapter?.updateData(packageList)
     }
 

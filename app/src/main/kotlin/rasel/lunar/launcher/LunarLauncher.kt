@@ -21,7 +21,6 @@ package rasel.lunar.launcher
 import android.app.Application
 import android.content.ComponentCallbacks2
 import android.database.sqlite.SQLiteDatabase
-import com.google.android.material.color.DynamicColors
 
 
 internal class LunarLauncher : Application() {

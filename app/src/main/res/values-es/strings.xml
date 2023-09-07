@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="about">Acerca de</string>
     <string name="accessibility">Accesibilidad</string>
     <string name="accessibility_service_description">Dejar que Lunar Launcher coloque el dispositivo en reposo (en Android Pie (API 28+)).</string>
@@ -7,7 +8,7 @@
     <string name="acknowledgements">
          <b>Agradecimientos</b>\n
          <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
-     </string>
+    </string>
     <string name="add_new">Añadir nuevo</string>
     <string name="add_widget">Añadir widget</string>
     <string name="advance">Avanzado</string>
@@ -49,6 +50,7 @@
     <string name="frequency">Frecuencias</string>
     <string name="got_it">Entendido</string>
     <string name="hide_status_bar">Ocultar barra de estado</string>
+    <string name="icon_size">Tamaño de los accesos directos e iconos de las aplicaciones</string>
     <string name="image_pick_failed">Error al buscar imagen</string>
     <string name="increase_height">Aumentar altura</string>
     <string name="last_update">Última actualización</string>
@@ -58,7 +60,7 @@
     <string name="misc">Miscelánea</string>
     <string name="misc_info_titles">
          Tiempo encendido\nSistema activo\nUmbral de memoria\nTemperatura de la batería\nVoltaje de la bateria\nRaíz de almacenamiento\nIPv4\nIPv6
-     </string>
+    </string>
     <string name="move_up">Mover hacia arriba</string>
     <string name="move_down">Mover hacia abajo</string>
     <string name="negative">Negativo</string>
@@ -73,6 +75,7 @@
     <string name="right">Derecha</string>
     <string name="root">Raíz</string>
     <string name="rss_feed">Feed RSS</string>
+    <string name="scrollbar_height">Altura de la barra alfabética</string>
     <string name="search_with_keyboard">Buscar con teclado</string>
     <string name="shortcut_count">Número de accesos directos (URL/Contacto)</string>
     <string name="show_city">Mostrar nombre de la ciudad en los datos meteorológicos</string>
@@ -81,10 +84,10 @@
     <string name="star">Estrella</string>
     <string name="support">Soporte</string>
     <string name="support_message">Apoya al desarrollador para mantener esta aplicación gratis y viva.
-\n
-\n<li><b>Donar:</b> si es posible, haga donaciones directas para ayudar y alentar al desarrollador.</li>
-\n<li><b>Amazon:</b> use el enlace de afiliado mientras compra en Amazon para recompensar al desarrollador.</li>
-\n<li><b>Estrella:</b> Destaca en GitHub para mostrar tu apoyo.</li> </string>
+         \n<li><b>Donar:</b> si es posible, haga donaciones directas para ayudar y alentar al desarrollador.</li>
+         \n<li><b>Amazon:</b> use el enlace de afiliado mientras compra en Amazon para recompensar al desarrollador.</li>
+         \n<li><b>Estrella:</b> Destaca en GitHub para mostrar tu apoyo.</li>
+    </string>
     <string name="system_stats">Información del sistema</string>
     <string name="telegram_group">Grupo de Telegram</string>
     <string name="temperature">Temperatura</string>
@@ -107,27 +110,21 @@
     <string name="wallpaper_change_success">Fondo de pantalla cambiado</string>
     <string name="weather">Tiempo</string>
     <string name="welcome">Bienvenide</string>
-    <string name="welcome_description">Bienvenido a Lunar Launcher.
-\n
-\nTras cerrar este mensaje, se pedirán los permisos necesarios para que aplicación funcione como se espera.
-\n
-\n<li><b>Modifica ajustes del sistema —</b> Controla el brillo usando una barra deslizadora</li>
-\n<li><b>Teléfono —</b> Haz llamadas desde un atajo</li>
-\n
-\nEste un software libre copylefteado; revisa, cambia y compártelo con todos.
-\n
-\n<b><u>Gestos:</u></b>
-\n<li>Deslizar hacia arriba — Acceso rápido</li>
-\n<li>Deslizar hacia abajo — Panel de notificaciones</li>
-\n<li>Deslizar hacia la derecha — Feeds</li>
-\n<li>Deslizar hacia la izquierda — Lista de aplicaciones</li>
-\n<li>Toca y mantén presionado en el indicador de batería — Configuración del launcher</li>
-\n<li>Toca y manten presionado en la parte inferior de la pantalla — Gestor de tareas</li>
-\n<li>Doble toque — Bloquear/reposar el dispositivo (activar desde configuraciones)</li>
-\n<li>Toca y mantén presionado el elemento favorito — Remover favorito </li>
-\n
-\nMas información en la página wiki en GitHub. </string>
-    <string name="battery_indicator_diameter">Diámetro del indicador de batería</string>
-    <string name="scrollbar_height">Altura de la barra de desplazamiento A-Z</string>
-    <string name="icon_size">Tamaño de los accesos directos e iconos de las aplicaciones</string>
+    <string name="welcome_description">Bienvenide a Lunar Launcher. Esta es la primera vez que abres la aplicación; si es la primera vez que la usas, <b>lee estos textos antes de proceder</b>.
+         \n\nPrimero, tras cerrar este mensaje, se te pedirá conceder los siguientes permisos. Si decides no hacerlo, esta aplicación no funcionará como se espera.
+         \n\n<li><b>Modificar ajustes del sistema -</b> Para controlar el brillo usando una barra deslizable</li>
+         \n<li><b>Teléfono -</b> Para poder hacer llamadas desde los accesos directos a contactos</li>
+         \n\n Si sigues teniendo cualquier duda, puedes comprobar el código fuente de la aplicación, este es una aplicación completamente de código abierto.
+         \n\n<b><u>Gestos:</u></b>
+         \n<li>Deslizar hacia arriba - acceso rápido</li>
+         \n<li>Deslizar hacia abajo - panel de notificaciones</li>
+         \n<li>Deslizar a la derecha - Feed </li>
+         \n<li>Deslizar a la izquierda - Cajón de aplicaciones</li>
+         \n<li>Mantener pulsado en el reloj circular - Ajustes de Lunar launcher</li>
+         \n<li>Mantener pulsado en la parte inferior de la pantalla - Administrador de tareas</li>
+         \n<li>Doble toque - Bloquear dispositivo (activar en ajustes)</li>
+         \n<li>Mantener pulsado un elemento favorito - Eliminar favorito</li>
+         \n\nPara más información, visite la página de Wiki en Github.
+    </string>
+
 </resources>

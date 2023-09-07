@@ -37,13 +37,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
@@ -64,7 +64,6 @@ import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SHORTCUTS
 import rasel.lunar.launcher.helpers.Constants.Companion.SEPARATOR
 import rasel.lunar.launcher.helpers.Constants.Companion.SHORTCUT_TYPE_PHONE
 import rasel.lunar.launcher.helpers.Constants.Companion.SHORTCUT_TYPE_URL
-import rasel.lunar.launcher.helpers.PrefsUtil.Companion.removeFavApps
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -359,7 +358,7 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     }
 
     /* favorite apps */
-    private fun favApp(packageName: String, imageView: AppCompatImageView, position: Int) {
+    private fun favApp(packageName: String, imageView: ShapeableImageView, position: Int) {
         val packageManager = requireContext().packageManager
         /* package name is not empty for a specific position */
         if (packageName.isNotEmpty()) {
@@ -373,12 +372,14 @@ internal class QuickAccess : BottomSheetDialogFragment() {
                 }
                 /* on long click - remove from favorite apps */
                 imageView.setOnLongClickListener {
-                    removeFavApps(position)
+                    requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
+                        .edit().remove(KEY_APP_NO_ + position).apply()
                     this.onResume()
                     true
                 }
             } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
-                removeFavApps(position)
+                requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
+                    .edit().remove(KEY_APP_NO_ + position).apply()
                 imageView.visibility = View.GONE
             }
         } else {
@@ -412,8 +413,8 @@ internal class QuickAccess : BottomSheetDialogFragment() {
     }
 
     /* create image view for favorite app icons */
-    private val imageView: AppCompatImageView get() {
-        AppCompatImageView(requireContext()).apply {
+    private val imageView: ShapeableImageView get() {
+        ShapeableImageView(requireContext()).apply {
             layoutParams = LinearLayoutCompat.LayoutParams(
                 (iconSize * resources.displayMetrics.density).toInt(),
                 (iconSize * resources.displayMetrics.density).toInt(), 1F)
