@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="about">Acerca de</string>
     <string name="accessibility">Accesibilidad</string>
-    <string name="accessibility_service_description">Servicio de accesibilidad para permitir que Lunar Launcher ponga el dispositivo en reposo, en Android Pie (API 28) y superior.</string>
+    <string name="accessibility_service_description">Dejar que Lunar Launcher coloque el dispositivo en reposo (en Android Pie (API 28+)).</string>
     <string name="accessibility_service_label">Bloquear servicio</string>
     <string name="acknowledgements">
          <b>Agradecimientos</b>\n
          <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i>
-     </string>
+    </string>
     <string name="add_new">Añadir nuevo</string>
     <string name="add_widget">Añadir widget</string>
     <string name="advance">Avanzado</string>
@@ -19,9 +20,7 @@
     <string name="app_store">Tienda de aplicaciones</string>
     <string name="authentication_error">Error de autenticación</string>
     <string name="authentication_failed">Autenticación fallida</string>
-    <string name="authentication_subtitle">
-        Identifícate con las credenciales del dispositivo para proceder
-     </string>
+    <string name="authentication_subtitle">Identifícate con las credenciales del dispositivo para proceder.</string>
     <string name="background">Fondo</string>
     <string name="back_home">Siempre volver a la pantalla de inicio</string>
     <string name="center">Centro</string>
@@ -36,18 +35,14 @@
     <string name="default_">Predeterminado</string>
     <string name="delete">Borrar</string>
     <string name="delete_all">Borrar todo</string>
-    <string name="delete_all_confirmation">
-         ¿Seguro que quieres borrar todas las tareas existentes?
-     </string>
-    <string name="developer_name">Desarrollado por Md Rasel Hossain</string>
+    <string name="delete_all_confirmation">¿Borrar todas las tareas existentes\?</string>
+    <string name="developer_name">Desarrollado por Md. Rasel Hossain</string>
     <string name="device_admin">Administrador del dispositivo</string>
-    <string name="device_admin_description">
-         Permite usar la función de doble toque para bloquear el dispositivo
-     </string>
+    <string name="device_admin_description">Doble toque para bloquear</string>
     <string name="donate">Donar</string>
     <string name="double_tap_lock">Método de bloqueo de doble toque</string>
-    <string name="empty_text_field">El Campo de texto está vacío</string>
-    <string name="feed_url">URL del Feed RSS</string>
+    <string name="empty_text_field">El campo de texto está vacío</string>
+    <string name="feed_url">URL de la fuente RSS</string>
     <string name="first_install">Primera instalación</string>
     <string name="follow_system">Seguir al sistema</string>
     <string name="free">Libre</string>
@@ -55,7 +50,8 @@
     <string name="frequency">Frecuencias</string>
     <string name="got_it">Entendido</string>
     <string name="hide_status_bar">Ocultar barra de estado</string>
-    <string name="image_pick_failed">Error al seleccionar imagen</string>
+    <string name="icon_size">Tamaño de los accesos directos e iconos de las aplicaciones</string>
+    <string name="image_pick_failed">Error al buscar imagen</string>
     <string name="increase_height">Aumentar altura</string>
     <string name="last_update">Última actualización</string>
     <string name="left">Izquierda</string>
@@ -64,56 +60,54 @@
     <string name="misc">Miscelánea</string>
     <string name="misc_info_titles">
          Tiempo encendido\nSistema activo\nUmbral de memoria\nTemperatura de la batería\nVoltaje de la bateria\nRaíz de almacenamiento\nIPv4\nIPv6
-     </string>
+    </string>
     <string name="move_up">Mover hacia arriba</string>
     <string name="move_down">Mover hacia abajo</string>
     <string name="negative">Negativo</string>
-    <string name="null_app_store_message">No hay ninguna tienda de aplicaciones instalada.
-\nen este dispositivo.</string>
+    <string name="null_app_store_message">No hay ninguna tienda de aplicaciones instalada en este dispositivo.</string>
     <string name="owm_key">Clave de la API de OWM</string>
     <string name="positive">Positivo</string>
     <string name="proceed">Proceder</string>
     <string name="quick_launch">Lanzado rápido</string>
     <string name="reset">Resetear</string>
-    <string name="reset_message">
-         Esta operación borrará todos los datos almacenados de la aplicación eneste dispositivo, y no puede deshacerse.
-     </string>
+    <string name="reset_message">Esta operación borrará todos los datos almacenados de la aplicación, y no puede deshacerse.</string>
     <string name="restart">Reiniciar</string>
     <string name="right">Derecha</string>
     <string name="root">Raíz</string>
     <string name="rss_feed">Feed RSS</string>
+    <string name="scrollbar_height">Altura de la barra alfabética</string>
     <string name="search_with_keyboard">Buscar con teclado</string>
-    <string name="shortcut_count">Número de accesos directos (Url/Contacto)</string>
+    <string name="shortcut_count">Número de accesos directos (URL/Contacto)</string>
     <string name="show_city">Mostrar nombre de la ciudad en los datos meteorológicos</string>
     <string name="something_went_wrong">Algo ha ido mal</string>
     <string name="source_code">Código fuente</string>
     <string name="star">Estrella</string>
     <string name="support">Soporte</string>
-    <string name="support_message">Apoya al desarrollador para mantener esta aplicacion viva y gratuita de por vida.\n
-         \n<li><b>Donar:</b> Si es posible, haz donaciones directas para ayudar y motivar al desarrollador.</li>
-         \n<li><b>Amazon:</b> Usa el link de afiliado al comprar en Amazon para que el desarrollador sea recompensado</li>
-         \n<li><b>Estrella:</b> Marca el repositorio con una estrella para mostrar tu apoyo a la aplicación.</li>
-     </string>
+    <string name="support_message">Apoya al desarrollador para mantener esta aplicación gratis y viva.
+         \n<li><b>Donar:</b> si es posible, haga donaciones directas para ayudar y alentar al desarrollador.</li>
+         \n<li><b>Amazon:</b> use el enlace de afiliado mientras compra en Amazon para recompensar al desarrollador.</li>
+         \n<li><b>Estrella:</b> Destaca en GitHub para mostrar tu apoyo.</li>
+    </string>
     <string name="system_stats">Información del sistema</string>
     <string name="telegram_group">Grupo de Telegram</string>
     <string name="temperature">Temperatura</string>
     <string name="temp_unit">Unidad de temperatura</string>
-    <string name="time_date">Hora - Fecha</string>
+    <string name="time_date">Hora — Fecha</string>
     <string name="time_format">Formato de hora</string>
     <string name="todo">Tareas</string>
-    <string name="todo_count">Número de tareas en la pantalla de inicio</string>
-    <string name="todo_manager">Gestor de tareas</string>
-    <string name="todo_manager_lock">Bloquear gestor de tareas</string>
+    <string name="todo_count">Número de entradas de tareas pendientes en la pantalla de inicio</string>
+    <string name="todo_manager">Administrador de tareas pendientes</string>
+    <string name="todo_manager_lock">Bloqueo del administrador de tareas pendientes</string>
     <string name="total">Total</string>
     <string name="twelve">12 Horas</string>
     <string name="twenty_four">24 Horas</string>
     <string name="unable_to_launch">Fallo al abrir</string>
     <string name="uninstall">Desinstalar</string>
     <string name="update">Actualizar</string>
-    <string name="url">Url</string>
+    <string name="url">URL</string>
     <string name="used">Usado</string>
     <string name="version">Versión</string>
-    <string name="wallpaper_change_success">Fondo de pantalla cambiado con éxito</string>
+    <string name="wallpaper_change_success">Fondo de pantalla cambiado</string>
     <string name="weather">Tiempo</string>
     <string name="welcome">Bienvenide</string>
     <string name="welcome_description">Bienvenide a Lunar Launcher. Esta es la primera vez que abres la aplicación; si es la primera vez que la usas, <b>lee estos textos antes de proceder</b>.
@@ -131,7 +125,6 @@
          \n<li>Doble toque - Bloquear dispositivo (activar en ajustes)</li>
          \n<li>Mantener pulsado un elemento favorito - Eliminar favorito</li>
          \n\nPara más información, visite la página de Wiki en Github.
-     </string>
-    <string name="scrollbar_height">Altura de la barra alfabética</string>
-    <string name="icon_size">Tamaño de los accesos directos e iconos de las aplicaciones</string>
+    </string>
+
 </resources>
