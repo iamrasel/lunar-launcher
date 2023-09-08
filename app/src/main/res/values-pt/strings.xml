@@ -59,7 +59,6 @@
     <string name="center">Centro</string>
     <string name="background">Fundo</string>
     <string name="back_home">Sempre voltar para a tela inicial</string>
-    <string name="battery_indicator_diameter">Diâmetro do indicador de bateria</string>
     <string name="about">Sobre</string>
     <string name="accessibility">Acessibilidade</string>
     <string name="accessibility_service_description">Deixar o Lunar Launcher colocar o dispositivo para dormir (no Android Pie (API 28+)).</string>
