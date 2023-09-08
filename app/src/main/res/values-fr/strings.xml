@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="center">Centrer</string>
+    <string name="add_new">Ajouter nouveau</string>
+    <string name="copied_message">Copié dans le presse-papier</string>
+    <string name="add_widget">Ajouter widget</string>
+    <string name="application_theme">Sélection du thème de l’application</string>
+    <string name="app_alignment">Alignement des applications</string>
+    <string name="accessibility">Accessibilité</string>
+    <string name="acknowledgements"> <b>Remerciements</b>
+\n<i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i> </string>
+    <string name="appearances">Apparence</string>
+    <string name="choose_launcher">Sélectionner le lanceur par défaut</string>
+    <string name="accessibility_service_label">Service de verrouillage</string>
+    <string name="advance">Avancé</string>
+    <string name="choose_icon_pack">Sélectionner le pack d’icônes</string>
+    <string name="contact">Contact</string>
+    <string name="about">À propos</string>
+    <string name="background">Arrière-plan</string>
+    <string name="dark_theme">Sombre</string>
+    <string name="accessibility_service_description">Laissez Lunar Launcher mettre l’appareil en sommeil (API 28+).</string>
+    <string name="change_wallpaper">Modifier le fond d’écran</string>
+    <string name="city_name">Nom de la ville</string>
+    <string name="activity_browser">Parcourir les activités</string>
+</resources>
