@@ -1,2 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="owm_key">OWM API-Schlüssel</string>
+    <string name="center">Center</string>
+    <string name="reset_message">Warnung! Diese Operation löscht alle Daten von dieser App! Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="time_date">Zeit — Datum</string>
+    <string name="icon_pack_not_found">Sie haben leider kein Icon-Pack installiert.</string>
+    <string name="default_">Standart</string>
+    <string name="reset">Zurücksetzen</string>
+    <string name="temperature">Temperatur</string>
+    <string name="device_admin_description">Erlauben, bei Doppeltippen in den Ruhezustand zu wechseln</string>
+    <string name="add_new">Neu Hinzufügen</string>
+    <string name="copied_message">In Zwischenablage kopiert</string>
+    <string name="welcome">Willkommen</string>
+    <string name="todo_count">Zahl der To-Do einträge auf dem Startbildschirm</string>
+    <string name="share_apk_message">APK-Datei teilen über</string>
+    <string name="add_widget">Widget hinzufügen</string>
+    <string name="application_theme">App-Thema wählen</string>
+    <string name="app_alignment">App-Ausrichtung</string>
+    <string name="last_update">Letzte Aktualisierung</string>
+    <string name="accessibility">Erleichterte Bedienung</string>
+    <string name="null_app_store_message">Kein AppStore auf diesem Gerät.</string>
+    <string name="acknowledgements"> <b>Danksagungen</b>
+\n <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i> </string>
+    <string name="wallpaper_change_success">Hintergrund geändert</string>
+    <string name="negative">Negativ</string>
+    <string name="unable_to_launch">Nicht ausführbar</string>
+    <string name="appearances">Anzeigezeitpunkt</string>
+    <string name="misc">Weiteres</string>
+    <string name="restart_message">Die Änderungen werden erst nach Neustart der App übernommen. Jetzt neu starten\?</string>
+    <string name="welcome_description">Willkommen bei Lunar Launcher.
+\n
+\n Nachdem Sie dieses Dialogfeld geschlossen haben, werden Sie aufgefordert, die erforderlichen Berechtigungen zu erteilen, damit die App wie erwartet funktioniert.
+\n
+\n <li><b>Systemeinstellungen ändern –</b> Um die Helligkeit mit einem Schieberegler zu steuern</li>
+\n <li><b>Telefon –</b> Zum Tätigen von Anrufen über Verknüpfungen</li>
+\n
+\n Es handelt sich um eine mit Copyleft versehene Libre-Software. \u0020Überprüfen, ändern und mit allen teilen.
+\n
+\n <b><u>Gesten:</u></b>
+\n <li>Nach oben wischen – Schnellzugriffsdialog</li>
+\n <li>Nach unten wischen – Benachrichtigungsfeld</li>
+\n <li>Nach rechts wischen – Feeds</li>
+\n <li>Nach links wischen – App-Schublade</li>
+\n <li>Tippen und halten Sie die Batterieanzeige – Launcher-Einstellungen</li>
+\n <li>Tippen und halten Sie den unteren Teil des Bildschirms – To-Do-Manager</li>
+\n <li>Doppeltippen – Gerätesperre/Ruhezustand (in den Einstellungen aktivieren)</li>
+\n <li>Tippen Sie auf den Favoriten und halten Sie es gedrückt – Favorit entfernen</li>
+\n
+\n Weitere Informationen auf der Wiki-Seite auf GitHub. </string>
+    <string name="total">Total</string>
+    <string name="list_with_icon">Liste mit Symbolen</string>
+    <string name="hide_status_bar">Statusleiste verstecken</string>
+    <string name="twelve">12-Stunden</string>
+    <string name="empty_text_field">Das Eingabefeld ist leer</string>
+    <string name="choose_launcher">Standart-Launcher wählen</string>
+    <string name="double_tap_lock">Doppeltippen-Sperrmethode</string>
+    <string name="rss_feed">RSS-Feed</string>
+    <string name="restart_now">Jetzt neu starten\?</string>
+    <string name="right">Rechts</string>
+    <string name="accessibility_service_label">Sperrservice</string>
+    <string name="image_pick_failed">Bild konnte nicht geladen werden</string>
+    <string name="update">Aktualisieren</string>
+    <string name="icon_size">Verknüpfung &amp; App-Icon Größe</string>
+    <string name="advance">Erweitert</string>
+    <string name="choose_icon_pack">Icon-Pack wählen</string>
+    <string name="app_drawer_layout">Aussehen des App-Drawers</string>
+    <string name="got_it">Fortfahren</string>
+    <string name="app_info">App-Info-Fenster öffnen</string>
+    <string name="show_city">Stadtname mit Wetter zeigen</string>
+    <string name="feed_url">RSS-Feed-URL</string>
+    <string name="source_code">Quellcode</string>
+    <string name="device_admin">Geräteadministratoren</string>
+    <string name="todo_manager_lock">To-Do Manager Sperren</string>
+    <string name="freeform">In pip Modus öffnen</string>
+    <string name="delete">Löschen</string>
+    <string name="scrollbar_height">Höhe der A bis Z Scroll-Leiste</string>
+    <string name="authentication_failed">Authentifizierungsfehler</string>
+    <string name="support">Support</string>
+    <string name="version">Version</string>
+    <string name="url">URL</string>
+    <string name="frequency">Wiederholungszahl</string>
+    <string name="delete_all_confirmation">Alle To-Do Eingaben löschen\?</string>
+    <string name="weather">Wetter</string>
+    <string name="something_went_wrong">Leider ist etwas schief gelaufen</string>
+    <string name="contact">Kontakte</string>
+    <string name="star">Favorit</string>
+    <string name="uninstall">App deinstallieren</string>
+    <string name="app_store">Auf App-Market anzeigen</string>
+    <string name="developer_name">Entwickelt von Md. Rasel Hossian</string>
+    <string name="misc_info_titles">Hochgefahren seit
+\nSystem Aktiv
+\nVerwendeter Arbeitsspeicher
+\nAkkutemperatur
+\nAkku-Voltzahl
+\nSpeicherplatz
+\nIPv4
+\nIPv6</string>
+    <string name="used">Verwendet</string>
+    <string name="about">Über</string>
+    <string name="restart">Neustart</string>
+    <string name="app_drawer">App-Drawer</string>
+    <string name="telegram_group">Telegramgruppe</string>
+    <string name="first_install">Erste Installation</string>
+    <string name="detailed_info">Detailinfos anzeigen</string>
+    <string name="authentication_error">Authentifizierungsfehler</string>
+    <string name="left">Links</string>
+    <string name="lunar_settings">Lunar-Einstellungen</string>
+    <string name="root">Root</string>
+    <string name="free">Kostenlos</string>
+    <string name="twenty_four">24-Stunden</string>
+    <string name="background">Hintergrund</string>
+    <string name="move_up">Hochbewegen</string>
+    <string name="dark_theme">Dunkelmodus</string>
+    <string name="todo">To-Do</string>
+    <string name="move_down">Runterbewegen</string>
+    <string name="accessibility_service_description">Lunar Launcher erlauben, das Gerät in den Ruhezustand zu versetzen (API 28+).</string>
+    <string name="proceed">Fortfahren</string>
+    <string name="follow_system">System folgen</string>
+    <string name="search_with_keyboard">Mit Tastatur starten</string>
+    <string name="support_message">Hilf dem Entwickler die App Kostenlos und am leben zu halten
+\n
+\n<li><b>Spenden:</b> Wenn möglich, direkt Spenden.</li>
+\n<li><b>Amazon:</b> Nutze den Link um den Entwickler beim Shoppen zu unterstützen.</li>
+\n<li><b>Star:</b> Star auf GitHub um deine Unterstützung zu zeigen.</li> </string>
+    <string name="list">Liste</string>
+    <string name="grid">Tabelle</string>
+    <string name="donate">Spenden</string>
+    <string name="delete_all">Alle löschen</string>
+    <string name="date_format">Datumsformat</string>
+    <string name="increase_height">Höhe erhöhen</string>
+    <string name="grid_columns_count">Keine Tabellenspalten</string>
+    <string name="positive">Positiv</string>
+    <string name="quick_launch">Schnellstart</string>
+    <string name="change_wallpaper">Hintergrund ändern</string>
+    <string name="city_name">Stadtname</string>
+    <string name="share">APK-Datei teilen</string>
+    <string name="decrease_height">Höhe verkleinern</string>
+    <string name="time_format">Zeitformat</string>
+    <string name="back_home">Immer zum Home-Bildschirm zurückkehren</string>
+    <string name="todo_manager">To-Do Manager</string>
+    <string name="shortcut_count">Zahl der Verknüpfungen (URL/Kontakte)</string>
+    <string name="light_theme">Licht</string>
+    <string name="temp_unit">Temperatureinheit</string>
+    <string name="later">Später</string>
+    <string name="authentication_subtitle">Mit ihrem Gerätanmeldedaten anmelden, um fortzufahren.</string>
+    <string name="activity_browser">Aktivitäten durchsuchen</string>
+    <string name="system_stats">Systemstatus</string>
+</resources>
