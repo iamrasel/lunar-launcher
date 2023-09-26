@@ -45,7 +45,7 @@
     <string name="first_install">Primera instalación</string>
     <string name="follow_system">Seguir al sistema</string>
     <string name="free">Libre</string>
-    <string name="freeform">Freeform</string>
+    <string name="freeform">Abrir en modo pip</string>
     <string name="frequency">Frecuencias</string>
     <string name="got_it">Entendido</string>
     <string name="hide_status_bar">Ocultar barra de estado</string>
@@ -93,15 +93,15 @@
     <string name="temp_unit">Unidad de temperatura</string>
     <string name="time_date">Hora — Fecha</string>
     <string name="time_format">Formato de hora</string>
-    <string name="todo">Tareas</string>
+    <string name="todo">Tareas pendientes</string>
     <string name="todo_count">Número de entradas de tareas pendientes en la pantalla de inicio</string>
     <string name="todo_manager">Administrador de tareas pendientes</string>
-    <string name="todo_manager_lock">Bloqueo del administrador de tareas pendientes</string>
+    <string name="todo_manager_lock">Bloquear el gestor de tareas pendientes</string>
     <string name="total">Total</string>
     <string name="twelve">12 Horas</string>
     <string name="twenty_four">24 Horas</string>
     <string name="unable_to_launch">Fallo al abrir</string>
-    <string name="uninstall">Desinstalar</string>
+    <string name="uninstall">Desinstalar la aplicación</string>
     <string name="update">Actualizar</string>
     <string name="url">URL</string>
     <string name="used">Usado</string>
@@ -138,4 +138,5 @@
     <string name="share">Compartir el archivo apk</string>
     <string name="later">Más tarde</string>
     <string name="activity_browser">Navegar por las actividades</string>
+    <string name="list_with_icon">Lista con iconos</string>
 </resources>
