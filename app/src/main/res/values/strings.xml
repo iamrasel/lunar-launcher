@@ -22,6 +22,7 @@
     <string name="app_drawer_layout">App Drawer Layout</string>
     <string name="app_info">Open App Info window</string>
     <string name="app_store">Visit on app market</string>
+    <string name="apps_count">Apps Count</string>
     <string name="argb" translatable="false">AARRGGBB</string>
     <string name="authentication_error">Authentication error</string>
     <string name="authentication_failed">Authentication failed</string>

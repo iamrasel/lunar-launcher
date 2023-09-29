@@ -45,6 +45,7 @@ internal class AppsAdapter(
 
     private var oldList = mutableListOf<Packages>()
     private var appGravity: Int = Gravity.CENTER
+    private var appsCountVisible: Boolean = true
 
     companion object {
         @JvmStatic var appsSize: Int? = null
@@ -62,6 +63,7 @@ internal class AppsAdapter(
 
         holder.view.apply {
             childTextview.text = item.appName
+            appsCount.visibility = if (appsCountVisible) View.VISIBLE else View.GONE
 
             when (layoutType) {
                 0 -> {
@@ -135,6 +137,15 @@ internal class AppsAdapter(
         if (gravity != appGravity &&
             (gravity == Gravity.LEFT || gravity == Gravity.CENTER || gravity == Gravity.RIGHT)) {
             appGravity = gravity
+            notifyDataSetChanged()
+        }
+    }
+
+    /* update apps count visible */
+    @SuppressLint("RtlHardcoded", "NotifyDataSetChanged")
+    fun updateAppsCountVisible(value: Boolean){
+        if (appsCountVisible != value) {
+            appsCountVisible = value
             notifyDataSetChanged()
         }
     }

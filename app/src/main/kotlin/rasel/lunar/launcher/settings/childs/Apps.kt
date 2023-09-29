@@ -19,6 +19,7 @@
 package rasel.lunar.launcher.settings.childs
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -33,6 +34,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.children
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
@@ -45,6 +47,7 @@ import rasel.lunar.launcher.databinding.SettingsAppsBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_GRID_COLUMNS
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_ICON_PACK
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_SCROLLBAR_HEIGHT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPS_COUNT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPS_LAYOUT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_GRID_COLUMNS
@@ -79,6 +82,11 @@ internal class Apps : BottomSheetDialogFragment() {
             false -> binding.quickLaunchNegative.isChecked = true
         }
 
+        when (settingsPrefs!!.getBoolean(KEY_APPS_COUNT, true)) {
+            true -> binding.appsCountPositive.isChecked = true
+            false -> binding.appsCountNegative.isChecked = true
+        }
+
         when (settingsPrefs!!.getInt(KEY_APPS_LAYOUT, 0)) {
             0 -> {
                 binding.drawerLayoutList.isChecked = true
@@ -111,6 +119,19 @@ internal class Apps : BottomSheetDialogFragment() {
 
         return binding.root
     }
+    @SuppressLint("RtlHardcoded")
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        val bottomSheetView = View.inflate(context, R.layout.settings_apps, null)
+
+        dialog.setContentView(bottomSheetView)
+
+        // Set the height to wrap_content
+        val behavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        behavior.peekHeight = resources.displayMetrics.heightPixels // Adjust this if needed
+
+        return dialog
+    }
 
     @SuppressLint("RtlHardcoded")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -130,6 +151,13 @@ internal class Apps : BottomSheetDialogFragment() {
             when (group.checkedChipId) {
                 binding.quickLaunchPositive.id -> settingsPrefs!!.edit().putBoolean(KEY_QUICK_LAUNCH, true).apply()
                 binding.quickLaunchNegative.id -> settingsPrefs!!.edit().putBoolean(KEY_QUICK_LAUNCH, false).apply()
+            }
+        }
+
+        binding.appsCountGroup.setOnCheckedStateChangeListener { group, _ ->
+            when (group.checkedChipId) {
+                binding.appsCountPositive.id -> settingsPrefs!!.edit().putBoolean(KEY_APPS_COUNT, true).apply()
+                binding.appsCountNegative.id -> settingsPrefs!!.edit().putBoolean(KEY_APPS_COUNT, false).apply()
             }
         }
 
