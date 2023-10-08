@@ -22,4 +22,9 @@
     <string name="change_wallpaper">Modifier le fond d’écran</string>
     <string name="city_name">Nom de la ville</string>
     <string name="activity_browser">Parcourir les activités</string>
+    <string name="app_drawer_layout">agencement du tiroir d\'applications</string>
+    <string name="app_info">Fenêtre des informations sur l\'application</string>
+    <string name="app_store">Visiter sur l\'app market</string>
+    <string name="app_drawer">tiroir d\'applications</string>
+    <string name="authentication_error">Erreur d\'authentification</string>
 </resources>
