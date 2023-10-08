@@ -27,4 +27,18 @@
     <string name="app_store">Visiter sur l\'app market</string>
     <string name="app_drawer">tiroir d\'applications</string>
     <string name="authentication_error">Erreur d\'authentification</string>
+    <string name="default_">Par défaut</string>
+    <string name="device_admin_description">Permettre de mettre l\'appareil en mode veille en tapant deux fois</string>
+    <string name="device_admin">Administrateur de l\'appareil</string>
+    <string name="delete">Supprimer</string>
+    <string name="authentication_failed">Échec d\'authentification</string>
+    <string name="delete_all_confirmation">Supprimer toutes les tâches\?</string>
+    <string name="developer_name">Développé par Md. Rasel Hossain</string>
+    <string name="detailed_info">Voir l\'information en détail</string>
+    <string name="donate">Faire un don</string>
+    <string name="delete_all">Tout supprimer</string>
+    <string name="date_format">Format de la date</string>
+    <string name="decrease_height">Diminuer la hauteur</string>
+    <string name="back_home">Toujours revenir à l\'écran d\'accueil</string>
+    <string name="authentication_subtitle">Connectez-vous à l\'aide de votre code</string>
 </resources>
