@@ -48,6 +48,7 @@ internal class Constants {
         const val KEY_KEYBOARD_SEARCH = "keyboard_search"
         const val KEY_QUICK_LAUNCH = "quick_launch"
         const val KEY_APPS_LAYOUT = "apps_layout"
+        const val KEY_APPS_COUNT = "apps_count"
         const val KEY_DRAW_ALIGN = "drawer_alignment"
         const val KEY_ICON_PACK = "icon_pack"
         const val KEY_GRID_COLUMNS = "grid_columns"

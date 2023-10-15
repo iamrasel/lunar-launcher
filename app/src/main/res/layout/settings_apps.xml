@@ -77,6 +77,43 @@
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/appsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twelve"
+        android:text="@string/apps_count"
+        android:textSize="@dimen/normalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quickLaunchGroup" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/appsCountGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appsCount"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/appsCountPositive"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/positive" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/appsCountNegative"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/negative" />
+    </com.google.android.material.chip.ChipGroup>
+
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/appDrawerLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,7 +122,7 @@
         android:textSize="@dimen/normalText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quickLaunchGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/appsCountGroup" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/drawerLayoutGroup"
