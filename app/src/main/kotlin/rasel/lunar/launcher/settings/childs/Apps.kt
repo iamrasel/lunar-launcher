@@ -66,6 +66,19 @@ internal class Apps : BottomSheetDialogFragment() {
     private var settingsChanged: Boolean = false
     private var packageManager: PackageManager? = null
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val bottomSheetView = View.inflate(context, R.layout.settings_apps, null)
+        val dialog = super.onCreateDialog(savedInstanceState).apply {
+            setContentView(bottomSheetView)
+        }
+
+        // Set the height to wrap_content
+        BottomSheetBehavior.from(bottomSheetView.parent as View)
+            .peekHeight = resources.displayMetrics.heightPixels // Adjust this if needed
+
+        return dialog
+    }
+
     @SuppressLint("RtlHardcoded")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SettingsAppsBinding.inflate(inflater, container, false)
@@ -118,19 +131,6 @@ internal class Apps : BottomSheetDialogFragment() {
         binding.scrollbarHeight.value = settingsPrefs!!.getInt(KEY_SCROLLBAR_HEIGHT, DEFAULT_SCROLLBAR_HEIGHT).toFloat()
 
         return binding.root
-    }
-    @SuppressLint("RtlHardcoded")
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        val bottomSheetView = View.inflate(context, R.layout.settings_apps, null)
-
-        dialog.setContentView(bottomSheetView)
-
-        // Set the height to wrap_content
-        val behavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
-        behavior.peekHeight = resources.displayMetrics.heightPixels // Adjust this if needed
-
-        return dialog
     }
 
     @SuppressLint("RtlHardcoded")

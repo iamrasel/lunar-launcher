@@ -67,7 +67,6 @@ internal class AppDrawer : Fragment() {
     private var layoutType: Int = 0
     private var isSearchShown: Boolean = false
     private var isKeyboardShowing: Boolean = false
-    private var isAppsCountVisible: Boolean = true
 
     companion object {
         private var packageManager: PackageManager? = null
@@ -111,13 +110,13 @@ internal class AppDrawer : Fragment() {
 
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         layoutType = settingsPrefs.getInt(KEY_APPS_LAYOUT, 0)
-        isAppsCountVisible = settingsPrefs.getBoolean(KEY_APPS_COUNT, true)
         packageManager = lActivity?.packageManager
         appsAdapter = AppsAdapter(layoutType, packageManager!!, childFragmentManager, binding.appsCount)
         letterPreview = binding.appsCount
 
+        binding.appsCount.visibility = if (settingsPrefs.getBoolean(KEY_APPS_COUNT, true)) VISIBLE else GONE
+
         setLayout()
-        setAppsCountVisibility()
         fetchApps()
         getAlphabetItems()
         setKeyboardPadding()
@@ -157,11 +156,11 @@ internal class AppDrawer : Fragment() {
         fetchApps()
         getAlphabetItems()
 
+        binding.appsCount.visibility = if (settingsPrefs.getBoolean(KEY_APPS_COUNT, true)) VISIBLE else GONE
+
         if (settingsPrefs.getInt(KEY_APPS_LAYOUT, 0) in 0..1) {
             appsAdapter?.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
         }
-
-        appsAdapter?.updateAppsCountVisible(settingsPrefs.getBoolean(KEY_APPS_COUNT, true))
 
         /* pop up the keyboard */
         if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) openSearch()
@@ -170,10 +169,6 @@ internal class AppDrawer : Fragment() {
     override fun onPause() {
         super.onPause()
         closeSearch()
-    }
-
-    private fun setAppsCountVisibility() {
-        appsAdapter!!.updateAppsCountVisible(isAppsCountVisible)
     }
 
     private fun setLayout() {
