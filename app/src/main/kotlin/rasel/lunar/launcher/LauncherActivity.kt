@@ -39,6 +39,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -148,6 +149,7 @@ internal class LauncherActivity : AppCompatActivity() {
                 supportFragmentManager, mutableListOf(Feeds(), LauncherHome(), AppDrawer()), lifecycle)
             offscreenPageLimit = 1
             setCurrentItem(1, false)
+            reduceDragSensitivity()
         }
     }
 
@@ -203,6 +205,19 @@ internal class LauncherActivity : AppCompatActivity() {
                 view.updatePadding(0, topInset, 0, it.bottom)
             }
             WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    private fun ViewPager2.reduceDragSensitivity() {
+        ViewPager2::class.java.getDeclaredField("mRecyclerView").apply {
+            isAccessible = true
+        }.let { recyclerViewField ->
+            (recyclerViewField.get(this) as RecyclerView).let { recyclerView ->
+                RecyclerView::class.java.getDeclaredField("mTouchSlop").apply {
+                    isAccessible = true
+                    set(recyclerView, this.get(recyclerView) as Int * 8)
+                }
+            }
         }
     }
 
