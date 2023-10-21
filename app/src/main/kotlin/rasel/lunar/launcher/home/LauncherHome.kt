@@ -23,6 +23,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
@@ -146,6 +147,13 @@ internal class LauncherHome : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun batteryProgressGestures() {
         binding.batteryProgress.setOnTouchListener(object : SwipeTouchListener(requireContext()) {
+            /* open alarms list with default clock app */
+            override fun onClick() {
+                super.onClick()
+                requireContext().startActivity(
+                    Intent(AlarmClock.ACTION_SHOW_ALARMS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
+            }
             /* open settings activity on long click */
             override fun onLongClick() {
                 super.onLongClick()

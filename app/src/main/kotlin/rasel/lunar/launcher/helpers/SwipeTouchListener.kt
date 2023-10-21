@@ -94,7 +94,7 @@ internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
     fun onSwipeLeft() {}
     open fun onSwipeUp() {}
     open fun onSwipeDown() {}
-    fun onClick() {}
+    open fun onClick() {}
     open fun onDoubleClick() {}
     open fun onLongClick() {}
 
