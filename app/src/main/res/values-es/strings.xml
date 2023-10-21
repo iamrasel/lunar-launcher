@@ -40,7 +40,7 @@
     <string name="device_admin">Administrador del dispositivo</string>
     <string name="device_admin_description">Doble toque para bloquear</string>
     <string name="donate">Donar</string>
-    <string name="double_tap_lock">Método de bloqueo de doble toque</string>
+    <string name="double_tap_action">Método de bloqueo de doble toque</string>
     <string name="empty_text_field">El campo de texto está vacío</string>
     <string name="feed_url">URL de la fuente RSS</string>
     <string name="first_install">Primera instalación</string>
