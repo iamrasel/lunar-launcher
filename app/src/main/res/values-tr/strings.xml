@@ -46,7 +46,7 @@
         Çift dokunarak kilitleme özelliğini kullanmaya izin ver
     </string>
     <string name="donate">Bağış Yap</string>
-    <string name="double_tap_lock">Çift Dokunma Kilitleme Yöntemi</string>
+    <string name="double_tap_action">Çift Dokunma Kilitleme Yöntemi</string>
     <string name="empty_text_field">Metin alanı boş</string>
     <string name="feed_url">RSS Besleme URL\'si</string>
     <string name="first_install">İlk Yükleme</string>

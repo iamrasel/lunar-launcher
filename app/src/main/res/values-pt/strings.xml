@@ -19,7 +19,7 @@
     <string name="developer_name">Desenvolvido por Md. Rasel Hossain</string>
     <string name="device_admin">Administrador do dispositivo</string>
     <string name="donate">Doar</string>
-    <string name="double_tap_lock">Método de bloqueio de toque-duplo</string>
+    <string name="double_tap_action">Método de bloqueio de toque-duplo</string>
     <string name="empty_text_field">O campo de texto está vazio</string>
     <string name="feed_url">URL do Feed RSS</string>
     <string name="first_install">Primeira instalação</string>

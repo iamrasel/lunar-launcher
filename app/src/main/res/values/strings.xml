@@ -56,7 +56,7 @@
         Allow to put the device to sleep on double tap gesture
     </string>
     <string name="donate">Donate</string>
-    <string name="double_tap_lock">Double Tap Lock Method</string>
+    <string name="double_tap_action">Double Tap Action</string>
     <string name="empty_text_field">The text field is empty</string>
     <string name="fahrenheit" translatable="false">Fahrenheit</string>
     <string name="feed_url">RSS Feed URL</string>
