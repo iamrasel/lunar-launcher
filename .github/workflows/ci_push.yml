@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build, sign & upload
+    name: Build
     runs-on: ubuntu-latest
     steps:
 
@@ -36,19 +36,3 @@ jobs:
 
       - name: Build
         run: ./gradlew clean && ./gradlew assembleRelease
-
-      - name: Sign
-        id: sign_apk
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNINGKEY_BASE64 }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: lunar-launcher-release
-          path: ${{steps.sign_apk.outputs.signedReleaseFile}}
