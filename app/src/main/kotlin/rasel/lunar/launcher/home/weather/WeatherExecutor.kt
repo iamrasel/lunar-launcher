@@ -58,9 +58,9 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
                         if (weather != null) {
                             materialTextView.apply {
                                 visibility = View.VISIBLE
-                                text = weather!!.temperature.toString() +
+                                text = weather!!.temperature.toString().substringBefore(".") +
                                         (if (tempUnit == 0) "ºC" else "ºF") +
-                                        (if (showCity) " at $cityName" else "")
+                                        (if (showCity) " at ${weather!!.cityName}" else "")
                             }
                         }
                     }
