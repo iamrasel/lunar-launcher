@@ -33,19 +33,17 @@ internal class WeatherClient {
         var bufferedReader: BufferedReader? = null
 
         try {
-            val url = URL(wUrl)
-            httpURLConnection = url.openConnection() as HttpURLConnection
+            httpURLConnection = URL(wUrl).openConnection() as HttpURLConnection
             httpURLConnection.connect()
-            val inputStream = httpURLConnection.inputStream
-            bufferedReader = BufferedReader(InputStreamReader(inputStream))
+            bufferedReader = BufferedReader(InputStreamReader(httpURLConnection.inputStream))
+
             val stringBuilder = StringBuilder()
             var line: String?
             while (bufferedReader.readLine().also { line = it } != null) {
-                stringBuilder.append(line).append("\n")
+                stringBuilder.append("$line\n")
             }
-            if (stringBuilder.isNotEmpty()) {
-                return stringBuilder.toString()
-            }
+
+            if (stringBuilder.isNotEmpty()) return stringBuilder.toString()
         } catch (exception: Exception) {
             exception.printStackTrace()
         } finally {

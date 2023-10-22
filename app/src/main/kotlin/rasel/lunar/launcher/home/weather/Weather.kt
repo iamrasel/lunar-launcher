@@ -22,6 +22,7 @@ package rasel.lunar.launcher.home.weather
 internal class Weather {
     var weatherCondition: String? = null
     var weatherDescription: String? = null
-    var weatherIconStr: String? = null
+    var weatherIconId: String? = null
     var temperature = 0f
+    var cityName: String? = null
 }

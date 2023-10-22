@@ -76,9 +76,7 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
         owmApi = sharedPreferences.getString(KEY_OWM_API, "").toString()
         tempUnit = sharedPreferences.getInt(KEY_TEMP_UNIT, 0)
         showCity = sharedPreferences.getBoolean(KEY_SHOW_CITY, false)
-        weatherUrl =
-            if (tempUnit == 0) "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmApi&units=metric"
-            else "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmApi&units=imperial"
+        weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmApi&units=" + if (tempUnit == 0) "metric" else "imperial"
     }
 
 }
