@@ -24,4 +24,21 @@
     <string name="city_name">Bynavn</string>
     <string name="contact">Kontakt</string>
     <string name="dark_theme">Mørk</string>
+    <string name="reset">Tilbakestill</string>
+    <string name="temperature">Temperatur</string>
+    <string name="share_apk_message">Del APK via</string>
+    <string name="misc">Ymse</string>
+    <string name="choose_launcher">Velg forvalgt oppstarter</string>
+    <string name="rss_feed">RSS-informasjonskanal</string>
+    <string name="right">Høyre</string>
+    <string name="accessibility_service_label">Låsetjeneste</string>
+    <string name="source_code">Kildekode</string>
+    <string name="support">Støtte</string>
+    <string name="delete_all_confirmation">Slett alle gjøremålsoppføringer\?</string>
+    <string name="something_went_wrong">Noe gikk galt</string>
+    <string name="restart">Omstart</string>
+    <string name="telegram_group">Telegram-gruppe</string>
+    <string name="detailed_info">Vis detaljer info</string>
+    <string name="time_format">Tidsformat</string>
+    <string name="temp_unit">Temperaturenhet</string>
 </resources>
