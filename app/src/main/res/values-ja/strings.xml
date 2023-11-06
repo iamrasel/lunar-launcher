@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="add_new">新しく追加</string>
+    <string name="add_widget">ウィジェットを追加</string>
+    <string name="application_theme">アプリケーションのテーマを選択</string>
+    <string name="app_alignment">アプリの調整</string>
+    <string name="accessibility">アクセシビリティ</string>
+    <string name="acknowledgements"> <b>感謝</b>
+\n <i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i> </string>
+    <string name="appearances">外観</string>
+    <string name="accessibility_service_label">ロックサービス</string>
+    <string name="advance">高度</string>
+    <string name="app_drawer_layout">アプリドロワーのレイアウト</string>
+    <string name="app_info">アプリ情報ウィンドウを開く</string>
+    <string name="app_store">アプリマーケットにアクセス</string>
+    <string name="about">詳細</string>
+    <string name="app_drawer">アプリドロワー</string>
+    <string name="accessibility_service_description">Lunar Launcherでデバイスをスリープ状態にします。（API 28+）</string>
+    <string name="activity_browser">アクティビティを参照</string>
+</resources>
