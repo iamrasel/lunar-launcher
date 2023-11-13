@@ -17,4 +17,15 @@
     <string name="app_drawer">アプリドロワー</string>
     <string name="accessibility_service_description">Lunar Launcherでデバイスをスリープ状態にします。（API 28+）</string>
     <string name="activity_browser">アクティビティを参照</string>
+    <string name="center">センター</string>
+    <string name="choose_launcher">デフォルトのランチャーを選択</string>
+    <string name="choose_icon_pack">アイコンパックを選択</string>
+    <string name="authentication_failed">認証に失敗しました</string>
+    <string name="contact">連絡先</string>
+    <string name="authentication_error">認証エラー</string>
+    <string name="background">バックグラウンド</string>
+    <string name="change_wallpaper">壁紙を変更</string>
+    <string name="city_name">都市名</string>
+    <string name="back_home">常にホーム画面に戻る</string>
+    <string name="authentication_subtitle">続行するには、デバイスの情報で認証してください。</string>
 </resources>
