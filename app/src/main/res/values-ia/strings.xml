@@ -91,4 +91,28 @@
     <string name="later">Depost</string>
     <string name="activity_browser">Navigar per le activitates</string>
     <string name="system_stats">Information del systema</string>
+    <string name="center">Centro</string>
+    <string name="reset_message">Iste operation delera tote le datos immagazinate pro iste application e non pote esser disfacite.</string>
+    <string name="icon_pack_not_found">Nos regretta, tu non ha necun pacchetto de icones installate.</string>
+    <string name="todo_count">Numero de entratas de cargas in le schermo de initio</string>
+    <string name="acknowledgements"> \u0020<b>Recognoscentias</b>
+\n \u0020<i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i> \u0020</string>
+    <string name="empty_text_field">Le campo de texto es vacue</string>
+    <string name="accessibility_service_label">Blocar servicio</string>
+    <string name="todo_manager_lock">Blocar le gestor de cargas</string>
+    <string name="delete_all_confirmation">Deler tote le entratas de cargas?</string>
+    <string name="something_went_wrong">Habeva qualcosa improprie</string>
+    <string name="misc_info_titles">Tempore de activitate del apparato
+\nSystema active
+\nLimine de memoria
+\nTemperatura de batteria
+\nVoltage de batteria
+\nImmagazinage radice
+\nIPv4
+\nIPv6</string>
+    <string name="move_up">Mover in alto</string>
+    <string name="todo">Cargas pendente</string>
+    <string name="move_down">Mover in basso</string>
+    <string name="quick_launch">Lanceamento rapide</string>
+    <string name="todo_manager">Gestor de cargas</string>
 </resources>
