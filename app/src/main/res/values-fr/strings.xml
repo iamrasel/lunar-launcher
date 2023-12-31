@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="center">Centrer</string>
+    <string name="add_new">Ajouter nouveau</string>
+    <string name="copied_message">Copié dans le presse-papier</string>
+    <string name="add_widget">Ajouter widget</string>
+    <string name="application_theme">Sélection du thème de l’application</string>
+    <string name="app_alignment">Alignement des applications</string>
+    <string name="accessibility">Accessibilité</string>
+    <string name="acknowledgements"> <b>Remerciements</b>
+\n<i><a href="https://github.com/cachapa/ExpandableLayout">https://github.com/cachapa/ExpandableLayout</a></i> </string>
+    <string name="appearances">Apparence</string>
+    <string name="choose_launcher">Sélectionner le lanceur par défaut</string>
+    <string name="accessibility_service_label">Service de verrouillage</string>
+    <string name="advance">Avancé</string>
+    <string name="choose_icon_pack">Sélectionner le pack d’icônes</string>
+    <string name="contact">Contact</string>
+    <string name="about">À propos</string>
+    <string name="background">Arrière-plan</string>
+    <string name="dark_theme">Sombre</string>
+    <string name="accessibility_service_description">Laissez Lunar Launcher mettre l’appareil en sommeil (API 28+).</string>
+    <string name="change_wallpaper">Modifier le fond d’écran</string>
+    <string name="city_name">Nom de la ville</string>
+    <string name="activity_browser">Parcourir les activités</string>
+    <string name="app_drawer_layout">agencement du tiroir d\'applications</string>
+    <string name="app_info">Fenêtre des informations sur l\'application</string>
+    <string name="app_store">Visiter sur l\'app market</string>
+    <string name="app_drawer">tiroir d\'applications</string>
+    <string name="authentication_error">Erreur d\'authentification</string>
+    <string name="default_">Par défaut</string>
+    <string name="device_admin_description">Permettre de mettre l\'appareil en mode veille en tapant deux fois</string>
+    <string name="device_admin">Administrateur de l\'appareil</string>
+    <string name="delete">Supprimer</string>
+    <string name="authentication_failed">Échec d\'authentification</string>
+    <string name="delete_all_confirmation">Supprimer toutes les tâches\?</string>
+    <string name="developer_name">Développé par Md. Rasel Hossain</string>
+    <string name="detailed_info">Voir l\'information en détail</string>
+    <string name="donate">Faire un don</string>
+    <string name="delete_all">Tout supprimer</string>
+    <string name="date_format">Format de la date</string>
+    <string name="decrease_height">Diminuer la hauteur</string>
+    <string name="back_home">Toujours revenir à l\'écran d\'accueil</string>
+    <string name="authentication_subtitle">Connectez-vous à l\'aide de votre code</string>
+    <string name="owm_key">Clé d\'API chez OWM</string>
+    <string name="reset_message">Cette opération supprimera toutes les données stockées pour cette application, sans retour possible.</string>
+    <string name="time_date">Heure — Date</string>
+    <string name="icon_pack_not_found">Désolé, vous n\'avez aucun pack d\'icônes installé.</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="temperature">Température</string>
+    <string name="welcome">Bienvenue</string>
+    <string name="todo_count">Nombre de tâches sur la page d\'accueil</string>
+    <string name="share_apk_message">Partager le fichier .apk via</string>
+    <string name="last_update">Dernière mise à jour</string>
+    <string name="null_app_store_message">Aucun magasin d\'applications trouvé sur cet appareil.</string>
+    <string name="wallpaper_change_success">Fond d\'écran changé</string>
+    <string name="negative">Négatif</string>
+    <string name="unable_to_launch">Incapable de lancer</string>
+    <string name="misc">Autres</string>
+    <string name="restart_message">Les changements que vous venez de faire requièrent un redémarrage de l\'application pour être appliqués. Voulez-vous redémarrer maintenant ?</string>
+    <string name="welcome_description">Bienvenue sur Lunar Launcher.
+\n
+\nAprès avoir fermé cette boîte de dialogue, il vous sera demandé d\'accorder les permissions nécessaires au bon fonctionnement de cette application.
+\n
+\n<li><b>Modifier les paramètres système —</b> Pour contrôler la luminosité de l\'écran en utilisant un curseur</li>
+\n<li><b>Téléphone —</b> Pour faire des appels à partir de raccourcis contact</li>
+\n
+\nCeci est un logiciel libre ; inspectez son code source, modifiez-le et partagez-le avec le plus grand nombre.
+\n
+\n<b><u>Gestes :</u></b>
+\n<li>Glisser vers le haut — Fenêtre d\'accès rapide</li>
+\n<li>Glisser vers le bas — Panneau de notifications</li>
+\n<li>Glisser vers la droite — Fils RSS</li>
+\n<li>Glisser vers la gauche — Liste des applications</li>
+\n<li>Rester appuyé sur l\'indicateur de batterie — Paramètres du lanceur</li>
+\n<li>Rester appuyé dans la zone inférieure de l\'écran — Gestionnaire de tâches</li>
+\n<li>Double-clic — Verrouiller l\'appareil (à activer dans les paramètres du lanceur)</li>
+\n<li>Rester appuyé sur un favori — Supprimer cet item</li>
+\n
+\nPlus d\'infos sur la page wiki (en anglais) sur GitHub. </string>
+    <string name="total">Total</string>
+    <string name="list_with_icon">Liste avec icône</string>
+    <string name="hide_status_bar">Cacher la barre d\'état</string>
+    <string name="twelve">12 heures</string>
+    <string name="empty_text_field">La zone de texte est vide</string>
+    <string name="double_tap_lock">Méthode de verrouillage par double-clic</string>
+    <string name="rss_feed">Flux RSS</string>
+    <string name="restart_now">Redémarrer maintenant ?</string>
+    <string name="right">Droite</string>
+    <string name="image_pick_failed">Impossible de récupérer l\'image</string>
+    <string name="update">Mettre à jour</string>
+    <string name="icon_size">Raccourci et taille des icônes</string>
+    <string name="got_it">Compris</string>
+    <string name="show_city">Montrer la ville avec la météo</string>
+    <string name="feed_url">URL du flux RSS</string>
+    <string name="source_code">Code source</string>
+    <string name="todo_manager_lock">Vérouiller le gestionnaire de tâches</string>
+    <string name="freeform">Ouvrir en mode pip</string>
+    <string name="scrollbar_height">Hauteur de la barre de défilement A-Z</string>
+    <string name="support">Soutenir</string>
+    <string name="version">Version</string>
+    <string name="url">URL</string>
+    <string name="frequency">Fréquence</string>
+    <string name="weather">Météo</string>
+    <string name="something_went_wrong">Quelque chose s\'est mal déroulé</string>
+    <string name="star">Noter</string>
+    <string name="uninstall">Désinstaller l\'application</string>
+    <string name="misc_info_titles">Temps d\'éveil de l\'appareil
+\nSystème actif
+\nSeuil mémoire
+\nTempérature de la batterie
+\nTension de la batterie
+\nDossier de stockage racine
+\nIPv4
+\nIPv6</string>
+    <string name="used">Utilisé</string>
+    <string name="restart">Redémarrer</string>
+    <string name="telegram_group">Groupe Telegram</string>
+    <string name="first_install">Première installation</string>
+    <string name="left">Gauche</string>
+    <string name="lunar_settings">Paramètres de Lunar</string>
+    <string name="root">Racine</string>
+    <string name="free">Gratuit</string>
+    <string name="twenty_four">24 heures</string>
+    <string name="move_up">Déplacer vers le haut</string>
+    <string name="todo">Tâches</string>
+    <string name="move_down">Déplacer vers le bas</string>
+    <string name="proceed">Continuer</string>
+    <string name="follow_system">Suivre le système</string>
+    <string name="search_with_keyboard">Démarrer avec le clavier</string>
+    <string name="support_message">Apportez votre soutien au développeur pour garder cette application gratuite et en vie.
+\n
+\n<li><b>Faire un don :</b> Si possible, faites un don directement au développeur pour l\'aider et l\'encourager.</li>
+\n<li><b>Amazon :</b> Utilisez le lien d\'affiliation lors de vos achats chez Amazon pour récompenser le développeur.</li>
+\n<li><b>GitHub :</b> Ajoutez cette application à vos favoris sur GitHub pour montrer votre soutien.</li> </string>
+    <string name="list">Liste</string>
+    <string name="grid">Grille</string>
+    <string name="increase_height">Augmenter la hauteur</string>
+    <string name="grid_columns_count">Nombre de colonnes dans la grille</string>
+    <string name="positive">Positif</string>
+    <string name="quick_launch">Lancement rapide</string>
+    <string name="share">Partager le fichier .apk</string>
+    <string name="time_format">Format d\'heure</string>
+    <string name="todo_manager">Gestionnaire de tâches</string>
+    <string name="shortcut_count">Nombre de raccourcis (URL/Contact)</string>
+    <string name="light_theme">Clair</string>
+    <string name="temp_unit">Unité de température</string>
+    <string name="later">Plus tard</string>
+    <string name="system_stats">Statistiques système</string>
+</resources>

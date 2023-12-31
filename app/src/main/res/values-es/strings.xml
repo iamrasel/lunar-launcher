@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="about">Acerca de</string>
     <string name="accessibility">Accesibilidad</string>
-    <string name="accessibility_service_description">Dejar que Lunar Launcher coloque el dispositivo en reposo (en Android Pie (API 28+)).</string>
+    <string name="accessibility_service_description">Deja que Lunar Launcher ponga el dispositivo en reposo (API 28+).</string>
     <string name="accessibility_service_label">Bloquear servicio</string>
     <string name="acknowledgements">
          <b>Agradecimientos</b>\n
@@ -13,11 +12,11 @@
     <string name="add_widget">Añadir widget</string>
     <string name="advance">Avanzado</string>
     <string name="appearances">Apariencia</string>
-    <string name="application_theme">Tema de la aplicación</string>
+    <string name="application_theme">Elegir el tema de la aplicación</string>
     <string name="app_alignment">Alineamiento de la app</string>
     <string name="app_drawer">Cajón de aplicaciones</string>
-    <string name="app_info">Información de la app</string>
-    <string name="app_store">Tienda de aplicaciones</string>
+    <string name="app_info">Abrir la ventana con la información de la aplicación</string>
+    <string name="app_store">Visitar en la Tienda de aplicaciones</string>
     <string name="authentication_error">Error de autenticación</string>
     <string name="authentication_failed">Autenticación fallida</string>
     <string name="authentication_subtitle">Identifícate con las credenciales del dispositivo para proceder.</string>
@@ -38,7 +37,7 @@
     <string name="delete_all_confirmation">¿Borrar todas las tareas existentes\?</string>
     <string name="developer_name">Desarrollado por Md. Rasel Hossain</string>
     <string name="device_admin">Administrador del dispositivo</string>
-    <string name="device_admin_description">Doble toque para bloquear</string>
+    <string name="device_admin_description">Permite poner el dispositivo en reposo con un doble toque</string>
     <string name="donate">Donar</string>
     <string name="double_tap_action">Método de bloqueo de doble toque</string>
     <string name="empty_text_field">El campo de texto está vacío</string>
@@ -46,7 +45,7 @@
     <string name="first_install">Primera instalación</string>
     <string name="follow_system">Seguir al sistema</string>
     <string name="free">Libre</string>
-    <string name="freeform">Freeform</string>
+    <string name="freeform">Abrir en modo pip</string>
     <string name="frequency">Frecuencias</string>
     <string name="got_it">Entendido</string>
     <string name="hide_status_bar">Ocultar barra de estado</string>
@@ -64,19 +63,19 @@
     <string name="move_up">Mover hacia arriba</string>
     <string name="move_down">Mover hacia abajo</string>
     <string name="negative">Negativo</string>
-    <string name="null_app_store_message">No hay ninguna tienda de aplicaciones instalada en este dispositivo.</string>
+    <string name="null_app_store_message">No se pude encontrar ninguna tienda de aplicaciones en este dispositivo.</string>
     <string name="owm_key">Clave de la API de OWM</string>
     <string name="positive">Positivo</string>
     <string name="proceed">Proceder</string>
     <string name="quick_launch">Lanzado rápido</string>
     <string name="reset">Resetear</string>
-    <string name="reset_message">Esta operación borrará todos los datos almacenados de la aplicación, y no puede deshacerse.</string>
+    <string name="reset_message">Esta operación borrará todos los datos almacenados para esta aplicación, y no se puede deshacer.</string>
     <string name="restart">Reiniciar</string>
     <string name="right">Derecha</string>
     <string name="root">Raíz</string>
     <string name="rss_feed">Feed RSS</string>
     <string name="scrollbar_height">Altura de la barra alfabética</string>
-    <string name="search_with_keyboard">Buscar con teclado</string>
+    <string name="search_with_keyboard">Comienza con el teclado</string>
     <string name="shortcut_count">Número de accesos directos (URL/Contacto)</string>
     <string name="show_city">Mostrar nombre de la ciudad en los datos meteorológicos</string>
     <string name="something_went_wrong">Algo ha ido mal</string>
@@ -94,15 +93,15 @@
     <string name="temp_unit">Unidad de temperatura</string>
     <string name="time_date">Hora — Fecha</string>
     <string name="time_format">Formato de hora</string>
-    <string name="todo">Tareas</string>
+    <string name="todo">Tareas pendientes</string>
     <string name="todo_count">Número de entradas de tareas pendientes en la pantalla de inicio</string>
     <string name="todo_manager">Administrador de tareas pendientes</string>
-    <string name="todo_manager_lock">Bloqueo del administrador de tareas pendientes</string>
+    <string name="todo_manager_lock">Bloquear el gestor de tareas pendientes</string>
     <string name="total">Total</string>
     <string name="twelve">12 Horas</string>
     <string name="twenty_four">24 Horas</string>
     <string name="unable_to_launch">Fallo al abrir</string>
-    <string name="uninstall">Desinstalar</string>
+    <string name="uninstall">Desinstalar la aplicación</string>
     <string name="update">Actualizar</string>
     <string name="url">URL</string>
     <string name="used">Usado</string>
@@ -126,5 +125,18 @@
          \n<li>Mantener pulsado un elemento favorito - Eliminar favorito</li>
          \n\nPara más información, visite la página de Wiki en Github.
     </string>
-
+    <string name="icon_pack_not_found">Lo sentimos, no tienes ningún paquete de iconos instalado.</string>
+    <string name="share_apk_message">Comparte el APK a través de</string>
+    <string name="restart_message">Los cambios que acabas de realizar requieren reiniciar la aplicación para que surtan efecto. ¿Quieres reiniciarla ahora\?</string>
+    <string name="restart_now">¿Reiniciar ahora\?</string>
+    <string name="choose_icon_pack">Elige un paquete de iconos</string>
+    <string name="app_drawer_layout">Diseño del cajón de las aplicaciones</string>
+    <string name="detailed_info">Ver la información detallada</string>
+    <string name="list">Lista</string>
+    <string name="grid">Cuadrícula</string>
+    <string name="grid_columns_count">Número de columnas de la cuadrícula</string>
+    <string name="share">Compartir el archivo apk</string>
+    <string name="later">Más tarde</string>
+    <string name="activity_browser">Navegar por las actividades</string>
+    <string name="list_with_icon">Lista con iconos</string>
 </resources>
