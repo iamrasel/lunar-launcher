@@ -46,6 +46,7 @@ import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.AppDrawerBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_GRID_COLUMNS
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_SCROLLBAR_HEIGHT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPS_COUNT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPS_LAYOUT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DRAW_ALIGN
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_GRID_COLUMNS
@@ -62,7 +63,6 @@ import java.util.regex.Pattern
 internal class AppDrawer : Fragment() {
 
     private lateinit var binding: AppDrawerBinding
-    private lateinit var settingsPrefs: SharedPreferences
     private var layoutType: Int = 0
     private var isSearchShown: Boolean = false
     private var isKeyboardShowing: Boolean = false
@@ -74,6 +74,7 @@ internal class AppDrawer : Fragment() {
         private var packageList = mutableListOf<Packages>()
         private val numberPattern = Pattern.compile("[0-9]")
         private val alphabetPattern = Pattern.compile("[A-Z]")
+        @JvmStatic var settingsPrefs: SharedPreferences? = null
         @JvmStatic var alphabetList = mutableListOf<String>()
         @JvmStatic var letterPreview: MaterialTextView? = null
 
@@ -108,10 +109,12 @@ internal class AppDrawer : Fragment() {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
-        layoutType = settingsPrefs.getInt(KEY_APPS_LAYOUT, 0)
+        layoutType = settingsPrefs!!.getInt(KEY_APPS_LAYOUT, 0)
         packageManager = lActivity?.packageManager
         appsAdapter = AppsAdapter(layoutType, packageManager!!, childFragmentManager, binding.appsCount)
         letterPreview = binding.appsCount
+
+        binding.appsCount.visibility = if (settingsPrefs!!.getBoolean(KEY_APPS_COUNT, true)) VISIBLE else GONE
 
         setLayout()
         fetchApps()
@@ -153,12 +156,14 @@ internal class AppDrawer : Fragment() {
         fetchApps()
         getAlphabetItems()
 
-        if (settingsPrefs.getInt(KEY_APPS_LAYOUT, 0) in 0..1) {
-            appsAdapter?.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+        binding.appsCount.visibility = if (settingsPrefs!!.getBoolean(KEY_APPS_COUNT, true)) VISIBLE else GONE
+
+        if (settingsPrefs!!.getInt(KEY_APPS_LAYOUT, 0) in 0..1) {
+            appsAdapter?.updateGravity(settingsPrefs!!.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
         }
 
         /* pop up the keyboard */
-        if (settingsPrefs.getBoolean(KEY_KEYBOARD_SEARCH, false)) openSearch()
+        if (settingsPrefs!!.getBoolean(KEY_KEYBOARD_SEARCH, false)) openSearch()
     }
 
     override fun onPause() {
@@ -170,9 +175,9 @@ internal class AppDrawer : Fragment() {
         when (layoutType) {
             0, 1 -> {
                 binding.appsList.layoutManager = LinearLayoutManager(requireContext())
-                appsAdapter!!.updateGravity(settingsPrefs.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
+                appsAdapter!!.updateGravity(settingsPrefs!!.getInt(KEY_DRAW_ALIGN, Gravity.CENTER))
             }
-            2 -> binding.appsList.layoutManager = GridLayoutManager(requireContext(), settingsPrefs.getInt(KEY_GRID_COLUMNS, DEFAULT_GRID_COLUMNS))
+            2 -> binding.appsList.layoutManager = GridLayoutManager(requireContext(), settingsPrefs!!.getInt(KEY_GRID_COLUMNS, DEFAULT_GRID_COLUMNS))
         }
 
         /* initialize apps list adapter */
@@ -208,7 +213,7 @@ internal class AppDrawer : Fragment() {
     }
 
     private fun getAlphabetItems() {
-        settingsPrefs.getInt(KEY_SCROLLBAR_HEIGHT, DEFAULT_SCROLLBAR_HEIGHT).let { height: Int ->
+        settingsPrefs!!.getInt(KEY_SCROLLBAR_HEIGHT, DEFAULT_SCROLLBAR_HEIGHT).let { height: Int ->
             if (height == 0) { binding.alphabets.visibility = GONE }
             else {
                 binding.alphabets.apply {
@@ -243,7 +248,7 @@ internal class AppDrawer : Fragment() {
             }
         }
 
-        if (packageList.size == 1 && settingsPrefs.getBoolean(KEY_QUICK_LAUNCH, true))
+        if (packageList.size == 1 && settingsPrefs!!.getBoolean(KEY_QUICK_LAUNCH, true))
             startActivity(packageManager?.getLaunchIntentForPackage(packageList[0].packageName))
         else appsAdapter?.updateData(packageList)
     }
@@ -292,7 +297,7 @@ internal class AppDrawer : Fragment() {
             when {
                 keyboardHeight > screenHeight * 0.15 -> {
                     if (!isKeyboardShowing &&
-                        !settingsPrefs.getBoolean(KEY_STATUS_BAR, false)) {
+                        !settingsPrefs!!.getBoolean(KEY_STATUS_BAR, false)) {
                         isKeyboardShowing = true
                         binding.root.setPadding(0, 0, 0, keyboardHeight)
                     }

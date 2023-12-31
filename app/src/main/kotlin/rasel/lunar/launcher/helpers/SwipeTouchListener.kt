@@ -25,15 +25,18 @@ import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import android.view.ViewParent
 import kotlin.math.abs
 
 
 internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
 
     private val gestureDetector: GestureDetector = GestureDetector(c, GestureListener())
+    private lateinit var viewParent: ViewParent
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
+        viewParent = view.parent
         return gestureDetector.onTouchEvent(motionEvent)
     }
 
@@ -55,6 +58,7 @@ internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
 
         override fun onLongPress(e: MotionEvent) {
             onLongClick()
+            viewParent.requestDisallowInterceptTouchEvent(true)
             super.onLongPress(e)
         }
 
@@ -90,7 +94,7 @@ internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
     fun onSwipeLeft() {}
     open fun onSwipeUp() {}
     open fun onSwipeDown() {}
-    fun onClick() {}
+    open fun onClick() {}
     open fun onDoubleClick() {}
     open fun onLongClick() {}
 

@@ -38,7 +38,7 @@
     <string name="device_admin">Amministratore del dispositivo</string>
     <string name="device_admin_description">Permetti il blocco dello schermo con due tocchi</string>
     <string name="donate">Donazioni</string>
-    <string name="double_tap_lock">Blocco schermo con due tocchi</string>
+    <string name="double_tap_action">Blocco schermo con due tocchi</string>
     <string name="empty_text_field">Il campo è vuoto</string>
     <string name="feed_url">URL del flusso RSS</string>
     <string name="first_install">Prima installazione</string>

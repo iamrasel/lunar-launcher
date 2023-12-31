@@ -31,15 +31,17 @@ internal class JsonParser {
             val jsonObject = JSONObject(jsonStr)
 
             /* Get weather condition */
-            val weatherJsonArray = jsonObject.getJSONArray("weather")
-            val jsonObject1 = weatherJsonArray.getJSONObject(0)
-            weather.weatherCondition = jsonObject1.getString("main")
-            weather.weatherDescription = jsonObject1.getString("description")
-            weather.weatherIconStr = jsonObject1.getString("icon")
+            val weatherArray = jsonObject.getJSONArray("weather")
+            val weatherObject = weatherArray.getJSONObject(0)
+            weather.weatherCondition = weatherObject.getString("main")
+            weather.weatherDescription = weatherObject.getString("description")
+            weather.weatherIconId = weatherObject.getString("icon")
 
             /* Get temperature */
-            val jsonObject2 = jsonObject.getJSONObject("main")
-            weather.temperature = jsonObject2.getDouble("temp").toFloat()
+            val mainObject = jsonObject.getJSONObject("main")
+            weather.temperature = mainObject.getDouble("temp").toFloat()
+
+            weather.cityName = jsonObject.getString("name")
         } catch (jsonException: JSONException) {
             jsonException.printStackTrace()
         }

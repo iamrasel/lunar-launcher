@@ -30,7 +30,9 @@ import androidx.core.content.ContextCompat
 import rasel.lunar.launcher.apps.AppDrawer.Companion.alphabetList
 import rasel.lunar.launcher.apps.AppDrawer.Companion.letterPreview
 import rasel.lunar.launcher.apps.AppDrawer.Companion.listenScroll
+import rasel.lunar.launcher.apps.AppDrawer.Companion.settingsPrefs
 import rasel.lunar.launcher.apps.AppsAdapter.Companion.appsSize
+import rasel.lunar.launcher.helpers.Constants
 
 
 internal class AlphabetScrollbar : View {
@@ -85,6 +87,8 @@ internal class AlphabetScrollbar : View {
                     selectedIndex = index
                     invalidate()
                 }
+
+                if (!settingsPrefs!!.getBoolean(Constants.KEY_APPS_COUNT, true)) letterPreview?.visibility = VISIBLE
                 try { letterPreview?.text = alphabet[selectedIndex] }
                 catch (exception: Exception) { exception.printStackTrace() }
             }
@@ -95,9 +99,11 @@ internal class AlphabetScrollbar : View {
                     selectedIndex > alphabet.count() - 1 -> listenScroll(alphabet[alphabet.count() - 1])
                     else -> listenScroll(alphabet[selectedIndex])
                 }
+
                 selectedIndex = -1
-                letterPreview?.text = appsSize.toString()
                 invalidate()
+                if (settingsPrefs!!.getBoolean(Constants.KEY_APPS_COUNT, true)) letterPreview?.text = appsSize.toString()
+                else letterPreview?.visibility = GONE
             }
         }
         return true

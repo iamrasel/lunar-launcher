@@ -18,6 +18,7 @@
 
 package rasel.lunar.launcher.home.weather
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
@@ -29,7 +30,6 @@ import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SHOW_CITY
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TEMP_UNIT
 import rasel.lunar.launcher.helpers.UniUtils.Companion.isNetworkAvailable
 import java.util.concurrent.Executors
-import kotlin.math.roundToInt
 
 
 internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
@@ -40,6 +40,7 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
     private val tempUnit: Int
     private val showCity: Boolean
 
+    @SuppressLint("SetTextI18n")
     fun generateWeatherString(materialTextView: MaterialTextView) {
         materialTextView.visibility = View.GONE
 
@@ -47,33 +48,20 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
             and city name and owm api values are not empty */
         if (isNetworkAvailable && cityName.isNotEmpty() && owmApi.isNotEmpty()) {
             try {
-                val executor = Executors.newSingleThreadExecutor()
-                val handler = Handler(Looper.getMainLooper())
-
-                executor.execute {
+                Executors.newSingleThreadExecutor().execute {
                     var weather: Weather? = null
-                    val jsonStr = WeatherClient().fetchWeather(weatherUrl)
-                    if (!jsonStr.isNullOrEmpty()) {
-                        weather = JsonParser().getMyWeather(jsonStr)
+                    WeatherClient().fetchWeather(weatherUrl).let {
+                        if (!it.isNullOrEmpty()) weather = JsonParser().getMyWeather(it)
                     }
-                    val finalWeather = weather
 
-                    handler.post {
-                        if (finalWeather != null) {
-                            /* set temperature unit */
-                            val temp = when (tempUnit) {
-                                0 -> (finalWeather.temperature - 273.15f).roundToInt().toString() + "ºC"
-                                1 -> ((finalWeather.temperature - 273.15f) * 1.8 + 32).roundToInt().toString() + "ºF"
-                                else -> throw AssertionError()
+                    Handler(Looper.getMainLooper()).post {
+                        if (weather != null) {
+                            materialTextView.apply {
+                                visibility = View.VISIBLE
+                                text = weather!!.temperature.toString().substringBefore(".") +
+                                        (if (tempUnit == 0) "ºC" else "ºF") +
+                                        (if (showCity) " at ${weather!!.cityName}" else "")
                             }
-                            /* show/hide the city name */
-                            val tempStr = when (showCity) {
-                                false -> temp
-                                true -> "$temp at $cityName"
-                            }
-
-                            materialTextView.visibility = View.VISIBLE
-                            materialTextView.text = tempStr
                         }
                     }
                 }
@@ -88,7 +76,7 @@ internal class WeatherExecutor(sharedPreferences: SharedPreferences) {
         owmApi = sharedPreferences.getString(KEY_OWM_API, "").toString()
         tempUnit = sharedPreferences.getInt(KEY_TEMP_UNIT, 0)
         showCity = sharedPreferences.getBoolean(KEY_SHOW_CITY, false)
-        weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmApi"
+        weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$owmApi&units=" + if (tempUnit == 0) "metric" else "imperial"
     }
 
 }
