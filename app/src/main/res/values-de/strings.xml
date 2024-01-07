@@ -54,7 +54,6 @@
     <string name="twelve">12-Stunden</string>
     <string name="empty_text_field">Das Eingabefeld ist leer</string>
     <string name="choose_launcher">Standart-Launcher wählen</string>
-    <string name="double_tap_lock">Doppeltippen-Sperrmethode</string>
     <string name="rss_feed">RSS-Feed</string>
     <string name="restart_now">Jetzt neu starten\?</string>
     <string name="right">Rechts</string>

@@ -82,7 +82,6 @@
     <string name="hide_status_bar">Cacher la barre d\'état</string>
     <string name="twelve">12 heures</string>
     <string name="empty_text_field">La zone de texte est vide</string>
-    <string name="double_tap_lock">Méthode de verrouillage par double-clic</string>
     <string name="rss_feed">Flux RSS</string>
     <string name="restart_now">Redémarrer maintenant ?</string>
     <string name="right">Droite</string>

@@ -34,7 +34,6 @@
     <string name="copied_message">クリップボードにコピーしました</string>
     <string name="hide_status_bar">ステータスバーを非表示にする</string>
     <string name="empty_text_field">テキストフィールドが空です</string>
-    <string name="double_tap_lock">ダブルタップでのロック方法</string>
     <string name="image_pick_failed">画像を取得出来ませんでした</string>
     <string name="icon_size">ショートカット＆アプリアイコンのサイズ</string>
     <string name="got_it">分かった</string>
