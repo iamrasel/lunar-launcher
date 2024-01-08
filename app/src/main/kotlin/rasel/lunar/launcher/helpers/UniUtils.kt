@@ -36,8 +36,6 @@ import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.helpers.Constants.Companion.ACCESSIBILITY_SERVICE_LOCK_SCREEN
 import rasel.lunar.launcher.helpers.Constants.Companion.AUTHENTICATOR_TYPE
-import rasel.lunar.launcher.helpers.Constants.Companion.BOTTOM_SHEET_TAG
-import rasel.lunar.launcher.qaccess.QuickAccess
 import java.io.DataOutputStream
 
 
@@ -94,9 +92,10 @@ internal class UniUtils {
         }
 
         /* lock using preferred method */
-        fun lockMethod(lockMethodValue: Int, context: Context) {
+        @Suppress("UNUSED_EXPRESSION")
+        fun lockMethod(lockMethodValue: Int, context: Context, populateFavApps: Unit) {
             when (lockMethodValue) {
-                0 -> QuickAccess().show(lActivity!!.supportFragmentManager, BOTTOM_SHEET_TAG)
+                0 -> populateFavApps
                 1 -> lockAccessibility()
                 2 -> lockDeviceAdmin(context)
                 3 -> lockRoot()

@@ -69,9 +69,20 @@
         android:padding="@dimen/fortyEight"
         android:scrollbars="none"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/favAppsGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/batteryProgress" />
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/favAppsGroup"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twentyTwo"
+        android:layout_marginBottom="@dimen/twelve"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notes" />
 </androidx.constraintlayout.widget.ConstraintLayout>

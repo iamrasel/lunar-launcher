@@ -160,7 +160,7 @@
         android:id="@+id/brightnessLayout"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/favAppsGroup"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shortcutsGroup">
@@ -183,14 +183,4 @@
             app:layout_constraintStart_toEndOf="@+id/iconBrightness"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/favAppsGroup"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/twentyTwo"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/brightnessLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

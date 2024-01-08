@@ -22,6 +22,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.AlarmClock
 import android.text.format.DateFormat
@@ -29,18 +30,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.biometric.BiometricPrompt
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.imageview.ShapeableImageView
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
 import rasel.lunar.launcher.databinding.LauncherHomeBinding
 import rasel.lunar.launcher.helpers.Constants.Companion.BOTTOM_SHEET_TAG
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_DATE_FORMAT
+import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_ICON_SIZE
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APP_NO_
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_DATE_FORMAT
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_ICON_SIZE
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_LOCK_METHOD
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TIME_FORMAT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_TODO_LOCK
+import rasel.lunar.launcher.helpers.Constants.Companion.MAX_FAVORITE_APPS
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_FAVORITE_APPS
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import rasel.lunar.launcher.helpers.SwipeTouchListener
 import rasel.lunar.launcher.helpers.UniUtils.Companion.biometricPromptInfo
@@ -69,6 +78,8 @@ internal class LauncherHome : Fragment() {
         fragManager = lActivity!!.supportFragmentManager
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
         batteryReceiver = BatteryReceiver(binding.batteryProgress)
+
+        binding.favAppsGroup.visibility = View.GONE
 
         return binding.root
     }
@@ -138,7 +149,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext())
+                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext(), populateFavApps())
             }
         })
     }
@@ -167,7 +178,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext())
+                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext(), populateFavApps())
             }
         })
     }
@@ -207,7 +218,7 @@ internal class LauncherHome : Fragment() {
             /* lock the screen on double tap (optional) */
             override fun onDoubleClick() {
                 super.onDoubleClick()
-                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext())
+                lockMethod(settingsPrefs.getInt(KEY_LOCK_METHOD, 0), requireContext(), populateFavApps())
             }
         })
     }
@@ -234,6 +245,50 @@ internal class LauncherHome : Fragment() {
     /* to-do list */
     private fun showTodoList() {
         binding.notes.adapter = TodoAdapter(null, requireContext())
+    }
+
+    /* favorite apps */
+    private fun populateFavApps() {
+        val prefsFavApps = requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
+        if (binding.favAppsGroup.isVisible || prefsFavApps.all.toString().length < 3) {
+            binding.favAppsGroup.visibility = View.GONE
+        } else {
+            binding.favAppsGroup.removeAllViews()
+            binding.favAppsGroup.visibility = View.VISIBLE
+
+            for (position in 1..MAX_FAVORITE_APPS) {
+                val packageName = prefsFavApps.getString(KEY_APP_NO_ + position.toString(), "").toString()
+                /* package name is not empty for a specific position */
+                if (packageName.isNotEmpty()) {
+                    val imageView = imageView
+                    try {
+                        /* show app icon */
+                        imageView.setImageDrawable(requireContext().packageManager.getApplicationIcon(packageName))
+                        /* on click - open app */
+                        imageView.setOnClickListener {
+                            requireContext().startActivity(requireContext().packageManager.getLaunchIntentForPackage(packageName))
+                        }
+                    } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
+                        requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
+                            .edit().remove(KEY_APP_NO_ + position).apply()
+                        imageView.visibility = View.GONE
+                    }
+                }
+            }
+        }
+    }
+
+    /* create image view for favorite app icons */
+    private val imageView: ShapeableImageView get() {
+        val iconSize = settingsPrefs.getInt(KEY_ICON_SIZE, DEFAULT_ICON_SIZE)
+        ShapeableImageView(requireContext()).apply {
+            layoutParams = LinearLayoutCompat.LayoutParams(
+                (iconSize * resources.displayMetrics.density).toInt(),
+                (iconSize * resources.displayMetrics.density).toInt(), 1F)
+        }.let {
+            binding.favAppsGroup.addView(it)
+            return it
+        }
     }
 
     /* get time format string */
