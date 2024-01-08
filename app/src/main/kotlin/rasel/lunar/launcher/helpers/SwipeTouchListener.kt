@@ -62,9 +62,9 @@ internal open class SwipeTouchListener(c: Context?) : OnTouchListener {
             super.onLongPress(e)
         }
 
-        override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
             try {
-                val diffY = e2.y - e1.y
+                val diffY = e2.y - e1!!.y
                 val diffX = e2.x - e1.x
                 val swipeThreshold = 15
                 val swipeVelocityThreshold = 90
