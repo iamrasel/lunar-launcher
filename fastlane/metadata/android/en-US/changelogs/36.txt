@@ -1,0 +1,3 @@
+- requests consideration
+- new translations
+- improvements
