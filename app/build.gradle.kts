@@ -67,7 +67,7 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.12.0")
     implementation ("androidx.core:core-splashscreen:1.0.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation ("com.google.android.material:material:1.11.0")
+    implementation ("com.google.android.material:material:1.10.0")
     implementation (kotlin("stdlib", version = kotlinVersion))
     implementation ("com.github.cachapa:ExpandableLayout:2.9.2")
 }
