@@ -4,16 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:padding="@dimen/twelve">
+    android:padding="@dimen/twelve"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/appName"
-        style="@style/TextAppearance.Material3.TitleLarge"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/appNameInputLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        app:hintEnabled="false"
+        app:boxStrokeWidth="@dimen/zero"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/zero"
+            android:gravity="center"
+            android:padding="@dimen/eight"
+            android:inputType="textNoSuggestions"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/appPackage"
@@ -23,7 +39,7 @@
         android:layout_marginTop="@dimen/eight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appName" />
+        app:layout_constraintTop_toBottomOf="@+id/appNameInputLayout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/activityBrowser"

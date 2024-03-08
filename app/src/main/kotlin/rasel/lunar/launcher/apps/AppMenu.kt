@@ -22,6 +22,7 @@ import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -32,9 +33,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -48,6 +51,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
+import rasel.lunar.launcher.apps.AppDrawer.Companion.appNamesPrefs
 import rasel.lunar.launcher.databinding.ActivityBrowserDialogBinding
 import rasel.lunar.launcher.databinding.AppInfoDialogBinding
 import rasel.lunar.launcher.databinding.AppMenuBinding
@@ -70,6 +74,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
     private lateinit var packageName: String
     private lateinit var packageManager: PackageManager
     private lateinit var appInfo: ApplicationInfo
+    private lateinit var defAppName: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = AppMenuBinding.inflate(inflater, container, false)
@@ -87,8 +92,12 @@ internal class AppMenu : BottomSheetDialogFragment() {
             packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
         }
 
+        /* get default app name */
+        defAppName = packageManager.getApplicationLabel(appInfo).toString()
+
         /* set application name and package name */
-        binding.appName.text = packageManager.getApplicationLabel(appInfo)
+        binding.appName.setText(appNamesPrefs?.getString(packageName, defAppName))
+        binding.appName.hint = defAppName
         binding.appPackage.text = packageName
         /* favorite apps */
         favoriteApps()
@@ -105,6 +114,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
             copyToClipboard(requireContext(), packageName)
         }
 
+        appName()
         binding.detailedInfo.setOnClickListener { detailedInfo() }
         binding.activityBrowser.setOnClickListener { activityBrowser() }
         binding.appStore.setOnClickListener { appStore() }
@@ -162,6 +172,41 @@ internal class AppMenu : BottomSheetDialogFragment() {
                     e.printStackTrace()
                 }
             }
+        }
+    }
+
+    private fun appName()
+    {
+        binding.appName.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.appName.minWidth = resources.getDimensionPixelOffset(R.dimen.twoSeventySix)
+            }
+            else {
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.appName.windowToken, 0)
+
+                binding.appName.minWidth = resources.getDimensionPixelOffset(R.dimen.zero)
+                binding.appName.apply {
+                    if (text!!.isBlank()) setText(defAppName)
+                    else setText(text!!.trim())
+
+                    if (text.toString() == defAppName) appNamesPrefs?.edit()!!.remove(packageName).apply()
+                    else appNamesPrefs?.edit()!!.putString(packageName, text.toString()).apply()
+
+                    (requireParentFragment() as AppDrawer).fetchApps()
+                }
+            }
+        }
+
+        binding.appName.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN)
+            {
+                if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_BACK) {
+                    binding.appName.clearFocus()
+                    return@setOnKeyListener true
+                }
+            }
+            false
         }
     }
 
