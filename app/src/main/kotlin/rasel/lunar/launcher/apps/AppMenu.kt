@@ -93,7 +93,8 @@ internal class AppMenu : BottomSheetDialogFragment() {
         }
 
         /* get default app name */
-        defAppName = packageManager.getApplicationLabel(appInfo).toString()
+        val resolve = packageManager.resolveActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(packageName), 0)
+        defAppName = resolve?.loadLabel(packageManager).toString()
 
         /* set application name and package name */
         binding.appName.setText(appNamesPrefs?.getString(packageName, defAppName))
