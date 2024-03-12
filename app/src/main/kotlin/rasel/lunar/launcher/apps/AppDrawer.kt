@@ -80,25 +80,28 @@ internal class AppDrawer : Fragment() {
         @JvmStatic var alphabetList = mutableListOf<String>()
         @JvmStatic var letterPreview: MaterialTextView? = null
 
+        private fun appName(resolver: ResolveInfo): String {
+            return appNamesPrefs?.getString(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())!!
+        }
+
         fun listenScroll(letter: String) {
             packageList.clear()
             for (resolver in packageInfoList) {
-                val appName = appNamesPrefs?.getString(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())!!
                 when {
                     letter == "#" -> {
-                        if (numberPattern.matcher(appName.first().uppercase()).matches()) {
-                            packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                        if (numberPattern.matcher(appName(resolver).first().uppercase()).matches()) {
+                            packageList.add(Packages(resolver.activityInfo.packageName, appName(resolver)))
                         }
                     }
                     alphabetPattern.matcher(letter).matches() -> {
-                        if (appName.first().uppercase() == letter) {
-                            packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                        if (appName(resolver).first().uppercase() == letter) {
+                            packageList.add(Packages(resolver.activityInfo.packageName, appName(resolver)))
                         }
                     }
                     letter == "⠶" -> {
-                        if (!numberPattern.matcher(appName.first().uppercase()).matches() &&
-                            !alphabetPattern.matcher(appName.first().uppercase()).matches()) {
-                            packageList.add(Packages(resolver.activityInfo.packageName, appName))
+                        if (!numberPattern.matcher(appName(resolver).first().uppercase()).matches() &&
+                            !alphabetPattern.matcher(appName(resolver).first().uppercase()).matches()) {
+                            packageList.add(Packages(resolver.activityInfo.packageName, appName(resolver)))
                         }
                     }
                 }
@@ -195,7 +198,6 @@ internal class AppDrawer : Fragment() {
                 PackageManager.ResolveInfoFlags.of(0)
             )
         } else {
-            @Suppress("DEPRECATION")
             (packageManager?.queryIntentActivities(
                 Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0))
         })?.apply {
@@ -206,10 +208,7 @@ internal class AppDrawer : Fragment() {
         /* add package and app names to the list */
         packageList.clear()
         for (resolver in packageInfoList) {
-            packageList.add(Packages(
-                    resolver.activityInfo.packageName, appNamesPrefs?.getString(resolver.activityInfo.packageName,
-                    resolver.loadLabel(packageManager).toString())!!
-            ))
+            packageList.add(Packages(resolver.activityInfo.packageName, appName(resolver)))
         }
 
         when {
@@ -247,9 +246,7 @@ internal class AppDrawer : Fragment() {
         /* check each app name and add if it matches the search string */
         packageList.clear()
         for (resolver in packageInfoList) {
-            val appName = appNamesPrefs?.getString(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())!!
-
-            appName.let {
+            appName(resolver).let {
                 if (normalize(it).contains(searchString)) {
                     packageList.add(Packages(resolver.activityInfo.packageName, it))
                 }

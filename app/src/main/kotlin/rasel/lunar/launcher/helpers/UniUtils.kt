@@ -194,7 +194,6 @@ internal class UniUtils {
         /* favorite apps */
         private fun populateFavApps(context: Context, linearLayoutCompat: LinearLayoutCompat) {
             val prefsFavApps = context.getSharedPreferences(PREFS_FAVORITE_APPS, 0)
-            val useIconPack = context.getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_APPS_LAYOUT, 0) != 0
             if (linearLayoutCompat.isVisible || prefsFavApps.all.toString().length < 3) {
                 linearLayoutCompat.visibility = View.GONE
             } else {

@@ -26,7 +26,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updatePadding
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -104,10 +103,7 @@ internal class AppsAdapter(
 
             /* on long click - open app menu */
             setOnLongClickListener {
-                AppMenu().let {
-                    it.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialog)
-                    it.show(fragmentManager, item.packageName)
-                }
+                AppMenu().show(fragmentManager, item.packageName)
                 true
             }
         }
@@ -119,8 +115,7 @@ internal class AppsAdapter(
 
     /* update app list */
     fun updateData(newList: List<Packages>) {
-        val diffUtil = AppsDiffUtil(oldList, newList)
-        val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
+        val diffUtilResult = DiffUtil.calculateDiff(AppsDiffUtil(oldList, newList))
 
         oldList.clear()
         oldList.addAll(newList)

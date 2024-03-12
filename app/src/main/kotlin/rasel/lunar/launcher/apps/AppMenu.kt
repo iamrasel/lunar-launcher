@@ -88,17 +88,19 @@ internal class AppMenu : BottomSheetDialogFragment() {
             packageManager.getApplicationInfo(packageName,
                 PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong()))
         } else {
-            @Suppress("DEPRECATION")
             packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
         }
 
         /* get default app name */
-        val resolve = packageManager.resolveActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(packageName), 0)
-        defAppName = resolve?.loadLabel(packageManager).toString()
+        defAppName = packageManager.resolveActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+            .setPackage(packageName), 0)?.loadLabel(packageManager).toString()
 
         /* set application name and package name */
-        binding.appName.setText(appNamesPrefs?.getString(packageName, defAppName))
-        binding.appName.hint = defAppName
+        binding.appName.apply {
+            setText(appNamesPrefs?.getString(packageName, defAppName))
+            hint = defAppName
+
+        }
         binding.appPackage.text = packageName
         /* favorite apps */
         favoriteApps()
@@ -146,7 +148,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
                     packageManager.getPackageInfo(savedPackageName!!, PackageManager.PackageInfoFlags.of(0))
                 else
-                    @Suppress("DEPRECATION") packageManager.getPackageInfo(savedPackageName!!, 0)
+                    packageManager.getPackageInfo(savedPackageName!!, 0)
             } catch (e: PackageManager.NameNotFoundException) {
                 requireContext().getSharedPreferences(PREFS_FAVORITE_APPS, 0)
                     .edit().remove(KEY_APP_NO_ + position).apply()
@@ -176,18 +178,16 @@ internal class AppMenu : BottomSheetDialogFragment() {
         }
     }
 
-    private fun appName()
-    {
+    private fun appName() {
         binding.appName.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.appName.minWidth = resources.getDimensionPixelOffset(R.dimen.twoSeventySix)
-            }
+            if (hasFocus) binding.appName.minWidth = resources.getDimensionPixelOffset(R.dimen.twoSeventySix)
             else {
-                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.appName.windowToken, 0)
+                (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                    .hideSoftInputFromWindow(binding.appName.windowToken, 0)
 
-                binding.appName.minWidth = resources.getDimensionPixelOffset(R.dimen.zero)
                 binding.appName.apply {
+                    minWidth = resources.getDimensionPixelOffset(R.dimen.zero)
+
                     if (text!!.isBlank()) setText(defAppName)
                     else setText(text!!.trim())
 
@@ -200,8 +200,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
         }
 
         binding.appName.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN)
-            {
+            if (event.action == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_BACK) {
                     binding.appName.clearFocus()
                     return@setOnKeyListener true
@@ -227,7 +226,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
         val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
         } else {
-            @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, 0)
+            packageManager.getPackageInfo(packageName, 0)
         }
 
         /* show infos */
@@ -259,7 +258,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
                 packageName, PackageManager.PackageInfoFlags.of(PackageManager.GET_ACTIVITIES.toLong())
             )
         } else {
-            @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
         }
 
         /* show activity list */
@@ -398,7 +397,7 @@ internal class AppMenu : BottomSheetDialogFragment() {
         val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(PackageManager.GET_PERMISSIONS.toLong()))
         } else {
-            @Suppress("DEPRECATION") packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+            packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
         }
 
         return if (packageInfo.requestedPermissions.isNotEmpty()) {

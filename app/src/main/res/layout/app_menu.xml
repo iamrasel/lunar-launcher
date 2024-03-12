@@ -26,9 +26,7 @@
             android:minWidth="@dimen/zero"
             android:gravity="center"
             android:padding="@dimen/eight"
-            android:inputType="textNoSuggestions"
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
