@@ -39,9 +39,11 @@ import androidx.core.view.isVisible
 import com.google.android.material.imageview.ShapeableImageView
 import rasel.lunar.launcher.LauncherActivity.Companion.lActivity
 import rasel.lunar.launcher.R
+import rasel.lunar.launcher.apps.IconPackManager.Companion.getDrawableIconForPackage
 import rasel.lunar.launcher.helpers.Constants.Companion.ACCESSIBILITY_SERVICE_LOCK_SCREEN
 import rasel.lunar.launcher.helpers.Constants.Companion.AUTHENTICATOR_TYPE
 import rasel.lunar.launcher.helpers.Constants.Companion.DEFAULT_ICON_SIZE
+import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APPS_LAYOUT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_APP_NO_
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_ICON_SIZE
 import rasel.lunar.launcher.helpers.Constants.Companion.MAX_FAVORITE_APPS
@@ -192,6 +194,7 @@ internal class UniUtils {
         /* favorite apps */
         private fun populateFavApps(context: Context, linearLayoutCompat: LinearLayoutCompat) {
             val prefsFavApps = context.getSharedPreferences(PREFS_FAVORITE_APPS, 0)
+            val useIconPack = context.getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_APPS_LAYOUT, 0) != 0
             if (linearLayoutCompat.isVisible || prefsFavApps.all.toString().length < 3) {
                 linearLayoutCompat.visibility = View.GONE
             } else {
@@ -208,12 +211,18 @@ internal class UniUtils {
                                 layoutParams = LinearLayoutCompat.LayoutParams(
                                     (iconSize * resources.displayMetrics.density).toInt(),
                                     (iconSize * resources.displayMetrics.density).toInt(), 1F)
-                            }.let {
-                                it.setImageDrawable(context.packageManager.getApplicationIcon(packageName))
-                                it.setOnClickListener {
+                            }.let { sImageView ->
+                                context.packageManager.getApplicationIcon(packageName).let { defaultIcon ->
+                                    sImageView.setImageDrawable(
+                                        if (context.getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_APPS_LAYOUT, 0) != 0)
+                                            getDrawableIconForPackage(packageName, defaultIcon)
+                                        else defaultIcon
+                                    )
+                                }
+                                sImageView.setOnClickListener {
                                     context.startActivity(context.packageManager.getLaunchIntentForPackage(packageName))
                                 }
-                                linearLayoutCompat.addView(it)
+                                linearLayoutCompat.addView(sImageView)
                             }
                         } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
                             context.getSharedPreferences(PREFS_FAVORITE_APPS, 0)
