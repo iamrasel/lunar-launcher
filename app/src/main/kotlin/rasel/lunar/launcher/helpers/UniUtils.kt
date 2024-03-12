@@ -211,19 +211,18 @@ internal class UniUtils {
                                 layoutParams = LinearLayoutCompat.LayoutParams(
                                     (iconSize * resources.displayMetrics.density).toInt(),
                                     (iconSize * resources.displayMetrics.density).toInt(), 1F)
-                            }.let {
-                                val defaultIcon = context.packageManager.getApplicationIcon(packageName)
-                                it.setImageDrawable(
-                                    if (useIconPack) {
-                                        getDrawableIconForPackage(packageName, defaultIcon)
-                                    } else {
-                                        defaultIcon
-                                    }
-                                )
-                                it.setOnClickListener {
+                            }.let { sImageView ->
+                                context.packageManager.getApplicationIcon(packageName).let { defaultIcon ->
+                                    sImageView.setImageDrawable(
+                                        if (context.getSharedPreferences(PREFS_SETTINGS, 0).getInt(KEY_APPS_LAYOUT, 0) != 0)
+                                            getDrawableIconForPackage(packageName, defaultIcon)
+                                        else defaultIcon
+                                    )
+                                }
+                                sImageView.setOnClickListener {
                                     context.startActivity(context.packageManager.getLaunchIntentForPackage(packageName))
                                 }
-                                linearLayoutCompat.addView(it)
+                                linearLayoutCompat.addView(sImageView)
                             }
                         } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
                             context.getSharedPreferences(PREFS_FAVORITE_APPS, 0)
