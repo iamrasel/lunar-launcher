@@ -1,6 +1,0 @@
-- add animated drawable for splash screen
-- add apk share option in app menu
-- change string button to icon button in app menu
-- add different app drawer layout selection option
-- add icon pack support
-- string updates and improvements
