@@ -54,6 +54,7 @@ import rasel.lunar.launcher.helpers.Constants.Companion.KEY_KEYBOARD_SEARCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_QUICK_LAUNCH
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_SCROLLBAR_HEIGHT
 import rasel.lunar.launcher.helpers.Constants.Companion.KEY_STATUS_BAR
+import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_APP_NAMES
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import java.text.Normalizer
 import java.util.*
@@ -75,13 +76,14 @@ internal class AppDrawer : Fragment() {
         private val numberPattern = Pattern.compile("[0-9]")
         private val alphabetPattern = Pattern.compile("[A-Z]")
         @JvmStatic var settingsPrefs: SharedPreferences? = null
+        @JvmStatic var appNamesPrefs: SharedPreferences? = null
         @JvmStatic var alphabetList = mutableListOf<String>()
         @JvmStatic var letterPreview: MaterialTextView? = null
 
         fun listenScroll(letter: String) {
             packageList.clear()
             for (resolver in packageInfoList) {
-                val appName = resolver.loadLabel(packageManager).toString()
+                val appName = appNamesPrefs?.getString(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())!!
                 when {
                     letter == "#" -> {
                         if (numberPattern.matcher(appName.first().uppercase()).matches()) {
@@ -101,7 +103,7 @@ internal class AppDrawer : Fragment() {
                     }
                 }
             }
-            appsAdapter?.updateData(packageList)
+            appsAdapter?.updateData(packageList.sortedBy { it.appName.lowercase() })
         }
     }
 
@@ -109,6 +111,7 @@ internal class AppDrawer : Fragment() {
         binding = AppDrawerBinding.inflate(inflater, container, false)
 
         settingsPrefs = requireContext().getSharedPreferences(PREFS_SETTINGS, 0)
+        appNamesPrefs = requireContext().getSharedPreferences(PREFS_APP_NAMES, 0)
         layoutType = settingsPrefs!!.getInt(KEY_APPS_LAYOUT, 0)
         packageManager = lActivity?.packageManager
         appsAdapter = AppsAdapter(layoutType, packageManager!!, childFragmentManager, binding.appsCount)
@@ -185,7 +188,7 @@ internal class AppDrawer : Fragment() {
     }
 
     /* update app list with app and package name */
-    private fun fetchApps() {
+    fun fetchApps() {
         packageInfoList = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager?.queryIntentActivities(
                 Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER),
@@ -203,12 +206,15 @@ internal class AppDrawer : Fragment() {
         /* add package and app names to the list */
         packageList.clear()
         for (resolver in packageInfoList) {
-            packageList.add(Packages(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString()))
+            packageList.add(Packages(
+                    resolver.activityInfo.packageName, appNamesPrefs?.getString(resolver.activityInfo.packageName,
+                    resolver.loadLabel(packageManager).toString())!!
+            ))
         }
 
         when {
             packageList.size < 1 -> return
-            else -> appsAdapter?.updateData(packageList)
+            else -> appsAdapter?.updateData(packageList.sortedBy { it.appName.lowercase() })
         }
     }
 
@@ -241,7 +247,9 @@ internal class AppDrawer : Fragment() {
         /* check each app name and add if it matches the search string */
         packageList.clear()
         for (resolver in packageInfoList) {
-            resolver.loadLabel(packageManager).toString().let {
+            val appName = appNamesPrefs?.getString(resolver.activityInfo.packageName, resolver.loadLabel(packageManager).toString())!!
+
+            appName.let {
                 if (normalize(it).contains(searchString)) {
                     packageList.add(Packages(resolver.activityInfo.packageName, it))
                 }
@@ -250,7 +258,7 @@ internal class AppDrawer : Fragment() {
 
         if (packageList.size == 1 && settingsPrefs!!.getBoolean(KEY_QUICK_LAUNCH, true))
             startActivity(packageManager?.getLaunchIntentForPackage(packageList[0].packageName))
-        else appsAdapter?.updateData(packageList)
+        else appsAdapter?.updateData(packageList.sortedBy { it.appName.lowercase() })
     }
 
     private fun normalize(str: String): String {

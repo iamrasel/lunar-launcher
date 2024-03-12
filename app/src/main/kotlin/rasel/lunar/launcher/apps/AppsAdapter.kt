@@ -26,6 +26,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updatePadding
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -103,7 +104,10 @@ internal class AppsAdapter(
 
             /* on long click - open app menu */
             setOnLongClickListener {
-                AppMenu().show(fragmentManager, item.packageName)
+                AppMenu().let {
+                    it.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialog)
+                    it.show(fragmentManager, item.packageName)
+                }
                 true
             }
         }

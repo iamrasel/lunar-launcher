@@ -81,6 +81,9 @@ internal class Constants {
         const val requestPickWidget = 103
         const val requestCreateWidget = 104
 
+        /* app names */
+        const val PREFS_APP_NAMES = "rasel.lunar.launcher.APP_NAMES"
+
         /* favorite apps */
         const val PREFS_FAVORITE_APPS = "rasel.lunar.launcher.FAVORITE_APPS"
         const val KEY_APP_NO_ = "app_no_"
