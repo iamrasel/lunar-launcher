@@ -24,6 +24,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -34,7 +35,10 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -57,7 +61,6 @@ import rasel.lunar.launcher.helpers.Constants.Companion.KEY_STATUS_BAR
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_APP_NAMES
 import rasel.lunar.launcher.helpers.Constants.Companion.PREFS_SETTINGS
 import java.text.Normalizer
-import java.util.*
 import java.util.regex.Pattern
 
 
@@ -125,6 +128,7 @@ internal class AppDrawer : Fragment() {
         setLayout()
         fetchApps()
         getAlphabetItems()
+        handleWindowInsets()
         setKeyboardPadding()
 
         return binding.root
@@ -239,6 +243,25 @@ internal class AppDrawer : Fragment() {
                 }
                 binding.alphabets.invalidate()
             }
+        }
+    }
+
+    @SuppressLint("RtlHardcoded")
+    private fun handleWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).let {
+                    val leftInsets =
+                        if (settingsPrefs!!.getInt(KEY_DRAW_ALIGN, Gravity.CENTER) == Gravity.LEFT ||
+                            settingsPrefs!!.getInt(KEY_APPS_LAYOUT, 0) != 0) {
+                            it.left
+                        } else 0
+
+                    binding.root.updatePadding(leftInsets, 0, it.right, 0)
+                }
+            }
+
+            WindowInsetsCompat.CONSUMED
         }
     }
 
