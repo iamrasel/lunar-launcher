@@ -63,8 +63,8 @@ import rasel.lunar.launcher.home.LauncherHome
 internal class LauncherActivity : AppCompatActivity() {
 
     private lateinit var binding: LauncherActivityBinding
-    private lateinit var viewPager: ViewPager2
     private lateinit var settingsPrefs: SharedPreferences
+    lateinit var viewPager: ViewPager2
 
     companion object {
         @JvmStatic var lActivity: LauncherActivity? = null

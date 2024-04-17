@@ -57,6 +57,12 @@ internal class TodoManager : Fragment() {
     override fun onResume() {
         super.onResume()
         refreshList()
+        lActivity!!.viewPager.isUserInputEnabled = false
+    }
+
+    override fun onPause() {
+        super.onPause()
+        lActivity!!.viewPager.isUserInputEnabled = true
     }
 
     fun refreshList() {
