@@ -204,7 +204,8 @@ internal class LauncherActivity : AppCompatActivity() {
 
                 view.updatePadding(0, topInset, 0, it.bottom)
             }
-            WindowInsetsCompat.CONSUMED
+            // return the insets to get it in AppDrawer>handleWindowInsets()
+            windowInsets
         }
     }
 
