@@ -17,7 +17,6 @@
  */
 
 package rasel.lunar.launcher.home
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
@@ -148,6 +147,17 @@ internal class LauncherHome : Fragment() {
     /* gestures on battery progress indicator area */
     @SuppressLint("ClickableViewAccessibility")
     private fun batteryProgressGestures() {
+        binding.date.setOnTouchListener(object : SwipeTouchListener(requireContext()) {
+            /* open alarms list with default clock app */
+            override fun onClick() {
+                super.onClick()
+                // Open Calendar
+                requireContext().startActivity(
+                    Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_CALENDAR)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
+            }})
+
         binding.batteryProgress.setOnTouchListener(object : SwipeTouchListener(requireContext()) {
             /* open alarms list with default clock app */
             override fun onClick() {
