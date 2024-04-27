@@ -195,6 +195,7 @@ internal class LauncherActivity : AppCompatActivity() {
     }
 
     private fun topPadding(topPadding: Boolean) {
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
             windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures()).let {
                 val topInset = if (topPadding) {

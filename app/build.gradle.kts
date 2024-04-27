@@ -30,6 +30,7 @@ android {
             isShrinkResources = true
             proguardFiles (getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             resValue ("string", "app_name", "Lunar Launcher")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
